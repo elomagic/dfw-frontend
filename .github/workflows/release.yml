@@ -1,0 +1,62 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get branch names.
+        id: branch-names
+        uses: tj-actions/branch-names@6871f53176ad61624f978536bbf089c574dc19a2 # v8
+
+      - name: Check out Git repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+
+      - name: Install Node.js and NPM
+        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: npm install
+        run: |
+          npm install
+
+      - name: Set up Git user
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Get and tag release version
+        run: |
+          VERSION=$(npm version patch)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: npm build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm run build
+      
+      - name: Upload released files
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2
+        with:
+          name: ${{ env.VERSION }}
+          tag_name: ${{ env.VERSION }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+          prerelease: true
+          files: |
+            dist-zip/*.zip
+
+      - name: Set and tag next RC version
+        run: |
+          npm version prerelease --preid rc              
+
+      - name: Push changes
+        run: |
+          git push
+          

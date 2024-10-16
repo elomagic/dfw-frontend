@@ -1,0 +1,48 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get branch names.
+        id: branch-names
+        uses: tj-actions/branch-names@6871f53176ad61624f978536bbf089c574dc19a2 # v8
+
+      - name: Check out Git repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+
+      - name: Install Node.js and NPM
+        uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: npm install
+        run: |
+          npm install
+
+      - name: npm build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm run build
+
+      - name: Extract version from package.json
+        run: |
+          VERSION=$(npm pkg get version --workspaces=false | tr -d \")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV          
+
+      - name: Upload SNAPSHOT files
+        if: steps.branch-names.outputs.current_branch == 'main'
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2
+        with:
+          name: v${{ env.VERSION }}
+          tag_name: v${{ env.VERSION }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: true
+          prerelease: false
+          files: |
+            dist-zip/*.zip
