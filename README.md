@@ -1,3 +1,39 @@
+
+# Dependency Firewall Frontend
+
+A tool that ...
+
+---
+
+[![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/apache/maven.svg?label=License)][license]
+[![build workflow](https://github.com/elomagic/dfw-frontend/actions/workflows/build.yml/badge.svg)](https://github.com/elomagic/dfw-frontend/actions)
+[![GitHub issues](https://img.shields.io/github/issues-raw/elomagic/dfw-frontend)](https://github.com/elomagic/dfw-frontend/issues)
+[![Latest](https://img.shields.io/github/release/elomagic/dfw-frontend.svg)](https://github.com/elomagic/dfw-frontend/releases)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/elomagic/dfw-frontend/graphs/commit-activity)
+[![Buymeacoffee](https://badgen.net/badge/icon/buymeacoffee?icon=buymeacoffee&label)](https://www.buymeacoffee.com/elomagic)
+
+---
+
+# Installation
+
+This UI is part of the https://github.com/elomagic/repository project. Docker image can also be found there.
+
+# Build web app
+
+```commandline
+npm run build
+```
+
+# Run as dev
+
+```commandline
+npm run dev
+```
+
+Enjoy
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -48,3 +84,5 @@ export default tseslint.config({
   },
 })
 ```
+
+[license]: https://www.apache.org/licenses/LICENSE-2.0
