@@ -1,3 +1,5 @@
 {
-    
+    "dashboard": "Dashboard",
+    "licenses": "Licenses",
+    "vulnerabilities": "Vulnerabilities"
 }
