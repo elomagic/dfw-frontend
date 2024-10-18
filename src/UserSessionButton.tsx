@@ -12,7 +12,7 @@ export default function UserSessionButton() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const menuOpen = Boolean(anchorEl);
     //  TODO
-    const [authenticated, setAuthenticated] = useState<boolean>(true);
+    const [authenticated] = useState<boolean>(true);
 
     const handleOpenMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
