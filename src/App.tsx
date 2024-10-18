@@ -68,7 +68,7 @@ function App() {
     // const { t } = useTranslation();
     const [open, setOpen] = useState<boolean>("true" !== localStorage.getItem("appbar_closed"));
     //  TODO
-    const [authenticated, setAuthenticated] = useState<boolean>;
+    const [authenticated, setAuthenticated] = useState<boolean>(true);
 
     const toggleDrawer = () => {
         localStorage.setItem("appbar_closed", open ? "true": "false");

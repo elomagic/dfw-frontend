@@ -2,7 +2,8 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from "react-router-dom";
 import { Divider, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { LocalPolice, BugReport, Home, Policy, Info } from "@mui/icons-material";
+import {LocalPolice, BugReport, Home, Info, Public, Settings, Group} from "@mui/icons-material";
+import {GoLaw} from "react-icons/go";
 
 export default function AppMenuItems() {
 
@@ -18,7 +19,7 @@ export default function AppMenuItems() {
             </ListItemButton>
             <ListItemButton component={RouterLink} to='licenses'>
                 <ListItemIcon>
-                    <Policy className='fs15em'/>
+                    <GoLaw className='fs15em'/>
                 </ListItemIcon>
                 <ListItemText primary={t("licenses")}/>
             </ListItemButton>
@@ -27,6 +28,38 @@ export default function AppMenuItems() {
                     <BugReport className='fs15em'/>
                 </ListItemIcon>
                 <ListItemText primary={t("vulnerabilities")}/>
+            </ListItemButton>
+
+            <Divider sx={{my: 1}}/>
+
+            <ListItemButton component={RouterLink} to='admin-licenses'>
+                <ListItemIcon>
+                    <Settings className='fs15em'/>
+                </ListItemIcon>
+                <ListItemText primary={t("licenses")}/>
+            </ListItemButton>
+
+            <ListItemButton component={RouterLink} to='admin-vulnerabilities'>
+                <ListItemIcon>
+                    <Settings className='fs15em'/>
+                </ListItemIcon>
+                <ListItemText primary={t("vulnerabilities")}/>
+            </ListItemButton>
+
+            <ListItemButton component={RouterLink} to='admin-repositories'>
+                <ListItemIcon>
+                    <Public className='fs15em'/>
+                </ListItemIcon>
+                <ListItemText primary={t("repositories")}/>
+            </ListItemButton>
+
+            <Divider sx={{my: 1}}/>
+
+            <ListItemButton component={RouterLink} to='admin-accounts'>
+                <ListItemIcon>
+                    <Group className='fs15em'/>
+                </ListItemIcon>
+                <ListItemText primary={t("user-accounts")}/>
             </ListItemButton>
 
             <Divider sx={{my: 1}}/>

@@ -1,5 +1,8 @@
 {
+    "app.title": "Dependency Firewall",
     "dashboard": "Dashboard",
     "licenses": "Licenses",
+    "repositories": "Repositories",
+    "user-accounts": "User Accounts",
     "vulnerabilities": "Vulnerabilities"
 }

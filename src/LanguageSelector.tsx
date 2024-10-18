@@ -34,13 +34,13 @@ export default function LanguageSelector() {
         >
             <MenuItem value={"en"} className="LanguageSelector Item">
                 <ImageListItem>
-                    <img src="assets/flag-us.svg" style={{height: "unset", width: "unset"}} alt='us'/>
+                    <img src="flag-us.svg" style={{height: "unset", width: "unset"}} alt='us'/>
                 </ImageListItem>
                 <ListItemText primary="EN"/>
             </MenuItem>
             <MenuItem value={"de"} className="LanguageSelector Item">
                 <ImageListItem>
-                    <img src="assets/flag-de.svg" style={{height: "unset", width: "unset"}} alt='de'/>
+                    <img src="flag-de.svg" style={{height: "unset", width: "unset"}} alt='de'/>
                 </ImageListItem>
                 <ListItemText primary="DE"/>
             </MenuItem>
