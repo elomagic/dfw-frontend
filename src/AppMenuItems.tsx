@@ -23,7 +23,7 @@ export default function AppMenuItems() {
                 </ListItemIcon>
                 <ListItemText primary={t("licenses")}/>
             </ListItemButton>
-            <ListItemButton component={RouterLink} to='vulnerabitlites'>
+                <ListItemButton component={RouterLink} to='vulnerabilities'>
                 <ListItemIcon>
                     <BugReport className='fs15em'/>
                 </ListItemIcon>

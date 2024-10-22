@@ -5,12 +5,24 @@ import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MuiDrawer from '@mui/material/Drawer';
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import TitleHeader from "./TitleHeader.tsx";
 import LanguageSelector from "./LanguageSelector.tsx";
 import UserSessionButton from "./UserSessionButton.tsx";
 import ThemeModeSelector from './ThemeModeSelector';
 import AppMenuItems from "./AppMenuItems.tsx";
+import {AuthContextProps, useAuth} from "./Auth.ts";
+import DashboardView from "./pages/dashboard/DashboardView.tsx";
+import DSGVOView from "./pages/commons/DSGVOView.tsx";
+import TabBar from "./TabBar.tsx";
+import {ProtectedRoute} from "./aas.tsx";
+import {PRODUCTION} from "./RestClient.ts";
+import AccountsView from "./pages/accounts/AccountsView.tsx";
+import AdminRepositoriesView from "./pages/adminRepositories/AdminRepositoriesView.tsx";
+import ImprintView from "./pages/commons/ImprintView.tsx";
+import LicensesView from "./pages/licenses/LicensesView.tsx";
+import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
+import AdminLicensesView from "./pages/adminLicenses/AdminLicensesView.tsx";
 
 const drawerWidth: number = 240;
 
@@ -67,8 +79,7 @@ const mdTheme = extendTheme({});
 function App() {
     // const { t } = useTranslation();
     const [open, setOpen] = useState<boolean>("true" !== localStorage.getItem("appbar_closed"));
-    //  TODO
-    const [authenticated] = useState<boolean>(true);
+    const auth: AuthContextProps = useAuth();
 
     const toggleDrawer = () => {
         localStorage.setItem("appbar_closed", open ? "true": "false");
@@ -79,7 +90,7 @@ function App() {
         <ThemeProvider theme={mdTheme} defaultMode='dark'>
             <BrowserRouter>
                 <Box sx={{display: 'flex', height: '100vh',}}>
-                    <AppBar position="absolute" open={open} className='AppBar'>
+                    <AppBar position="absolute" open={auth.isAuthenticated && open} className='AppBar'>
                         <Toolbar
                             className="AppToolbar"
                             sx={{
@@ -113,7 +124,7 @@ function App() {
                         </Toolbar>
                     </AppBar>
 
-                    {authenticated &&
+                    {auth.isAuthenticated &&
                         <Drawer variant="permanent" open={open} className='Drawer'>
                             <Toolbar
                                 sx={{
@@ -133,6 +144,41 @@ function App() {
                             </List>
                         </Drawer>
                     }
+
+                    <Box
+                        component="main"
+                        sx={{
+                            backgroundImage: PRODUCTION
+                                ? "url(assets/background.webp)"
+                                : "url(assets/test-background.webp)",
+                            backgroundRepeat: "no-repeat",
+                            backgroundSize: "cover",
+                            backgroundColor: (theme) =>
+                                theme.palette.mode === 'light'
+                                    ? theme.palette.grey[100]
+                                    : theme.palette.grey[900],
+                            flexGrow: 1,
+                            overflow: 'auto',
+                        }}
+                    >
+                        {/* Toolbar is placeholder, otherwise the Container element will be covered by the header. */}
+                        <Toolbar />
+                        <Routes>
+                            <Route path='licenses' element={<ProtectedRoute><LicensesView /></ProtectedRoute>}/>
+                            <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                            <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
+                            <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                            <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
+                            <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                            <Route path='my-account' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                            <Route path='dsgvo' element={<DSGVOView />}/>
+                            <Route path='imprint' element={<ImprintView />}/>
+                            {/* Default/Fallback routes */}
+                            <Route index element={<DashboardView />}/>
+                            <Route path='*' element={<DashboardView />}/>
+                        </Routes>
+                        {auth.isAuthenticated && <TabBar />}
+                    </Box>
                 </Box>
             </BrowserRouter>
         </ThemeProvider>

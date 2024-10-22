@@ -5,14 +5,14 @@ import { Link as RouterLink } from "react-router-dom";
 import {Button, Menu, MenuItem,} from "@mui/material";
 import {AccountCircle, Login, Logout} from "@mui/icons-material";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import {logout, signinRedirect} from "./aas.ts";
+import {logout, signinRedirect} from "./aas.tsx";
+import {useAuth} from "./Auth.ts";
 
 export default function UserSessionButton() {
     const { t } = useTranslation();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const menuOpen = Boolean(anchorEl);
-    //  TODO
-    const [authenticated] = useState<boolean>(true);
+    const auth = useAuth();
 
     const handleOpenMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -29,7 +29,7 @@ export default function UserSessionButton() {
 
     return (
         <React.Fragment>
-            {!authenticated &&
+            {!auth.isAuthenticated &&
                 <div>
                     <Button
                         color="inherit"
@@ -41,7 +41,7 @@ export default function UserSessionButton() {
                     </Button>
                 </div>
             }
-            {authenticated &&
+            {auth.isAuthenticated &&
                 <div>
                     <Button
                         id="basic-button"
@@ -55,7 +55,7 @@ export default function UserSessionButton() {
                         endIcon={<AccountCircle />}
                         onClick={handleOpenMenuClick}
                     >
-                        USER {/* TODO auth.user?.profile.name*/}
+                        {auth.username}
                     </Button>
                     <Menu
                         id="basic-menu"
