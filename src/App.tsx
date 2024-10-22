@@ -23,6 +23,7 @@ import ImprintView from "./pages/commons/ImprintView.tsx";
 import LicensesView from "./pages/licenses/LicensesView.tsx";
 import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
 import AdminLicensesView from "./pages/adminLicenses/AdminLicensesView.tsx";
+import SignInView from "./pages/signin/SignInView.tsx";
 
 const drawerWidth: number = 240;
 
@@ -89,42 +90,43 @@ function App() {
     return (
         <ThemeProvider theme={mdTheme} defaultMode='dark'>
             <BrowserRouter>
-                <Box sx={{display: 'flex', height: '100vh',}}>
-                    <AppBar position="absolute" open={auth.isAuthenticated && open} className='AppBar'>
-                        <Toolbar
-                            className="AppToolbar"
-                            sx={{
-                                pr: '24px', // keep right padding when drawer closed
-                            }}
-                        >
-                            <IconButton
-                                edge="start"
-                                color="inherit"
-                                aria-label="open drawer"
-                                onClick={toggleDrawer}
+                {!auth.isAuthenticated && <SignInView />}
+                {auth.isAuthenticated &&
+                    <Box sx={{display: 'flex', height: '100vh',}}>
+                        <AppBar position="absolute" open={open} className='AppBar'>
+                            <Toolbar
+                                className="AppToolbar"
                                 sx={{
-                                    marginRight: '36px',
-                                    ...(open && {display: 'none'}),
+                                    pr: '24px', // keep right padding when drawer closed
                                 }}
                             >
-                                <MenuIcon/>
-                            </IconButton>
-                            <Typography
-                                component="h1"
-                                variant="h6"
-                                color="inherit"
-                                noWrap
-                                sx={{flexGrow: 1}}
-                            >
-                                <TitleHeader/>
-                            </Typography>
-                            <LanguageSelector />
-                            <ThemeModeSelector />
-                            <UserSessionButton />
-                        </Toolbar>
-                    </AppBar>
+                                <IconButton
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    onClick={toggleDrawer}
+                                    sx={{
+                                        marginRight: '36px',
+                                        ...(open && {display: 'none'}),
+                                    }}
+                                >
+                                    <MenuIcon/>
+                                </IconButton>
+                                <Typography
+                                    component="h1"
+                                    variant="h6"
+                                    color="inherit"
+                                    noWrap
+                                    sx={{flexGrow: 1}}
+                                >
+                                    <TitleHeader/>
+                                </Typography>
+                                <LanguageSelector />
+                                <ThemeModeSelector />
+                                <UserSessionButton />
+                            </Toolbar>
+                        </AppBar>
 
-                    {auth.isAuthenticated &&
                         <Drawer variant="permanent" open={open} className='Drawer'>
                             <Toolbar
                                 sx={{
@@ -143,43 +145,44 @@ function App() {
                                 <AppMenuItems/>
                             </List>
                         </Drawer>
-                    }
 
-                    <Box
-                        component="main"
-                        sx={{
-                            backgroundImage: PRODUCTION
-                                ? "url(assets/background.webp)"
-                                : "url(assets/test-background.webp)",
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                            backgroundColor: (theme) =>
-                                theme.palette.mode === 'light'
-                                    ? theme.palette.grey[100]
-                                    : theme.palette.grey[900],
-                            flexGrow: 1,
-                            overflow: 'auto',
-                        }}
-                    >
-                        {/* Toolbar is placeholder, otherwise the Container element will be covered by the header. */}
-                        <Toolbar />
-                        <Routes>
-                            <Route path='licenses' element={<ProtectedRoute><LicensesView /></ProtectedRoute>}/>
-                            <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
-                            <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
-                            <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
-                            <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
-                            <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
-                            <Route path='my-account' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
-                            <Route path='dsgvo' element={<DSGVOView />}/>
-                            <Route path='imprint' element={<ImprintView />}/>
-                            {/* Default/Fallback routes */}
-                            <Route index element={<DashboardView />}/>
-                            <Route path='*' element={<DashboardView />}/>
-                        </Routes>
-                        {auth.isAuthenticated && <TabBar />}
+
+                        <Box
+                            component="main"
+                            sx={{
+                                backgroundImage: PRODUCTION
+                                    ? "url(assets/background.webp)"
+                                    : "url(assets/test-background.webp)",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                backgroundColor: (theme) =>
+                                    theme.palette.mode === 'light'
+                                        ? theme.palette.grey[100]
+                                        : theme.palette.grey[900],
+                                flexGrow: 1,
+                                overflow: 'auto',
+                            }}
+                        >
+                            {/* Toolbar is placeholder, otherwise the Container element will be covered by the header. */}
+                            <Toolbar />
+                            <Routes>
+                                <Route path='licenses' element={<ProtectedRoute><LicensesView /></ProtectedRoute>}/>
+                                <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                                <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
+                                <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                                <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
+                                <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                                <Route path='my-account' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                                <Route path='dsgvo' element={<DSGVOView />}/>
+                                <Route path='imprint' element={<ImprintView />}/>
+                                {/* Default/Fallback routes */}
+                                <Route index element={<DashboardView />}/>
+                                <Route path='*' element={<DashboardView />}/>
+                            </Routes>
+                            <TabBar />
+                        </Box>
                     </Box>
-                </Box>
+                }
             </BrowserRouter>
         </ThemeProvider>
     )

@@ -10,14 +10,14 @@ const BASE_REST_URL: string = PUBLIC_BASE_URL + "/rest"
 
 export enum RestEndpoint {
 
-    Repository = "/v1/repository",
-    GameStatistics = "/v2/game/statistics",
-    Image = "/v1/image",
-    ImageScan = "/v2/image/scan",
-    Metric = "v1/metric",
-    Subscription = "/subscription",
-    User = "/v1/user",
-    Version = "/version",
+    LicenseNameMap = "/api/v1/license/nameMap",
+    LicensePermitted = "/api/v1/license/permitted",
+    LicensePurlMap = "/api/v1/license/purlMap",
+    LicenseViolation = "/api/v1/license/violation",
+    Repository = "/api/v1/repository",
+    User = "/api/v1/user",
+    UserGroup = "/api/v1/usergroup",
+    Version = "/api/v1/version",
 
 }
 

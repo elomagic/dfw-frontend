@@ -12,7 +12,7 @@ export const useAuth = (): AuthContextProps => {
     return {
         username: "",
         roles: [],
-        isAuthenticated: true,
+        isAuthenticated: false,
         accessToken: "",
 
         removeUser(): Promise<void> {
