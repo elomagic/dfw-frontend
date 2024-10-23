@@ -1,7 +1,6 @@
 import {
     Box,
     Button,
-    CssBaseline,
     FormControl,
     FormLabel,
     Stack,
@@ -13,6 +12,8 @@ import MuiCard from '@mui/material/Card';
 import Link from "@mui/material/Link";
 import ForgotPassword from "./ForgotPassword.tsx";
 import {useState} from "react";
+import * as Rest from "../../RestClient.ts";
+import { setUserSession, useAuth } from "../../Auth.ts";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -56,8 +57,9 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
     },
 }));
 
-export default function SignInView(props: { disableCustomTheme?: boolean }) {
+export default function SignInView() {
 
+    const auth = useAuth();
     const [emailError, setEmailError] = useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);
@@ -82,6 +84,22 @@ export default function SignInView(props: { disableCustomTheme?: boolean }) {
             email: data.get('email'),
             password: data.get('password'),
         });
+
+        const username: string | undefined = data.get('email') as string;
+
+        Rest.post(auth, Rest.RestEndpoint.AuthorizationAuthenticate, data)
+            .then((res) => res.text())
+            .then((token: string) => {
+                setUserSession(
+                    username,
+                    // TODO get roles
+                    [],
+                    token
+                );
+
+                // TODO Redirect
+            });
+
     };
 
     const validateInputs = () => {
@@ -113,7 +131,6 @@ export default function SignInView(props: { disableCustomTheme?: boolean }) {
 
     return (
         <SignInContainer direction="column" justifyContent="space-between">
-            <CssBaseline enableColorScheme />
             <Card variant="outlined">
 
                 <Typography

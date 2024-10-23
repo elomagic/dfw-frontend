@@ -10,6 +10,8 @@ const BASE_REST_URL: string = PUBLIC_BASE_URL + "/rest"
 
 export enum RestEndpoint {
 
+    AuthorizationAuthenticate = "/api/v1/authenticate",
+    AuthorizationLogout = "/api/v1/logout",
     LicenseNameMap = "/api/v1/license/nameMap",
     LicensePermitted = "/api/v1/license/permitted",
     LicensePurlMap = "/api/v1/license/purlMap",

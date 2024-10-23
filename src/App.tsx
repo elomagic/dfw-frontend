@@ -1,6 +1,16 @@
 import {useState} from 'react'
 import './App.css'
-import {Box, Divider, extendTheme, IconButton, List, styled, ThemeProvider, Toolbar, Typography} from "@mui/material";
+import {
+    Box,
+    CssBaseline,
+    Divider,
+    IconButton,
+    List,
+    styled,
+    ThemeProvider,
+    Toolbar,
+    Typography
+} from "@mui/material";
 import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -16,7 +26,6 @@ import DashboardView from "./pages/dashboard/DashboardView.tsx";
 import DSGVOView from "./pages/commons/DSGVOView.tsx";
 import TabBar from "./TabBar.tsx";
 import {ProtectedRoute} from "./aas.tsx";
-import {PRODUCTION} from "./RestClient.ts";
 import AccountsView from "./pages/accounts/AccountsView.tsx";
 import AdminRepositoriesView from "./pages/adminRepositories/AdminRepositoriesView.tsx";
 import ImprintView from "./pages/commons/ImprintView.tsx";
@@ -24,6 +33,7 @@ import LicensesView from "./pages/licenses/LicensesView.tsx";
 import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
 import AdminLicensesView from "./pages/adminLicenses/AdminLicensesView.tsx";
 import SignInView from "./pages/signin/SignInView.tsx";
+import {createTheme} from "@mui/material/styles";
 
 const drawerWidth: number = 240;
 
@@ -75,7 +85,11 @@ const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})
     }),
 );
 
-const mdTheme = extendTheme({});
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
 
 function App() {
     // const { t } = useTranslation();
@@ -88,7 +102,8 @@ function App() {
     };
 
     return (
-        <ThemeProvider theme={mdTheme} defaultMode='dark'>
+        <ThemeProvider theme={darkTheme} defaultMode='system'>
+            <CssBaseline />
             <BrowserRouter>
                 {!auth.isAuthenticated && <SignInView />}
                 {auth.isAuthenticated &&
@@ -146,22 +161,10 @@ function App() {
                             </List>
                         </Drawer>
 
-
                         <Box
                             component="main"
-                            sx={{
-                                backgroundImage: PRODUCTION
-                                    ? "url(assets/background.webp)"
-                                    : "url(assets/test-background.webp)",
-                                backgroundRepeat: "no-repeat",
-                                backgroundSize: "cover",
-                                backgroundColor: (theme) =>
-                                    theme.palette.mode === 'light'
-                                        ? theme.palette.grey[100]
-                                        : theme.palette.grey[900],
-                                flexGrow: 1,
-                                overflow: 'auto',
-                            }}
+                            overflow={'auto'}
+                            flexGrow={1}
                         >
                             {/* Toolbar is placeholder, otherwise the Container element will be covered by the header. */}
                             <Toolbar />

@@ -12,7 +12,7 @@ interface ForgotPasswordProps {
     handleClose: () => void;
 }
 
-export default function ForgotPassword({ open, handleClose }: ForgotPasswordProps) {
+export default function ForgotPassword({ open, handleClose }: Readonly<ForgotPasswordProps>) {
     return (
         <Dialog
             open={open}
