@@ -90,7 +90,9 @@ const executeRequest = (auth: AuthContextProps, input: RequestInfo, requestOptio
         });
 }
 
-const _get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: string[]|string|undefined, queryParameters?: Map<string, any>, acceptedMimeType?: string): Promise<Response> => {
+export declare type PathComponents = string[] | string | undefined
+
+const _get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: PathComponents, queryParameters?: Map<string, number>, acceptedMimeType?: string): Promise<Response> => {
     let paths = undefined;
     if (pathComponents != null && Array.isArray(pathComponents)) {
         paths = pathComponents
@@ -111,11 +113,11 @@ const _get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: s
     return executeRequest(auth, url, requestOptions);
 }
 
-export const getImage = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: string[]|string|undefined, queryParameters?: Map<string, number>): Promise<Response> => {
+export const getImage = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: PathComponents, queryParameters?: Map<string, number>): Promise<Response> => {
     return _get(auth, endpoint, pathComponents, queryParameters, "image/*");
 }
 
-export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: string[]|string|undefined, queryParameters?: Map<string, number>): Promise<Response> => {
+export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: PathComponents, queryParameters?: Map<string, number>): Promise<Response> => {
     return _get(auth, endpoint, pathComponents, queryParameters, "application/json")
 }
 

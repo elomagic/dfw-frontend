@@ -3,7 +3,7 @@ import {Box} from "@mui/material";
 export default function DashboardView() {
 
     return (
-        <Box>
+        <Box margin={3}>
             Dashboard
         </Box>
     );

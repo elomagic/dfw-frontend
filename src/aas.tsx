@@ -2,14 +2,6 @@ import {AuthContextProps, useAuth} from "./Auth.ts";
 import React from "react";
 import {Navigate, useLocation} from "react-router-dom";
 
-export const logout = () => {
-
-}
-
-export const signinRedirect = () => {
-
-}
-
 export const SubscriptionsContext: React.Context<string[]> = React.createContext(["BASIC"]);
 
 const hasRole = (auth: AuthContextProps, roles: string[]|string): boolean => {

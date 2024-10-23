@@ -3,7 +3,7 @@ import {Box} from "@mui/material";
 export default function LicensesView() {
 
     return (
-        <Box>
+        <Box margin={3}>
             LicensesView
         </Box>
     );

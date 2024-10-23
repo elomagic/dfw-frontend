@@ -1,13 +1,25 @@
-export interface AuthContextProps {
+
+
+export declare interface SignoutRedirectArgs {
+    url?: string;
+}
+
+export declare interface SigninRedirectArgs {
+    url?: string;
+}
+
+export declare interface AuthContextProps {
     username: string | undefined;
     roles: string[];
     isAuthenticated: boolean;
     accessToken: string | undefined;
 
     removeUser(): Promise<void>;
+    signinRedirect(args?: SigninRedirectArgs): Promise<void>;
+    signoutRedirect(args?: SignoutRedirectArgs): Promise<void>;
 }
 
-let _auth: AuthContextProps = {
+const _auth: AuthContextProps = {
     username: "",
     roles: [],
     isAuthenticated: false,
@@ -21,6 +33,12 @@ let _auth: AuthContextProps = {
 
         return Promise.resolve(undefined);
     },
+    signoutRedirect(args?: SignoutRedirectArgs): Promise<void> {
+        return Promise.resolve(undefined);
+    },
+    signinRedirect(args?: SigninRedirectArgs): Promise<void> {
+        return Promise.resolve(undefined);
+    }
 }
 
 export const useAuth = (): AuthContextProps => {

@@ -87,7 +87,7 @@ export default function SignInView() {
 
         const username: string | undefined = data.get('email') as string;
 
-        Rest.post(auth, Rest.RestEndpoint.AuthorizationAuthenticate, data)
+        Rest.postFormData(auth, Rest.RestEndpoint.AuthorizationAuthenticate, data)
             .then((res) => res.text())
             .then((token: string) => {
                 setUserSession(

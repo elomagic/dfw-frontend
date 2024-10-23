@@ -1,6 +1,6 @@
-declare type RepositoryTypes = "MAVEN" | "NPM" | "DOCKER" | "NUGET"
+export declare type RepositoryTypes = "MAVEN" | "NPM" | "DOCKER" | "NUGET"
 
-export interface Repository {
+export declare interface Repository {
     id?: string;
     type: RepositoryTypes;
     name: string;
@@ -11,7 +11,7 @@ export interface Repository {
     lastUpdate?: string;
 }
 
-export interface UserAccount {
+export declare interface UserAccount {
     id?: string;
     username: string;
     enabled: boolean;
@@ -20,18 +20,18 @@ export interface UserAccount {
     mailAddress: string;
 }
 
-export interface UserAccountGroup {
+export declare interface UserAccountGroup {
     name: string;
     userAccounts: UserAccount[];
     permissions: string[];
 }
 
-export interface Version {
+export declare interface Version {
     version: string;
     timestamp: string;
 }
 
-export interface License {
+export declare interface License {
     reference: string;
     isDeprecatedLicenseId: boolean;
     detailsUrl: string;
@@ -47,23 +47,23 @@ export interface LicenseNameMap {
     spdxId: string;
 }
 
-export interface LicensePackage {
+export declare interface LicensePackage {
     type: RepositoryTypes;
     purl: string;
     groupId: string;
     licenseId: string;
 }
 
-export interface LicensePermitted {
+export declare interface LicensePermitted {
     spdxId: string;
 }
 
-export interface LicensePurlMap {
+export declare interface LicensePurlMap {
     purlMatch: string;
     spdxId: string;
 }
 
-export interface LicenseViolation {
+export declare interface LicenseViolation {
     purl: string;
     licenses: string[];
 }

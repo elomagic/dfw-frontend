@@ -5,7 +5,6 @@ import { Link as RouterLink } from "react-router-dom";
 import {Button, Menu, MenuItem,} from "@mui/material";
 import {AccountCircle, Login, Logout} from "@mui/icons-material";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import {logout, signinRedirect} from "./aas.tsx";
 import {useAuth} from "./Auth.ts";
 
 export default function UserSessionButton() {
@@ -23,8 +22,8 @@ export default function UserSessionButton() {
 
     const handleLogoutClick = () => {
         setAnchorEl(null);
-        logout();
-            // .catch((e: any) => console.log(e.message));
+        auth.signoutRedirect()
+            .catch((e: any) => console.log(e.message));
     }
 
     return (
@@ -35,7 +34,7 @@ export default function UserSessionButton() {
                         color="inherit"
                         variant="text"
                         endIcon={<Login />}
-                        onClick={() => signinRedirect()}
+                        onClick={() => auth.signinRedirect()}
                     >
                         {t('login')}
                     </Button>
