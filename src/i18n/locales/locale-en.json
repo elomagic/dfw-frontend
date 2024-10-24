@@ -1,8 +1,15 @@
 {
     "app.title": "Dependency Firewall",
+    "continue": "Continue",
     "dashboard": "Dashboard",
+    "description": "Description",
     "licenses": "Licenses",
+    "name": "Name",
+    "purl": "PURL",
     "repositories": "Repositories",
+    "sign-in": "Sign in",
+    "type": "Type",
+    "url": "URL",
     "user-accounts": "User Accounts",
     "vulnerabilities": "Vulnerabilities"
 }

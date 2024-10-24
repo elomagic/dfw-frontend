@@ -26,26 +26,10 @@ export const ProtectedRoute = ({ children }: Element|any, props: ProtectedProps)
     if (!auth.isAuthenticated || (props.roles !== undefined && !hasRole(auth, props.roles))) {
         return (
             <SubscriptionsContext.Consumer>
-                {
-                    (value: string[]) => <Navigate to="/home" replace state={{ from: location }} />
-                }
+                { () => <Navigate to="/home" replace state={{ from: location }} /> }
             </SubscriptionsContext.Consumer>
     );
     }
 
     return children;
-};
-
-export const ProtectedContent = (props: ProtectedProps): React.ReactElement | null => {
-    const auth = useAuth();
-
-    if (auth.isAuthenticated && (props.roles === undefined || hasRole(auth, props.roles))) {
-        return (
-            <SubscriptionsContext.Consumer>
-                {(value: string[]) => props.children}
-            </SubscriptionsContext.Consumer>
-    );
-    }
-
-    return null;
 };

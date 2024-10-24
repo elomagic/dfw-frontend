@@ -1,13 +1,4 @@
 
-
-export declare interface SignoutRedirectArgs {
-    url?: string;
-}
-
-export declare interface SigninRedirectArgs {
-    url?: string;
-}
-
 export declare interface AuthContextProps {
     username: string | undefined;
     roles: string[];
@@ -15,8 +6,14 @@ export declare interface AuthContextProps {
     accessToken: string | undefined;
 
     removeUser(): Promise<void>;
-    signinRedirect(args?: SigninRedirectArgs): Promise<void>;
-    signoutRedirect(args?: SignoutRedirectArgs): Promise<void>;
+    signinRedirect(formData: FormData): Promise<AuthContextProps>;
+    signoutRedirect(): Promise<void>;
+}
+
+declare interface AuthenticationResponse {
+    username: string;
+    token: string;
+    roles: string[];
 }
 
 const _auth: AuthContextProps = {
@@ -33,21 +30,74 @@ const _auth: AuthContextProps = {
 
         return Promise.resolve(undefined);
     },
-    signoutRedirect(args?: SignoutRedirectArgs): Promise<void> {
+
+    signoutRedirect(): Promise<void> {
+        // TODO
+        const url: RequestInfo = "/api/v1/logout";
+
+        const requestOptions: RequestInit = {
+            mode: 'cors',
+            method: 'GET',
+            headers: {
+                "Accept": "*/*",
+            },
+        };
+
+        const request = new Request(
+            url,
+            requestOptions);
+
+        fetch(request)
+            .then((res: Response) => {
+                if (res.status >= 400) {
+                    return Promise.reject(new Error(res.statusText));
+                }
+
+                return Promise.resolve(res);
+            })
+            .finally(() => _auth.removeUser());
+
         return Promise.resolve(undefined);
     },
-    signinRedirect(args?: SigninRedirectArgs): Promise<void> {
-        return Promise.resolve(undefined);
+    signinRedirect(formData: FormData): Promise<AuthContextProps> {
+        _auth.removeUser()
+
+        // TODO
+        const url: RequestInfo = "/api/v1/authenticate";
+
+        const requestOptions: RequestInit = {
+            body: formData,
+            mode: 'cors',
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept": "application/json",
+            },
+        };
+
+        const request = new Request(
+            url,
+            requestOptions);
+
+        fetch(request)
+            .then((res: Response) => {
+                if (res.status >= 400) {
+                    return Promise.reject(new Error(res.statusText));
+                }
+
+                return Promise.resolve(res);
+            })
+            .then((res: Response) => res.json())
+            .then((dto: AuthenticationResponse) => {
+                _auth.accessToken = dto.token;
+                _auth.username = dto.username;
+                _auth.roles = dto.roles;
+            });
+
+        return Promise.resolve(_auth);
     }
 }
 
 export const useAuth = (): AuthContextProps => {
     return _auth;
-}
-
-export const setUserSession = (username: string, roles: string[], accessToken: string): void => {
-    _auth.isAuthenticated = true;
-    _auth.username = username;
-    _auth.roles = roles;
-    _auth.accessToken = accessToken;
 }

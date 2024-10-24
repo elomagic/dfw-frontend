@@ -3,7 +3,7 @@ import {useState} from "react";
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from "react-router-dom";
 import {Button, Menu, MenuItem,} from "@mui/material";
-import {AccountCircle, Login, Logout} from "@mui/icons-material";
+import {AccountCircle, Logout} from "@mui/icons-material";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import {useAuth} from "./Auth.ts";
 
@@ -27,60 +27,44 @@ export default function UserSessionButton() {
     }
 
     return (
-        <React.Fragment>
-            {!auth.isAuthenticated &&
-                <div>
-                    <Button
-                        color="inherit"
-                        variant="text"
-                        endIcon={<Login />}
-                        onClick={() => auth.signinRedirect()}
-                    >
-                        {t('login')}
-                    </Button>
-                </div>
-            }
-            {auth.isAuthenticated &&
-                <div>
-                    <Button
-                        id="basic-button"
-                        color="inherit"
-                        variant="text"
-                        style={{textTransform: "none"}}
-                        className="tt-none"
-                        aria-controls={menuOpen ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={menuOpen ? 'true' : undefined}
-                        endIcon={<AccountCircle />}
-                        onClick={handleOpenMenuClick}
-                    >
-                        {auth.username}
-                    </Button>
-                    <Menu
-                        id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={menuOpen}
-                        onClose={handleCloseMenu}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                        }}
-                    >
-                        <MenuItem component={RouterLink} onClick={handleCloseMenu} to="my-profile">
-                            <ListItemIcon>
-                                <AccountCircle fontSize="small" />
-                            </ListItemIcon>
-                            {t('my-account')}
-                        </MenuItem>
-                        {/* Prevent browser round trip */}
-                        <MenuItem onClick={handleLogoutClick}>
-                            <ListItemIcon>
-                                <Logout fontSize="small" />
-                            </ListItemIcon>
-                            {t('logout')}
-                        </MenuItem>
-                    </Menu>
-                </div>
-            }
-        </React.Fragment>
+        <div>
+            <Button
+                id="basic-button"
+                color="inherit"
+                variant="text"
+                style={{textTransform: "none"}}
+                className="tt-none"
+                aria-controls={menuOpen ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={menuOpen ? 'true' : undefined}
+                endIcon={<AccountCircle />}
+                onClick={handleOpenMenuClick}
+            >
+                {auth.username}
+            </Button>
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={menuOpen}
+                onClose={handleCloseMenu}
+                MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
+            >
+                <MenuItem component={RouterLink} onClick={handleCloseMenu} to="my-profile">
+                    <ListItemIcon>
+                        <AccountCircle fontSize="small" />
+                    </ListItemIcon>
+                    {t('my-account')}
+                </MenuItem>
+                {/* Prevent browser round trip */}
+                <MenuItem onClick={handleLogoutClick}>
+                    <ListItemIcon>
+                        <Logout fontSize="small" />
+                    </ListItemIcon>
+                    {t('logout')}
+                </MenuItem>
+            </Menu>
+        </div>
     );
 }

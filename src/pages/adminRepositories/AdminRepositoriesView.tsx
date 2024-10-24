@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts"
 import {AuthContextProps, useAuth} from "../../Auth.ts";
 import {Repository} from "../../DTOs.ts";
+import {useTranslation} from "react-i18next";
 
 /*
 function createData(
@@ -25,6 +26,7 @@ const rows: Repository[]= [
 
 export default function AdminRepositoriesView() {
 
+    const { t } = useTranslation();
     const auth: AuthContextProps = useAuth();
     const [ rows, setRows ] = useState<Repository[]>([]);
 
@@ -42,10 +44,10 @@ export default function AdminRepositoriesView() {
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Type</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Description</TableCell>
-                            <TableCell>URL</TableCell>
+                            <TableCell>{t("type")}</TableCell>
+                            <TableCell>{t("name")}</TableCell>
+                            <TableCell>{t("description")}</TableCell>
+                            <TableCell>{t("url")}</TableCell>
                         </TableRow>
                     </TableHead>
                 </Table>

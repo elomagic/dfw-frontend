@@ -10,20 +10,21 @@ const BASE_REST_URL: string = PUBLIC_BASE_URL + "/rest"
 
 export enum RestEndpoint {
 
-    AuthorizationAuthenticate = "/api/v1/authenticate",
-    AuthorizationLogout = "/api/v1/logout",
     LicenseNameMap = "/api/v1/license/nameMap",
     LicensePermitted = "/api/v1/license/permitted",
     LicensePurlMap = "/api/v1/license/purlMap",
     LicenseViolation = "/api/v1/license/violation",
     Repository = "/api/v1/repository",
     User = "/api/v1/user",
+    UserChangePassword = "/api/v1/user/changePassword",
+    UserRoles = "/api/v1/user/Roles",
+    UserSelf = "/api/v1/user/self",
     UserGroup = "/api/v1/usergroup",
     Version = "/api/v1/version",
 
 }
 
-function createUrl(endpoint: RestEndpoint, pathComponents: string[] | undefined, queryParameters?: Map<string, number>): string {
+function createUrl(endpoint: RestEndpoint, pathComponents: string[] | undefined, queryParameters?: Map<string, number>): RequestInfo {
 
     let url: string = BASE_REST_URL + endpoint;
 
@@ -71,14 +72,14 @@ const applyBearerToken = (auth: AuthContextProps | undefined, headers: HeadersIn
     return h;
 }
 
-const executeRequest = (auth: AuthContextProps, input: RequestInfo, requestOptions: RequestInit): Promise<Response> => {
+const executeRequest = (auth: AuthContextProps, url: RequestInfo, requestOptions: RequestInit): Promise<Response> => {
     try {
         requestOptions.headers = applyBearerToken(auth, requestOptions?.headers);
     } catch (err) {
         return Promise.reject(err)
     }
 
-    return fetch(input, requestOptions)
+    return fetch(url, requestOptions)
         .then((res: Response) => {
             if (res.status === 401) {
                 auth.removeUser()
@@ -100,7 +101,7 @@ const _get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: P
         paths = [pathComponents];
     }
 
-    const url: string = createUrl(endpoint, paths, queryParameters);
+    const url: RequestInfo = createUrl(endpoint, paths, queryParameters);
 
     const requestOptions: RequestInit = {
         mode: 'cors',
@@ -130,7 +131,7 @@ export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponen
  */
 export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
 
-    const url: string = createUrl(endpoint, undefined);
+    const url: RequestInfo = createUrl(endpoint, undefined);
     const data = JSON.stringify(dto);
 
     const requestOptions: RequestInit = {
@@ -155,7 +156,7 @@ export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object
  */
 export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
 
-    const url: string = createUrl(endpoint, undefined);
+    const url: RequestInfo = createUrl(endpoint, undefined);
     const data = JSON.stringify(dto);
 
     const requestOptions: RequestInit = {
@@ -174,7 +175,7 @@ export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object)
 
 export const postFormData = (auth: AuthContextProps, endpoint: RestEndpoint, data: FormData): Promise<Response> => {
 
-    const url: string = createUrl(endpoint, undefined);
+    const url: RequestInfo = createUrl(endpoint, undefined);
 
     const requestOptions: RequestInit = {
         body: data,
@@ -191,7 +192,7 @@ export const postFormData = (auth: AuthContextProps, endpoint: RestEndpoint, dat
 
 export const putFormData = (auth: AuthContextProps, endpoint: RestEndpoint, data: FormData): Promise<Response> => {
 
-    const url: string = createUrl(endpoint, undefined);
+    const url: RequestInfo = createUrl(endpoint, undefined);
 
     const requestOptions: RequestInit = {
         body: data,
@@ -208,7 +209,7 @@ export const putFormData = (auth: AuthContextProps, endpoint: RestEndpoint, data
 
 export const deleteResource = (auth: AuthContextProps, endpoint: RestEndpoint, uid: string|undefined, queryParameters?: Map<string, number>): Promise<Response> => {
     const path = uid === undefined ? undefined : [uid];
-    const url: string = createUrl(endpoint, path, queryParameters);
+    const url: RequestInfo = createUrl(endpoint, path, queryParameters);
 
     const requestOptions: RequestInit = {
         mode: 'cors',

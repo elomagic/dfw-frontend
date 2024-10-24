@@ -6,6 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import {useTranslation} from "react-i18next";
 
 interface ForgotPasswordProps {
     open: boolean;
@@ -13,6 +14,9 @@ interface ForgotPasswordProps {
 }
 
 export default function ForgotPassword({ open, handleClose }: Readonly<ForgotPasswordProps>) {
+
+    const { t } = useTranslation();
+
     return (
         <Dialog
             open={open}
@@ -49,7 +53,7 @@ export default function ForgotPassword({ open, handleClose }: Readonly<ForgotPas
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={handleClose}>Cancel</Button>
                 <Button variant="contained" type="submit">
-                    Continue
+                    {t("continue")}
                 </Button>
             </DialogActions>
         </Dialog>

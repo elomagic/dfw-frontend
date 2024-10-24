@@ -1,19 +1,10 @@
-import {
-    Box,
-    Button,
-    FormControl,
-    FormLabel,
-    Stack,
-    styled,
-    TextField,
-    Typography
-} from "@mui/material";
+import {useState} from "react";
+import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typography} from "@mui/material";
 import MuiCard from '@mui/material/Card';
 import Link from "@mui/material/Link";
 import ForgotPassword from "./ForgotPassword.tsx";
-import {useState} from "react";
-import * as Rest from "../../RestClient.ts";
-import { setUserSession, useAuth } from "../../Auth.ts";
+import {useAuth} from "../../Auth.ts";
+import {useTranslation} from "react-i18next";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -59,6 +50,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 
 export default function SignInView() {
 
+    const { t } = useTranslation();
     const auth = useAuth();
     const [emailError, setEmailError] = useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
@@ -85,21 +77,7 @@ export default function SignInView() {
             password: data.get('password'),
         });
 
-        const username: string | undefined = data.get('email') as string;
-
-        Rest.postFormData(auth, Rest.RestEndpoint.AuthorizationAuthenticate, data)
-            .then((res) => res.text())
-            .then((token: string) => {
-                setUserSession(
-                    username,
-                    // TODO get roles
-                    [],
-                    token
-                );
-
-                // TODO Redirect
-            });
-
+        auth.signinRedirect(data); // Handle errors
     };
 
     const validateInputs = () => {
@@ -146,7 +124,7 @@ export default function SignInView() {
                     variant="h4"
                     sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
                 >
-                    Sign in
+                    {t("sign-in")}
                 </Typography>
 
                 <Box
@@ -216,7 +194,7 @@ export default function SignInView() {
                         variant="contained"
                         onClick={validateInputs}
                     >
-                        Sign in
+                        {t("sign-in")}
                     </Button>
                 </Box>
             </Card>

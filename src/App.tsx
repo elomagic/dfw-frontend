@@ -102,7 +102,7 @@ function App() {
     };
 
     return (
-        <ThemeProvider theme={darkTheme} defaultMode='system'>
+        <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <BrowserRouter>
                 {!auth.isAuthenticated && <SignInView />}
