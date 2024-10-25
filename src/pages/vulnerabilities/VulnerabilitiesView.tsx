@@ -6,8 +6,8 @@ export default function VulnerabilitiesView() {
     const { t } = useTranslation();
 
     return (
-        <Box>
-            VulnerabilitiesView
+        <Box margin={3}>
+            {t("VulnerabilitiesView")}
         </Box>
     );
 }

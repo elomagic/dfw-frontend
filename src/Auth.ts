@@ -1,4 +1,3 @@
-
 export declare interface AuthContextProps {
     username: string | undefined;
     roles: string[];
@@ -10,6 +9,18 @@ export declare interface AuthContextProps {
     signoutRedirect(): Promise<void>;
 }
 
+export declare interface AuthProviderProps {
+    auth_uri: string;
+}
+
+const _authConfig: AuthProviderProps = {
+    auth_uri: "http://localhost:8080"
+};
+
+export const setAuthConfig = (config: AuthProviderProps): void => {
+    _authConfig.auth_uri = config.auth_uri;
+}
+
 declare interface AuthenticationResponse {
     username: string;
     token: string;
@@ -19,7 +30,7 @@ declare interface AuthenticationResponse {
 const _auth: AuthContextProps = {
     username: "",
     roles: [],
-    isAuthenticated: false,
+    isAuthenticated: true,
     accessToken: "",
 
     removeUser(): Promise<void> {

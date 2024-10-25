@@ -2,8 +2,6 @@ import {AuthContextProps, useAuth} from "./Auth.ts";
 import React from "react";
 import {Navigate, useLocation} from "react-router-dom";
 
-export const SubscriptionsContext: React.Context<string[]> = React.createContext(["BASIC"]);
-
 const hasRole = (auth: AuthContextProps, roles: string[]|string): boolean => {
     if (auth.accessToken === undefined) {
         return false;
@@ -24,11 +22,7 @@ export const ProtectedRoute = ({ children }: Element|any, props: ProtectedProps)
     const location = useLocation();
 
     if (!auth.isAuthenticated || (props.roles !== undefined && !hasRole(auth, props.roles))) {
-        return (
-            <SubscriptionsContext.Consumer>
-                { () => <Navigate to="/home" replace state={{ from: location }} /> }
-            </SubscriptionsContext.Consumer>
-    );
+        return (<Navigate to="/home" replace state={{ from: location }} />);
     }
 
     return children;
