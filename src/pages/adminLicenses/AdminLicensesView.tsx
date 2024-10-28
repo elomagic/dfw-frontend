@@ -7,7 +7,7 @@ export default function AdminLicensesView() {
 
     return (
         <Box margin={3}>
-            AdminLicensesView
+            {t("AdminLicensesView")}
         </Box>
     );
 }

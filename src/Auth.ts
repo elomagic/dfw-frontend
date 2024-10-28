@@ -27,10 +27,14 @@ declare interface AuthenticationResponse {
     roles: string[];
 }
 
+const getAuthBaseUrl = (): string => {
+    return import.meta.env.DEV ? import.meta.env.VITE_AUTH_URL : _authConfig.auth_uri;
+}
+
 const _auth: AuthContextProps = {
     username: "",
     roles: [],
-    isAuthenticated: true,
+    isAuthenticated: false,
     accessToken: "",
 
     removeUser(): Promise<void> {
@@ -43,8 +47,7 @@ const _auth: AuthContextProps = {
     },
 
     signoutRedirect(): Promise<void> {
-        // TODO
-        const url: RequestInfo = "/api/v1/logout";
+        const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/logout`;
 
         const requestOptions: RequestInit = {
             mode: 'cors',
@@ -71,10 +74,9 @@ const _auth: AuthContextProps = {
         return Promise.resolve(undefined);
     },
     signinRedirect(formData: FormData): Promise<AuthContextProps> {
-        _auth.removeUser()
+        _auth.removeUser();
 
-        // TODO
-        const url: RequestInfo = "/api/v1/authenticate";
+        const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/authenticate`;
 
         const requestOptions: RequestInit = {
             body: formData,
