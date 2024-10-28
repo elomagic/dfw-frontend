@@ -7,7 +7,7 @@ export default function AdminVulnerabilitiesView() {
 
     return (
         <Box margin={3}>
-            AdminVulnerabilitiesView
+            {t("AdminVulnerabilitiesView")}
         </Box>
     );
 }
