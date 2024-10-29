@@ -29,7 +29,9 @@ i18n.use(initReactI18next).init({
             translations: englishTrans
         }
     }
-}).then(() => dayjs.locale(language));
+})
+    .then(() => dayjs.locale(language))
+    .catch((reason: any) => console.log(reason));
 
 i18n.languages = ['en', 'de'];
 

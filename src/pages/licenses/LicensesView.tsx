@@ -16,7 +16,8 @@ export default function LicensesView() {
             .then((res) => res.json())
             .then((reps: LicenseViolation[]) => {
                 setRows(reps);
-            });
+            })
+            .catch((reason: any) => console.log(reason));
     }, [auth]);
 
     return (

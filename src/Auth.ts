@@ -105,7 +105,8 @@ const _auth: AuthContextProps = {
                 _auth.accessToken = dto.token;
                 _auth.username = dto.username;
                 _auth.roles = dto.roles;
-            });
+            })
+            .catch((reason: any) => console.log(reason));
 
         return Promise.resolve(_auth);
     }

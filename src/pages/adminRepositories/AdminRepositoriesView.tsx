@@ -35,7 +35,8 @@ export default function AdminRepositoriesView() {
             .then((res) => res.json())
             .then((reps: Repository[]) => {
                 setRows(reps);
-            });
+            })
+            .catch((reason: any) => console.log(reason));
     }, [auth]);
 
     return (
