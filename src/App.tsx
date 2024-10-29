@@ -1,16 +1,39 @@
 import {useState} from 'react'
 import './App.css'
-import {Box, Divider, extendTheme, IconButton, List, styled, ThemeProvider, Toolbar, Typography} from "@mui/material";
+import {
+    Box,
+    CssBaseline,
+    Divider,
+    IconButton,
+    List,
+    styled,
+    ThemeProvider,
+    Toolbar,
+    Typography
+} from "@mui/material";
 import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MuiDrawer from '@mui/material/Drawer';
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import TitleHeader from "./TitleHeader.tsx";
 import LanguageSelector from "./LanguageSelector.tsx";
 import UserSessionButton from "./UserSessionButton.tsx";
 import ThemeModeSelector from './ThemeModeSelector';
 import AppMenuItems from "./AppMenuItems.tsx";
+import {AuthContextProps, useAuth} from "./Auth.ts";
+import DashboardView from "./pages/dashboard/DashboardView.tsx";
+import DSGVOView from "./pages/commons/DSGVOView.tsx";
+import TabBar from "./TabBar.tsx";
+import {ProtectedRoute} from "./aas.tsx";
+import AccountsView from "./pages/accounts/AccountsView.tsx";
+import AdminRepositoriesView from "./pages/adminRepositories/AdminRepositoriesView.tsx";
+import ImprintView from "./pages/commons/ImprintView.tsx";
+import LicensesView from "./pages/licenses/LicensesView.tsx";
+import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
+import AdminLicensesView from "./pages/adminLicenses/AdminLicensesView.tsx";
+import SignInView from "./pages/signin/SignInView.tsx";
+import {createTheme} from "@mui/material/styles";
 
 const drawerWidth: number = 240;
 
@@ -62,13 +85,16 @@ const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})
     }),
 );
 
-const mdTheme = extendTheme({});
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
 
 function App() {
     // const { t } = useTranslation();
     const [open, setOpen] = useState<boolean>("true" !== localStorage.getItem("appbar_closed"));
-    //  TODO
-    const [authenticated] = useState<boolean>(true);
+    const auth: AuthContextProps = useAuth();
 
     const toggleDrawer = () => {
         localStorage.setItem("appbar_closed", open ? "true": "false");
@@ -76,44 +102,46 @@ function App() {
     };
 
     return (
-        <ThemeProvider theme={mdTheme} defaultMode='dark'>
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
             <BrowserRouter>
-                <Box sx={{display: 'flex', height: '100vh',}}>
-                    <AppBar position="absolute" open={open} className='AppBar'>
-                        <Toolbar
-                            className="AppToolbar"
-                            sx={{
-                                pr: '24px', // keep right padding when drawer closed
-                            }}
-                        >
-                            <IconButton
-                                edge="start"
-                                color="inherit"
-                                aria-label="open drawer"
-                                onClick={toggleDrawer}
+                {!auth.isAuthenticated && <SignInView />}
+                {auth.isAuthenticated &&
+                    <Box sx={{display: 'flex', height: '100vh',}}>
+                        <AppBar position="absolute" open={open} className='AppBar'>
+                            <Toolbar
+                                className="AppToolbar"
                                 sx={{
-                                    marginRight: '36px',
-                                    ...(open && {display: 'none'}),
+                                    pr: '24px', // keep right padding when drawer closed
                                 }}
                             >
-                                <MenuIcon/>
-                            </IconButton>
-                            <Typography
-                                component="h1"
-                                variant="h6"
-                                color="inherit"
-                                noWrap
-                                sx={{flexGrow: 1}}
-                            >
-                                <TitleHeader/>
-                            </Typography>
-                            <LanguageSelector />
-                            <ThemeModeSelector />
-                            <UserSessionButton />
-                        </Toolbar>
-                    </AppBar>
+                                <IconButton
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    onClick={toggleDrawer}
+                                    sx={{
+                                        marginRight: '36px',
+                                        ...(open && {display: 'none'}),
+                                    }}
+                                >
+                                    <MenuIcon/>
+                                </IconButton>
+                                <Typography
+                                    component="h1"
+                                    variant="h6"
+                                    color="inherit"
+                                    noWrap
+                                    sx={{flexGrow: 1}}
+                                >
+                                    <TitleHeader/>
+                                </Typography>
+                                <LanguageSelector />
+                                <ThemeModeSelector />
+                                <UserSessionButton />
+                            </Toolbar>
+                        </AppBar>
 
-                    {authenticated &&
                         <Drawer variant="permanent" open={open} className='Drawer'>
                             <Toolbar
                                 sx={{
@@ -132,8 +160,32 @@ function App() {
                                 <AppMenuItems/>
                             </List>
                         </Drawer>
-                    }
-                </Box>
+
+                        <Box
+                            component="main"
+                            overflow={'auto'}
+                            flexGrow={1}
+                        >
+                            {/* Toolbar is placeholder, otherwise the Container element will be covered by the header. */}
+                            <Toolbar />
+                            <Routes>
+                                <Route path='licenses' element={<ProtectedRoute><LicensesView /></ProtectedRoute>}/>
+                                <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                                <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
+                                <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                                <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
+                                <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                                <Route path='my-account' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                                <Route path='dsgvo' element={<DSGVOView />}/>
+                                <Route path='imprint' element={<ImprintView />}/>
+                                {/* Default/Fallback routes */}
+                                <Route index element={<DashboardView />}/>
+                                <Route path='*' element={<DashboardView />}/>
+                            </Routes>
+                            <TabBar />
+                        </Box>
+                    </Box>
+                }
             </BrowserRouter>
         </ThemeProvider>
     )

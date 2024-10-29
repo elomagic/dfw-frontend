@@ -27,3 +27,4 @@ dist-zip
 # elo
 *.tsbuildinfo
 /src/assets/license-report.json
+/.env.development.local

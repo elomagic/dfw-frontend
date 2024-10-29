@@ -1,21 +1,11 @@
-import React from "react";
 import {Contrast} from "@mui/icons-material";
 import {useColorScheme} from "@mui/material/styles";
 import {Button} from "@mui/material";
 
 export default function ModeSwitcher() {
+
+    // TODO Doesn't work > https://mui.com/material-ui/customization/dark-mode/#toggling-color-mode
     const { mode, setMode } = useColorScheme();
-    const [mounted, setMounted] = React.useState(false);
-
-    React.useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted) {
-        // for server-side rendering
-        // learn more at https://github.com/pacocoursey/next-themes#avoid-hydration-mismatch
-        return null;
-    }
 
     return (
         <div>
@@ -27,10 +17,11 @@ export default function ModeSwitcher() {
                     minWidth: "32px",
                     fontSize: "1.2rem"
                 }}
-                onClick={() => setMode(mode === 'light' ? 'dark':'light')}
+                onClick={() => setMode(mode === 'dark' ? 'light' : 'dark')}
             >
                 <Contrast/>
             </Button>
         </div>
     );
+
 };
