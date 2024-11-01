@@ -13,11 +13,10 @@ export declare interface Repository {
 
 export declare interface UserAccount {
     id?: string;
-    username: string;
+    mailAddress: string;
     enabled: boolean;
     changePassword: boolean;
     lastPasswordChange?: string;
-    mailAddress: string;
 }
 
 export declare interface UserAccountGroup {
