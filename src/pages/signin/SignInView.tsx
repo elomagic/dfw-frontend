@@ -73,7 +73,7 @@ export default function SignInView() {
         }
         const data = new FormData(event.currentTarget);
         console.log({
-            email: data.get('email'),
+            mailAddress: data.get('email'),
             password: data.get('password'),
         });
 
