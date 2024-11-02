@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typography} from "@mui/material";
+import { useNavigate } from "react-router-dom"
 import MuiCard from '@mui/material/Card';
 import Link from "@mui/material/Link";
 import ForgotPassword from "./ForgotPassword.tsx";
@@ -51,6 +52,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 export default function SignInView() {
 
     const { t } = useTranslation();
+    const navigate = useNavigate()
     const auth = useAuth();
     const [emailError, setEmailError] = useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
@@ -67,29 +69,27 @@ export default function SignInView() {
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
         if (emailError || passwordError) {
-            event.preventDefault();
             return;
         }
-        const data = new FormData(event.currentTarget);
-        console.log({
-            mailAddress: data.get('email'),
-            password: data.get('password'),
-        });
 
-        auth.signinRedirect(data); // Handle errors
+        const data = new FormData(event.currentTarget);
+
+        auth.signinRedirect(data)
+            .then(() => navigate("/"))
+            .catch((reason) => console.error(reason));
+
     };
 
     const validateInputs = () => {
-        const email = document.getElementById('email') as HTMLInputElement;
+        const email = document.getElementById('mailAddress') as HTMLInputElement;
         const password = document.getElementById('password') as HTMLInputElement;
-
-        let isValid = true;
 
         if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
             setEmailError(true);
             setEmailErrorMessage('Please enter a valid email address.');
-            isValid = false;
         } else {
             setEmailError(false);
             setEmailErrorMessage('');
@@ -98,13 +98,10 @@ export default function SignInView() {
         if (!password.value || password.value.length < 6) {
             setPasswordError(true);
             setPasswordErrorMessage('Password must be at least 6 characters long.');
-            isValid = false;
         } else {
             setPasswordError(false);
             setPasswordErrorMessage('');
         }
-
-        return isValid;
     };
 
     return (
@@ -139,13 +136,13 @@ export default function SignInView() {
                     }}
                 >
                     <FormControl>
-                        <FormLabel htmlFor="email">Email</FormLabel>
+                        <FormLabel htmlFor="mailAddress">Email</FormLabel>
                         <TextField
                             error={emailError}
                             helperText={emailErrorMessage}
-                            id="email"
+                            id="mailAddress"
                             type="email"
-                            name="email"
+                            name="mailAddress"
                             placeholder="your@email.com"
                             autoComplete="email"
                             autoFocus
@@ -153,7 +150,7 @@ export default function SignInView() {
                             fullWidth
                             variant="outlined"
                             color={emailError ? 'error' : 'primary'}
-                            sx={{ ariaLabel: 'email' }}
+                            sx={{ ariaLabel: 'mailAddress' }}
                         />
                     </FormControl>
 
