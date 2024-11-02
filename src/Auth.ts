@@ -74,7 +74,7 @@ const _auth: AuthContextProps = {
         return Promise.resolve(undefined);
     },
     signinRedirect(formData: FormData): Promise<AuthContextProps> {
-        _auth.removeUser().catch((reason) => console.error(reason));;
+        _auth.removeUser().catch((reason) => console.error(reason));
 
         const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/authenticate`;
 
@@ -105,6 +105,9 @@ const _auth: AuthContextProps = {
                 _auth.accessToken = dto.token;
                 _auth.mailAddress = dto.mailAddress;
                 _auth.roles = dto.roles;
+                _auth.isAuthenticated = true;
+
+                return Promise.resolve(_auth);
             })
             .catch((reason) => console.error(reason));
 
