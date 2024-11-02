@@ -1,5 +1,5 @@
 export declare interface AuthContextProps {
-    username: string | undefined;
+    mailAddress: string | undefined;
     roles: string[];
     isAuthenticated: boolean;
     accessToken: string | undefined;
@@ -22,7 +22,7 @@ export const setAuthConfig = (config: AuthProviderProps): void => {
 }
 
 declare interface AuthenticationResponse {
-    username: string;
+    mailAddress: string;
     token: string;
     roles: string[];
 }
@@ -32,13 +32,13 @@ const getAuthBaseUrl = (): string => {
 }
 
 const _auth: AuthContextProps = {
-    username: "",
+    mailAddress: "",
     roles: [],
     isAuthenticated: false,
     accessToken: "",
 
     removeUser(): Promise<void> {
-        this.username = undefined;
+        this.mailAddress = undefined;
         this.roles = [];
         this.isAuthenticated = false;
         this.accessToken = undefined
@@ -74,7 +74,7 @@ const _auth: AuthContextProps = {
         return Promise.resolve(undefined);
     },
     signinRedirect(formData: FormData): Promise<AuthContextProps> {
-        _auth.removeUser();
+        _auth.removeUser().catch((reason) => console.error(reason));;
 
         const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/authenticate`;
 
@@ -83,7 +83,7 @@ const _auth: AuthContextProps = {
             mode: 'cors',
             method: 'POST',
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
+                // Content-Type will be set during FormData
                 "Accept": "application/json",
             },
         };
@@ -103,10 +103,10 @@ const _auth: AuthContextProps = {
             .then((res: Response) => res.json())
             .then((dto: AuthenticationResponse) => {
                 _auth.accessToken = dto.token;
-                _auth.username = dto.username;
+                _auth.mailAddress = dto.mailAddress;
                 _auth.roles = dto.roles;
             })
-            .catch((reason: any) => console.log(reason));
+            .catch((reason) => console.error(reason));
 
         return Promise.resolve(_auth);
     }
