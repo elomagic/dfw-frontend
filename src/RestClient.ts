@@ -1,12 +1,6 @@
 import {AuthContextProps} from "./Auth.ts";
 
-export const PRODUCTION: boolean = window.location.host.includes('dfw.elomagic.de');
-const PUBLIC_BASE_URL: string = PRODUCTION
-    ? "https://dfw.elomagic.de"
-    : "https://localhost:8080";
-export const REDIRECT_BASE: string = process.env.REACT_APP_REDIRECT_BASE_URI ?? PUBLIC_BASE_URL;
-
-const BASE_REST_URL: string = PUBLIC_BASE_URL + "/rest"
+const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_URL : window.location.host;
 
 export enum RestEndpoint {
 
