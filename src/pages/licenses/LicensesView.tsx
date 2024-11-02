@@ -1,5 +1,5 @@
 import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {AuthContextProps, useAuth} from "../../Auth.ts";
+import {useAuth} from "../../Auth.ts";
 import {useEffect, useState} from "react";
 import {LicenseViolation} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
@@ -8,7 +8,7 @@ import {useTranslation} from "react-i18next";
 export default function LicensesView() {
 
     const { t } = useTranslation();
-    const auth: AuthContextProps = useAuth();
+    const [auth] = useAuth();
     const [ rows, setRows ] = useState<LicenseViolation[]>([]);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export default function LicensesView() {
             .then((reps: LicenseViolation[]) => {
                 setRows(reps);
             })
-            .catch((reason: any) => console.log(reason));
+            .catch((reason) => console.log(reason));
     }, [auth]);
 
     return (

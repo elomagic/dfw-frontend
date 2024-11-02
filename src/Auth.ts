@@ -1,12 +1,14 @@
+import {useState} from "react";
+
 export declare interface AuthContextProps {
     mailAddress: string | undefined;
     roles: string[];
     isAuthenticated: boolean;
     accessToken: string | undefined;
 
-    removeUser(): Promise<void>;
+    removeUser(): Promise<AuthContextProps>;
     signinRedirect(formData: FormData): Promise<AuthContextProps>;
-    signoutRedirect(): Promise<void>;
+    signoutRedirect(): Promise<Response>;
 }
 
 export declare interface AuthProviderProps {
@@ -31,90 +33,93 @@ const getAuthBaseUrl = (): string => {
     return import.meta.env.DEV ? import.meta.env.VITE_AUTH_URL : _authConfig.auth_uri;
 }
 
-const _auth: AuthContextProps = {
-    mailAddress: "",
-    roles: [],
-    isAuthenticated: false,
-    accessToken: "",
+export const useAuth= () => {
 
-    removeUser(): Promise<void> {
-        this.mailAddress = undefined;
-        this.roles = [];
-        this.isAuthenticated = false;
-        this.accessToken = undefined
+    const [auth, setAuth] = useState<AuthContextProps>({
+        mailAddress: undefined,
+        roles: [],
+        isAuthenticated: false,
+        accessToken: undefined,
 
-        return Promise.resolve(undefined);
-    },
+        removeUser(): Promise<AuthContextProps> {
+            auth.mailAddress = undefined;
+            auth.roles = [];
+            auth.isAuthenticated = false;
+            auth.accessToken = undefined;
 
-    signoutRedirect(): Promise<void> {
-        const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/logout`;
+            setAuth(this);
 
-        const requestOptions: RequestInit = {
-            mode: 'cors',
-            method: 'GET',
-            headers: {
-                "Accept": "*/*",
-            },
-        };
+            return Promise.resolve(auth);
+        },
 
-        const request = new Request(
-            url,
-            requestOptions);
+        async signoutRedirect(): Promise<Response> {
+            const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/logout`;
 
-        fetch(request)
-            .then((res: Response) => {
-                if (res.status >= 400) {
-                    return Promise.reject(new Error(res.statusText));
-                }
+            const requestOptions: RequestInit = {
+                mode: 'cors',
+                method: 'GET',
+                headers: {
+                    "Accept": "*/*",
+                },
+            };
 
-                return Promise.resolve(res);
-            })
-            .finally(() => _auth.removeUser());
+            const request = new Request(
+                url,
+                requestOptions);
 
-        return Promise.resolve(undefined);
-    },
-    signinRedirect(formData: FormData): Promise<AuthContextProps> {
-        _auth.removeUser().catch((reason) => console.error(reason));
+            return fetch(request)
+                .then((res: Response) => {
+                    if (res.status >= 400) {
+                        return Promise.reject(new Error(res.statusText));
+                    }
 
-        const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/authenticate`;
+                    return Promise.resolve(res);
+                })
+                .finally(() => auth.removeUser());
+        },
 
-        const requestOptions: RequestInit = {
-            body: formData,
-            mode: 'cors',
-            method: 'POST',
-            headers: {
-                // Content-Type will be set during FormData
-                "Accept": "application/json",
-            },
-        };
+        async signinRedirect(formData: FormData): Promise<AuthContextProps> {
+            auth.removeUser().catch((reason) => console.error(reason));
 
-        const request = new Request(
-            url,
-            requestOptions);
+            const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/authenticate`;
 
-        fetch(request)
-            .then((res: Response) => {
-                if (res.status >= 400) {
-                    return Promise.reject(new Error(res.statusText));
-                }
+            const requestOptions: RequestInit = {
+                body: formData,
+                mode: 'cors',
+                method: 'POST',
+                headers: {
+                    // Content-Type will be set during FormData
+                    "Accept": "application/json",
+                },
+            };
 
-                return Promise.resolve(res);
-            })
-            .then((res: Response) => res.json())
-            .then((dto: AuthenticationResponse) => {
-                _auth.accessToken = dto.token;
-                _auth.mailAddress = dto.mailAddress;
-                _auth.roles = dto.roles;
-                _auth.isAuthenticated = true;
+            const request = new Request(
+                url,
+                requestOptions);
 
-                return Promise.resolve(_auth);
-            })
-            .catch((reason) => console.error(reason));
+            return fetch(request)
+                .then((res: Response) => {
+                    if (res.status >= 400) {
+                        return Promise.reject(new Error(res.statusText));
+                    }
 
-        return Promise.resolve(_auth);
-    }
-}
+                    return Promise.resolve(res);
+                })
+                .then((res: Response) => res.json())
+                .then((dto: AuthenticationResponse) => {
+                    auth.mailAddress = dto.mailAddress;
+                    auth.roles = dto.roles;
+                    auth.isAuthenticated = true;
+                    auth.accessToken = dto.token;
 
-export const useAuth = (): AuthContextProps => {
-    return _auth;
-}
+                    setAuth(this);
+
+                    return Promise.resolve(auth);
+                });
+        }
+    });
+
+    return [auth];
+};
+
+export { }

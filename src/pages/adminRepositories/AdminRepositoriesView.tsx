@@ -1,7 +1,7 @@
 import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts"
-import {AuthContextProps, useAuth} from "../../Auth.ts";
+import {useAuth} from "../../Auth.ts";
 import {Repository} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 
@@ -27,7 +27,7 @@ const rows: Repository[]= [
 export default function AdminRepositoriesView() {
 
     const { t } = useTranslation();
-    const auth: AuthContextProps = useAuth();
+    const [auth] = useAuth();
     const [ rows, setRows ] = useState<Repository[]>([]);
 
     useEffect(() => {
@@ -36,7 +36,7 @@ export default function AdminRepositoriesView() {
             .then((reps: Repository[]) => {
                 setRows(reps);
             })
-            .catch((reason: any) => console.log(reason));
+            .catch((reason) => console.log(reason));
     }, [auth]);
 
     return (

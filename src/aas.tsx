@@ -1,4 +1,4 @@
-import {AuthContextProps, useAuth} from "./Auth.ts";
+import {useAuth, AuthContextProps} from "./Auth.ts";
 import React from "react";
 import {Navigate, useLocation} from "react-router-dom";
 
@@ -18,7 +18,7 @@ interface ProtectedProps {
 }
 
 export const ProtectedRoute = ({ children }: Element|any, props: ProtectedProps) => {
-    const auth = useAuth();
+    const [auth] = useAuth();
     const location = useLocation();
 
     if (!auth.isAuthenticated || (props.roles !== undefined && !hasRole(auth, props.roles))) {

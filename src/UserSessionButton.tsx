@@ -11,7 +11,7 @@ export default function UserSessionButton() {
     const { t } = useTranslation();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const menuOpen = Boolean(anchorEl);
-    const auth = useAuth();
+    const [auth] = useAuth();
 
     const handleOpenMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -23,7 +23,7 @@ export default function UserSessionButton() {
     const handleLogoutClick = () => {
         setAnchorEl(null);
         auth.signoutRedirect()
-            .catch((e: any) => console.log(e.message));
+            .catch((e) => console.log(e.message));
     }
 
     return (
@@ -40,7 +40,7 @@ export default function UserSessionButton() {
                 endIcon={<AccountCircle />}
                 onClick={handleOpenMenuClick}
             >
-                {auth.username}
+                {auth.mailAddress}
             </Button>
             <Menu
                 id="basic-menu"

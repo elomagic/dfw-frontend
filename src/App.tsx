@@ -21,7 +21,7 @@ import LanguageSelector from "./LanguageSelector.tsx";
 import UserSessionButton from "./UserSessionButton.tsx";
 import ThemeModeSelector from './ThemeModeSelector';
 import AppMenuItems from "./AppMenuItems.tsx";
-import {AuthContextProps, useAuth} from "./Auth.ts";
+import {useAuth} from "./Auth.ts";
 import DashboardView from "./pages/dashboard/DashboardView.tsx";
 import DSGVOView from "./pages/commons/DSGVOView.tsx";
 import TabBar from "./TabBar.tsx";
@@ -94,7 +94,7 @@ const darkTheme = createTheme({
 function App() {
     // const { t } = useTranslation();
     const [open, setOpen] = useState<boolean>("true" !== localStorage.getItem("appbar_closed"));
-    const auth: AuthContextProps = useAuth();
+    const [auth] = useAuth();
 
     const toggleDrawer = () => {
         localStorage.setItem("appbar_closed", open ? "true": "false");
