@@ -33,91 +33,102 @@ const getAuthBaseUrl = (): string => {
     return import.meta.env.DEV ? import.meta.env.VITE_AUTH_URL : _authConfig.auth_uri;
 }
 
+let _auth: AuthContextProps | undefined = undefined;
+
 export const useAuth= () => {
 
-    const [auth, setAuth] = useState<AuthContextProps>({
-        mailAddress: undefined,
-        roles: [],
-        isAuthenticated: false,
-        accessToken: undefined,
+    if (_auth === undefined) {
+        _auth = {
+            mailAddress: undefined,
+            roles: [],
+            isAuthenticated: false,
+            accessToken: undefined,
 
-        removeUser(): Promise<AuthContextProps> {
-            auth.mailAddress = undefined;
-            auth.roles = [];
-            auth.isAuthenticated = false;
-            auth.accessToken = undefined;
+            removeUser(): Promise<AuthContextProps> {
+                this.mailAddress = undefined;
+                this.roles = [];
+                this.isAuthenticated = false;
+                this.accessToken = undefined;
 
-            setAuth(this);
+                const _auth = Object.assign({}, this);
 
-            return Promise.resolve(auth);
-        },
+                setAuth(_auth);
 
-        async signoutRedirect(): Promise<Response> {
-            const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/logout`;
+                return Promise.resolve(_auth);
+            },
 
-            const requestOptions: RequestInit = {
-                mode: 'cors',
-                method: 'GET',
-                headers: {
-                    "Accept": "*/*",
-                },
-            };
+            async signoutRedirect(): Promise<Response> {
+                const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/logout`;
 
-            const request = new Request(
-                url,
-                requestOptions);
+                const requestOptions: RequestInit = {
+                    mode: 'cors',
+                    method: 'GET',
+                    headers: {
+                        "Accept": "*/*",
+                    },
+                };
 
-            return fetch(request)
-                .then((res: Response) => {
-                    if (res.status >= 400) {
-                        return Promise.reject(new Error(res.statusText));
-                    }
+                const request = new Request(
+                    url,
+                    requestOptions);
 
-                    return Promise.resolve(res);
-                })
-                .finally(() => auth.removeUser());
-        },
+                return fetch(request)
+                    .then((res: Response) => {
+                        if (res.status >= 400) {
+                            return Promise.reject(new Error(res.statusText));
+                        }
 
-        async signinRedirect(formData: FormData): Promise<AuthContextProps> {
-            auth.removeUser().catch((reason) => console.error(reason));
+                        return Promise.resolve(res);
+                    })
+                    .finally(() => this.removeUser());
+            },
 
-            const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/authenticate`;
+            async signinRedirect(formData: FormData): Promise<AuthContextProps> {
+                this.removeUser().catch((reason) => console.error(reason));
 
-            const requestOptions: RequestInit = {
-                body: formData,
-                mode: 'cors',
-                method: 'POST',
-                headers: {
-                    // Content-Type will be set during FormData
-                    "Accept": "application/json",
-                },
-            };
+                const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/authenticate`;
 
-            const request = new Request(
-                url,
-                requestOptions);
+                const requestOptions: RequestInit = {
+                    body: formData,
+                    mode: 'cors',
+                    method: 'POST',
+                    headers: {
+                        // Content-Type will be set during FormData
+                        "Accept": "application/json",
+                    },
+                };
 
-            return fetch(request)
-                .then((res: Response) => {
-                    if (res.status >= 400) {
-                        return Promise.reject(new Error(res.statusText));
-                    }
+                const request = new Request(
+                    url,
+                    requestOptions);
 
-                    return Promise.resolve(res);
-                })
-                .then((res: Response) => res.json())
-                .then((dto: AuthenticationResponse) => {
-                    auth.mailAddress = dto.mailAddress;
-                    auth.roles = dto.roles;
-                    auth.isAuthenticated = true;
-                    auth.accessToken = dto.token;
+                return fetch(request)
+                    .then((res: Response) => {
+                        if (res.status >= 400) {
+                            return Promise.reject(new Error(res.statusText));
+                        }
 
-                    setAuth(this);
+                        return Promise.resolve(res);
+                    })
+                    .then((res: Response) => res.json())
+                    .then((dto: AuthenticationResponse) => {
+                        this.mailAddress = dto.mailAddress;
+                        this.roles = dto.roles;
+                        this.isAuthenticated = true;
+                        this.accessToken = dto.token;
 
-                    return Promise.resolve(auth);
-                });
-        }
-    });
+                        const _auth = Object.assign({}, this);
+
+                        setAuth(_auth);
+
+                        return Promise.resolve(_auth);
+                    });
+            }
+        };
+    }
+
+
+    const [auth, setAuth] = useState<AuthContextProps>(_auth);
 
     return [auth];
 };
