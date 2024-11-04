@@ -21,11 +21,10 @@ import LanguageSelector from "./LanguageSelector.tsx";
 import UserSessionButton from "./UserSessionButton.tsx";
 import ThemeModeSelector from './ThemeModeSelector';
 import AppMenuItems from "./AppMenuItems.tsx";
-import {AuthContextProps, AuthProvider} from "./Auth.tsx";
+import {AuthContextProps} from "./auth/Auth.tsx";
 import DashboardView from "./pages/dashboard/DashboardView.tsx";
 import DSGVOView from "./pages/commons/DSGVOView.tsx";
-import TabBar from "./TabBar.tsx";
-import {ProtectedRoute} from "./aas.tsx";
+import {ProtectedRoute} from "./auth/ProtectedRoute.tsx";
 import AccountsView from "./pages/accounts/AccountsView.tsx";
 import AdminRepositoriesView from "./pages/adminRepositories/AdminRepositoriesView.tsx";
 import ImprintView from "./pages/commons/ImprintView.tsx";
@@ -104,92 +103,89 @@ function App() {
 
     return (
         <ThemeProvider theme={darkTheme}>
-            <AuthProvider>
-                <CssBaseline />
-                <BrowserRouter>
-                    {!auth.isAuthenticated && <SignInView />}
-                    {auth.isAuthenticated &&
-                        <Box sx={{display: 'flex', height: '100vh',}}>
-                            <AppBar position="absolute" open={open} className='AppBar'>
-                                <Toolbar
-                                    className="AppToolbar"
-                                    sx={{
-                                        pr: '24px', // keep right padding when drawer closed
-                                    }}
-                                >
-                                    <IconButton
-                                        edge="start"
-                                        color="inherit"
-                                        aria-label="open drawer"
-                                        onClick={toggleDrawer}
-                                        sx={{
-                                            marginRight: '36px',
-                                            ...(open && {display: 'none'}),
-                                        }}
-                                    >
-                                        <MenuIcon/>
-                                    </IconButton>
-                                    <Typography
-                                        component="h1"
-                                        variant="h6"
-                                        color="inherit"
-                                        noWrap
-                                        sx={{flexGrow: 1}}
-                                    >
-                                        <TitleHeader/>
-                                    </Typography>
-                                    <LanguageSelector />
-                                    <ThemeModeSelector />
-                                    <UserSessionButton />
-                                </Toolbar>
-                            </AppBar>
-
-                            <Drawer variant="permanent" open={open} className='Drawer'>
-                                <Toolbar
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'flex-end',
-                                        px: [1],
-                                    }}
-                                >
-                                    <IconButton onClick={toggleDrawer}>
-                                        <ChevronLeftIcon/>
-                                    </IconButton>
-                                </Toolbar>
-                                <Divider/>
-                                <List component="nav">
-                                    <AppMenuItems/>
-                                </List>
-                            </Drawer>
-
-                            <Box
-                                component="main"
-                                overflow={'auto'}
-                                flexGrow={1}
+            <CssBaseline />
+            <BrowserRouter>
+                {!auth.isAuthenticated && <SignInView />}
+                {auth.isAuthenticated &&
+                    <Box sx={{display: 'flex', height: '100vh',}}>
+                        <AppBar position="absolute" open={open} className='AppBar'>
+                            <Toolbar
+                                className="AppToolbar"
+                                sx={{
+                                    pr: '24px', // keep right padding when drawer closed
+                                }}
                             >
-                                {/* Toolbar is placeholder, otherwise the Container element will be covered by the header. */}
-                                <Toolbar />
-                                <Routes>
-                                    <Route path='licenses' element={<ProtectedRoute><LicensesView /></ProtectedRoute>}/>
-                                    <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
-                                    <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
-                                    <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
-                                    <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
-                                    <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
-                                    <Route path='my-account' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
-                                    <Route path='dsgvo' element={<DSGVOView />}/>
-                                    <Route path='imprint' element={<ImprintView />}/>
-                                    {/* Default/Fallback routes */}
-                                    <Route index element={<DashboardView />}/>
-                                    <Route path='*' element={<DashboardView />}/>
-                                </Routes>
-                                <TabBar />
-                            </Box>
+                                <IconButton
+                                    edge="start"
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    onClick={toggleDrawer}
+                                    sx={{
+                                        marginRight: '36px',
+                                        ...(open && {display: 'none'}),
+                                    }}
+                                >
+                                    <MenuIcon/>
+                                </IconButton>
+                                <Typography
+                                    component="h1"
+                                    variant="h6"
+                                    color="inherit"
+                                    noWrap
+                                    sx={{flexGrow: 1}}
+                                >
+                                    <TitleHeader/>
+                                </Typography>
+                                <LanguageSelector />
+                                <ThemeModeSelector />
+                                <UserSessionButton />
+                            </Toolbar>
+                        </AppBar>
+
+                        <Drawer variant="permanent" open={open} className='Drawer'>
+                            <Toolbar
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-end',
+                                    px: [1],
+                                }}
+                            >
+                                <IconButton onClick={toggleDrawer}>
+                                    <ChevronLeftIcon/>
+                                </IconButton>
+                            </Toolbar>
+                            <Divider/>
+                            <List component="nav">
+                                <AppMenuItems/>
+                            </List>
+                        </Drawer>
+
+                        <Box
+                            component="main"
+                            overflow={'auto'}
+                            flexGrow={1}
+                        >
+                            {/* Toolbar is placeholder, otherwise the Container element will be covered by the header. */}
+                            <Toolbar />
+                            <Routes>
+                                <Route path='licenses' element={<ProtectedRoute><LicensesView /></ProtectedRoute>}/>
+                                <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                                <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
+                                <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                                <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
+                                <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                                <Route path='my-account' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                                <Route path='dsgvo' element={<DSGVOView />}/>
+                                <Route path='imprint' element={<ImprintView />}/>
+                                {/* Default/Fallback routes */}
+                                <Route index element={<DashboardView />}/>
+                                <Route path='*' element={<DashboardView />}/>
+                            </Routes>
                         </Box>
-                    }
-                </BrowserRouter>
-            </AuthProvider>
+                    </Box>
+                }
+            </BrowserRouter>
         </ThemeProvider>
     )
 }

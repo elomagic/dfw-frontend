@@ -1,4 +1,4 @@
-import {AuthContext, AuthContextProps} from "../Auth.tsx";
+import {AuthContext, AuthContextProps} from "./Auth.tsx";
 import {useContext} from "react";
 
 export const useAuth = (): AuthContextProps => {

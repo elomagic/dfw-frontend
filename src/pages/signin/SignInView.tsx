@@ -78,10 +78,6 @@ export default function SignInView() {
         const data = new FormData(event.currentTarget);
 
         auth.signinRedirect(data)
-            .then((a) => {
-                console.log("Authenticated: " + a.isAuthenticated);
-                // navigate("/");
-            })
             .catch((reason) => console.error(reason));
 
     };

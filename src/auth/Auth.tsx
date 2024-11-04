@@ -1,4 +1,4 @@
-import {createContext, useState} from "react";
+import {createContext, ReactNode, useState} from "react";
 
 export interface AuthContextProps {
     mailAddress: string | undefined;
@@ -15,15 +15,7 @@ export const AuthContext = createContext<AuthContextProps | undefined>(undefined
 AuthContext.displayName = "AuthContext";
 
 export declare interface AuthProviderProps {
-    auth_uri: string;
-}
-
-const _authConfig: AuthProviderProps = {
-    auth_uri: "http://localhost:8080"
-};
-
-export const setAuthConfig = (config: AuthProviderProps): void => {
-    _authConfig.auth_uri = config.auth_uri;
+    children?: ReactNode;
 }
 
 declare interface AuthenticationResponse {
@@ -32,11 +24,11 @@ declare interface AuthenticationResponse {
     roles: string[];
 }
 
-const getAuthBaseUrl = (): string => {
-    return import.meta.env.DEV ? import.meta.env.VITE_AUTH_URL : _authConfig.auth_uri;
-}
+export const AuthProvider = (authProvider: AuthProviderProps): JSX.Element => {
 
-export const AuthProvider = ({ children }): JSX.Element => {
+    const getAuthBaseUrl = (): string => {
+        return import.meta.env.DEV ? import.meta.env.VITE_AUTH_URL : window.location.host;
+    }
 
     const _auth: AuthContextProps = {
         mailAddress: undefined,
@@ -45,12 +37,12 @@ export const AuthProvider = ({ children }): JSX.Element => {
         accessToken: undefined,
 
         removeUser(): Promise<AuthContextProps> {
-            this.mailAddress = undefined;
+            auth.mailAddress = undefined;
             auth.roles = [];
             auth.isAuthenticated = false;
             auth.accessToken = undefined;
 
-            const _auth = Object.assign({}, this);
+            const _auth = {...this};
 
             setAuth(_auth);
 
@@ -64,6 +56,7 @@ export const AuthProvider = ({ children }): JSX.Element => {
                 mode: 'cors',
                 method: 'GET',
                 headers: {
+                    "Authorization": `Bearer ${auth?.accessToken}`,
                     "Accept": "*/*",
                 },
             };
@@ -80,11 +73,13 @@ export const AuthProvider = ({ children }): JSX.Element => {
 
                     return Promise.resolve(res);
                 })
-                .finally(() => this.removeUser());
+                .finally(() => auth.removeUser());
         },
 
         async signinRedirect(formData: FormData): Promise<AuthContextProps> {
-            this.removeUser().catch((reason) => console.error(reason));
+            if (auth.isAuthenticated) {
+                auth.removeUser().catch((reason) => console.error(reason));
+            }
 
             const url: RequestInfo = `${getAuthBaseUrl()}/api/v1/authenticate`;
 
@@ -112,12 +107,12 @@ export const AuthProvider = ({ children }): JSX.Element => {
                 })
                 .then((res: Response) => res.json())
                 .then((dto: AuthenticationResponse) => {
-                    this.mailAddress = dto.mailAddress;
-                    this.roles = dto.roles;
-                    this.isAuthenticated = true;
-                    this.accessToken = dto.token;
+                    auth.mailAddress = dto.mailAddress;
+                    auth.roles = dto.roles;
+                    auth.isAuthenticated = true;
+                    auth.accessToken = dto.token;
 
-                    const _auth = Object.assign({}, this);
+                    const _auth = {...this};
 
                     setAuth(_auth);
 
@@ -130,7 +125,7 @@ export const AuthProvider = ({ children }): JSX.Element => {
 
     return (
         <AuthContext.Provider value={auth}>
-            {children}
+            {authProvider.children}
         </AuthContext.Provider>
     );
 }
