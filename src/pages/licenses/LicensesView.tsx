@@ -1,14 +1,14 @@
 import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import {useAuth} from "../../Auth.ts";
 import {useEffect, useState} from "react";
 import {LicenseViolation} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
 import {useTranslation} from "react-i18next";
+import {useAuth} from "../../auth/useAuth.ts";
 
 export default function LicensesView() {
 
     const { t } = useTranslation();
-    const [auth] = useAuth();
+    const auth = useAuth();
     const [ rows, setRows ] = useState<LicenseViolation[]>([]);
 
     useEffect(() => {

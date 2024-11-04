@@ -1,9 +1,9 @@
 import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts"
-import {useAuth} from "../../Auth.ts";
 import {Repository} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
+import {useAuth} from "../../auth/useAuth.ts";
 
 /*
 function createData(
@@ -27,7 +27,7 @@ const rows: Repository[]= [
 export default function AdminRepositoriesView() {
 
     const { t } = useTranslation();
-    const [auth] = useAuth();
+    const auth = useAuth();
     const [ rows, setRows ] = useState<Repository[]>([]);
 
     useEffect(() => {

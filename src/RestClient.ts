@@ -1,4 +1,4 @@
-import {AuthContextProps} from "./Auth.ts";
+import {AuthContextProps} from "./Auth.tsx";
 
 const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_URL : window.location.host;
 

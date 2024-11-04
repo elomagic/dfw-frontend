@@ -5,7 +5,7 @@ import MuiCard from '@mui/material/Card';
 import Link from "@mui/material/Link";
 import ForgotPassword from "./ForgotPassword.tsx";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../Auth.ts";
+import {useAuth} from "../../auth/useAuth.ts";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -53,7 +53,7 @@ export default function SignInView() {
 
     const { t } = useTranslation();
     // const navigate = useNavigate()
-    const [auth] = useAuth();
+    const auth = useAuth();
     const [emailError, setEmailError] = useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);

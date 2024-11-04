@@ -5,13 +5,13 @@ import { Link as RouterLink } from "react-router-dom";
 import {Button, Menu, MenuItem,} from "@mui/material";
 import {AccountCircle, Logout} from "@mui/icons-material";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import {useAuth} from "./Auth.ts";
+import {useAuth} from "./auth/useAuth.ts";
 
 export default function UserSessionButton() {
     const { t } = useTranslation();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const menuOpen = Boolean(anchorEl);
-    const [auth] = useAuth();
+    const auth = useAuth();
 
     const handleOpenMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
