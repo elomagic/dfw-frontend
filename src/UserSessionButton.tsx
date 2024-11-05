@@ -40,7 +40,7 @@ export default function UserSessionButton() {
                 endIcon={<AccountCircle />}
                 onClick={handleOpenMenuClick}
             >
-                {auth.username}
+                {auth.mailAddress}
             </Button>
             <Menu
                 id="basic-menu"
