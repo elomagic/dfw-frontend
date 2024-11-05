@@ -34,6 +34,8 @@ import AdminLicensesView from "./pages/adminLicenses/AdminLicensesView.tsx";
 import SignInView from "./pages/signin/SignInView.tsx";
 import {createTheme} from "@mui/material/styles";
 import {useAuth} from "./auth/useAuth.ts";
+import AboutView from "./pages/commons/AboutView.tsx";
+import MyAccountView from "./pages/myAccount/MyAccountView.tsx";
 
 const drawerWidth: number = 240;
 
@@ -175,7 +177,8 @@ function App() {
                                 <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
                                 <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
                                 <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
-                                <Route path='my-account' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                                <Route path='my-account' element={<ProtectedRoute><MyAccountView /></ProtectedRoute>}/>
+                                <Route path='about' element={<AboutView />}/>
                                 <Route path='dsgvo' element={<DSGVOView />}/>
                                 <Route path='imprint' element={<ImprintView />}/>
                                 {/* Default/Fallback routes */}

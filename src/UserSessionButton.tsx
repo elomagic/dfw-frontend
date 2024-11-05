@@ -51,7 +51,7 @@ export default function UserSessionButton() {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem component={RouterLink} onClick={handleCloseMenu} to="my-profile">
+                <MenuItem component={RouterLink} onClick={handleCloseMenu} to="my-account">
                     <ListItemIcon>
                         <AccountCircle fontSize="small" />
                     </ListItemIcon>

@@ -64,6 +64,12 @@ export default function AppMenuItems() {
 
             <Divider sx={{my: 1}}/>
 
+            <ListItemButton component={RouterLink} to='about'>
+                <ListItemIcon>
+                    <Info className='fs15em'/>
+                </ListItemIcon>
+                <ListItemText primary={t("gdpr")}/>
+            </ListItemButton>
             <ListItemButton component={RouterLink} to='dsgvo'>
                 <ListItemIcon>
                     <LocalPolice className='fs15em'/>
