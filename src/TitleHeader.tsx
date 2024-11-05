@@ -7,11 +7,18 @@ const getTitleKey = (path: string): string => {
     switch (path) {
         case '':
         case '/': return 'app.title';
-        case '/chart': return 'statistics';
-        case '/game': return 'enter-game';
-        case '/scan-game': return 'import-game';
-        case '/games': return 'games';
-        case '/my-profile': return 'my-account';
+
+        case '/licenses': return 'licenses';
+        case '/vulnerabilities': return 'vulnerabilities';
+
+        case '/admin-licenses': return 'admin-licenses';
+        case '/admin-vulnerabilities': return 'admin-vulnerabilities';
+        case '/admin-repositories': return 'admin-repositories';
+        case '/admin-accounts': return 'admin-accounts';
+
+        case '/my-account': return 'my-account';
+        case '/change-password': return 'change-password';
+
         case '/about': return 'about';
         default: return 'app.title';
     }

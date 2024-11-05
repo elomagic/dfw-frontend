@@ -112,7 +112,7 @@ export default function SignInView() {
                     variant="h4"
                     sx={{ width: '100%', fontSize: 'unset' }}
                 >
-                    Dependency Firewall
+                    {t("app.title")}
                 </Typography>
 
                 <Typography

@@ -34,7 +34,7 @@ export default function AboutView() {
             <Card>
                 <Grid container spacing={2}>
                     <Grid size={12}>
-                        Dependency Firewall
+                        {t("app.title")}
                     </Grid>
                     <Grid size={6}>
                         <Paper>

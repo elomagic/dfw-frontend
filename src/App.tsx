@@ -36,6 +36,7 @@ import {createTheme} from "@mui/material/styles";
 import {useAuth} from "./auth/useAuth.ts";
 import AboutView from "./pages/commons/AboutView.tsx";
 import MyAccountView from "./pages/myAccount/MyAccountView.tsx";
+import ChangePasswortView from "./pages/signin/ChangePasswortView.tsx";
 
 const drawerWidth: number = 240;
 
@@ -173,14 +174,18 @@ function App() {
                             <Routes>
                                 <Route path='licenses' element={<ProtectedRoute><LicensesView /></ProtectedRoute>}/>
                                 <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+
                                 <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
                                 <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
                                 <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
                                 <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+
                                 <Route path='my-account' element={<ProtectedRoute><MyAccountView /></ProtectedRoute>}/>
-                                <Route path='about' element={<AboutView />}/>
-                                <Route path='dsgvo' element={<DSGVOView />}/>
-                                <Route path='imprint' element={<ImprintView />}/>
+                                <Route path='change-password' element={<ProtectedRoute><ChangePasswortView /></ProtectedRoute>}/>
+
+                                <Route path='about' element={<ProtectedRoute><AboutView /></ProtectedRoute>}/>
+                                <Route path='dsgvo' element={<ProtectedRoute><DSGVOView /></ProtectedRoute>}/>
+                                <Route path='imprint' element={<ProtectedRoute><ImprintView /></ProtectedRoute>}/>
                                 {/* Default/Fallback routes */}
                                 <Route index element={<DashboardView />}/>
                                 <Route path='*' element={<DashboardView />}/>
