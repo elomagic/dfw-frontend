@@ -60,5 +60,12 @@ jobs:
         run: |
           git push
 
-      # TODO Trigger workflow elomagic/repository:release
+      - name: Trigger workflow elomagic/repository:release
+        run: |
+          curl -X POST https://api.github.com/repos/elomagic/repository/dispatches \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Authorization: Bearer ${{ secrets.REPOSITORY_TOKEN }}" \
+          -d '{"event_type": "release"}'
           
+
+
