@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from "react-router-dom";
 import { Divider, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import {LocalPolice, BugReport, Home, Info, Public, Settings, Group} from "@mui/icons-material";
+import { BugReport, Home, Info, Public, Settings, Group } from "@mui/icons-material";
 import {GoLaw} from "react-icons/go";
 
 export default function AppMenuItems() {
@@ -68,8 +68,9 @@ export default function AppMenuItems() {
                 <ListItemIcon>
                     <Info className='fs15em'/>
                 </ListItemIcon>
-                <ListItemText primary={t("gdpr")}/>
+                <ListItemText primary={t("about")}/>
             </ListItemButton>
+            {/*
             <ListItemButton component={RouterLink} to='dsgvo'>
                 <ListItemIcon>
                     <LocalPolice className='fs15em'/>
@@ -82,6 +83,7 @@ export default function AppMenuItems() {
                 </ListItemIcon>
                 <ListItemText primary={t("imprint")}/>
             </ListItemButton>
+            */}
         </React.Fragment>
     );
 }

@@ -13,7 +13,7 @@ const hasRole = (auth: AuthContextProps, roles: string[]|string): boolean => {
     return auth.roles ? auth.roles.filter(v => requiredRoles.includes(v)).length > 0 : false;
 }
 
-interface ProtectedProps {
+declare interface ProtectedProps {
     roles?: string[];
     children?: ReactNode;
 }
