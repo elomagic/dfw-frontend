@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { Paper, Grid, Container, Typography } from "@mui/material";
+import { Paper, Container, Typography } from "@mui/material";
+import Grid from '@mui/material/Grid2';
 
 import CopyrightFooter from "../../CopyrightFooter";
 
@@ -10,7 +11,7 @@ export default function DSGVOView() {
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-                <Grid item xs={12}>
+                <Grid size={12}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                         <Typography variant="h4">{t("privacy-policy")}</Typography>
                         <Typography variant="body1">

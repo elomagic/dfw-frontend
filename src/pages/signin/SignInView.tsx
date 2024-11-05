@@ -135,7 +135,7 @@ export default function SignInView() {
                     }}
                 >
                     <FormControl>
-                        <FormLabel htmlFor="mailAddress">Email</FormLabel>
+                        <FormLabel htmlFor="mailAddress">{t("email")}</FormLabel>
                         <TextField
                             error={emailError}
                             helperText={emailErrorMessage}
@@ -155,7 +155,7 @@ export default function SignInView() {
 
                     <FormControl>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <FormLabel htmlFor="password">Password</FormLabel>
+                            <FormLabel htmlFor="password">{t("password")}</FormLabel>
                             <Link
                                 component="button"
                                 type="button"
