@@ -3,14 +3,12 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import './i18n/config';
-import {setAuthConfig} from "./Auth.ts";
-
-setAuthConfig({
-    auth_uri: 'http://localhost:8080',
-})
+import {AuthProvider} from "./auth/Auth.tsx";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+      <AuthProvider>
+          <App />
+      </AuthProvider>
   </StrictMode>,
 )

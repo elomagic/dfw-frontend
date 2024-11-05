@@ -1,6 +1,7 @@
-import {AuthContextProps, useAuth} from "./Auth.ts";
-import React from "react";
+import {AuthContextProps} from "./Auth.tsx";
+import {ReactNode} from "react";
 import {Navigate, useLocation} from "react-router-dom";
+import {useAuth} from "./useAuth.ts";
 
 const hasRole = (auth: AuthContextProps, roles: string[]|string): boolean => {
     if (auth.accessToken === undefined) {
@@ -14,10 +15,10 @@ const hasRole = (auth: AuthContextProps, roles: string[]|string): boolean => {
 
 interface ProtectedProps {
     roles?: string[];
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
-export const ProtectedRoute = ({ children }: Element|any, props: ProtectedProps) => {
+export const ProtectedRoute = (props: ProtectedProps) => {
     const auth = useAuth();
     const location = useLocation();
 
@@ -25,5 +26,5 @@ export const ProtectedRoute = ({ children }: Element|any, props: ProtectedProps)
         return (<Navigate to="/home" replace state={{ from: location }} />);
     }
 
-    return children;
+    return props.children;
 };

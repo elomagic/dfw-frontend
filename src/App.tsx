@@ -21,11 +21,10 @@ import LanguageSelector from "./LanguageSelector.tsx";
 import UserSessionButton from "./UserSessionButton.tsx";
 import ThemeModeSelector from './ThemeModeSelector';
 import AppMenuItems from "./AppMenuItems.tsx";
-import {AuthContextProps, useAuth} from "./Auth.ts";
+import {AuthContextProps} from "./auth/Auth.tsx";
 import DashboardView from "./pages/dashboard/DashboardView.tsx";
 import DSGVOView from "./pages/commons/DSGVOView.tsx";
-import TabBar from "./TabBar.tsx";
-import {ProtectedRoute} from "./aas.tsx";
+import {ProtectedRoute} from "./auth/ProtectedRoute.tsx";
 import AccountsView from "./pages/accounts/AccountsView.tsx";
 import AdminRepositoriesView from "./pages/adminRepositories/AdminRepositoriesView.tsx";
 import ImprintView from "./pages/commons/ImprintView.tsx";
@@ -34,6 +33,7 @@ import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx
 import AdminLicensesView from "./pages/adminLicenses/AdminLicensesView.tsx";
 import SignInView from "./pages/signin/SignInView.tsx";
 import {createTheme} from "@mui/material/styles";
+import {useAuth} from "./auth/useAuth.ts";
 
 const drawerWidth: number = 240;
 
@@ -182,7 +182,6 @@ function App() {
                                 <Route index element={<DashboardView />}/>
                                 <Route path='*' element={<DashboardView />}/>
                             </Routes>
-                            <TabBar />
                         </Box>
                     </Box>
                 }

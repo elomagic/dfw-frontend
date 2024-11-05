@@ -1,11 +1,11 @@
 import {useState} from "react";
 import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typography} from "@mui/material";
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
 import MuiCard from '@mui/material/Card';
 import Link from "@mui/material/Link";
 import ForgotPassword from "./ForgotPassword.tsx";
-import {useAuth} from "../../Auth.ts";
 import {useTranslation} from "react-i18next";
+import {useAuth} from "../../auth/useAuth.ts";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -52,7 +52,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 export default function SignInView() {
 
     const { t } = useTranslation();
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const auth = useAuth();
     const [emailError, setEmailError] = useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
@@ -78,7 +78,6 @@ export default function SignInView() {
         const data = new FormData(event.currentTarget);
 
         auth.signinRedirect(data)
-            .then(() => navigate("/"))
             .catch((reason) => console.error(reason));
 
     };

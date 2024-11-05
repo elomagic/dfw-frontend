@@ -5,7 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 import {Button, Menu, MenuItem,} from "@mui/material";
 import {AccountCircle, Logout} from "@mui/icons-material";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import {useAuth} from "./Auth.ts";
+import {useAuth} from "./auth/useAuth.ts";
 
 export default function UserSessionButton() {
     const { t } = useTranslation();
@@ -23,7 +23,7 @@ export default function UserSessionButton() {
     const handleLogoutClick = () => {
         setAnchorEl(null);
         auth.signoutRedirect()
-            .catch((e: any) => console.log(e.message));
+            .catch((e) => console.log(e.message));
     }
 
     return (
