@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useState} from "react";
+import {createContext, ReactNode, useEffect, useState} from "react";
 
 export interface AuthContextProps {
     mailAddress: string | undefined;
@@ -42,11 +42,11 @@ export const AuthProvider = (authProvider: AuthProviderProps): JSX.Element => {
             auth.isAuthenticated = false;
             auth.accessToken = undefined;
 
-            const _auth = {...this};
+            const a = {...auth};
 
-            setAuth(_auth);
+            setAuth(a);
 
-            return Promise.resolve(_auth);
+            return Promise.resolve(a);
         },
 
         async signoutRedirect(): Promise<Response> {
@@ -112,16 +112,27 @@ export const AuthProvider = (authProvider: AuthProviderProps): JSX.Element => {
                     auth.isAuthenticated = true;
                     auth.accessToken = dto.token;
 
-                    const _auth = {...this};
+                    const a = {...auth};
 
-                    setAuth(_auth);
+                    setAuth(a);
 
-                    return Promise.resolve(_auth);
+                    return Promise.resolve(a);
                 });
         }
     };
 
-    const [auth, setAuth] = useState(_auth);
+    const currentAuth = sessionStorage.getItem("currentAuth");
+    const ca: AuthContextProps = currentAuth !== null ? {...JSON.parse(currentAuth),
+        removeUser: _auth.removeUser,
+        signinRedirect: _auth.signinRedirect,
+        signoutRedirect: _auth.signoutRedirect,
+    } : _auth;
+
+    const [auth, setAuth] = useState(ca);
+
+    useEffect(() => {
+        sessionStorage.setItem("currentAuth", JSON.stringify(auth))
+    }, [auth])
 
     return (
         <AuthContext.Provider value={auth}>

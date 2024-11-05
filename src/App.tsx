@@ -23,11 +23,9 @@ import ThemeModeSelector from './ThemeModeSelector';
 import AppMenuItems from "./AppMenuItems.tsx";
 import {AuthContextProps} from "./auth/Auth.tsx";
 import DashboardView from "./pages/dashboard/DashboardView.tsx";
-import DSGVOView from "./pages/commons/DSGVOView.tsx";
 import {ProtectedRoute} from "./auth/ProtectedRoute.tsx";
 import AccountsView from "./pages/accounts/AccountsView.tsx";
 import AdminRepositoriesView from "./pages/adminRepositories/AdminRepositoriesView.tsx";
-import ImprintView from "./pages/commons/ImprintView.tsx";
 import LicensesView from "./pages/licenses/LicensesView.tsx";
 import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
 import AdminLicensesView from "./pages/adminLicenses/AdminLicensesView.tsx";
@@ -36,6 +34,8 @@ import {createTheme} from "@mui/material/styles";
 import {useAuth} from "./auth/useAuth.ts";
 import AboutView from "./pages/commons/AboutView.tsx";
 import MyAccountView from "./pages/myAccount/MyAccountView.tsx";
+import ChangePasswortView from "./pages/signin/ChangePasswortView.tsx";
+import ResetPasswortView from "./pages/signin/ResetPasswortView.tsx";
 
 const drawerWidth: number = 240;
 
@@ -107,7 +107,12 @@ function App() {
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <BrowserRouter>
-                {!auth.isAuthenticated && <SignInView />}
+                {!auth.isAuthenticated &&
+                    <Routes>
+                        <Route path='about' element={<ResetPasswortView />}/>
+                        <Route path='*' element={<SignInView />}/>
+                    </Routes>
+                }
                 {auth.isAuthenticated &&
                     <Box sx={{display: 'flex', height: '100vh',}}>
                         <AppBar position="absolute" open={open} className='AppBar'>
@@ -173,14 +178,20 @@ function App() {
                             <Routes>
                                 <Route path='licenses' element={<ProtectedRoute><LicensesView /></ProtectedRoute>}/>
                                 <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+
                                 <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
                                 <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
                                 <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
                                 <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
-                                <Route path='my-account' element={<ProtectedRoute><MyAccountView /></ProtectedRoute>}/>
+
+                                <Route path='my-account' element={<MyAccountView />}/>
+                                <Route path='change-password' element={<ProtectedRoute><ChangePasswortView /></ProtectedRoute>}/>
+
                                 <Route path='about' element={<AboutView />}/>
-                                <Route path='dsgvo' element={<DSGVOView />}/>
-                                <Route path='imprint' element={<ImprintView />}/>
+                                {/*
+                                <Route path='dsgvo' element={<ProtectedRoute><DSGVOView /></ProtectedRoute>}/>
+                                <Route path='imprint' element={<ProtectedRoute><ImprintView /></ProtectedRoute>}/>
+                                */}
                                 {/* Default/Fallback routes */}
                                 <Route index element={<DashboardView />}/>
                                 <Route path='*' element={<DashboardView />}/>
