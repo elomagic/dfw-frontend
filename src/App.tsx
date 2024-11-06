@@ -24,7 +24,7 @@ import AppMenuItems from "./AppMenuItems.tsx";
 import {AuthContextProps} from "./auth/Auth.tsx";
 import DashboardView from "./pages/dashboard/DashboardView.tsx";
 import {ProtectedRoute} from "./auth/ProtectedRoute.tsx";
-import AccountsView from "./pages/accounts/AccountsView.tsx";
+import AccountsView from "./pages/adminAccounts/AccountsView.tsx";
 import AdminRepositoriesView from "./pages/adminRepositories/AdminRepositoriesView.tsx";
 import LicensesView from "./pages/licenses/LicensesView.tsx";
 import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
@@ -175,14 +175,45 @@ function App() {
                         >
                             {/* Toolbar is placeholder, otherwise the Container element will be covered by the header. */}
                             <Toolbar />
+                            {/*
+                            LICENSE_NAME_MAP_CREATE,
+                            LICENSE_NAME_MAP_READ,
+                            LICENSE_NAME_MAP_UPDATE,
+                            LICENSE_NAME_MAP_DELETE,
+
+                            LICENSE_PERMITTED_CREATE,
+                            LICENSE_PERMITTED_READ,
+                            LICENSE_PERMITTED_UPDATE,
+                            LICENSE_PERMITTED_DELETE,
+
+                            LICENSE_PURL_MAP_CREATE,
+                            LICENSE_PURL_MAP_READ,
+                            LICENSE_PURL_MAP_UPDATE,
+                            LICENSE_PURL_MAP_DELETE,
+
+                            REPOSITORY_CREATE,
+                            REPOSITORY_READ,
+                            REPOSITORY_UPDATE,
+                            REPOSITORY_DELETE,
+
+                            USERACCOUNT_CREATE,
+                            USERACCOUNT_READ,
+                            USERACCOUNT_UPDATE,
+                            USERACCOUNT_DELETE,
+
+                            USERACCOUNT_GROUP_CREATE,
+                            USERACCOUNT_GROUP_READ,
+                            USERACCOUNT_GROUP_UPDATE,
+                            USERACCOUNT_GROUP_DELETE;
+                            */}
                             <Routes>
-                                <Route path='licenses' element={<ProtectedRoute><LicensesView /></ProtectedRoute>}/>
+                                <Route path='licenses' element={<ProtectedRoute roles={["LICENSE_*"]}><LicensesView /></ProtectedRoute>}/>
                                 <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
 
                                 <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
                                 <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
                                 <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
-                                <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                                <Route path='admin-accounts' element={<ProtectedRoute roles={["USERACCOUNT_*"]}><AccountsView /></ProtectedRoute>}/>
 
                                 <Route path='my-account' element={<MyAccountView />}/>
                                 <Route path='change-password' element={<ProtectedRoute><ChangePasswortView /></ProtectedRoute>}/>

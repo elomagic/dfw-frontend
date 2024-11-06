@@ -21,6 +21,7 @@
     "my-account": "My Account",
     "name": "Name",
     "password": "Password",
+    "password-validation": "Password Validation",
     "purl": "PURL",
     "repositories": "Repositories",
     "reset-password": "Reset Password",
