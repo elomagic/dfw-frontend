@@ -1,4 +1,4 @@
-import {Box, Card, Paper} from "@mui/material";
+import {Box, Card} from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
@@ -30,41 +30,34 @@ export default function AboutView() {
     }, [auth]);
 
     return (
-        <Box margin={3}>
-            <Card>
-                <Grid container spacing={2}>
+        <Box margin={4} sx={{ display: "flex", flexDirection: "column" }}>
+            <Card sx={{ maxWidth: "800px", alignSelf: "center" }}>
+                <Grid container spacing={2} margin={2}>
                     <Grid size={12}>
                         {t("app.title")}
                     </Grid>
                     <Grid size={6}>
-                        <Paper>
-                            {t("backend")} v{backendVersion}<br/>
-                            {t("builtOn")}: {backendBuildOn}<br/>
-                            <GitHub/><Link href="https://github.com/elomagic/dfw-backend">GitHub</Link>
-                        </Paper>
+                        {t("backend")} v{backendVersion}<br/>
+                        {t("builtOn")}: {backendBuildOn}
+                        <Box>
+                            <GitHub fontSize="small"/> <Link href="https://github.com/elomagic/dfw-backend">GitHub</Link>
+                        </Box>
                     </Grid>
                     <Grid size={6}>
-                        <Paper>
-                            {t("frontend")} v{frontendVersion}<br/>
-                            {t("builtOn")}: {frontendBuildOn}<br/>
-                            <GitHub/><Link href="https://github.com/elomagic/dfw-frontend">GitHub</Link>
-                        </Paper>
+                        {t("frontend")} v{frontendVersion}<br/>
+                        {t("builtOn")}: {frontendBuildOn}<br/>
+                        <Box>
+                            <GitHub fontSize="small"/> <Link href="https://github.com/elomagic/dfw-frontend">GitHub</Link>
+                        </Box>
                     </Grid>
                     <Grid size={12}>
-                        <Paper>
-                            Licenses???
-                        </Paper>
+                        Licenses???
                     </Grid>
-                    <Grid size={12}>
-                        <Paper>Copyright Carsten Rambow. All Rights Reserved.</Paper>
+                    <Grid size={12} textAlign="center">
+                        Copyright Carsten Rambow. All Rights Reserved.
                     </Grid>
                 </Grid>
-
             </Card>
-            AccountView
-            {backendVersion}
-            {frontendVersion}
-            {t("abc")}
         </Box>
     );
 

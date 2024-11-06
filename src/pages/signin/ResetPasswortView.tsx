@@ -1,12 +1,11 @@
 import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typography} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {useAuth} from "../../auth/useAuth.ts";
 import MuiCard from "@mui/material/Card";
-
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -54,11 +53,13 @@ export default function ResetPasswortView() {
 
     const { t } = useTranslation();
     const auth = useAuth();
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [emailError, setEmailError] = useState(false);
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+    const [token, setToken] = useState<string>('');
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -106,6 +107,10 @@ export default function ResetPasswortView() {
 
     };
 
+    useEffect(() => {
+        setToken(searchParams.get("token") ?? "");
+    }, [searchParams]);
+
     return (
         <ResetPasswordContainer direction="column" justifyContent="space-between">
             <Card variant="outlined">
@@ -137,14 +142,12 @@ export default function ResetPasswortView() {
                         gap: 2,
                     }}
                 >
-                    <FormControl>
-                        <TextField
-                            hidden={true}
-                            id="resetToken"
-                            name="resetToken"
-                            type="text"
-                        />
-                    </FormControl>
+                    <input
+                        type="hidden"
+                        id="resetToken"
+                        name="resetToken"
+                        defaultValue={token}
+                    />
 
                     <FormControl>
                         <FormLabel htmlFor="mailAddress">{t("email")}</FormLabel>
