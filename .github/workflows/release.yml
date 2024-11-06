@@ -64,7 +64,7 @@ jobs:
         run: |
           curl -X POST https://api.github.com/repos/elomagic/repository/dispatches \
           -H "Accept: application/vnd.github.everest-preview+json" \
-          -H "Authorization: Bearer ${{ secrets.REPOSITORY_TOKEN }}" \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           -d '{"event_type": "release"}'
           
 
