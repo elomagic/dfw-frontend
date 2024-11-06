@@ -109,7 +109,7 @@ function App() {
             <BrowserRouter>
                 {!auth.isAuthenticated &&
                     <Routes>
-                        <Route path='about' element={<ResetPasswortView />}/>
+                        <Route path='reset-password' element={<ResetPasswortView />}/>
                         <Route path='*' element={<SignInView />}/>
                     </Routes>
                 }
