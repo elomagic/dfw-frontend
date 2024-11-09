@@ -30,17 +30,19 @@ export default function LicensesView() {
                             <TableCell>{t("license")}</TableCell>
                         </TableRow>
                     </TableHead>
+
+                    <TableBody>
+                        {rows.map((row) => (
+                            <TableRow
+                                key={row.purl}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell>{row.purl}</TableCell>
+                                <TableCell>{row.licenses}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
                 </Table>
-                <TableBody>
-                    {rows.map((row) => (
-                        <TableRow
-                            key={row.purl}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell>{row.licenses}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
             </TableContainer>
         </Box>
     );

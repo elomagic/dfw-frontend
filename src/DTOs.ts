@@ -14,6 +14,7 @@ export declare interface Repository {
 export declare interface UserAccount {
     id?: string;
     mailAddress: string;
+    displayName: string;
     enabled: boolean;
     changePassword: boolean;
     lastPasswordChange?: string;

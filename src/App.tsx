@@ -213,7 +213,7 @@ function App() {
                                 <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
                                 <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
                                 <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
-                                <Route path='admin-accounts' element={<ProtectedRoute roles={["USERACCOUNT_*"]}><AccountsView /></ProtectedRoute>}/>
+                                <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
 
                                 <Route path='my-account' element={<MyAccountView />}/>
                                 <Route path='change-password' element={<ProtectedRoute><ChangePasswortView /></ProtectedRoute>}/>

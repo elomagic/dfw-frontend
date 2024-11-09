@@ -1,5 +1,7 @@
 import {Box, Tab, Tabs} from "@mui/material";
 import {SyntheticEvent, useState} from "react";
+import UserAccountTab from "./UserAccountTab.tsx";
+import UserAccountGroupTab from "./UserAccountGroupTab.tsx";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -42,11 +44,15 @@ export default function AccountsView() {
         <Box margin={3}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Accounts" {...a11yProps(0)} />
+                    <Tab label="User Accounts" {...a11yProps(0)} />
+                    <Tab label="User Groups" {...a11yProps(1)} />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                AccountsView
+                <UserAccountTab/>
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+                <UserAccountGroupTab/>
             </CustomTabPanel>
         </Box>
     );

@@ -1,4 +1,10 @@
-import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Box, Paper} from "@mui/material";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import {useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts"
 import {Repository} from "../../DTOs.ts";
@@ -42,7 +48,7 @@ export default function AdminRepositoriesView() {
     return (
         <Box margin={3}>
             <TableContainer component={Paper}>
-                <Table aria-label="simple table">
+                <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>{t("type")}</TableCell>
@@ -51,20 +57,21 @@ export default function AdminRepositoriesView() {
                             <TableCell>{t("url")}</TableCell>
                         </TableRow>
                     </TableHead>
+
+                    <TableBody>
+                        {rows.map((row) => (
+                            <TableRow
+                                key={row.name}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell>{row.type}</TableCell>
+                                <TableCell>{row.name}</TableCell>
+                                <TableCell>{row.description}</TableCell>
+                                <TableCell>{row.baseUri}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
                 </Table>
-                <TableBody>
-                    {rows.map((row) => (
-                        <TableRow
-                            key={row.name}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell>{row.type}</TableCell>
-                            <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.description}</TableCell>
-                            <TableCell>{row.baseUri}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
             </TableContainer>
         </Box>
     );
