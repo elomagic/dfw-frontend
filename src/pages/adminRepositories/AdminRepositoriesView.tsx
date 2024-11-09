@@ -10,6 +10,7 @@ import * as Rest from "../../RestClient.ts"
 import {Repository} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
+import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 
 /*
 function createData(
@@ -35,6 +36,15 @@ export default function AdminRepositoriesView() {
     const { t } = useTranslation();
     const auth = useAuth();
     const [ rows, setRows ] = useState<Repository[]>([]);
+    const [ filter, setFilter ] = useState<string>("");
+
+    const handleCreate = () => {
+
+    }
+
+    const handleRefresh = () => {
+
+    }
 
     useEffect(() => {
         Rest.get(auth, Rest.RestEndpoint.Repository)
@@ -47,6 +57,11 @@ export default function AdminRepositoriesView() {
 
     return (
         <Box margin={3}>
+            <TableHeaderControls createCaption="Create Repository"
+                                 onCreateClicked={handleCreate}
+                                 onFilterChanged={f => setFilter(f)}
+                                 onRefresh={handleRefresh}
+            />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
@@ -59,7 +74,9 @@ export default function AdminRepositoriesView() {
                     </TableHead>
 
                     <TableBody>
-                        {rows.map((row) => (
+                        {rows
+                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
+                            .map((row) => (
                             <TableRow
                                 key={row.name}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

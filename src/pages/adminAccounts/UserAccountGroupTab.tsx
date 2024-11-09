@@ -1,5 +1,5 @@
 import {useTranslation} from "react-i18next";
-import {Paper} from "@mui/material";
+import {Box, Paper} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -10,12 +10,22 @@ import {useAuth} from "../../auth/useAuth.ts";
 import {useEffect, useState} from "react";
 import {UserAccountGroup} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
+import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 
 export default function UserAccountGroupTab() {
 
     const { t } = useTranslation();
     const auth = useAuth();
     const [ rows, setRows ] = useState<UserAccountGroup[]>([]);
+    const [ filter, setFilter ] = useState<string>("");
+
+    const handleCreate = () => {
+
+    }
+
+    const handleRefresh = () => {
+
+    }
 
     useEffect(() => {
         Rest.get(auth, Rest.RestEndpoint.UserGroup)
@@ -27,25 +37,34 @@ export default function UserAccountGroupTab() {
     }, [auth]);
 
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 900 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>{t("name")}</TableCell>
-                    </TableRow>
-                </TableHead>
-
-                <TableBody>
-                    {rows.map((row) => (
-                        <TableRow
-                            key={row.name}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell>{row.name}</TableCell>
+        <Box>
+            <TableHeaderControls createCaption="Create User Group"
+                                 onCreateClicked={handleCreate}
+                                 onFilterChanged={f => setFilter(f)}
+                                 onRefresh={handleRefresh}
+            />
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 900 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>{t("name")}</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+
+                    <TableBody>
+                        {rows
+                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
+                            .map((row) => (
+                            <TableRow
+                                key={row.name}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell>{row.name}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Box>
     );
 }
