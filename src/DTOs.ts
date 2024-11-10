@@ -3,6 +3,7 @@ export declare type RepositoryTypes = "MAVEN" | "NPM" | "DOCKER" | "NUGET"
 export declare interface Repository {
     id?: string;
     type: RepositoryTypes;
+    enabled: boolean;
     name: string;
     description?: string;
     baseUri?: string;

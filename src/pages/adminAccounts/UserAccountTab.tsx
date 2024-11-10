@@ -11,6 +11,7 @@ import {useEffect, useState} from "react";
 import {UserAccount} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
+import {Check} from "@mui/icons-material";
 
 export default function UserAccountTab() {
 
@@ -62,7 +63,7 @@ export default function UserAccountTab() {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell>{row.mailAddress}</TableCell>
-                                <TableCell>{row.enabled}</TableCell>
+                                <TableCell>{row.enabled ? <Check color="success" /> : ""}</TableCell>
                                 <TableCell>{row.displayName}</TableCell>
                             </TableRow>
                         ))}

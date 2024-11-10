@@ -15,6 +15,7 @@
     "displayName": "Display Name",
     "email": "Email",
     "emailAddress": "Email Address",
+    "enabled": "Enabled",
     "frontend": "Frontend",
     "licenses": "Licenses",
     "logout": "Logout",
