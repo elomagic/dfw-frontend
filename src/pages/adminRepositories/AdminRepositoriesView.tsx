@@ -11,7 +11,7 @@ import {Repository} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
-import {Check} from "@mui/icons-material";
+import EditableTableRow from "./EditableTableRow.tsx";
 
 /*
 function createData(
@@ -78,18 +78,8 @@ export default function AdminRepositoriesView() {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
-                            .map((row) => (
-                            <TableRow
-                                key={row.name}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell>{row.type}</TableCell>
-                                <TableCell>{row.name}</TableCell>
-                                <TableCell>{row.enabled ? <Check color="success" /> : ""}</TableCell>
-                                <TableCell>{row.description}</TableCell>
-                                <TableCell>{row.baseUri}</TableCell>
-                            </TableRow>
-                        ))}
+                            .map((row) => (<EditableTableRow key={row.name} repository={row} />))
+                        }
                     </TableBody>
                 </Table>
             </TableContainer>
