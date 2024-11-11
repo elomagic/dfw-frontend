@@ -11,7 +11,7 @@ import {useEffect, useState} from "react";
 import {UserAccount} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
-import {Check} from "@mui/icons-material";
+import CollapsableUserTableRow from "./CollapsableUserTableRow.tsx";
 
 export default function UserAccountTab() {
 
@@ -57,16 +57,7 @@ export default function UserAccountTab() {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.mailAddress.toLowerCase().includes(filter)))
-                            .map((row) => (
-                            <TableRow
-                                key={row.mailAddress}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell>{row.mailAddress}</TableCell>
-                                <TableCell>{row.enabled ? <Check color="success" /> : ""}</TableCell>
-                                <TableCell>{row.displayName}</TableCell>
-                            </TableRow>
-                        ))}
+                            .map((row) => (<CollapsableUserTableRow key={row.mailAddress} user={row} />))}
                     </TableBody>
                 </Table>
             </TableContainer>

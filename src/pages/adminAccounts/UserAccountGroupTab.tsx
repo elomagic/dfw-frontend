@@ -11,6 +11,7 @@ import {useEffect, useState} from "react";
 import {UserAccountGroup} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
+import CollapsableUserGroupTableRow from "./CollapsableUserGroupTableRow.tsx";
 
 export default function UserAccountGroupTab() {
 
@@ -54,14 +55,7 @@ export default function UserAccountGroupTab() {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
-                            .map((row) => (
-                            <TableRow
-                                key={row.name}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell>{row.name}</TableCell>
-                            </TableRow>
-                        ))}
+                            .map((row) => (<CollapsableUserGroupTableRow key={row.name} userGroup={row} />))}
                     </TableBody>
                 </Table>
             </TableContainer>
