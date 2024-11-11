@@ -12,7 +12,7 @@ interface EditableTableRowProps {
     repository: Repository
 }
 
-export default function EditableTableRow({ repository }: Readonly<EditableTableRowProps>) {
+export default function CollapsableTableRow({ repository }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
     const [open, setOpen] = useState<boolean>(false);
