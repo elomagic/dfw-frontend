@@ -1,29 +1,19 @@
 import TableCell from "@mui/material/TableCell";
-import Grid from '@mui/material/Grid2';
 import {Check} from "@mui/icons-material";
 import TableRow from "@mui/material/TableRow";
 import {Repository} from "../../DTOs.ts";
 import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
-import {Button, Checkbox, Collapse, FormControl, FormControlLabel, FormLabel, TextField} from "@mui/material";
+import {Collapse} from "@mui/material";
 import {useState} from "react";
-import {useTranslation} from "react-i18next";
+import EditableTableRow from "./EditableTableRow.tsx";
 
-interface EditableTableRowProps {
+interface CollapsableTableRowProps {
     repository: Repository
 }
 
-export default function CollapsableTableRow({ repository }: Readonly<EditableTableRowProps>) {
+export default function CollapsableTableRow({ repository }: Readonly<CollapsableTableRowProps>) {
 
-    const { t } = useTranslation();
     const [open, setOpen] = useState<boolean>(false);
-    const [nameError, setNameError] = useState<boolean>(false);
-    const [nameErrorMessage, setNameErrorMessage] = useState<string>("");
-
-    const validateInputs = () => {
-        console.log("validateInputs");
-        setNameError(false);
-        setNameErrorMessage("");
-    };
 
     return (
         <>
@@ -41,74 +31,7 @@ export default function CollapsableTableRow({ repository }: Readonly<EditableTab
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Grid container spacing={2} margin={2}>
-                            <Grid size={6}>
-                                <FormControl fullWidth>
-                                    <FormLabel htmlFor="name">{t("name")}</FormLabel>
-                                    <TextField
-                                        error={nameError}
-                                        helperText={nameErrorMessage}
-                                        id="name"
-                                        type="text"
-                                        name="name"
-                                        autoFocus
-                                        required
-                                        fullWidth
-                                        variant="outlined"
-                                        color={nameError ? 'error' : 'primary'}
-                                        sx={{ ariaLabel: 'name' }}
-                                    />
-                                </FormControl>
-                            </Grid>
-
-                            <Grid size={6}>
-                                <FormControl fullWidth>
-                                    <FormLabel htmlFor="description">{t("description")}</FormLabel>
-                                    <TextField
-                                        name="description"
-                                        type="text"
-                                        id="description"
-                                        fullWidth
-                                        variant="outlined"
-                                    />
-                                </FormControl>
-                            </Grid>
-
-                            <Grid size={6}>
-                                <FormControl fullWidth>
-                                    <FormLabel htmlFor="baseUrl">{t("baseUrl")}</FormLabel>
-                                    <TextField
-                                        name="baseUrl"
-                                        type="url"
-                                        id="baseUrl"
-                                        fullWidth
-                                        variant="outlined"
-                                    />
-                                </FormControl>
-                            </Grid>
-
-                            <Grid size={12}>
-                                <FormControl>
-                                    <FormControlLabel
-                                        control={<Checkbox />}
-                                        name="enabled"
-                                        id="enabled"
-                                        label={t("enabled")}
-                                    />
-                                </FormControl>
-                            </Grid>
-
-                            <Grid size={12}>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    onClick={validateInputs}
-                                >
-                                    {t("save")}
-                                </Button>
-                            </Grid>
-                        </Grid>
+                        <EditableTableRow repository={repository} />
                     </Collapse>
                 </TableCell>
 
