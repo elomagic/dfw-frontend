@@ -3,31 +3,53 @@ import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import {Button, Checkbox, FormControl, FormControlLabel, FormLabel, TextField} from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import {FormFieldProperty} from "../../FormFieldProperties.ts";
 
 interface EditableTableRowProps {
     repository: Repository
 }
 
+const fields: FormFieldProperty[] = [
+    { name : "name", type: "text", minLength: 1 },
+];
+
 export default function EditableTableRow({ repository }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
-    const [nameError, setNameError] = useState<boolean>(false);
-    const [nameErrorMessage, setNameErrorMessage] = useState<string>("");
+    const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
+
+    const handleSaveClick = () => {
+        const name = document.getElementById('name') as HTMLInputElement;
+
+        console.log("save" + name);
+    };
 
     const validateInputs = () => {
-        console.log("validateInputs");
-        setNameError(false);
-        setNameErrorMessage("");
+        for (const field of fields) {
+            const value = document.getElementById(field.name) as HTMLInputElement;
+            if (field.minLength > 0 && value.value.length === 0) {
+                setNameErrorMessage(field.name + ' must be set');
+                return;
+            }
+        }
+
+        const name = document.getElementById('name') as HTMLInputElement;
+
+        if (!name.value || name.value.length == 0) {
+            setNameErrorMessage('Name must be set');
+        } else {
+            setNameErrorMessage(undefined);
+        }
     };
 
     return (
-        <Grid container spacing={2} margin={2}>
+        <Grid container spacing={2} margin={2} onSubmit={handleSaveClick}>
             <Grid size={6}>
                 <FormControl fullWidth>
                     <FormLabel htmlFor="name">{t("name")}</FormLabel>
                     <TextField
                         defaultValue={repository.name}
-                        error={nameError}
+                        error={nameErrorMessage != undefined}
                         helperText={nameErrorMessage}
                         id="name"
                         type="text"
@@ -36,7 +58,7 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
                         required
                         fullWidth
                         variant="outlined"
-                        color={nameError ? 'error' : 'primary'}
+                        color={nameErrorMessage == undefined ? 'primary' : 'error'}
                         sx={{ ariaLabel: 'name' }}
                     />
                 </FormControl>
@@ -81,7 +103,7 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
 
             <Grid size={12}>
                 <Button
-                    type="submit"
+                    type={"submit"}
                     fullWidth
                     variant="contained"
                     onClick={validateInputs}
