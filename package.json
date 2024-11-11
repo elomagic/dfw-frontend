@@ -1,7 +1,7 @@
 {
   "name": "dfw-frontend",
   "private": true,
-  "version": "0.0.9-rc.0",
+  "version": "0.0.9",
   "type": "module",
   "description": "Dependency Firewall Frontend",
   "homepage": "https://github.com/elomagic/dfw-frontend",
