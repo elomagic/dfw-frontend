@@ -16,7 +16,7 @@ interface ForgotPasswordProps {
     handleClose: () => void;
 }
 
-export default function ForgotPassword({ open, handleClose }: Readonly<ForgotPasswordProps>) {
+export default function ForgotPasswordDialog({ open, handleClose }: Readonly<ForgotPasswordProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

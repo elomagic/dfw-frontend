@@ -1,8 +1,9 @@
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import {UserAccountGroup} from "../../DTOs.ts";
+import {UserAccountGroup} from "../../../DTOs.ts";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
+import EditableTableRow from "./EditableTableRow.tsx";
 
 interface CollapsableUserGroupTableRowProps {
     userGroup: UserAccountGroup
@@ -24,7 +25,7 @@ export default function CollapsableUserGroupTableRow({ userGroup }: Readonly<Col
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={1}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-
+                        <EditableTableRow group={userGroup} />
                     </Collapse>
                 </TableCell>
 

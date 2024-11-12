@@ -22,6 +22,7 @@ export declare interface UserAccount {
 }
 
 export declare interface UserAccountGroup {
+    id?: string;
     name: string;
     userAccounts: UserAccount[];
     permissions: string[];

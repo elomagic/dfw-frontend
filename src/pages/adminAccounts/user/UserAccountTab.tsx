@@ -6,12 +6,13 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
-import {useAuth} from "../../auth/useAuth.ts";
-import {useEffect, useState} from "react";
-import {UserAccount} from "../../DTOs.ts";
-import * as Rest from "../../RestClient.ts";
-import TableHeaderControls from "../../components/TableHeaderControls.tsx";
+import {useAuth} from "../../../auth/useAuth.ts";
+import {useCallback, useEffect, useState} from "react";
+import {UserAccount} from "../../../DTOs.ts";
+import * as Rest from "../../../RestClient.ts";
+import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
 import CollapsableUserTableRow from "./CollapsableUserTableRow.tsx";
+import CreateUserDialog from "./CreateUserDialog.tsx";
 
 export default function UserAccountTab() {
 
@@ -19,16 +20,9 @@ export default function UserAccountTab() {
     const auth = useAuth();
     const [ rows, setRows ] = useState<UserAccount[]>([]);
     const [ filter, setFilter ] = useState<string>("");
+    const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
 
-    const handleCreate = () => {
-
-    }
-
-    const handleRefresh = () => {
-
-    }
-
-    useEffect(() => {
+    const refresh = useCallback(() => {
         Rest.get(auth, Rest.RestEndpoint.User)
             .then((res) => res.json())
             .then((dtos: UserAccount[]) => {
@@ -37,12 +31,22 @@ export default function UserAccountTab() {
             .catch((reason) => console.log(reason));
     }, [auth]);
 
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+        refresh();
+        // todo Select new record?
+    }
+
+    useEffect(() => {
+        refresh();
+    }, [refresh]);
+
     return (
         <Box>
             <TableHeaderControls createCaption="Create User"
-                                 onCreateClicked={handleCreate}
+                                 onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
-                                 onRefresh={handleRefresh}
+                                 onRefresh={refresh}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
@@ -60,6 +64,7 @@ export default function UserAccountTab() {
                             .map((row) => (<CollapsableUserTableRow key={row.mailAddress} user={row} />))}
                     </TableBody>
                 </Table>
+                <CreateUserDialog open={dialogOpen} handleClose={handleCloseDialog} />
             </TableContainer>
         </Box>
     );

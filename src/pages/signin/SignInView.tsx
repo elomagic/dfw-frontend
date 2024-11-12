@@ -3,7 +3,7 @@ import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typograph
 // import { useNavigate } from "react-router-dom"
 import MuiCard from '@mui/material/Card';
 import Link from "@mui/material/Link";
-import ForgotPassword from "./ForgotPassword.tsx";
+import ForgotPasswordDialog from "./ForgotPasswordDialog.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 
@@ -182,7 +182,7 @@ export default function SignInView() {
                         />
                     </FormControl>
 
-                    <ForgotPassword open={open} handleClose={handleClose} />
+                    <ForgotPasswordDialog open={open} handleClose={handleClose} />
 
                     <Button
                         type="submit"

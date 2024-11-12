@@ -1,7 +1,7 @@
 import {Box, Tab, Tabs} from "@mui/material";
 import {SyntheticEvent, useState} from "react";
-import UserAccountTab from "./UserAccountTab.tsx";
-import UserAccountGroupTab from "./UserAccountGroupTab.tsx";
+import UserAccountTab from "./user/UserAccountTab.tsx";
+import UserAccountGroupTab from "./usergroups/UserAccountGroupTab.tsx";
 
 interface TabPanelProps {
     children?: React.ReactNode;

@@ -5,13 +5,14 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts"
 import {Repository} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
+import CreateRepositoryDialog from "./CreateRepositoryDialog.tsx";
 
 /*
 function createData(
@@ -38,16 +39,9 @@ export default function AdminRepositoriesView() {
     const auth = useAuth();
     const [ rows, setRows ] = useState<Repository[]>([]);
     const [ filter, setFilter ] = useState<string>("");
+    const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
 
-    const handleCreate = () => {
-
-    }
-
-    const handleRefresh = () => {
-
-    }
-
-    useEffect(() => {
+    const refresh = useCallback(() => {
         Rest.get(auth, Rest.RestEndpoint.Repository)
             .then((res) => res.json())
             .then((reps: Repository[]) => {
@@ -56,12 +50,22 @@ export default function AdminRepositoriesView() {
             .catch((reason) => console.log(reason));
     }, [auth]);
 
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+        refresh();
+        //todo Select new record?
+    }
+
+    useEffect(() => {
+        refresh();
+    }, [refresh]);
+
     return (
         <Box margin={3}>
             <TableHeaderControls createCaption="Create Repository"
-                                 onCreateClicked={handleCreate}
+                                 onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
-                                 onRefresh={handleRefresh}
+                                 onRefresh={refresh}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
@@ -83,6 +87,8 @@ export default function AdminRepositoriesView() {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            <CreateRepositoryDialog open={dialogOpen} handleClose={handleCloseDialog} />
         </Box>
     );
 }

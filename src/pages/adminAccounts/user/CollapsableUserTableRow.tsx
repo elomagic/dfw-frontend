@@ -1,9 +1,10 @@
 import TableCell from "@mui/material/TableCell";
 import {Check} from "@mui/icons-material";
 import TableRow from "@mui/material/TableRow";
-import {UserAccount} from "../../DTOs.ts";
+import {UserAccount} from "../../../DTOs.ts";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
+import EditableTableRow from "./EditableTableRow.tsx";
 
 interface CollapsableUserTableRowProps {
     user: UserAccount
@@ -27,7 +28,7 @@ export default function CollapsableUserTableRow({ user }: Readonly<CollapsableUs
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-
+                        <EditableTableRow user={user} />
                     </Collapse>
                 </TableCell>
 

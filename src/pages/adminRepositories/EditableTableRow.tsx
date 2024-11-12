@@ -1,112 +1,121 @@
 import {Repository} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
-import {Button, Checkbox, FormControl, FormControlLabel, FormLabel, TextField} from "@mui/material";
+import {Button} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import {FormFieldProperty} from "../../FormFieldProperties.ts";
+import {FormFieldProperty, validateInputs} from "../../FormFieldProperties.ts";
+import FormFieldComponents, {FormCheckbox} from "../../components/FormFieldComponents.tsx";
+import * as Rest from "../../RestClient.ts";
+import {RestEndpoint} from "../../RestClient.ts";
+import {useAuth} from "../../auth/useAuth.ts";
+
+const fields: FormFieldProperty[] = [
+    { name : "name", minLength: 1 },
+    { name : "baseUri", minLength: 8 },
+];
 
 interface EditableTableRowProps {
     repository: Repository
 }
 
-const fields: FormFieldProperty[] = [
-    { name : "name", type: "text", minLength: 1 },
-];
-
 export default function EditableTableRow({ repository }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
+    const auth = useAuth();
+
+    const [id] = useState(repository.id);
+    const [enabled, setEnabled] = useState(repository.enabled);
+    const [name, setName] = useState(repository.name);
+    const [description, setDescription] = useState(repository.description);
+    const [baseUri, setBaseUri] = useState(repository.baseUri);
+    const [credentialsId, setCredentialsId] = useState(repository.credentialsId);
+
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
+    const [baseUriErrorMessage, setBaseUriErrorMessage] = useState<string|undefined>(undefined);
 
     const handleSaveClick = () => {
-        const name = document.getElementById('name') as HTMLInputElement;
-
-        console.log("save" + name);
-    };
-
-    const validateInputs = () => {
-        for (const field of fields) {
-            const value = document.getElementById(field.name) as HTMLInputElement;
-            if (field.minLength > 0 && value.value.length === 0) {
-                setNameErrorMessage(field.name + ' must be set');
-                return;
+        if (validateInputs(fields, (fieldName, result) => {
+            switch (fieldName) {
+                case "name": {
+                    setNameErrorMessage(result);
+                    break;
+                }
+                case "baseUri": {
+                    setBaseUriErrorMessage(result);
+                    break;
+                }
             }
+        })) {
+            return;
         }
 
-        const name = document.getElementById('name') as HTMLInputElement;
-
-        if (!name.value || name.value.length == 0) {
-            setNameErrorMessage('Name must be set');
-        } else {
-            setNameErrorMessage(undefined);
+        const data: Repository = {
+            id,
+            enabled,
+            type: repository.type,
+            name,
+            description,
+            baseUri,
+            credentialsId
         }
+
+        Rest.patch(auth, RestEndpoint.Repository, data)
+            .then(() => {
+                // navigate("/");
+            })
+            .catch((reason) => {
+                console.error(reason);
+                // setPasswordError(true);
+                // setPasswordErrorMessage('Somme went wrong during password reset.');
+            });
     };
 
     return (
         <Grid container spacing={2} margin={2} onSubmit={handleSaveClick}>
-            <Grid size={6}>
-                <FormControl fullWidth>
-                    <FormLabel htmlFor="name">{t("name")}</FormLabel>
-                    <TextField
-                        defaultValue={repository.name}
-                        error={nameErrorMessage != undefined}
-                        helperText={nameErrorMessage}
-                        id="name"
-                        type="text"
-                        name="name"
-                        autoFocus
-                        required
-                        fullWidth
-                        variant="outlined"
-                        color={nameErrorMessage == undefined ? 'primary' : 'error'}
-                        sx={{ ariaLabel: 'name' }}
-                    />
-                </FormControl>
-            </Grid>
+            <FormFieldComponents id="name"
+                                 value={name}
+                                 errorMessage={nameErrorMessage}
+                                 onChange={e => setName(e.target.value)}
+                                 label={t("name")}
+                                 autoFocus
+                                 required
+                                 gridSize={6}
+            />
+            <FormFieldComponents id={"description"}
+                                 value={description}
+                                 onChange={e => setDescription(e.target.value)}
+                                 label={t("description")}
+                                 gridSize={6}
+            />
 
-            <Grid size={6}>
-                <FormControl fullWidth>
-                    <FormLabel htmlFor="description">{t("description")}</FormLabel>
-                    <TextField
-                        name="description"
-                        type="text"
-                        id="description"
-                        fullWidth
-                        variant="outlined"
-                    />
-                </FormControl>
-            </Grid>
+            <FormFieldComponents id={"baseUrl"}
+                                 type={"url"}
+                                 value={baseUri}
+                                 errorMessage={baseUriErrorMessage}
+                                 onChange={e => setBaseUri(e.target.value)}
+                                 label={t("baseUrl")}
+                                 required
+                                 gridSize={6}
+            />
+            <FormFieldComponents id={"credentialsId"}
+                                 value={credentialsId}
+                                 errorMessage={baseUriErrorMessage}
+                                 onChange={e => setCredentialsId(e.target.value)}
+                                 label={t("credentialsId")}
+                                 gridSize={6}
+            />
 
-            <Grid size={6}>
-                <FormControl fullWidth>
-                    <FormLabel htmlFor="baseUrl">{t("baseUrl")}</FormLabel>
-                    <TextField
-                        name="baseUrl"
-                        type="url"
-                        id="baseUrl"
-                        fullWidth
-                        variant="outlined"
-                    />
-                </FormControl>
-            </Grid>
-
-            <Grid size={12}>
-                <FormControl>
-                    <FormControlLabel
-                        control={<Checkbox />}
-                        name="enabled"
-                        id="enabled"
-                        label={t("enabled")}
-                    />
-                </FormControl>
-            </Grid>
+            <FormCheckbox id="enabled"
+                          value={enabled}
+                          label={t("enabled")}
+                          onChange={e => setEnabled(e.target.checked)}
+                          gridSize={12}
+            />
 
             <Grid size={12}>
                 <Button
-                    type={"submit"}
-                    fullWidth
                     variant="contained"
-                    onClick={validateInputs}
+                    onClick={handleSaveClick}
                 >
                     {t("save")}
                 </Button>

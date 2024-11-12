@@ -150,7 +150,7 @@ export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object
  * @param endpoint
  * @param dto
  */
-export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
+export const patch = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
 
     const url: RequestInfo = createUrl(endpoint, undefined);
     const data = JSON.stringify(dto);
@@ -158,7 +158,7 @@ export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object)
     const requestOptions: RequestInit = {
         body: data,
         mode: 'cors',
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
