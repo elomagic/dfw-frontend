@@ -97,7 +97,7 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
                                  value={credentialsId}
                                  errorMessage={baseUriErrorMessage}
                                  onChange={e => setCredentialsId(e.target.value)}
-                                 label={t("credentialsId")}
+                                 label={t("credentialId")}
                                  gridSize={6}
             />
 
