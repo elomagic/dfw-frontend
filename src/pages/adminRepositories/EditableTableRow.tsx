@@ -1,13 +1,15 @@
 import {Repository} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
-import {Button} from "@mui/material";
+import {Button, InputAdornment} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {FormFieldProperty, validateInputs} from "../../FormFieldProperties.ts";
 import FormFieldComponents, {FormCheckbox} from "../../components/FormFieldComponents.tsx";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
+import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
+import {enqueueSnackbar} from "notistack";
 
 const fields: FormFieldProperty[] = [
     { name : "name", minLength: 1 },
@@ -60,14 +62,8 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
         }
 
         Rest.patch(auth, RestEndpoint.Repository, data)
-            .then(() => {
-                // navigate("/");
-            })
-            .catch((reason) => {
-                console.error(reason);
-                // setPasswordError(true);
-                // setPasswordErrorMessage('Somme went wrong during password reset.');
-            });
+            .then(() => enqueueSnackbar("Successful saved", { variant: 'success'} ))
+            .catch((err) => enqueueSnackbar("Saving data failed: " + err, { variant: 'error'} ));
     };
 
     return (
@@ -105,11 +101,22 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
                                  gridSize={6}
             />
 
+            <FormFieldComponents id={"type"}
+                                 value={repository.type}
+                                 label={t("type")}
+                                 gridSize={6}
+                                 readOnly
+                                 startAdornment={(
+                                     <InputAdornment position="start">
+                                         <RepositoryTypeIcon type={repository.type} />
+                                     </InputAdornment>
+                                )}
+            />
             <FormCheckbox id="enabled"
                           value={enabled}
                           label={t("enabled")}
                           onChange={e => setEnabled(e.target.checked)}
-                          gridSize={12}
+                          gridSize={6}
             />
 
             <Grid size={12}>

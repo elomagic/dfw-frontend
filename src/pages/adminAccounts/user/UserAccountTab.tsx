@@ -13,6 +13,7 @@ import * as Rest from "../../../RestClient.ts";
 import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
 import CollapsableUserTableRow from "./CollapsableUserTableRow.tsx";
 import CreateUserDialog from "./CreateUserDialog.tsx";
+import {enqueueSnackbar} from "notistack";
 
 export default function UserAccountTab() {
 
@@ -28,7 +29,7 @@ export default function UserAccountTab() {
             .then((dtos: UserAccount[]) => {
                 setRows(dtos);
             })
-            .catch((reason) => console.log(reason));
+            .catch((err) => enqueueSnackbar("Getting data failed: " + err, { variant: 'error'} ));
     }, [auth]);
 
     const handleCloseDialog = () => {

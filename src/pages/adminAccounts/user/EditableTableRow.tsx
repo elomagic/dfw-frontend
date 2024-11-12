@@ -8,6 +8,7 @@ import * as Rest from "../../../RestClient.ts";
 import {RestEndpoint} from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount} from "../../../DTOs.ts";
+import {enqueueSnackbar} from "notistack";
 
 const fields: FormFieldProperty[] = [
     { name : "displayName", minLength: 1 },
@@ -49,14 +50,8 @@ export default function EditableTableRow({ user }: Readonly<EditableTableRowProp
         }
 
         Rest.patch(auth, RestEndpoint.User, data)
-            .then(() => {
-                // navigate("/");
-            })
-            .catch((reason) => {
-                console.error(reason);
-                // setPasswordError(true);
-                // setPasswordErrorMessage('Somme went wrong during password reset.');
-            });
+            .then(() => enqueueSnackbar("Successful saved", { variant: 'success'} ))
+            .catch((err) => enqueueSnackbar("Saving data failed: " + err, { variant: 'error'} ));
     };
 
     return (

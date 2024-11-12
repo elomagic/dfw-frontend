@@ -13,6 +13,7 @@ import * as Rest from "../../../RestClient.ts";
 import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
 import CollapsableUserGroupTableRow from "./CollapsableUserGroupTableRow.tsx";
 import CreateUserGroupDialog from "./CreateUserGroupDialog.tsx";
+import {enqueueSnackbar} from "notistack";
 
 export default function UserAccountGroupTab() {
 
@@ -28,7 +29,7 @@ export default function UserAccountGroupTab() {
             .then((dtos: UserAccountGroup[]) => {
                 setRows(dtos);
             })
-            .catch((reason) => console.log(reason));
+            .catch((err) => enqueueSnackbar("Getting data failed: " + err, { variant: 'error'} ));
     }, [auth]);
 
     const handleCloseDialog = () => {

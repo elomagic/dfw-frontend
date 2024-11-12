@@ -11,6 +11,7 @@ import {RestEndpoint} from "../../../RestClient.ts"
 import {useAuth} from "../../../auth/useAuth.ts";
 import {useState} from "react";
 import {UserAccountGroup} from "../../../DTOs.ts";
+import {enqueueSnackbar} from "notistack";
 
 interface CreateUserGroupProps {
     open: boolean;
@@ -38,7 +39,9 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Cr
                 }
                 return res;
             })
-            .then(() => handleClose(true));
+            .then(() => handleClose(true))
+            .then(() => enqueueSnackbar("Successful created", { variant: 'success'} ))
+            .catch((err) => enqueueSnackbar("Creation failed: " + err, { variant: 'error'} ));
     }
 
     return (
@@ -47,7 +50,7 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Cr
             onClose={handleClose}
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
-            <DialogTitle>{t("create-repository")}</DialogTitle>
+            <DialogTitle>{t("create-user-group")}</DialogTitle>
             <DialogContent
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
             >

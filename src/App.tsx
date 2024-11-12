@@ -36,6 +36,7 @@ import AboutView from "./pages/commons/AboutView.tsx";
 import MyAccountView from "./pages/myAccount/MyAccountView.tsx";
 import ChangePasswortView from "./pages/signin/ChangePasswortView.tsx";
 import ResetPasswortView from "./pages/signin/ResetPasswortView.tsx";
+import {SnackbarProvider} from "notistack";
 
 const drawerWidth: number = 240;
 
@@ -105,6 +106,7 @@ function App() {
 
     return (
         <ThemeProvider theme={darkTheme}>
+            <SnackbarProvider anchorOrigin={{vertical: "top", horizontal: "center" }}/>
             <CssBaseline />
             <BrowserRouter>
                 {!auth.isAuthenticated &&

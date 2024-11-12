@@ -11,6 +11,8 @@ import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
 import {Repository, RepositoryTypes} from "../../DTOs.ts";
+import {FormSelect} from "../../components/FormFieldComponents.tsx";
+import {enqueueSnackbar} from "notistack";
 
 interface ForgotPasswordProps {
     open: boolean;
@@ -22,7 +24,7 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
     const { t } = useTranslation();
     const auth = useAuth();
     const [name, setName] = useState("");
-    const [type] = useState<RepositoryTypes>("NPM");
+    const [type, setType] = useState<RepositoryTypes>("NPM");
 
     const handleCreateClick = () => {
         const data: Repository = {
@@ -39,7 +41,9 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
                 }
                 return res;
             })
-            .then(() => handleClose(true));
+            .then(() => handleClose(true))
+            .then(() => enqueueSnackbar("Successful created", { variant: 'success'} ))
+            .catch((err) => enqueueSnackbar("Creation failed: " + err, { variant: 'error'} ));
     }
 
     return (
@@ -67,6 +71,18 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
                     placeholder={t("name")}
                     type="text"
                     fullWidth
+                />
+                <FormSelect id="type"
+                            value={type}
+                            label={t("type")}
+                            items={[
+                                { "key": "MAVEN", "label": "MAVEN" },
+                                { "key": "NPM", "label": "NPM" },
+                                { "key": "DOCKER", "label": "DOCKER" },
+                                { "key": "NUGET", "label": "NUGET" },
+
+                            ]}
+                            onChange={(e) => setType(e.target.value as RepositoryTypes)}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

@@ -13,6 +13,7 @@ import {useAuth} from "../../auth/useAuth.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateRepositoryDialog from "./CreateRepositoryDialog.tsx";
+import {enqueueSnackbar} from "notistack";
 
 /*
 function createData(
@@ -47,7 +48,7 @@ export default function AdminRepositoriesView() {
             .then((reps: Repository[]) => {
                 setRows(reps);
             })
-            .catch((reason) => console.log(reason));
+            .catch((err) => enqueueSnackbar("Getting data failed: " + err, { variant: 'error'} ));
     }, [auth]);
 
     const handleCloseDialog = () => {
