@@ -173,7 +173,7 @@ export function FormSelect({ id, value, onChange, label, items, gridSize}: Reado
                             id={id}
                             value={value}
                             label={label}
-                            variant="standard"
+                            variant="outlined"
                             onChange={onChange}
                         >
                             {items.map((item) => (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>))}
@@ -189,7 +189,7 @@ export function FormSelect({ id, value, onChange, label, items, gridSize}: Reado
                         id={id}
                         value={value}
                         label={label}
-                        variant="standard"
+                        variant="outlined"
                         onChange={onChange}
                     >
                         {items.map((item) => (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>))}
