@@ -11,7 +11,6 @@ import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {AuthenticationMode, CredentialData} from "../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
-import Grid from "@mui/material/Grid2";
 import FormFieldComponents, {FormSelect} from "../../components/FormFieldComponents.tsx";
 import {FormFieldProperty, validateInputs} from "../../FormFieldProperties.ts";
 
@@ -84,17 +83,15 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                     Please enter credential details
                 </DialogContentText>
 
-                <Grid container spacing={2} margin={2}>
-                    <FormFieldComponents id="credentialId"
-                                         value={credentialId}
-                                         errorMessage={credentialIdErrorMessage}
-                                         onChange={e => setCredentialId(e.target.value)}
-                                         label={t("credentialId")}
-                                         autoFocus
-                                         required
-                                         gridSize={6}
-                    />
-                </Grid>
+                <FormFieldComponents id="credentialId"
+                                     value={credentialId}
+                                     errorMessage={credentialIdErrorMessage}
+                                     onChange={e => setCredentialId(e.target.value)}
+                                     label={t("credentialId")}
+                                     autoFocus
+                                     required
+                />
+
                 <FormSelect id="mode"
                             value={mode}
                             label={t("mode")}
@@ -103,36 +100,31 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                                 { "key": "BEARER", "label": "BEARER" },
                             ]}
                             onChange={(e) => setMode(e.target.value as AuthenticationMode)}
-                            gridSize={6}
                 />
 
-                <Grid container spacing={2} margin={2} display={mode == "BASIC" ? "block" : "none"}>
-                    <FormFieldComponents id="username"
-                                         value={username}
-                                         onChange={e => setUsername(e.target.value)}
-                                         label={t("username")}
-                                         gridSize={6}
-                    />
-                </Grid>
-                <Grid container spacing={2} margin={2} display={mode == "BASIC" ? "block" : "none"}>
-                    <FormFieldComponents id="name"
-                                         value={password}
-                                         type="password"
-                                         onChange={e => setPassword(e.target.value)}
-                                         label={t("password")}
-                                         gridSize={6}
-                    />
-                </Grid>
-
-                <Grid container spacing={2} margin={2} display={mode == "BEARER" ? "block" : "none"}>
+                {mode == "BASIC" && (
+                    <>
+                        <FormFieldComponents id="username"
+                                             value={username}
+                                             onChange={e => setUsername(e.target.value)}
+                                             label={t("username")}
+                        />
+                        <FormFieldComponents id="name"
+                                             value={password}
+                                             type="password"
+                                             onChange={e => setPassword(e.target.value)}
+                                             label={t("password")}
+                        />
+                    </>
+                )}
+                {mode == "BEARER" && (
                     <FormFieldComponents id="passphrase"
                                          value={password}
                                          type="passphrase"
                                          onChange={e => setPassphrase(e.target.value)}
                                          label={t("passphrase")}
-                                         gridSize={6}
                     />
-                </Grid>
+                )}
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(false)}>{t("cancel")}</Button>

@@ -12,9 +12,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import CreateRepositoryDialog from "../adminRepositories/CreateRepositoryDialog.tsx";
 import CredentialTableRow from "./CredentialTableRow.tsx";
 import YesNoDialog from "../../components/YesNoDialog.tsx";
+import CreateCredentialDialog from "./CreateCredentialDialog.tsx";
 
 export default function CredentialsView() {
 
@@ -87,9 +87,9 @@ export default function CredentialsView() {
                 </Table>
             </TableContainer>
 
-            <CreateRepositoryDialog open={dialogOpen} handleClose={handleCloseDialog} />
-            <YesNoDialog title="Delete Credential"
-                         text="Do ya really want to delete the credential?"
+            <CreateCredentialDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <YesNoDialog title={t("delete-credential")}
+                         text={`Do ya really want to delete the credential '${selectedEntity?.credentialId}'?`}
                          open={deleteOpen}
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}
