@@ -10,10 +10,10 @@ export default function RepositoryTypeIcon({ type }: Readonly<RepositoryTypeIcon
 
     const icon = () => {
         switch(type) {
-            case "MAVEN": return <SiApachemaven />;
-            case "NPM": return <FaNpm color="red" />;
-            case "DOCKER": return <FaDocker />;
-            case "NUGET": return <SiNuget />;
+            case "MAVEN": return <SiApachemaven color="#b71c1c" />;
+            case "NPM": return <FaNpm color="#cb3837" />;
+            case "DOCKER": return <FaDocker color="#0db7ed"/>;
+            case "NUGET": return <SiNuget color="#0db7ed" />;
         }
     }
 
