@@ -1,14 +1,15 @@
 import {useTranslation} from "react-i18next";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Button} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {FormFieldProperty, validateInputs} from "../../../FormFieldProperties.ts";
-import FormFieldComponents from "../../../components/FormFieldComponents.tsx";
+import FormFieldComponents, {KeyLabelItem} from "../../../components/FormFieldComponents.tsx";
 import * as Rest from "../../../RestClient.ts";
 import {RestEndpoint} from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
-import {UserAccountGroup} from "../../../DTOs.ts";
+import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
+import FormSelectList from "../../../components/FormSelectList.tsx";
 
 const fields: FormFieldProperty[] = [
     { name : "name", minLength: 1 },
@@ -25,8 +26,26 @@ export default function EditableTableRow({ group }: Readonly<EditableTableRowPro
 
     const [id] = useState(group.id);
     const [name, setName] = useState(group.name);
+    const [userMembers, setUserMembers] = useState<string[]>([]); // Key = mailAddress
+    const [allUsers, setAllUsers] = useState<KeyLabelItem[]>([]);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
+
+    useEffect(() => {
+        Rest.get(auth, Rest.RestEndpoint.User)
+            .then((res) => res.json())
+            .then((dtos: UserAccount[]) => {
+                return dtos.map(u => { return { "key": u.mailAddress, "label": u.mailAddress} as KeyLabelItem })
+            })
+            .then((items: KeyLabelItem[]) => {
+                setAllUsers(items);
+            })
+            .catch((err) => enqueueSnackbar("Getting users failed: " + err, { variant: 'error'} ));
+    }, [auth]);
+
+    const handleUserMembers = (selectedMembers: string[]) => {
+        setUserMembers(selectedMembers);
+    }
 
     const handleSaveClick = () => {
         if (validateInputs(fields, (fieldName, result) => {
@@ -63,6 +82,11 @@ export default function EditableTableRow({ group }: Readonly<EditableTableRowPro
                                  required
                                  gridSize={6}
             />
+
+            <FormSelectList value={userMembers}
+                            selectables={allUsers}
+                            label={t("User Account Members")}
+                            onChange={handleUserMembers} />
 
             <Grid size={12}>
                 <Button

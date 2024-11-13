@@ -146,7 +146,7 @@ export function FormCheckbox({ id, value, onChange, label, gridSize}: Readonly<F
     );
 }
 
-export declare interface SelectItem {
+export declare interface KeyLabelItem {
     key: string;
     label: string;
 }
@@ -155,7 +155,7 @@ interface FormSelectProps {
     id: string;
     value: string;
     label: string;
-    items: SelectItem[];
+    items: KeyLabelItem[];
     onChange: SelectInputProps['onChange'];
     gridSize?: number;
 }
