@@ -14,6 +14,7 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import CreateRepositoryDialog from "../adminRepositories/CreateRepositoryDialog.tsx";
 import CredentialTableRow from "./CredentialTableRow.tsx";
+import YesNoDialog from "../../components/YesNoDialog.tsx";
 
 export default function CredentialsView() {
 
@@ -22,12 +23,14 @@ export default function CredentialsView() {
     const [ rows, setRows ] = useState<CredentialData[]>([]);
     const [ filter, setFilter ] = useState<string>("");
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
+    const [ deleteOpen, setDeleteOpen ] = useState<boolean>(false);
+    const [ selectedEntity, setSelectedEntity ] = useState<CredentialData>();
 
     const refresh = useCallback(() => {
         Rest.get(auth, Rest.RestEndpoint.Credential)
             .then((res) => res.json())
-            .then((creds: CredentialData[]) => {
-                setRows(creds);
+            .then((cd: CredentialData[]) => {
+                setRows(cd);
             })
             .catch((err) => enqueueSnackbar("Getting data failed: " + err, { variant: 'error'} ));
     }, [auth]);
@@ -36,6 +39,17 @@ export default function CredentialsView() {
         setDialogOpen(false);
         refresh();
         //todo Select new record?
+    }
+
+    const handleDeleteRequest = (c: CredentialData) => {
+        setSelectedEntity(c);
+        setDeleteOpen(true);
+    }
+
+    const handleDelete = () => {
+        Rest.deleteResource(auth, Rest.RestEndpoint.Credential, selectedEntity?.id)
+            .then(() => refresh())
+            .catch((err) => enqueueSnackbar("Deleting failed: " + err, { variant: 'error'} ));
     }
 
     useEffect(() => {
@@ -62,13 +76,24 @@ export default function CredentialsView() {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.credentialId.toLowerCase().includes(filter)))
-                            .map((row) => (<CredentialTableRow key={row.credentialId} credential={row} />))
+                            .map((row) => (
+                                <CredentialTableRow key={row.credentialId}
+                                                    credential={row}
+                                                    onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                />
+                            ))
                         }
                     </TableBody>
                 </Table>
             </TableContainer>
 
             <CreateRepositoryDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <YesNoDialog title="Delete Credential"
+                         text="Do ya really want to delete the credential?"
+                         open={deleteOpen}
+                         onYesClick={() => handleDelete()}
+                         onNoClick={() => setDeleteOpen(false)}
+            />
         </Box>
     );
 }

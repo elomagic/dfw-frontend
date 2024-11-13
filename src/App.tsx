@@ -107,7 +107,7 @@ function App() {
 
     return (
         <ThemeProvider theme={darkTheme}>
-            <SnackbarProvider anchorOrigin={{vertical: "top", horizontal: "center" }}/>
+            <SnackbarProvider anchorOrigin={{vertical: "top", horizontal: "center" }} preventDuplicate={true}/>
             <CssBaseline />
             <BrowserRouter>
                 {!auth.isAuthenticated &&

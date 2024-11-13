@@ -18,6 +18,10 @@
     "create-user-group": "Create User Group",
     "credentialId": "Credential ID",
     "dashboard": "Dashboard",
+    "delete-credential": "Delete Credential",
+    "delete-repository": "Delete Repository",
+    "delete-user-account": "Delete User Account",
+    "delete-user-group": "Delete User Group",
     "description": "Description",
     "displayName": "Display Name",
     "email": "Email",
@@ -30,6 +34,7 @@
     "mode": "Mode",
     "my-account": "My Account",
     "name": "Name",
+    "no": "No",
     "password": "Password",
     "password-validation": "Password Validation",
     "passphrase": "Passphrase",
@@ -42,5 +47,6 @@
     "type": "Type",
     "url": "URL",
     "user-accounts": "User Accounts",
-    "vulnerabilities": "Vulnerabilities"
+    "vulnerabilities": "Vulnerabilities",
+    "yes": "yes"
 }

@@ -14,25 +14,7 @@ import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateRepositoryDialog from "./CreateRepositoryDialog.tsx";
 import {enqueueSnackbar} from "notistack";
-
-/*
-function createData(
-    type: RepositoryTypes,
-    name: string,
-    description: string | undefined,
-    baseUri: string | undefined
-): Repository {
-    return { type, name, description, baseUri };
-}
-
-const rows: Repository[]= [
-    createData('MAVEN', 'Central Repository', undefined, 'https://repo1.maven.org/maven2/'),
-    createData('MAVEN', 'Ice cream sandwich', undefined, ''),
-    createData('NPM', 'Eclair', undefined, ''),
-    createData('NPM', 'Cupcake', undefined, ''),
-    createData('DOCKER', 'Public Docker Hub', undefined, '49'),
-];
-*/
+import YesNoDialog from "../../components/YesNoDialog.tsx";
 
 export default function AdminRepositoriesView() {
 
@@ -41,6 +23,8 @@ export default function AdminRepositoriesView() {
     const [ rows, setRows ] = useState<Repository[]>([]);
     const [ filter, setFilter ] = useState<string>("");
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
+    const [ deleteOpen, setDeleteOpen ] = useState<boolean>(false);
+    const [ selectedEntity, setSelectedEntity ] = useState<Repository>();
 
     const refresh = useCallback(() => {
         Rest.get(auth, Rest.RestEndpoint.Repository)
@@ -55,6 +39,17 @@ export default function AdminRepositoriesView() {
         setDialogOpen(false);
         refresh();
         //todo Select new record?
+    }
+
+    const handleDeleteRequest = (r: Repository) => {
+        setSelectedEntity(r);
+        setDeleteOpen(true);
+    }
+
+    const handleDelete = () => {
+        Rest.deleteResource(auth, Rest.RestEndpoint.Repository, selectedEntity?.id)
+            .then(() => refresh())
+            .catch((err) => enqueueSnackbar("Deleting failed: " + err, { variant: 'error'} ));
     }
 
     useEffect(() => {
@@ -77,19 +72,31 @@ export default function AdminRepositoriesView() {
                             <TableCell>{t("enabled")}</TableCell>
                             <TableCell>{t("description")}</TableCell>
                             <TableCell>{t("url")}</TableCell>
+                            <TableCell>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
-                            .map((row) => (<CollapsableTableRow key={row.name} repository={row} />))
+                            .map((row) => (
+                                <CollapsableTableRow key={row.name}
+                                                     repository={row}
+                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                />
+                            ))
                         }
                     </TableBody>
                 </Table>
             </TableContainer>
 
             <CreateRepositoryDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <YesNoDialog title={t("delete-repository")}
+                         text={`Do ya really want to delete the repository '${selectedEntity?.name}'?`}
+                         open={deleteOpen}
+                         onYesClick={() => handleDelete()}
+                         onNoClick={() => setDeleteOpen(false)}
+            />
         </Box>
     );
 }

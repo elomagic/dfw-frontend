@@ -14,6 +14,7 @@ import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
 import CollapsableUserTableRow from "./CollapsableUserTableRow.tsx";
 import CreateUserDialog from "./CreateUserDialog.tsx";
 import {enqueueSnackbar} from "notistack";
+import YesNoDialog from "../../../components/YesNoDialog.tsx";
 
 export default function UserAccountTab() {
 
@@ -22,6 +23,8 @@ export default function UserAccountTab() {
     const [ rows, setRows ] = useState<UserAccount[]>([]);
     const [ filter, setFilter ] = useState<string>("");
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
+    const [ deleteOpen, setDeleteOpen ] = useState<boolean>(false);
+    const [ selectedEntity, setSelectedEntity ] = useState<UserAccount>();
 
     const refresh = useCallback(() => {
         Rest.get(auth, Rest.RestEndpoint.User)
@@ -36,6 +39,17 @@ export default function UserAccountTab() {
         setDialogOpen(false);
         refresh();
         // todo Select new record?
+    }
+
+    const handleDeleteRequest = (u: UserAccount) => {
+        setSelectedEntity(u);
+        setDeleteOpen(true);
+    }
+
+    const handleDelete = () => {
+        Rest.deleteResource(auth, Rest.RestEndpoint.User, selectedEntity?.id)
+            .then(() => refresh())
+            .catch((err) => enqueueSnackbar("Deleting failed: " + err, { variant: 'error'} ));
     }
 
     useEffect(() => {
@@ -56,17 +70,31 @@ export default function UserAccountTab() {
                             <TableCell>{t("mailAddress")}</TableCell>
                             <TableCell>{t("enabled")}</TableCell>
                             <TableCell>{t("displayName")}</TableCell>
+                            <TableCell>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.mailAddress.toLowerCase().includes(filter)))
-                            .map((row) => (<CollapsableUserTableRow key={row.mailAddress} user={row} />))}
+                            .map((row) => (
+                                <CollapsableUserTableRow key={row.mailAddress}
+                                                         user={row}
+                                                         onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                />
+                            ))
+                        }
                     </TableBody>
                 </Table>
-                <CreateUserDialog open={dialogOpen} handleClose={handleCloseDialog} />
             </TableContainer>
+
+            <CreateUserDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <YesNoDialog title={t("delete-user-account")}
+                         text={`Do ya really want to delete the user account '${selectedEntity?.mailAddress}'?`}
+                         open={deleteOpen}
+                         onYesClick={() => handleDelete()}
+                         onNoClick={() => setDeleteOpen(false)}
+            />
         </Box>
     );
 }

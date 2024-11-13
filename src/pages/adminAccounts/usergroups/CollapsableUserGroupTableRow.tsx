@@ -1,15 +1,17 @@
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import {UserAccountGroup} from "../../../DTOs.ts";
-import {Collapse} from "@mui/material";
+import {Collapse, IconButton} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
+import {DeleteForever} from "@mui/icons-material";
 
 interface CollapsableUserGroupTableRowProps {
     userGroup: UserAccountGroup
+    onDeleteRequest: (ug: UserAccountGroup) => void;
 }
 
-export default function CollapsableUserGroupTableRow({ userGroup }: Readonly<CollapsableUserGroupTableRowProps>) {
+export default function CollapsableUserGroupTableRow({ userGroup, onDeleteRequest }: Readonly<CollapsableUserGroupTableRowProps>) {
 
     const [open, setOpen] = useState<boolean>(false);
 
@@ -21,6 +23,7 @@ export default function CollapsableUserGroupTableRow({ userGroup }: Readonly<Col
                 onClick={()=> setOpen(!open)}
             >
                 <TableCell>{userGroup.name}</TableCell>
+                <TableCell><IconButton onClick={() => onDeleteRequest(userGroup)}><DeleteForever/></IconButton></TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={1}>

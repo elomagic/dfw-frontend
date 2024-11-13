@@ -3,6 +3,7 @@ export declare type AuthenticationMode = "BASIC" | "BEARER"
 
 // Name of the dto must differ from "Credential"
 export declare interface CredentialData {
+    id?: string;
     credentialId: string;
     mode: AuthenticationMode;
     username: string;

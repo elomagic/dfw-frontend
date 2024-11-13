@@ -14,6 +14,7 @@ import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
 import CollapsableUserGroupTableRow from "./CollapsableUserGroupTableRow.tsx";
 import CreateUserGroupDialog from "./CreateUserGroupDialog.tsx";
 import {enqueueSnackbar} from "notistack";
+import YesNoDialog from "../../../components/YesNoDialog.tsx";
 
 export default function UserAccountGroupTab() {
 
@@ -22,6 +23,8 @@ export default function UserAccountGroupTab() {
     const [ rows, setRows ] = useState<UserAccountGroup[]>([]);
     const [ filter, setFilter ] = useState<string>("");
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
+    const [ deleteOpen, setDeleteOpen ] = useState<boolean>(false);
+    const [ selectedEntity, setSelectedEntity ] = useState<UserAccountGroup>();
 
     const refresh = useCallback(() => {
         Rest.get(auth, Rest.RestEndpoint.UserGroup)
@@ -36,6 +39,17 @@ export default function UserAccountGroupTab() {
         setDialogOpen(false);
         refresh();
         //todo Select new record?
+    }
+
+    const handleDeleteRequest = (ug: UserAccountGroup) => {
+        setSelectedEntity(ug);
+        setDeleteOpen(true);
+    }
+
+    const handleDelete = () => {
+        Rest.deleteResource(auth, Rest.RestEndpoint.UserGroup, selectedEntity?.id)
+            .then(() => refresh())
+            .catch((err) => enqueueSnackbar("Deleting failed: " + err, { variant: 'error'} ));
     }
 
     useEffect(() => {
@@ -54,18 +68,31 @@ export default function UserAccountGroupTab() {
                     <TableHead>
                         <TableRow>
                             <TableCell>{t("name")}</TableCell>
+                            <TableCell>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
-                            .map((row) => (<CollapsableUserGroupTableRow key={row.name} userGroup={row} />))}
+                            .map((row) => (
+                                <CollapsableUserGroupTableRow key={row.name}
+                                                              userGroup={row}
+                                                              onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                />
+                            ))
+                        }
                     </TableBody>
                 </Table>
             </TableContainer>
 
             <CreateUserGroupDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <YesNoDialog title={t("delete-user-group")}
+                         text={`Do ya really want to delete the user group '${selectedEntity?.name}'?`}
+                         open={deleteOpen}
+                         onYesClick={() => handleDelete()}
+                         onNoClick={() => setDeleteOpen(false)}
+            />
         </Box>
     );
 }
