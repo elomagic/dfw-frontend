@@ -106,7 +106,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                             gridSize={6}
                 />
 
-                <Grid container spacing={2} margin={2}>
+                <Grid container spacing={2} margin={2} display={mode == "BASIC" ? "block" : "none"}>
                     <FormFieldComponents id="username"
                                          value={username}
                                          onChange={e => setUsername(e.target.value)}
@@ -114,7 +114,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                                          gridSize={6}
                     />
                 </Grid>
-                <Grid container spacing={2} margin={2}>
+                <Grid container spacing={2} margin={2} display={mode == "BASIC" ? "block" : "none"}>
                     <FormFieldComponents id="name"
                                          value={password}
                                          type="password"
@@ -124,7 +124,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                     />
                 </Grid>
 
-                <Grid container spacing={2} margin={2}>
+                <Grid container spacing={2} margin={2} display={mode == "BEARER" ? "block" : "none"}>
                     <FormFieldComponents id="passphrase"
                                          value={password}
                                          type="passphrase"

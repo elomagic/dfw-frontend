@@ -17,7 +17,7 @@ export declare interface Repository {
     name: string;
     description?: string;
     baseUri?: string;
-    credentialsId?: string;
+    credentialId?: string;
     created?: string;
     lastUpdate?: string;
 }

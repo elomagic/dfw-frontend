@@ -30,7 +30,7 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
     const [name, setName] = useState(repository.name);
     const [description, setDescription] = useState(repository.description);
     const [baseUri, setBaseUri] = useState(repository.baseUri);
-    const [credentialsId, setCredentialsId] = useState(repository.credentialsId);
+    const [credentialId, setCredentialId] = useState(repository.credentialId);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
     const [baseUriErrorMessage, setBaseUriErrorMessage] = useState<string|undefined>(undefined);
@@ -58,7 +58,7 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
             name,
             description,
             baseUri,
-            credentialsId
+            credentialId
         }
 
         Rest.patch(auth, RestEndpoint.Repository, data)
@@ -93,10 +93,10 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
                                  required
                                  gridSize={6}
             />
-            <FormFieldComponents id={"credentialsId"}
-                                 value={credentialsId}
+            <FormFieldComponents id={"credentialId"}
+                                 value={credentialId}
                                  errorMessage={baseUriErrorMessage}
-                                 onChange={e => setCredentialsId(e.target.value)}
+                                 onChange={e => setCredentialId(e.target.value)}
                                  label={t("credentialId")}
                                  gridSize={6}
             />
