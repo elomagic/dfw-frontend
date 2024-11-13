@@ -1,4 +1,14 @@
 export declare type RepositoryTypes = "MAVEN" | "NPM" | "DOCKER" | "NUGET"
+export declare type AuthenticationMode = "BASIC" | "BEARER"
+
+// Name of the dto must differ from "Credential"
+export declare interface CredentialData {
+    credentialId: string;
+    mode: AuthenticationMode;
+    username: string;
+    password: string;
+    passphrase: string;
+}
 
 export declare interface Repository {
     id?: string;

@@ -42,7 +42,7 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
                 return res;
             })
             .then(() => handleClose(true))
-            .then(() => enqueueSnackbar("Successful created", { variant: 'success'} ))
+            .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
             .catch((err) => enqueueSnackbar("Creation failed: " + err, { variant: 'error'} ));
     }
 
@@ -80,7 +80,6 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
                                 { "key": "NPM", "label": "NPM" },
                                 { "key": "DOCKER", "label": "DOCKER" },
                                 { "key": "NUGET", "label": "NUGET" },
-
                             ]}
                             onChange={(e) => setType(e.target.value as RepositoryTypes)}
                 />

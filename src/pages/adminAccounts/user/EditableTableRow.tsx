@@ -50,7 +50,7 @@ export default function EditableTableRow({ user }: Readonly<EditableTableRowProp
         }
 
         Rest.patch(auth, RestEndpoint.User, data)
-            .then(() => enqueueSnackbar("Successful saved", { variant: 'success'} ))
+            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
             .catch((err) => enqueueSnackbar("Saving data failed: " + err, { variant: 'error'} ));
     };
 

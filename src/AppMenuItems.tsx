@@ -4,6 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Divider, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { BugReport, Home, Info, Public, Settings, Group } from "@mui/icons-material";
 import {GoLaw} from "react-icons/go";
+import {RiLockPasswordFill} from "react-icons/ri";
 
 export default function AppMenuItems() {
 
@@ -51,6 +52,13 @@ export default function AppMenuItems() {
                     <Public className='fs15em'/>
                 </ListItemIcon>
                 <ListItemText primary={t("repositories")}/>
+            </ListItemButton>
+
+            <ListItemButton component={RouterLink} to='admin-credentials'>
+                <ListItemIcon>
+                    <RiLockPasswordFill className='fs15em'/>
+                </ListItemIcon>
+                <ListItemText primary={t("credentials")}/>
             </ListItemButton>
 
             <Divider sx={{my: 1}}/>

@@ -1,33 +1,33 @@
-import {useTranslation} from "react-i18next";
 import {Box, Paper} from "@mui/material";
+import {useTranslation} from "react-i18next";
+import {useAuth} from "../../auth/useAuth.ts";
+import {useCallback, useEffect, useState} from "react";
+import {CredentialData} from "../../DTOs.ts";
+import * as Rest from "../../RestClient.ts";
+import {enqueueSnackbar} from "notistack";
+import TableHeaderControls from "../../components/TableHeaderControls.tsx";
+import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import TableContainer from "@mui/material/TableContainer";
-import {useAuth} from "../../../auth/useAuth.ts";
-import {useCallback, useEffect, useState} from "react";
-import {UserAccount} from "../../../DTOs.ts";
-import * as Rest from "../../../RestClient.ts";
-import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
-import CollapsableUserTableRow from "./CollapsableUserTableRow.tsx";
-import CreateUserDialog from "./CreateUserDialog.tsx";
-import {enqueueSnackbar} from "notistack";
+import CreateRepositoryDialog from "../adminRepositories/CreateRepositoryDialog.tsx";
+import CredentialTableRow from "./CredentialTableRow.tsx";
 
-export default function UserAccountTab() {
+export default function CredentialsView() {
 
     const { t } = useTranslation();
     const auth = useAuth();
-    const [ rows, setRows ] = useState<UserAccount[]>([]);
+    const [ rows, setRows ] = useState<CredentialData[]>([]);
     const [ filter, setFilter ] = useState<string>("");
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.User)
+        Rest.get(auth, Rest.RestEndpoint.Credential)
             .then((res) => res.json())
-            .then((dtos: UserAccount[]) => {
-                setRows(dtos);
+            .then((creds: CredentialData[]) => {
+                setRows(creds);
             })
             .catch((err) => enqueueSnackbar("Getting data failed: " + err, { variant: 'error'} ));
     }, [auth]);
@@ -35,7 +35,7 @@ export default function UserAccountTab() {
     const handleCloseDialog = () => {
         setDialogOpen(false);
         refresh();
-        // todo Select new record?
+        //todo Select new record?
     }
 
     useEffect(() => {
@@ -43,8 +43,8 @@ export default function UserAccountTab() {
     }, [refresh]);
 
     return (
-        <Box>
-            <TableHeaderControls createCaption={t("create-user")}
+        <Box margin={3}>
+            <TableHeaderControls createCaption={t("create-credential")}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
@@ -53,20 +53,22 @@ export default function UserAccountTab() {
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>{t("mailAddress")}</TableCell>
-                            <TableCell>{t("enabled")}</TableCell>
-                            <TableCell>{t("displayName")}</TableCell>
+                            <TableCell>{t("credentialId")}</TableCell>
+                            <TableCell>{t("mode")}</TableCell>
+                            <TableCell>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.mailAddress.toLowerCase().includes(filter)))
-                            .map((row) => (<CollapsableUserTableRow key={row.mailAddress} user={row} />))}
+                            .filter(r => ("" === filter || r.credentialId.toLowerCase().includes(filter)))
+                            .map((row) => (<CredentialTableRow key={row.credentialId} credential={row} />))
+                        }
                     </TableBody>
                 </Table>
-                <CreateUserDialog open={dialogOpen} handleClose={handleCloseDialog} />
             </TableContainer>
+
+            <CreateRepositoryDialog open={dialogOpen} handleClose={handleCloseDialog} />
         </Box>
     );
 }

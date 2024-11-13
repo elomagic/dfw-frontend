@@ -44,7 +44,7 @@ export default function UserAccountGroupTab() {
 
     return (
         <Box>
-            <TableHeaderControls createCaption="Create User Group"
+            <TableHeaderControls createCaption={t("create-user-group")}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}

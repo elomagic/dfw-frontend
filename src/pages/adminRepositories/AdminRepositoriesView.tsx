@@ -63,7 +63,7 @@ export default function AdminRepositoriesView() {
 
     return (
         <Box margin={3}>
-            <TableHeaderControls createCaption="Create Repository"
+            <TableHeaderControls createCaption={t("create-repository")}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}

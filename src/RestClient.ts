@@ -4,6 +4,7 @@ const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_UR
 
 export enum RestEndpoint {
 
+    Credential = "/api/v1/credential",
     LicenseNameMap = "/api/v1/license/nameMap",
     LicensePermitted = "/api/v1/license/permitted",
     LicensePurlMap = "/api/v1/license/purlMap",

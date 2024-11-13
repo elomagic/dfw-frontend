@@ -37,6 +37,7 @@ import MyAccountView from "./pages/myAccount/MyAccountView.tsx";
 import ChangePasswortView from "./pages/signin/ChangePasswortView.tsx";
 import ResetPasswortView from "./pages/signin/ResetPasswortView.tsx";
 import {SnackbarProvider} from "notistack";
+import CredentialsView from "./pages/credentials/CredentialsView.tsx";
 
 const drawerWidth: number = 240;
 
@@ -216,6 +217,7 @@ function App() {
                                 <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
                                 <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
                                 <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
+                                <Route path='admin-credentials' element={<ProtectedRoute><CredentialsView /></ProtectedRoute>}/>
 
                                 <Route path='my-account' element={<MyAccountView />}/>
                                 <Route path='change-password' element={<ProtectedRoute><ChangePasswortView /></ProtectedRoute>}/>

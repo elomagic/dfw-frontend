@@ -67,7 +67,7 @@ export default function EditableTableRow({ group }: Readonly<EditableTableRowPro
         }
 
         Rest.patch(auth, RestEndpoint.UserGroup, data)
-            .then(() => enqueueSnackbar("Successful saved", { variant: 'success'} ))
+            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
             .catch((err) => enqueueSnackbar("Saving data failed: " + err, { variant: 'error'} ));
     };
 
