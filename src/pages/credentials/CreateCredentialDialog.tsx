@@ -96,8 +96,8 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                             value={mode}
                             label={t("mode")}
                             items={[
-                                { "key": "BASIC", "label": "BASIC" },
-                                { "key": "BEARER", "label": "BEARER" },
+                                { "key": "BASIC", "label": "BASIC Authentication" },
+                                { "key": "BEARER", "label": "BEARER Token" },
                             ]}
                             onChange={(e) => setMode(e.target.value as AuthenticationMode)}
                 />
