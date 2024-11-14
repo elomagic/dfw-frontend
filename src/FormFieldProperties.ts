@@ -1,11 +1,6 @@
+import {FormFieldValidationProperty} from "./components/FormBuilder.ts";
 
-export declare interface FormFieldProperty {
-    name: string;
-    minLength?: number;
-    maxLength?: number;
-}
-
-export const validateInputs = (fields: FormFieldProperty[], onResult: (fieldName: string, result: string | undefined) => void): boolean => {
+export const validateInputs = (fields: FormFieldValidationProperty[], onResult: (fieldName: string, result: string | undefined) => void): boolean => {
     let result = false;
 
     //const validateInputs = ((onResult: (string | undefined) => void) => ()) {

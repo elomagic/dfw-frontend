@@ -11,11 +11,13 @@ import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {AuthenticationMode, CredentialData} from "../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
-import FormFieldComponents, {FormSelect} from "../../components/FormFieldComponents.tsx";
-import {FormFieldProperty, validateInputs} from "../../FormFieldProperties.ts";
+import {FormSelect} from "../../components/FormSelect.tsx";
+import {validateInputs} from "../../FormFieldProperties.ts";
+import FormTextField from "../../components/FormTextField.tsx";
+import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
 
 
-const fields: FormFieldProperty[] = [
+const fields: FormFieldValidationProperty[] = [
     { name : "credentialId", minLength: 1 },
 ];
 
@@ -83,7 +85,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                     Please enter credential details
                 </DialogContentText>
 
-                <FormFieldComponents id="credentialId"
+                <FormTextField id="credentialId"
                                      value={credentialId}
                                      errorMessage={credentialIdErrorMessage}
                                      onChange={e => setCredentialId(e.target.value)}
@@ -104,12 +106,12 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
 
                 {mode == "BASIC" && (
                     <>
-                        <FormFieldComponents id="username"
+                        <FormTextField id="username"
                                              value={username}
                                              onChange={e => setUsername(e.target.value)}
                                              label={t("username")}
                         />
-                        <FormFieldComponents id="name"
+                        <FormTextField id="name"
                                              value={password}
                                              type="password"
                                              onChange={e => setPassword(e.target.value)}
@@ -118,7 +120,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                     </>
                 )}
                 {mode == "BEARER" && (
-                    <FormFieldComponents id="passphrase"
+                    <FormTextField id="passphrase"
                                          value={password}
                                          type="passphrase"
                                          onChange={e => setPassphrase(e.target.value)}

@@ -11,7 +11,7 @@ import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
 import {Repository, RepositoryTypes} from "../../DTOs.ts";
-import {FormSelect} from "../../components/FormFieldComponents.tsx";
+import {FormSelect} from "../../components/FormSelect.tsx";
 import {enqueueSnackbar} from "notistack";
 
 interface ForgotPasswordProps {

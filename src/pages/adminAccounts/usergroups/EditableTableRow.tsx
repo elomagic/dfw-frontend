@@ -1,8 +1,8 @@
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid2";
-import {FormFieldProperty, validateInputs} from "../../../FormFieldProperties.ts";
-import FormFieldComponents, {KeyLabelItem} from "../../../components/FormFieldComponents.tsx";
+import {validateInputs} from "../../../FormFieldProperties.ts";
+import {KeyLabelItem} from "../../../components/FormSelect.tsx";
 import * as Rest from "../../../RestClient.ts";
 import {RestEndpoint} from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
@@ -10,8 +10,10 @@ import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
 import FormSelectList from "../../../components/FormSelectList.tsx";
 import FormButton from "../../../components/FormButton.tsx";
+import FormTextField from "../../../components/FormTextField.tsx";
+import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
 
-const fields: FormFieldProperty[] = [
+const fields: FormFieldValidationProperty[] = [
     { name : "name", minLength: 1 },
 ];
 
@@ -73,7 +75,7 @@ export default function EditableTableRow({ group }: Readonly<EditableTableRowPro
 
     return (
         <Grid container spacing={2} margin={2}>
-            <FormFieldComponents id="name"
+            <FormTextField id="name"
                                  value={name}
                                  errorMessage={nameErrorMessage}
                                  onChange={e => setName(e.target.value)}

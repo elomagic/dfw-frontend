@@ -1,16 +1,18 @@
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
-import {FormFieldProperty, validateInputs} from "../../../FormFieldProperties.ts";
-import FormFieldComponents, {FormCheckbox} from "../../../components/FormFieldComponents.tsx";
+import {validateInputs} from "../../../FormFieldProperties.ts";
 import * as Rest from "../../../RestClient.ts";
 import {RestEndpoint} from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
 import FormButton from "../../../components/FormButton.tsx";
+import FormTextField from "../../../components/FormTextField.tsx";
+import {FormCheckbox} from "../../../components/FormCheckBox.tsx";
+import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
 
-const fields: FormFieldProperty[] = [
+const fields: FormFieldValidationProperty[] = [
     { name : "displayName", minLength: 1 },
 ];
 
@@ -56,12 +58,12 @@ export default function EditableTableRow({ user }: Readonly<EditableTableRowProp
 
     return (
         <Grid container spacing={2} margin={2}>
-            <FormFieldComponents id="mailAddress"
+            <FormTextField id="mailAddress"
                                  value={mailAddress}
                                  label={t("mailAddress")}
                                  gridSize={6}
             />
-            <FormFieldComponents id="displayName"
+            <FormTextField id="displayName"
                                  value={displayName}
                                  errorMessage={displayNameErrorMessage}
                                  onChange={e => setDisplayName(e.target.value)}

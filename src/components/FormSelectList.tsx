@@ -5,7 +5,7 @@ import {
     ListItem,
     ListItemText
 } from "@mui/material";
-import {KeyLabelItem} from "./FormFieldComponents.tsx";
+import {KeyLabelItem} from "./FormSelect.tsx";
 import Grid from "@mui/material/Grid2";
 import {Add, Garage} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";

@@ -5,13 +5,14 @@ import {useState} from "react";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import Grid from "@mui/material/Grid2";
-import FormFieldComponents from "../../components/FormFieldComponents.tsx";
-import {FormFieldProperty, validateInputs} from "../../FormFieldProperties.ts";
+import {validateInputs} from "../../FormFieldProperties.ts";
 import {UserAccount} from "../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
 import FormButton from "../../components/FormButton.tsx";
+import FormTextField from "../../components/FormTextField.tsx";
+import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
 
-const fields: FormFieldProperty[] = [
+const fields: FormFieldValidationProperty[] = [
     { name : "displayName", minLength: 1 },
 ];
 
@@ -54,12 +55,12 @@ export default function MyAccountView() {
         <Box margin={3}>
             <Card>
                 <Grid container spacing={2} margin={2}>
-                    <FormFieldComponents id="mailAddress"
+                    <FormTextField id="mailAddress"
                                          value={mailAddress}
                                          label={t("mailAddress")}
                                          gridSize={6}
                     />
-                    <FormFieldComponents id="displayName"
+                    <FormTextField id="displayName"
                                          value={displayName}
                                          errorMessage={displayNameErrorMessage}
                                          onChange={e => setDisplayName(e.target.value)}
