@@ -43,7 +43,7 @@ export default function EditableTableRow({ group, onDeleteRequest }: Readonly<Ed
             .then((items: KeyLabelItem[]) => {
                 setAllUsers(items);
             })
-            .catch((err) => enqueueSnackbar("Getting users failed: " + err, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar("Getting users failed: " + err.message, { variant: 'error'} ));
     }, [auth]);
 
     const handleUserMembers = (selectedMembers: string[]) => {
@@ -71,7 +71,7 @@ export default function EditableTableRow({ group, onDeleteRequest }: Readonly<Ed
 
         Rest.patch(auth, RestEndpoint.UserGroup, data)
             .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err) => enqueueSnackbar("Saving data failed: " + err, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
     };
 
     return (

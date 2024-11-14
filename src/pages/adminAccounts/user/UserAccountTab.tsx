@@ -32,7 +32,7 @@ export default function UserAccountTab() {
             .then((dtos: UserAccount[]) => {
                 setRows(dtos);
             })
-            .catch((err) => enqueueSnackbar("Getting data failed: " + err, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar("Getting data failed: " + err.message, { variant: 'error'} ));
     }, [auth]);
 
     const handleCloseDialog = () => {
@@ -49,7 +49,7 @@ export default function UserAccountTab() {
     const handleDelete = () => {
         Rest.deleteResource(auth, Rest.RestEndpoint.User, selectedEntity?.id)
             .then(() => refresh())
-            .catch((err) => enqueueSnackbar("Deleting failed: " + err, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar("Deleting failed: " + err.message, { variant: 'error'} ));
     }
 
     useEffect(() => {

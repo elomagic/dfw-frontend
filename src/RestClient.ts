@@ -1,4 +1,5 @@
 import {AuthContextProps} from "./auth/Auth.tsx";
+import i18next from "i18next";
 
 const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_URL : window.location.host;
 
@@ -70,6 +71,9 @@ const applyBearerToken = (auth: AuthContextProps | undefined, headers: HeadersIn
 }
 
 const executeRequest = (auth: AuthContextProps, url: RequestInfo, requestOptions: RequestInit): Promise<Response> => {
+
+
+
     try {
         requestOptions.headers = applyBearerToken(auth, requestOptions?.headers);
     } catch (err) {
@@ -82,7 +86,22 @@ const executeRequest = (auth: AuthContextProps, url: RequestInfo, requestOptions
                 auth.removeUser()
                     .finally(() => console.log("Wat nun?"));
             } else if (res.status >= 400) {
-                return Promise.reject(new Error(res.statusText));
+                let text = res.statusText;
+                if (text === "") {
+                    if (res.status === 401) {
+                        text = i18next.t("unauthorized");
+                    } else if (res.status === 403) {
+                        text = i18next.t("forbidden");
+                    } else if (res.status === 404) {
+                        text = i18next.t("not-found");
+                    } else if (res.status === 429) {
+                        text = i18next.t("too-many-requests");
+                    } else {
+                        text = i18next.t("http-error-code", { status: res.status });
+                    }
+                 }
+
+                return Promise.reject(new Error(text));
             }
             return Promise.resolve(res);
         });
@@ -109,10 +128,6 @@ const _get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: P
     };
 
     return executeRequest(auth, url, requestOptions);
-}
-
-export const getImage = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: PathComponents, queryParameters?: Map<string, number>): Promise<Response> => {
-    return _get(auth, endpoint, pathComponents, queryParameters, "image/*");
 }
 
 export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: PathComponents, queryParameters?: Map<string, number>): Promise<Response> => {

@@ -42,7 +42,7 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<CreateU
             })
             .then(() => handleClose(true))
             .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err) => enqueueSnackbar("Creation failed: " + err, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar("Creation failed: " + err.message, { variant: 'error'} ));
     }
 
     return (

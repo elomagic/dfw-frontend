@@ -43,7 +43,7 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
             })
             .then(() => handleClose(true))
             .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err) => enqueueSnackbar("Creation failed: " + err, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar("Creation failed: " + err.message, { variant: 'error'} ));
     }
 
     return (
