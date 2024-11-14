@@ -69,7 +69,7 @@ export default function MyAccountView() {
                                          required
                                          gridSize={6}
                     />
-                    <FormButton label={t("save")} onClick={handleSaveClick}/>
+                    <FormButton onClick={handleSaveClick}/>
                 </Grid>
             </Card>
         </Box>

@@ -90,7 +90,7 @@ export default function EditableTableRow({ group }: Readonly<EditableTableRowPro
                             label={t("User Account Members")}
                             onChange={handleUserMembers} />
 
-            <FormButton label={t("save")} onClick={handleSaveClick}/>
+            <FormButton onClick={handleSaveClick}/>
         </Grid>
     );
 }

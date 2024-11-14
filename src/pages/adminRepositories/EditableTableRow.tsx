@@ -122,7 +122,7 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
                           gridSize={6}
             />
 
-            <FormButton label={t("save")} onClick={handleSaveClick}/>
+            <FormButton onClick={handleSaveClick}/>
         </Grid>
     );
 }

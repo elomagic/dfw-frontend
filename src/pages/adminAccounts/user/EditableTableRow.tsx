@@ -86,7 +86,7 @@ export default function EditableTableRow({ user }: Readonly<EditableTableRowProp
                           gridSize={6}
             />
 
-            <FormButton label={t("save")} onClick={handleSaveClick}/>
+            <FormButton onClick={handleSaveClick}/>
         </Grid>
     );
 }
