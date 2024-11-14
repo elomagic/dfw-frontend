@@ -21,9 +21,10 @@ const fields: FormFieldValidationProperty[] = [
 
 interface EditableTableRowProps {
     repository: Repository
+    onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ repository }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ repository, onDeleteRequest }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -122,7 +123,7 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
                           gridSize={6}
             />
 
-            <FormButton onClick={handleSaveClick}/>
+            <FormButton onClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

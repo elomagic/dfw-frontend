@@ -1,9 +1,9 @@
 import TableCell from "@mui/material/TableCell";
-import {Check, DeleteForever} from "@mui/icons-material";
+import {Check} from "@mui/icons-material";
 import TableRow from "@mui/material/TableRow";
 import {Repository} from "../../DTOs.ts";
 import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
-import {Collapse, IconButton} from "@mui/material";
+import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
 
@@ -28,12 +28,11 @@ export default function CollapsableTableRow({ repository, onDeleteRequest }: Rea
                 <TableCell>{repository.enabled ? <Check color="success" /> : ""}</TableCell>
                 <TableCell>{repository.description}</TableCell>
                 <TableCell>{repository.baseUri}</TableCell>
-                <TableCell><IconButton onClick={() => onDeleteRequest(repository)}><DeleteForever/></IconButton></TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow repository={repository} />
+                        <EditableTableRow repository={repository} onDeleteRequest={() => onDeleteRequest(repository)} />
                     </Collapse>
                 </TableCell>
 

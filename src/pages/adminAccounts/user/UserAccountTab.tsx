@@ -70,7 +70,6 @@ export default function UserAccountTab() {
                             <TableCell>{t("mailAddress")}</TableCell>
                             <TableCell>{t("enabled")}</TableCell>
                             <TableCell>{t("displayName")}</TableCell>
-                            <TableCell>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
 

@@ -68,7 +68,6 @@ export default function UserAccountGroupTab() {
                     <TableHead>
                         <TableRow>
                             <TableCell>{t("name")}</TableCell>
-                            <TableCell>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
 

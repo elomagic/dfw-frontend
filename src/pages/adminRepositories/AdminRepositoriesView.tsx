@@ -72,7 +72,6 @@ export default function AdminRepositoriesView() {
                             <TableCell>{t("enabled")}</TableCell>
                             <TableCell>{t("description")}</TableCell>
                             <TableCell>{t("url")}</TableCell>
-                            <TableCell>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>
 

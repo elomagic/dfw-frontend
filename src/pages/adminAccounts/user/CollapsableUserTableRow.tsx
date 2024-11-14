@@ -1,8 +1,8 @@
 import TableCell from "@mui/material/TableCell";
-import {Check, DeleteForever} from "@mui/icons-material";
+import {Check} from "@mui/icons-material";
 import TableRow from "@mui/material/TableRow";
 import {UserAccount} from "../../../DTOs.ts";
-import {Collapse, IconButton} from "@mui/material";
+import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
 
@@ -25,12 +25,11 @@ export default function CollapsableUserTableRow({ user, onDeleteRequest }: Reado
                 <TableCell>{user.mailAddress}</TableCell>
                 <TableCell>{user.enabled ? <Check color="success" /> : ""}</TableCell>
                 <TableCell>{user.displayName}</TableCell>
-                <TableCell><IconButton onClick={() => onDeleteRequest(user)}><DeleteForever/></IconButton></TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow user={user} />
+                        <EditableTableRow user={user} onDeleteRequest={() => onDeleteRequest(user)} />
                     </Collapse>
                 </TableCell>
 
