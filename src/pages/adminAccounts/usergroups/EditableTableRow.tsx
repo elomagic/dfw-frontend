@@ -1,6 +1,5 @@
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
-import {Button} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {FormFieldProperty, validateInputs} from "../../../FormFieldProperties.ts";
 import FormFieldComponents, {KeyLabelItem} from "../../../components/FormFieldComponents.tsx";
@@ -10,6 +9,7 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
 import FormSelectList from "../../../components/FormSelectList.tsx";
+import FormButton from "../../../components/FormButton.tsx";
 
 const fields: FormFieldProperty[] = [
     { name : "name", minLength: 1 },
@@ -72,7 +72,7 @@ export default function EditableTableRow({ group }: Readonly<EditableTableRowPro
     };
 
     return (
-        <Grid container spacing={2} margin={2} onSubmit={handleSaveClick}>
+        <Grid container spacing={2} margin={2}>
             <FormFieldComponents id="name"
                                  value={name}
                                  errorMessage={nameErrorMessage}
@@ -88,14 +88,7 @@ export default function EditableTableRow({ group }: Readonly<EditableTableRowPro
                             label={t("User Account Members")}
                             onChange={handleUserMembers} />
 
-            <Grid size={12}>
-                <Button
-                    variant="contained"
-                    onClick={handleSaveClick}
-                >
-                    {t("save")}
-                </Button>
-            </Grid>
+            <FormButton label={t("save")} onClick={handleSaveClick}/>
         </Grid>
     );
 }

@@ -1,106 +1,75 @@
-import {Box, Button, Card, FormControl, FormLabel, TextField} from "@mui/material";
+import {Box, Card} from "@mui/material";
 import {useAuth} from "../../auth/useAuth.ts";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
+import Grid from "@mui/material/Grid2";
+import FormFieldComponents from "../../components/FormFieldComponents.tsx";
+import {FormFieldProperty, validateInputs} from "../../FormFieldProperties.ts";
+import {UserAccount} from "../../DTOs.ts";
+import {enqueueSnackbar} from "notistack";
+import FormButton from "../../components/FormButton.tsx";
+
+const fields: FormFieldProperty[] = [
+    { name : "displayName", minLength: 1 },
+];
 
 export default function MyAccountView() {
 
     const { t } = useTranslation();
     const auth = useAuth();
-    const [displayNameError, setDisplayNameError] = useState(false);
-    const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState('');
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const [mailAddress] = useState(auth.mailAddress);
+    const [displayName, setDisplayName] = useState(auth.displayName);
 
-        if (displayNameError) {
+    const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string|undefined>('');
+
+    const handleSaveClick = () => {
+        if (validateInputs(fields, (fieldName, result) => {
+            switch (fieldName) {
+                case "displayName": {
+                    setDisplayNameErrorMessage(result);
+                    break;
+                }
+            }
+        })) {
             return;
         }
 
-        const data = new FormData(event.currentTarget);
-
-        Rest.post(auth, RestEndpoint.UserSelf, data)
-            .catch((reason) => {
-                console.error(reason);
-                setDisplayNameError(true);
-                setDisplayNameErrorMessage('Something went wrong during saving your data.');
-            });
-    };
-
-    const validateInputs = () => {
-        const displayName = document.getElementById('displayName') as HTMLInputElement;
-
-        if (displayName.value.length === 0) {
-            setDisplayNameError(true);
-            setDisplayNameErrorMessage('Please enter a display name');
-        } else {
-            setDisplayNameError(false);
-            setDisplayNameErrorMessage('');
+        const data: UserAccount = {
+            mailAddress: auth.mailAddress ?? "",
+            displayName: auth.displayName ?? "",
+            // Following properties will be ignored by server
+            enabled: false,
+            changePassword: true,
         }
+
+        Rest.patch(auth, RestEndpoint.UserSelf, data)
+            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
+            .catch((err) => enqueueSnackbar("Saving data failed: " + err, { variant: 'error'} ));
     };
 
     return (
         <Box margin={3}>
             <Card>
-                <Box
-                    component="form"
-                    onSubmit={handleSubmit}
-                    noValidate
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        gap: 2,
-                    }}
-                >
-                    <FormControl>
-                        <FormLabel htmlFor="mailAddress">{t("mailAddress")}</FormLabel>
-                        <TextField
-                            id="mailAddress"
-                            defaultValue={auth.mailAddress}
-                            type="email"
-                            name="mailAddress"
-                            fullWidth
-                            variant="outlined"
-                            sx={{ ariaLabel: 'mailAddress' }}
-                            slotProps={{
-                                input: {
-                                    readOnly: true,
-                                },
-                            }}
-                        />
-                    </FormControl>
-
-                    <FormControl>
-                        <FormLabel htmlFor="displayName">{t("displayName")}</FormLabel>
-                        <TextField
-                            error={displayNameError}
-                            helperText={displayNameErrorMessage}
-                            id="displayName"
-                            type="text"
-                            name="displayName"
-                            placeholder="Johnny Doe"
-                            autoComplete="displayName"
-                            autoFocus
-                            required
-                            fullWidth
-                            variant="outlined"
-                            color={displayNameError ? 'error' : 'primary'}
-                            sx={{ ariaLabel: 'mailAddress' }}
-                        />
-                    </FormControl>
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        onClick={validateInputs}
-                    >
-                        {t("save")}
-                    </Button>
-                </Box>
+                <Grid container spacing={2} margin={2}>
+                    <FormFieldComponents id="mailAddress"
+                                         value={mailAddress}
+                                         label={t("mailAddress")}
+                                         gridSize={6}
+                    />
+                    <FormFieldComponents id="displayName"
+                                         value={displayName}
+                                         errorMessage={displayNameErrorMessage}
+                                         onChange={e => setDisplayName(e.target.value)}
+                                         label={t("displayName")}
+                                         autoFocus
+                                         required
+                                         gridSize={6}
+                    />
+                    <FormButton label={t("save")} onClick={handleSaveClick}/>
+                </Grid>
             </Card>
         </Box>
     );
