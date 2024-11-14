@@ -109,7 +109,7 @@ const executeRequest = (auth: AuthContextProps, url: RequestInfo, requestOptions
 
 export declare type PathComponents = string[] | string | undefined
 
-const _get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: PathComponents, queryParameters?: Map<string, number>, acceptedMimeType?: string): Promise<Response> => {
+export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: PathComponents, queryParameters?: Map<string, number>): Promise<Response> => {
     let paths = undefined;
     if (pathComponents != null && Array.isArray(pathComponents)) {
         paths = pathComponents
@@ -123,15 +123,11 @@ const _get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: P
         mode: 'cors',
         method: 'GET',
         headers: {
-            "Accept": acceptedMimeType ?? "*/*",
+            "Accept": "application/json",
         },
     };
 
     return executeRequest(auth, url, requestOptions);
-}
-
-export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: PathComponents, queryParameters?: Map<string, number>): Promise<Response> => {
-    return _get(auth, endpoint, pathComponents, queryParameters, "application/json")
 }
 
 /**
