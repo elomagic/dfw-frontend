@@ -7,7 +7,7 @@ import {
     DialogTitle, Slide,
 } from '@mui/material';
 import {TransitionProps} from "@mui/material/transitions";
-import {forwardRef} from "react";
+import {forwardRef, ReactElement, Ref} from "react";
 import {useTranslation} from "react-i18next";
 
 interface YesNoDialogProps {
@@ -22,11 +22,11 @@ interface YesNoDialogProps {
 
 const Transition = forwardRef(function Transition(
     props: TransitionProps & {
-        children: React.ReactElement<any, any>;
+        children: ReactElement<any, any>;
     },
-    ref: React.Ref<unknown>,
+    ref: Ref<unknown>,
 ) {
-    return <Slide direction="up" ref={ref} {...props}/>;
+    return <Slide direction="down" ref={ref} {...props}/>;
 });
 
 const YesNoDialog = ({

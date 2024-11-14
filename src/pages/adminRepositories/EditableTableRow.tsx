@@ -1,7 +1,7 @@
 import {Repository} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
-import {Button, InputAdornment} from "@mui/material";
+import {InputAdornment} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {FormFieldProperty, validateInputs} from "../../FormFieldProperties.ts";
 import FormFieldComponents, {FormCheckbox} from "../../components/FormFieldComponents.tsx";
@@ -10,6 +10,7 @@ import {RestEndpoint} from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
 import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
 import {enqueueSnackbar} from "notistack";
+import FormButton from "../../components/FormButton.tsx";
 
 const fields: FormFieldProperty[] = [
     { name : "name", minLength: 1 },
@@ -67,7 +68,7 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
     };
 
     return (
-        <Grid container spacing={2} margin={2} onSubmit={handleSaveClick}>
+        <Grid container spacing={2} margin={2}>
             <FormFieldComponents id="name"
                                  value={name}
                                  errorMessage={nameErrorMessage}
@@ -119,14 +120,7 @@ export default function EditableTableRow({ repository }: Readonly<EditableTableR
                           gridSize={6}
             />
 
-            <Grid size={12}>
-                <Button
-                    variant="contained"
-                    onClick={handleSaveClick}
-                >
-                    {t("save")}
-                </Button>
-            </Grid>
+            <FormButton label={t("save")} onClick={handleSaveClick}/>
         </Grid>
     );
 }

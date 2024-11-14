@@ -2,6 +2,7 @@ import {createContext, ReactNode, useEffect, useState} from "react";
 
 export interface AuthContextProps {
     mailAddress: string | undefined;
+    displayName: string | undefined;
     roles: string[];
     isAuthenticated: boolean;
     accessToken: string | undefined;
@@ -20,6 +21,7 @@ export declare interface AuthProviderProps {
 
 declare interface AuthenticationResponse {
     mailAddress: string;
+    displayName: string;
     token: string;
     roles: string[];
 }
@@ -32,12 +34,14 @@ export const AuthProvider = (authProvider: AuthProviderProps): JSX.Element => {
 
     const _auth: AuthContextProps = {
         mailAddress: undefined,
+        displayName: undefined,
         roles: [],
         isAuthenticated: false,
         accessToken: undefined,
 
         removeUser(): Promise<AuthContextProps> {
             auth.mailAddress = undefined;
+            auth.displayName = undefined;
             auth.roles = [];
             auth.isAuthenticated = false;
             auth.accessToken = undefined;
@@ -108,6 +112,7 @@ export const AuthProvider = (authProvider: AuthProviderProps): JSX.Element => {
                 .then((res: Response) => res.json())
                 .then((dto: AuthenticationResponse) => {
                     auth.mailAddress = dto.mailAddress;
+                    auth.displayName = dto.displayName;
                     auth.roles = dto.roles;
                     auth.isAuthenticated = true;
                     auth.accessToken = dto.token;

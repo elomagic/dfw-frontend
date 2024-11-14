@@ -1,6 +1,5 @@
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
-import {Button} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {FormFieldProperty, validateInputs} from "../../../FormFieldProperties.ts";
 import FormFieldComponents, {FormCheckbox} from "../../../components/FormFieldComponents.tsx";
@@ -9,6 +8,7 @@ import {RestEndpoint} from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
+import FormButton from "../../../components/FormButton.tsx";
 
 const fields: FormFieldProperty[] = [
     { name : "displayName", minLength: 1 },
@@ -55,7 +55,7 @@ export default function EditableTableRow({ user }: Readonly<EditableTableRowProp
     };
 
     return (
-        <Grid container spacing={2} margin={2} onSubmit={handleSaveClick}>
+        <Grid container spacing={2} margin={2}>
             <FormFieldComponents id="mailAddress"
                                  value={mailAddress}
                                  label={t("mailAddress")}
@@ -84,14 +84,7 @@ export default function EditableTableRow({ user }: Readonly<EditableTableRowProp
                           gridSize={6}
             />
 
-            <Grid size={12}>
-                <Button
-                    variant="contained"
-                    onClick={handleSaveClick}
-                >
-                    {t("save")}
-                </Button>
-            </Grid>
+            <FormButton label={t("save")} onClick={handleSaveClick}/>
         </Grid>
     );
 }
