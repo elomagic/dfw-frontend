@@ -37,7 +37,7 @@ export declare interface UserAccountGroup {
     id?: string;
     name: string;
     userAccounts: UserAccount[];
-    permissions: string[];
+    roles: string[];
 }
 
 export declare interface Version {

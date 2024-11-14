@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import {KeyLabelItem} from "./FormSelect.tsx";
 import Grid from "@mui/material/Grid2";
-import {Add, Garage} from "@mui/icons-material";
+import {Add, RemoveCircle} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
 
 interface FormSelectListProps {
@@ -18,7 +18,7 @@ interface FormSelectListProps {
     gridSize?: number;
 }
 
-export default function FormSelectList({ label, selectables, gridSize}: Readonly<FormSelectListProps>) {
+export default function FormSelectList({ label, selectables, gridSize, onChange}: Readonly<FormSelectListProps>) {
 
     const { t } = useTranslation();
 
@@ -26,17 +26,25 @@ export default function FormSelectList({ label, selectables, gridSize}: Readonly
         console.log("Not implemented yet");
     }
 
+    const handleDeleteClick = (key: string) => {
+        onChange(selectables.filter(item => item.key !== key).map(item => item.key));
+    }
+
     return (
         <>
             { gridSize && (
                 <Grid size={gridSize}>
                     {label}
-                    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                    <List sx={{
+                        width: '100%', height: 300, margin: '6px 0 6px 0',
+                        border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px', padding: '8px 14px',
+                        overflow: "auto"
+                    }}>
                         {selectables.map((item) => (
                             <ListItem key={item.key}
                                       secondaryAction={
                                           <IconButton edge="end" aria-label="remove">
-                                              <Garage />
+                                              <RemoveCircle color="error" onClick={() => handleDeleteClick(item.key)}/>
                                           </IconButton>
                                       }
                                       disablePadding>

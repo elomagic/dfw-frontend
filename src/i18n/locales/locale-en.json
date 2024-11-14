@@ -33,6 +33,7 @@
     "frontend": "Frontend",
     "german": "German",
     "http-error-code": "HTTP Error Code: {{status}}",
+    "language": "Language",
     "licenses": "Licenses",
     "logout": "Logout",
     "mailAddress": "Mail Address",
@@ -47,6 +48,7 @@
     "purl": "PURL",
     "repositories": "Repositories",
     "reset-password": "Reset Password",
+    "roles": "Roles",
     "sign-in": "Sign in",
     "successful-created": "Successful created",
     "successful-saved": "Successful saved",
@@ -55,6 +57,7 @@
     "unauthorized": "Unauthorized",
     "url": "URL",
     "user-accounts": "User Accounts",
+    "user-account-members": "User Account Members",
     "username": "Username",
     "vulnerabilities": "Vulnerabilities",
     "yes": "yes"

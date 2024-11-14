@@ -31,6 +31,8 @@ export default function EditableTableRow({ group, onDeleteRequest }: Readonly<Ed
     const [name, setName] = useState(group.name);
     const [userMembers, setUserMembers] = useState<string[]>([]); // Key = mailAddress
     const [allUsers, setAllUsers] = useState<KeyLabelItem[]>([]);
+    const [roles, setRoles] = useState<string[]>([]);
+    const [allRoles, setAllRoles] = useState<string[]>([]);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
 
@@ -44,10 +46,19 @@ export default function EditableTableRow({ group, onDeleteRequest }: Readonly<Ed
                 setAllUsers(items);
             })
             .catch((err: Error) => enqueueSnackbar("Getting users failed: " + err.message, { variant: 'error'} ));
+
+        Rest.get(auth, Rest.RestEndpoint.Role)
+            .then((res) => res.json())
+            .then((rs: string[]) => setAllRoles(rs))
+            .catch((err: Error) => enqueueSnackbar("Getting roles failed: " + err.message, { variant: 'error'} ));
     }, [auth]);
 
-    const handleUserMembers = (selectedMembers: string[]) => {
+    const handleUserMembersChanged = (selectedMembers: string[]) => {
         setUserMembers(selectedMembers);
+    }
+
+    const handleRolesChanged = (selectedRoles: string[]) => {
+        setRoles(selectedRoles);
     }
 
     const handleSaveClick = () => {
@@ -65,7 +76,7 @@ export default function EditableTableRow({ group, onDeleteRequest }: Readonly<Ed
         const data: UserAccountGroup = {
             id,
             name,
-            permissions: [],
+            roles,
             userAccounts: []
         }
 
@@ -86,10 +97,20 @@ export default function EditableTableRow({ group, onDeleteRequest }: Readonly<Ed
                                  gridSize={6}
             />
 
+            <Grid size={6} />
+
             <FormSelectList value={userMembers}
                             selectables={allUsers}
-                            label={t("User Account Members")}
-                            onChange={handleUserMembers} />
+                            label={t("user-account-members")}
+                            onChange={handleUserMembersChanged}
+                            gridSize={6}
+            />
+            <FormSelectList value={roles}
+                            selectables={allRoles.map(r => { return { "key": r, "label": r} as KeyLabelItem })}
+                            label={t("roles")}
+                            onChange={handleRolesChanged}
+                            gridSize={6}
+            />
 
             <FormButton onClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>

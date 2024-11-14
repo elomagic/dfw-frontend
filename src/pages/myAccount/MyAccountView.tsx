@@ -24,7 +24,7 @@ export default function MyAccountView() {
 
     const [mailAddress] = useState(auth.mailAddress);
     const [displayName, setDisplayName] = useState(auth.displayName);
-    const [language, setLanguage] = useState(auth.displayName);
+    const [language, setLanguage] = useState<string>(auth.language ?? "EN");
 
     const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string|undefined>('');
 
@@ -73,14 +73,15 @@ export default function MyAccountView() {
                                          gridSize={6}
                     />
 
-                    <FormSelect id="mode"
-                                value={language ?? "EN"}
-                                label={t("mode")}
+                    <FormSelect id="language"
+                                value={language}
+                                label={t("language")}
                                 items={[
                                     { "key": "EN", "label": t("english") },
                                     { "key": "DE", "label": t("german") },
                                 ]}
                                 onChange={(e) => setLanguage(e.target.value as string)}
+                                gridSize={6}
                     />
 
                     <FormButton onClick={handleSaveClick}/>
