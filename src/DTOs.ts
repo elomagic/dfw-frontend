@@ -27,6 +27,7 @@ export declare interface UserAccount {
     id?: string;
     mailAddress: string;
     displayName: string;
+    language: string;
     enabled: boolean;
     changePassword: boolean;
     lastPasswordChange?: string;

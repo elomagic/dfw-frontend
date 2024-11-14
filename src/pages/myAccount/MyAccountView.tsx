@@ -11,6 +11,7 @@ import {enqueueSnackbar} from "notistack";
 import FormButton from "../../components/FormButton.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
+import {FormSelect} from "../../components/FormSelect.tsx";
 
 const fields: FormFieldValidationProperty[] = [
     { name : "displayName", minLength: 1 },
@@ -23,6 +24,7 @@ export default function MyAccountView() {
 
     const [mailAddress] = useState(auth.mailAddress);
     const [displayName, setDisplayName] = useState(auth.displayName);
+    const [language, setLanguage] = useState(auth.displayName);
 
     const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string|undefined>('');
 
@@ -40,7 +42,8 @@ export default function MyAccountView() {
 
         const data: UserAccount = {
             mailAddress: auth.mailAddress ?? "",
-            displayName: auth.displayName ?? "",
+            displayName: displayName ?? "",
+            language: language ?? "EN",
             // Following properties will be ignored by server
             enabled: false,
             changePassword: true,
@@ -69,6 +72,17 @@ export default function MyAccountView() {
                                          required
                                          gridSize={6}
                     />
+
+                    <FormSelect id="mode"
+                                value={language ?? "EN"}
+                                label={t("mode")}
+                                items={[
+                                    { "key": "EN", "label": t("english") },
+                                    { "key": "DE", "label": t("german") },
+                                ]}
+                                onChange={(e) => setLanguage(e.target.value as string)}
+                    />
+
                     <FormButton onClick={handleSaveClick}/>
                 </Grid>
             </Card>

@@ -28,6 +28,7 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<CreateU
         const data: UserAccount = {
             mailAddress,
             displayName: '',
+            language: 'EN',
             enabled: false,
             changePassword: true,
         }

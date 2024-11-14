@@ -11,6 +11,7 @@ import FormButton from "../../../components/FormButton.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../../components/FormCheckBox.tsx";
 import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
+import {FormSelect} from "../../../components/FormSelect.tsx";
 
 const fields: FormFieldValidationProperty[] = [
     { name : "displayName", minLength: 1 },
@@ -28,6 +29,7 @@ export default function EditableTableRow({ user, onDeleteRequest }: Readonly<Edi
 
     const [mailAddress] = useState(user.mailAddress);
     const [displayName, setDisplayName] = useState(user.displayName);
+    const [language, setLanguage] = useState(user.language);
     const [enabled, setEnabled] = useState(user.enabled);
     const [changePassword, setChangePassword] = useState(user.changePassword);
 
@@ -48,6 +50,7 @@ export default function EditableTableRow({ user, onDeleteRequest }: Readonly<Edi
         const data: UserAccount = {
             mailAddress: user.mailAddress,
             displayName,
+            language,
             enabled,
             changePassword
         }
@@ -85,6 +88,16 @@ export default function EditableTableRow({ user, onDeleteRequest }: Readonly<Edi
                           label={t("changePassword")}
                           onChange={e => setChangePassword(e.target.checked)}
                           gridSize={6}
+            />
+
+            <FormSelect id="mode"
+                        value={language ?? "EN"}
+                        label={t("mode")}
+                        items={[
+                            { "key": "EN", "label": t("english") },
+                            { "key": "DE", "label": t("german") },
+                        ]}
+                        onChange={(e) => setLanguage(e.target.value as string)}
             />
 
             <FormButton onClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
