@@ -28,7 +28,7 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Cr
         const data: UserAccountGroup = {
             name,
             userAccounts: [],
-            permissions: []
+            roles: []
         }
 
         Rest
