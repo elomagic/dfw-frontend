@@ -9,6 +9,8 @@ import {KeyLabelItem} from "./FormSelect.tsx";
 import Grid from "@mui/material/Grid2";
 import {Add, RemoveCircle} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
+import {useState} from "react";
+import SelectItemDialog from "./SelectItemDialog.tsx";
 
 interface FormSelectListProps {
     value: string[];
@@ -18,12 +20,22 @@ interface FormSelectListProps {
     gridSize?: number;
 }
 
-export default function FormSelectList({ label, selectables, gridSize, onChange}: Readonly<FormSelectListProps>) {
+export default function FormSelectList({ label, selectables, gridSize, onChange, value}: Readonly<FormSelectListProps>) {
 
     const { t } = useTranslation();
+    const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
+    const [ values, setValues ] = useState<string[]>(value);
+
+    const handleCloseDialog = (cancel: boolean, keys: string[]) => {
+        setDialogOpen(false);
+        if (!cancel) {
+            setValues(keys)
+            onChange(keys);
+        }
+    }
 
     const handleAddClick = () => {
-        console.log("Not implemented yet");
+        setDialogOpen(true);
     }
 
     const handleDeleteClick = (key: string) => {
@@ -60,6 +72,7 @@ export default function FormSelectList({ label, selectables, gridSize, onChange}
                     </Button>
                 </Grid>
             )}
+            <SelectItemDialog open={dialogOpen} handleClose={handleCloseDialog} value={values} selectables={selectables} />
         </>
     );
 }

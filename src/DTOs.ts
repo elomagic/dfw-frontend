@@ -57,6 +57,7 @@ export declare interface License {
 }
 
 export interface LicenseNameMap {
+    id?: string;
     nameMatch: string;
     spdxId: string;
 }
@@ -73,6 +74,7 @@ export declare interface LicensePermitted {
 }
 
 export declare interface LicensePurlMap {
+    id?: string;
     purlMatch: string;
     spdxId: string;
 }
