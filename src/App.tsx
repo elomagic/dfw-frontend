@@ -26,7 +26,7 @@ import DashboardView from "./pages/dashboard/DashboardView.tsx";
 import {ProtectedRoute} from "./auth/ProtectedRoute.tsx";
 import AccountsView from "./pages/adminAccounts/AccountsView.tsx";
 import AdminRepositoriesView from "./pages/adminRepositories/AdminRepositoriesView.tsx";
-import LicensesView from "./pages/licenses/LicensesView.tsx";
+import LicenseIssuesView from "./pages/licenseIssues/LicenseIssuesView.tsx";
 import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
 import AdminLicensesView from "./pages/adminLicenses/AdminLicensesView.tsx";
 import SignInView from "./pages/signin/SignInView.tsx";
@@ -210,7 +210,7 @@ function App() {
                             USERACCOUNT_GROUP_DELETE;
                             */}
                             <Routes>
-                                <Route path='licenses' element={<ProtectedRoute roles={["LICENSE_*"]}><LicensesView /></ProtectedRoute>}/>
+                                <Route path='license-issues' element={<ProtectedRoute><LicenseIssuesView /></ProtectedRoute>}/>
                                 <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
 
                                 <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>

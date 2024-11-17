@@ -80,6 +80,7 @@ export declare interface LicensePurlMap {
 }
 
 export declare interface LicenseViolation {
+    id: string;
     purl: string;
     licenses: string[];
 }

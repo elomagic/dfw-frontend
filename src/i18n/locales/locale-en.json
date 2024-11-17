@@ -34,6 +34,7 @@
     "german": "German",
     "http-error-code": "HTTP Error Code: {{status}}",
     "language": "Language",
+    "license-issues": "License Issues",
     "licenses": "Licenses",
     "logout": "Logout",
     "mailAddress": "Mail Address",
