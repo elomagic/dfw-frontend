@@ -90,14 +90,15 @@ export default function EditableTableRow({ user, onDeleteRequest }: Readonly<Edi
                           gridSize={6}
             />
 
-            <FormSelect id="mode"
+            <FormSelect id="language"
                         value={language ?? "EN"}
-                        label={t("mode")}
+                        label={t("language")}
                         items={[
                             { "key": "EN", "label": t("english") },
                             { "key": "DE", "label": t("german") },
                         ]}
                         onChange={(e) => setLanguage(e.target.value as string)}
+                        gridSize={6}
             />
 
             <FormButton onClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>

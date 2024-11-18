@@ -20,6 +20,7 @@
     "create-user-account": "Create User Account",
     "create-user-group": "Create User Group",
     "credentialId": "Credential ID",
+    "credentials": "Credentials",
     "dashboard": "Dashboard",
     "delete-credential": "Delete Credential",
     "delete-repository": "Delete Repository",

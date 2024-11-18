@@ -22,7 +22,7 @@ export default function AppMenuItems() {
                 <ListItemIcon>
                     <GoLaw className='fs15em'/>
                 </ListItemIcon>
-                <ListItemText primary={t("licenses-issues")}/>
+                <ListItemText primary={t("license-issues")}/>
             </ListItemButton>
                 <ListItemButton component={RouterLink} to='vulnerabilities'>
                 <ListItemIcon>
@@ -37,28 +37,28 @@ export default function AppMenuItems() {
                 <ListItemIcon>
                     <Settings className='fs15em'/>
                 </ListItemIcon>
-                <ListItemText primary={t("licenses")}/>
+                <ListItemText primary={t("admin-licenses")}/>
             </ListItemButton>
 
             <ListItemButton component={RouterLink} to='admin-vulnerabilities'>
                 <ListItemIcon>
                     <Settings className='fs15em'/>
                 </ListItemIcon>
-                <ListItemText primary={t("vulnerabilities")}/>
+                <ListItemText primary={t("admin-vulnerabilities")}/>
             </ListItemButton>
 
             <ListItemButton component={RouterLink} to='admin-repositories'>
                 <ListItemIcon>
                     <Public className='fs15em'/>
                 </ListItemIcon>
-                <ListItemText primary={t("repositories")}/>
+                <ListItemText primary={t("admin-repositories")}/>
             </ListItemButton>
 
             <ListItemButton component={RouterLink} to='admin-credentials'>
                 <ListItemIcon>
                     <RiLockPasswordFill className='fs15em'/>
                 </ListItemIcon>
-                <ListItemText primary={t("credentials")}/>
+                <ListItemText primary={t("admin-credentials")}/>
             </ListItemButton>
 
             <Divider sx={{my: 1}}/>
