@@ -66,7 +66,7 @@ export default function EditableTableRow({ nameMap, onDeleteRequest }: Readonly<
     };
 
     return (
-        <Grid container spacing={2} margin={2}>
+        <Grid container spacing={2} marginTop={2} marginBottom={2}>
             <FormTextField id="nameMatch"
                            value={nameMatch}
                            errorMessage={nameErrorMessage}
@@ -82,6 +82,7 @@ export default function EditableTableRow({ nameMap, onDeleteRequest }: Readonly<
                         label={t("spdx-id")}
                         items={spdxList}
                         onChange={(e) => setSpdxId(e.target.value as string)}
+                        gridSize={6}
             />
 
             <FormButton onClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>

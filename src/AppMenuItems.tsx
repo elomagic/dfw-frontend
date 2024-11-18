@@ -18,11 +18,11 @@ export default function AppMenuItems() {
                 </ListItemIcon>
                 <ListItemText primary={t('dashboard')}/>
             </ListItemButton>
-            <ListItemButton component={RouterLink} to='licenses'>
+            <ListItemButton component={RouterLink} to='license-issues'>
                 <ListItemIcon>
                     <GoLaw className='fs15em'/>
                 </ListItemIcon>
-                <ListItemText primary={t("licenses")}/>
+                <ListItemText primary={t("licenses-issues")}/>
             </ListItemButton>
                 <ListItemButton component={RouterLink} to='vulnerabilities'>
                 <ListItemIcon>

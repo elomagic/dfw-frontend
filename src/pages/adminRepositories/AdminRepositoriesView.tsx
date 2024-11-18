@@ -32,8 +32,11 @@ export default function AdminRepositoriesView() {
             .then((reps: Repository[]) => {
                 setRows(reps);
             })
-            .catch((err: Error) => enqueueSnackbar("Getting data failed: " + err.message, { variant: 'error'} ));
-    }, [auth]);
+            .catch((err: Error) => {
+                setRows([])
+                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+            });
+    }, [t, auth]);
 
     const handleCloseDialog = () => {
         setDialogOpen(false);
@@ -49,7 +52,8 @@ export default function AdminRepositoriesView() {
     const handleDelete = () => {
         Rest.deleteResource(auth, Rest.RestEndpoint.Repository, selectedEntity?.id)
             .then(() => refresh())
-            .catch((err: Error) => enqueueSnackbar("Deleting failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("deleting-failed", { message: err.message }), { variant: 'error'} ))
+            .finally(() => setDeleteOpen(false))
     }
 
     useEffect(() => {

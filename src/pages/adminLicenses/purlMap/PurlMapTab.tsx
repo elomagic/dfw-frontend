@@ -32,8 +32,11 @@ export default function PurlMapTab() {
             .then((dtos: LicensePurlMap[]) => {
                 setRows(dtos);
             })
-            .catch((err: Error) => enqueueSnackbar("Getting data failed: " + err.message, { variant: 'error'} ));
-    }, [auth]);
+            .catch((err: Error) => {
+                setRows([])
+                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+            });
+    }, [t, auth]);
 
     const handleCloseDialog = () => {
         setDialogOpen(false);
@@ -47,9 +50,10 @@ export default function PurlMapTab() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.User, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.RestEndpoint.LicensePurlMap, selectedEntity?.id)
             .then(() => refresh())
-            .catch((err: Error) => enqueueSnackbar("Deleting failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("deleting-failed", { message: err.message }), { variant: 'error'} ))
+            .finally(() => setDeleteOpen(false))
     }
 
     useEffect(() => {
@@ -67,9 +71,8 @@ export default function PurlMapTab() {
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>{t("mailAddress")}</TableCell>
-                            <TableCell>{t("enabled")}</TableCell>
-                            <TableCell>{t("displayName")}</TableCell>
+                            <TableCell>{t("purl-match")}</TableCell>
+                            <TableCell>{t("spdx-id")}</TableCell>
                         </TableRow>
                     </TableHead>
 

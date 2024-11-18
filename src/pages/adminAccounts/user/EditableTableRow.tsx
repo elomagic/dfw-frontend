@@ -61,7 +61,7 @@ export default function EditableTableRow({ user, onDeleteRequest }: Readonly<Edi
     };
 
     return (
-        <Grid container spacing={2} margin={2}>
+        <Grid container spacing={2} marginTop={2} marginBottom={2}>
             <FormTextField id="mailAddress"
                                  value={mailAddress}
                                  label={t("mailAddress")}

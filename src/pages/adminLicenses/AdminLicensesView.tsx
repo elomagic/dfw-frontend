@@ -47,8 +47,8 @@ export default function AdminLicensesView() {
         <Box margin={3}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label={t("PURL Mappings")} {...a11yProps(0)} />
-                    <Tab label={t("Name Mappings")} {...a11yProps(1)} />
+                    <Tab label={t("purl-mappings")} {...a11yProps(0)} />
+                    <Tab label={t("name-mappings")} {...a11yProps(1)} />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>

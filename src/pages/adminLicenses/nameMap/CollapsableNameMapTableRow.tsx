@@ -17,8 +17,7 @@ export default function CollapsableNameMapTableRow({ nameMap, onDeleteRequest }:
     return (
         <>
             <TableRow
-                key={nameMap.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
                 <TableCell>{nameMap.nameMatch}</TableCell>
@@ -30,7 +29,6 @@ export default function CollapsableNameMapTableRow({ nameMap, onDeleteRequest }:
                         <EditableTableRow nameMap={nameMap} onDeleteRequest={() => onDeleteRequest(nameMap)} />
                     </Collapse>
                 </TableCell>
-
             </TableRow>
         </>
     );

@@ -32,8 +32,11 @@ export default function NameMapTab() {
             .then((dtos: LicenseNameMap[]) => {
                 setRows(dtos);
             })
-            .catch((err: Error) => enqueueSnackbar("Getting data failed: " + err.message, { variant: 'error'} ));
-    }, [auth]);
+            .catch((err: Error) => {
+                setRows([])
+                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+            });
+    }, [t, auth]);
 
     const handleCloseDialog = () => {
         setDialogOpen(false);
@@ -49,7 +52,8 @@ export default function NameMapTab() {
     const handleDelete = () => {
         Rest.deleteResource(auth, Rest.RestEndpoint.LicenseNameMap, selectedEntity?.id)
             .then(() => refresh())
-            .catch((err: Error) => enqueueSnackbar("Deleting failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("deleting-failed", { message: err.message }), { variant: 'error'} ))
+            .finally(() => setDeleteOpen(false))
     }
 
     useEffect(() => {
@@ -58,7 +62,7 @@ export default function NameMapTab() {
 
     return (
         <Box>
-            <TableHeaderControls createCaption={t("create-user")}
+            <TableHeaderControls createCaption={t("create-name-mapping")}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}

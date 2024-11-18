@@ -1,7 +1,8 @@
 import {HTMLInputTypeAttribute, ReactNode} from "react";
 import {OutlinedInputProps} from "@mui/material/OutlinedInput";
 import Grid from "@mui/material/Grid2";
-import {FormControl, FormLabel, TextField} from "@mui/material";
+import {FormControl, TextField} from "@mui/material";
+import {GridSize} from "@mui/material/Grid2/Grid2";
 
 interface FormTextFieldProps {
     id: string;
@@ -12,7 +13,7 @@ interface FormTextFieldProps {
     required?: boolean;
     autoFocus?: boolean;
     onChange?: OutlinedInputProps['onChange'];
-    gridSize?: number;
+    gridSize?: GridSize;
     readOnly?: boolean;
     startAdornment?: ReactNode;
 }
@@ -39,12 +40,12 @@ export default function FormTextField({id, type, value, errorMessage, onChange, 
             { gridSize && (
                 <Grid size={gridSize}>
                     <FormControl fullWidth>
-                        <FormLabel htmlFor={id}>{label}</FormLabel>
                         <TextField
                             id={id}
                             name={id}
                             type={type ?? "text"}
                             value={value}
+                            label={label}
                             onChange={onChange}
                             fullWidth
                             required={required}
@@ -66,12 +67,12 @@ export default function FormTextField({id, type, value, errorMessage, onChange, 
             )}
             { !gridSize && (
                 <FormControl fullWidth>
-                    <FormLabel htmlFor={id}>{label}</FormLabel>
                     <TextField
                         id={id}
                         name={id}
                         type={type ?? "text"}
                         value={value}
+                        label={label}
                         onChange={onChange}
                         fullWidth
                         required={required}

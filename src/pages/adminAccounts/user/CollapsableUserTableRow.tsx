@@ -18,8 +18,7 @@ export default function CollapsableUserTableRow({ user, onDeleteRequest }: Reado
     return (
         <>
             <TableRow
-                key={user.mailAddress}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
                 <TableCell>{user.mailAddress}</TableCell>
@@ -32,7 +31,6 @@ export default function CollapsableUserTableRow({ user, onDeleteRequest }: Reado
                         <EditableTableRow user={user} onDeleteRequest={() => onDeleteRequest(user)} />
                     </Collapse>
                 </TableCell>
-
             </TableRow>
         </>
     );

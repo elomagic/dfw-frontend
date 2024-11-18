@@ -24,8 +24,11 @@ export default function LicenseIssuesView() {
             .then((reps: LicenseViolation[]) => {
                 setRows(reps);
             })
-            .catch((err: Error) => enqueueSnackbar("Getting data failed: " + err.message, { variant: 'error'} ));
-    }, [auth]);
+            .catch((err: Error) => {
+                setRows([])
+                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+            });
+    }, [t, auth]);
 
     const handleDeleteRequest = (r: LicenseViolation) => {
         setSelectedEntity(r);
@@ -33,9 +36,10 @@ export default function LicenseIssuesView() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.Repository, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.RestEndpoint.LicenseViolation, selectedEntity?.id)
             .then(() => refresh())
-            .catch((err: Error) => enqueueSnackbar("Deleting failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("deleting-failed", { message: err.message }), { variant: 'error'} ))
+            .finally(() => setDeleteOpen(false))
     }
 
     useEffect(() => {
@@ -52,7 +56,7 @@ export default function LicenseIssuesView() {
                     <TableHead>
                         <TableRow>
                             <TableCell>{t("purl")}</TableCell>
-                            <TableCell>{t("license")}</TableCell>
+                            <TableCell>{t("licenses")}</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -71,7 +75,7 @@ export default function LicenseIssuesView() {
             </TableContainer>
 
             <YesNoDialog title={t("delete-repository")}
-                         text={`Do ya really want to delete the issue with PURL '${selectedEntity?.purl}'?`}
+                         text={t("Do ya really want to delete the issue with PURL {{purl}}", { purl: selectedEntity?.purl})}
                          open={deleteOpen}
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}

@@ -1,13 +1,14 @@
 import {SwitchBaseProps} from "@mui/material/internal/SwitchBase";
 import Grid from "@mui/material/Grid2";
 import {Checkbox, FormControl, FormControlLabel} from "@mui/material";
+import {GridSize} from "@mui/material/Grid2/Grid2";
 
 interface FormCheckboxProps {
     id: string;
     value: boolean;
     label: string;
     onChange: SwitchBaseProps['onChange'];
-    gridSize?: number;
+    gridSize?: GridSize;
 }
 
 export function FormCheckbox({ id, value, onChange, label, gridSize}: Readonly<FormCheckboxProps>) {

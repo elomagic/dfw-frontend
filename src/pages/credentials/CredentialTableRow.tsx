@@ -13,8 +13,7 @@ export default function CredentialTableRow({ credential, onDeleteRequest }: Read
 
     return (
         <TableRow
-            key={credential.credentialId}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
         >
             <TableCell>{credential.credentialId}</TableCell>
             <TableCell>{credential.mode}</TableCell>

@@ -52,7 +52,7 @@ export default function SelectItemDialog({ open, handleClose, value, selectables
                 </DialogContentText>
 
                 <List sx={{
-                    width: '100%', height: 300, margin: '6px 0 6px 0',
+                    width: '100%', height: 400, margin: '6px 0 6px 0',
                     border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px', padding: '8px 14px',
                     overflow: "auto"
                 }}>

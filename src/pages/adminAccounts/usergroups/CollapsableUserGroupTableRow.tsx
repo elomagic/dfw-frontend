@@ -17,8 +17,7 @@ export default function CollapsableUserGroupTableRow({ userGroup, onDeleteReques
     return (
         <>
             <TableRow
-                key={userGroup.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
                 <TableCell>{userGroup.name}</TableCell>
@@ -29,7 +28,6 @@ export default function CollapsableUserGroupTableRow({ userGroup, onDeleteReques
                         <EditableTableRow group={userGroup} onDeleteRequest={() => onDeleteRequest(userGroup)} />
                     </Collapse>
                 </TableCell>
-
             </TableRow>
         </>
     );

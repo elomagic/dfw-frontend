@@ -17,8 +17,7 @@ export default function CollapsableTableRow({ licenseViolation, onDeleteRequest 
     return (
         <>
             <TableRow
-                key={licenseViolation.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
                 <TableCell>{licenseViolation.purl}</TableCell>
@@ -30,7 +29,6 @@ export default function CollapsableTableRow({ licenseViolation, onDeleteRequest 
                         <LicenseIssueTableRow licenseViolation={licenseViolation} onDeleteRequest={() => onDeleteRequest(licenseViolation)} />
                     </Collapse>
                 </TableCell>
-
             </TableRow>
         </>
     );

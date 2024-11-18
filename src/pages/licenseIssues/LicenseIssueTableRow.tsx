@@ -14,7 +14,7 @@ export default function LicenseIssueTableRow({ licenseViolation, onDeleteRequest
     const { t } = useTranslation();
 
     return (
-        <Grid container spacing={2} margin={2}>
+        <Grid container spacing={2} marginTop={2} marginBottom={2}>
             <FormTextField id="purl"
                            value={licenseViolation.purl}
                            label={t("purl")}

@@ -19,8 +19,7 @@ export default function CollapsableTableRow({ repository, onDeleteRequest }: Rea
     return (
         <>
             <TableRow
-                key={repository.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
                 <TableCell><RepositoryTypeIcon type={repository.type} /></TableCell>
@@ -35,7 +34,6 @@ export default function CollapsableTableRow({ repository, onDeleteRequest }: Rea
                         <EditableTableRow repository={repository} onDeleteRequest={() => onDeleteRequest(repository)} />
                     </Collapse>
                 </TableCell>
-
             </TableRow>
         </>
     );

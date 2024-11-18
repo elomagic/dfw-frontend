@@ -11,13 +11,14 @@ import {Add, RemoveCircle} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import SelectItemDialog from "./SelectItemDialog.tsx";
+import {GridSize} from "@mui/material/Grid2/Grid2";
 
 interface FormSelectListProps {
     value: string[];
     selectables: KeyLabelItem[];
     label: string;
     onChange: (selectedKeys: string[]) => void;
-    gridSize?: number;
+    gridSize?: GridSize;
 }
 
 export default function FormSelectList({ label, selectables, gridSize, onChange, value}: Readonly<FormSelectListProps>) {

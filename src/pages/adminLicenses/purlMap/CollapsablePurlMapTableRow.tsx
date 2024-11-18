@@ -17,8 +17,7 @@ export default function CollapsablePurlMapTableRow({ purlMap, onDeleteRequest }:
     return (
         <>
             <TableRow
-                key={purlMap.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
                 <TableCell>{purlMap.purlMatch}</TableCell>
@@ -30,7 +29,6 @@ export default function CollapsablePurlMapTableRow({ purlMap, onDeleteRequest }:
                         <EditableTableRow purlMap={purlMap} onDeleteRequest={() => onDeleteRequest(purlMap)} />
                     </Collapse>
                 </TableCell>
-
             </TableRow>
         </>
     );
