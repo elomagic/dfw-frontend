@@ -22,7 +22,7 @@ function CustomTabPanel(props: Readonly<TabPanelProps>) {
             aria-labelledby={`admin-licenses-tab-${index}`}
             {...other}
         >
-            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+            {value === index && <Box sx={{ pt: 3 }}>{children}</Box>}
         </div>
     );
 }

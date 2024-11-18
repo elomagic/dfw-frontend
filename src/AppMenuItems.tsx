@@ -2,9 +2,11 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from "react-router-dom";
 import { Divider, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { BugReport, Home, Info, Public, Settings, Group } from "@mui/icons-material";
+import { BugReport, Info, Settings } from "@mui/icons-material";
 import {GoLaw} from "react-icons/go";
-import {RiLockPasswordFill} from "react-icons/ri";
+import {TbDatabaseCog, TbLockCog} from "react-icons/tb";
+import {RiUserSettingsLine} from "react-icons/ri";
+import {AiOutlineDashboard} from "react-icons/ai";
 
 export default function AppMenuItems() {
 
@@ -14,7 +16,7 @@ export default function AppMenuItems() {
         <React.Fragment>
             <ListItemButton component={RouterLink} to='/'>
                 <ListItemIcon>
-                    <Home className='fs15em'/>
+                    <AiOutlineDashboard className='fs15em'/>
                 </ListItemIcon>
                 <ListItemText primary={t('dashboard')}/>
             </ListItemButton>
@@ -49,14 +51,14 @@ export default function AppMenuItems() {
 
             <ListItemButton component={RouterLink} to='admin-repositories'>
                 <ListItemIcon>
-                    <Public className='fs15em'/>
+                    <TbDatabaseCog className='fs15em'/>
                 </ListItemIcon>
                 <ListItemText primary={t("admin-repositories")}/>
             </ListItemButton>
 
             <ListItemButton component={RouterLink} to='admin-credentials'>
                 <ListItemIcon>
-                    <RiLockPasswordFill className='fs15em'/>
+                    <TbLockCog className='fs15em'/>
                 </ListItemIcon>
                 <ListItemText primary={t("admin-credentials")}/>
             </ListItemButton>
@@ -65,7 +67,7 @@ export default function AppMenuItems() {
 
             <ListItemButton component={RouterLink} to='admin-accounts'>
                 <ListItemIcon>
-                    <Group className='fs15em'/>
+                    <RiUserSettingsLine className='fs15em'/>
                 </ListItemIcon>
                 <ListItemText primary={t("user-accounts")}/>
             </ListItemButton>
