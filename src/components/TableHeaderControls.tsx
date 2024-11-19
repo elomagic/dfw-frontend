@@ -1,13 +1,14 @@
 import {Box, Button, IconButton, TextField} from "@mui/material";
 import {Add, Refresh} from "@mui/icons-material";
 import {useAuth} from "../auth/useAuth.ts";
+import {Role} from "../auth/Auth.tsx";
 
 interface TableHeaderControlsProps {
     createCaption?: string;
     onCreateClicked?: () => void;
     onFilterChanged: (filter: string) => void;
     onRefresh: () => void;
-    createRole?: string;
+    createRole?: Role;
 }
 
 export default function TableHeaderControls({ createCaption, onCreateClicked, onFilterChanged, onRefresh, createRole }: Readonly<TableHeaderControlsProps>) {

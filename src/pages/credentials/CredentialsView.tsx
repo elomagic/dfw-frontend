@@ -15,6 +15,7 @@ import TableBody from "@mui/material/TableBody";
 import CredentialTableRow from "./CredentialTableRow.tsx";
 import YesNoDialog from "../../components/YesNoDialog.tsx";
 import CreateCredentialDialog from "./CreateCredentialDialog.tsx";
+import {Role} from "../../auth/Auth.tsx";
 
 export default function CredentialsView() {
 
@@ -66,6 +67,7 @@ export default function CredentialsView() {
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
+                                 createRole={Role.CREDENTIAL_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">

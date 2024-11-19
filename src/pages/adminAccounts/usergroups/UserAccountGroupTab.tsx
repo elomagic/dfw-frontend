@@ -15,6 +15,7 @@ import CollapsableUserGroupTableRow from "./CollapsableUserGroupTableRow.tsx";
 import CreateUserGroupDialog from "./CreateUserGroupDialog.tsx";
 import {enqueueSnackbar} from "notistack";
 import YesNoDialog from "../../../components/YesNoDialog.tsx";
+import {Role} from "../../../auth/Auth.tsx";
 
 export default function UserAccountGroupTab() {
 
@@ -66,6 +67,7 @@ export default function UserAccountGroupTab() {
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
+                                 createRole={Role.USERACCOUNT_GROUP_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">

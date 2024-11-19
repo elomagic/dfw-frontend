@@ -1,5 +1,18 @@
 import {createContext, ReactNode, useEffect, useState} from "react";
 
+export enum Role {
+
+    CREDENTIAL_CREATE = "CREDENTIAL_CREATE",
+    CREDENTIAL_READ = "CREDENTIAL_READ",
+    CREDENTIAL_DELETE = "CREDENTIAL_DELETE",
+
+    USERACCOUNT_GROUP_CREATE = "USERACCOUNT_GROUP_CREATE",
+    USERACCOUNT_GROUP_READ = "USERACCOUNT_GROUP_READ",
+    USERACCOUNT_GROUP_UPDATE = "USERACCOUNT_GROUP_UPDATE",
+    USERACCOUNT_GROUP_DELETE = "USERACCOUNT_GROUP_DELETE",
+
+}
+
 export interface AuthContextProps {
     mailAddress: string | undefined;
     displayName: string | undefined;
