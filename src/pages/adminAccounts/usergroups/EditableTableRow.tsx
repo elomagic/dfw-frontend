@@ -30,8 +30,9 @@ export default function EditableTableRow({ group, onDeleteRequest }: Readonly<Ed
     const [id] = useState(group.id);
     const [name, setName] = useState(group.name);
     const [userMembers, setUserMembers] = useState<string[]>(group.userAccounts.map(u => u.mailAddress)); // Key = mailAddress
-    const [allUsers, setAllUsers] = useState<KeyLabelItem[]>([]);
     const [roles, setRoles] = useState<string[]>(group.roles);
+
+    const [allUsers, setAllUsers] = useState<KeyLabelItem[]>([]);
     const [allRoles, setAllRoles] = useState<string[]>([]);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
