@@ -2,11 +2,7 @@ import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
 import {validateInputs} from "../../../FormFieldProperties.ts";
-import * as Rest from "../../../RestClient.ts";
-import {RestEndpoint} from "../../../RestClient.ts";
-import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount} from "../../../DTOs.ts";
-import {enqueueSnackbar} from "notistack";
 import FormButton from "../../../components/FormButton.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../../components/FormCheckBox.tsx";
@@ -19,13 +15,13 @@ const fields: FormFieldValidationProperty[] = [
 
 interface EditableTableRowProps {
     user: UserAccount
+    onSaveClick: (data: UserAccount) => void;
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ user, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
-    const auth = useAuth();
 
     const [mailAddress] = useState(user.mailAddress);
     const [displayName, setDisplayName] = useState(user.displayName);
@@ -47,17 +43,7 @@ export default function EditableTableRow({ user, onDeleteRequest }: Readonly<Edi
             return;
         }
 
-        const data: UserAccount = {
-            mailAddress: user.mailAddress,
-            displayName,
-            language,
-            enabled,
-            changePassword
-        }
-
-        Rest.patch(auth, RestEndpoint.User, data)
-            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+        onSaveClick({id: user.id, mailAddress, displayName, language, enabled, changePassword});
     };
 
     return (
@@ -101,7 +87,7 @@ export default function EditableTableRow({ user, onDeleteRequest }: Readonly<Edi
                         gridSize={6}
             />
 
-            <FormButton onClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButton onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

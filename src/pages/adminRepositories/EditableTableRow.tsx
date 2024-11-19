@@ -5,7 +5,6 @@ import {InputAdornment} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {validateInputs} from "../../FormFieldProperties.ts";
 import * as Rest from "../../RestClient.ts";
-import {RestEndpoint} from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
 import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
 import {enqueueSnackbar} from "notistack";
@@ -22,10 +21,11 @@ const fields: FormFieldValidationProperty[] = [
 
 interface EditableTableRowProps {
     repository: Repository
+    onSaveClick: (data: Repository) => void;
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ repository, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ repository, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -58,19 +58,7 @@ export default function EditableTableRow({ repository, onDeleteRequest }: Readon
             return;
         }
 
-        const data: Repository = {
-            id,
-            enabled,
-            type: repository.type,
-            name,
-            description,
-            baseUri,
-            credentialId
-        }
-
-        Rest.patch(auth, RestEndpoint.Repository, data)
-            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+        onSaveClick({id, enabled, type: repository.type, name, description, baseUri, credentialId});
     };
 
     useEffect(() => {
@@ -138,7 +126,7 @@ export default function EditableTableRow({ repository, onDeleteRequest }: Readon
                           gridSize={6}
             />
 
-            <FormButton onClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButton onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

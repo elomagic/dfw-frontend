@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid2";
 import {validateInputs} from "../../../FormFieldProperties.ts";
 import {KeyLabelItem} from "../../../components/FormSelect.tsx";
 import * as Rest from "../../../RestClient.ts";
-import {RestEndpoint} from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
@@ -19,10 +18,11 @@ const fields: FormFieldValidationProperty[] = [
 
 interface EditableTableRowProps {
     group: UserAccountGroup
+    onSaveClick: (data: UserAccountGroup) => void;
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ group, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -74,16 +74,7 @@ export default function EditableTableRow({ group, onDeleteRequest }: Readonly<Ed
             return;
         }
 
-        const data: UserAccountGroup = {
-            id,
-            name,
-            roles,
-            userAccountMailAddresses: userMembers
-        }
-
-        Rest.patch(auth, RestEndpoint.UserGroup, data)
-            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+        onSaveClick({id, name, roles, userAccountMailAddresses: userMembers});
     };
 
     return (
@@ -113,7 +104,7 @@ export default function EditableTableRow({ group, onDeleteRequest }: Readonly<Ed
                             gridSize={6}
             />
 
-            <FormButton onClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButton onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

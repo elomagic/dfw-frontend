@@ -5,7 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Checkbox, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {KeyLabelItem} from "./FormSelect.tsx";
 
@@ -20,7 +20,7 @@ export default function SelectItemDialog({ open, handleClose, value, selectables
 
     const { t } = useTranslation();
 
-    const [checked, setChecked] = useState<string[]>(value);
+    const [checked, setChecked] = useState<string[]>([]);
 
     const handleToggleItem = (item: KeyLabelItem) => {
         const currentIndex = checked.indexOf(item.key);
@@ -35,12 +35,16 @@ export default function SelectItemDialog({ open, handleClose, value, selectables
         setChecked(newChecked);
     }
 
+    useEffect(() => {
+        setChecked(value)
+    }, [value]);
+
     // TODO Remove selected items from selectables
 
     return (
         <Dialog
             open={open}
-            onClose={() => handleClose(false, [])}
+            onClose={() => handleClose(true, checked)}
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("select-items-dialog-title")}</DialogTitle>
@@ -63,6 +67,7 @@ export default function SelectItemDialog({ open, handleClose, value, selectables
                             <ListItemButton
                                 key={item.key}
                                 role="listitem"
+                                sx={{ p: 0 }}
                                 onClick={() => handleToggleItem(item)}
                             >
                                 <ListItemIcon>
@@ -75,15 +80,15 @@ export default function SelectItemDialog({ open, handleClose, value, selectables
                                         }}
                                     />
                                 </ListItemIcon>
-                                <ListItemText id={labelId} primary={item.label}/>
+                                <ListItemText  id={labelId} primary={item.label}/>
                             </ListItemButton>
                         );
                     })}
                 </List>
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(false, [])}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={() => handleClose(true, checked)}>
+                <Button onClick={() => handleClose(true, checked)}>{t("cancel")}</Button>
+                <Button variant="contained" onClick={() => handleClose(false, checked)}>
                     {t("ok")}
                 </Button>
             </DialogActions>

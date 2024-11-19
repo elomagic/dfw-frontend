@@ -9,7 +9,7 @@ import {useAuth} from "../auth/useAuth.ts";
 interface FormButtonSaveProps {
     label?: string;
     startIcon?: React.ReactNode;
-    onClick?: MouseEventHandler | undefined;
+    onSaveClick?: MouseEventHandler | undefined;
     onDeleteClick?: MouseEventHandler | undefined;
     updateRole?: string;
     deleteRole?: string;
@@ -23,16 +23,16 @@ interface FormButtonSaveProps {
  * @param onDeleteClick Optional. If not set, the "delete" button not visible
  * @constructor
  */
-export default function FormButton({label, startIcon, onClick, onDeleteClick, updateRole, deleteRole}: Readonly<FormButtonSaveProps>) {
+export default function FormButton({label, startIcon, onSaveClick, onDeleteClick, updateRole, deleteRole}: Readonly<FormButtonSaveProps>) {
 
     const auth = useAuth();
     const { t } = useTranslation();
 
     return (
         <Grid size={12} display="flex" flexDirection="row">
-            {(updateRole === undefined || auth.roles.includes(updateRole)) && onClick &&
+            {(updateRole === undefined || auth.roles.includes(updateRole)) && onSaveClick &&
                 <Button variant="contained"
-                        onClick={onClick}
+                        onClick={onSaveClick}
                         size="small"
                         startIcon={startIcon ?? <Save />}>
                     {label ?? t("save")}

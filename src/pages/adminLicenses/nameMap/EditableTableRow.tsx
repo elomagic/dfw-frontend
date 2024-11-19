@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid2";
 import {validateInputs} from "../../../FormFieldProperties.ts";
 import * as Rest from "../../../RestClient.ts";
-import {RestEndpoint} from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {License, LicenseNameMap} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
@@ -19,10 +18,11 @@ const fields: FormFieldValidationProperty[] = [
 
 interface EditableTableRowProps {
     nameMap: LicenseNameMap,
+    onSaveClick: (data: LicenseNameMap) => void;
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ nameMap, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -54,15 +54,7 @@ export default function EditableTableRow({ nameMap, onDeleteRequest }: Readonly<
             return;
         }
 
-        const data: LicenseNameMap = {
-            id,
-            nameMatch,
-            spdxId
-        }
-
-        Rest.patch(auth, RestEndpoint.LicenseNameMap, data)
-            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+        onSaveClick({id, nameMatch, spdxId});
     };
 
     return (
@@ -85,7 +77,7 @@ export default function EditableTableRow({ nameMap, onDeleteRequest }: Readonly<
                         gridSize={6}
             />
 
-            <FormButton onClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButton onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

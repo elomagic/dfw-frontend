@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid2";
 import {validateInputs} from "../../../FormFieldProperties.ts";
 import * as Rest from "../../../RestClient.ts";
-import {RestEndpoint} from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {License, LicensePurlMap} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
@@ -13,16 +12,17 @@ import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
 
 const fields: FormFieldValidationProperty[] = [
-    { name : "nameMatch", minLength: 1 },
+    { name : "purlMatch", minLength: 1 },
     { name : "spdxId", minLength: 1 },
 ];
 
 interface EditableTableRowProps {
     purlMap: LicensePurlMap
-    onDeleteRequest: () => void
+    onSaveClick: (data: LicensePurlMap) => void;
+    onDeleteRequest: () => void;
 }
 
-export default function EditableTableRow({ purlMap, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -54,15 +54,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest }: Readonly<
             return;
         }
 
-        const data: LicensePurlMap = {
-            id,
-            purlMatch,
-            spdxId
-        }
-
-        Rest.patch(auth, RestEndpoint.LicensePurlMap, data)
-            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+        onSaveClick({id, purlMatch, spdxId});
     };
 
     return (
@@ -85,7 +77,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest }: Readonly<
                         gridSize={6}
             />
 
-            <FormButton onClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButton onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

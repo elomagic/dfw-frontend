@@ -4,6 +4,11 @@ import {LicensePurlMap} from "../../../DTOs.ts";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
+import * as Rest from "../../../RestClient.ts";
+import {RestEndpoint} from "../../../RestClient.ts";
+import {enqueueSnackbar} from "notistack";
+import {useTranslation} from "react-i18next";
+import {useAuth} from "../../../auth/useAuth.ts";
 
 interface CollapsablePurlMapTableRowProps {
     purlMap: LicensePurlMap
@@ -12,7 +17,18 @@ interface CollapsablePurlMapTableRowProps {
 
 export default function CollapsablePurlMapTableRow({ purlMap, onDeleteRequest }: Readonly<CollapsablePurlMapTableRowProps>) {
 
+    const { t } = useTranslation();
+    const auth = useAuth();
     const [open, setOpen] = useState<boolean>(false);
+    const [data, setData] = useState<LicensePurlMap>(purlMap);
+
+    const handleSaveClick = (d: LicensePurlMap) => {
+        Rest.patch(auth, RestEndpoint.LicensePurlMap, d)
+            .then((res) => res.json())
+            .then((dto: LicensePurlMap) => setData(dto))
+            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
+            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+    };
 
     return (
         <>
@@ -20,13 +36,15 @@ export default function CollapsablePurlMapTableRow({ purlMap, onDeleteRequest }:
                 sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
-                <TableCell>{purlMap.purlMatch}</TableCell>
-                <TableCell>{purlMap.spdxId}</TableCell>
+                <TableCell>{data.purlMatch}</TableCell>
+                <TableCell>{data.spdxId}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow purlMap={purlMap} onDeleteRequest={() => onDeleteRequest(purlMap)} />
+                        <EditableTableRow purlMap={data}
+                                          onSaveClick={handleSaveClick}
+                                          onDeleteRequest={() => onDeleteRequest(data)} />
                     </Collapse>
                 </TableCell>
             </TableRow>

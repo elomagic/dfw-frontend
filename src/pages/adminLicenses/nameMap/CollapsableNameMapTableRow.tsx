@@ -4,6 +4,11 @@ import {LicenseNameMap} from "../../../DTOs.ts";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
+import {useTranslation} from "react-i18next";
+import {useAuth} from "../../../auth/useAuth.ts";
+import * as Rest from "../../../RestClient.ts";
+import {RestEndpoint} from "../../../RestClient.ts";
+import {enqueueSnackbar} from "notistack";
 
 interface CollapsableNameMapTableRowProps {
     nameMap: LicenseNameMap
@@ -12,7 +17,18 @@ interface CollapsableNameMapTableRowProps {
 
 export default function CollapsableNameMapTableRow({ nameMap, onDeleteRequest }: Readonly<CollapsableNameMapTableRowProps>) {
 
+    const { t } = useTranslation();
+    const auth = useAuth();
     const [open, setOpen] = useState<boolean>(false);
+    const [data, setData] = useState<LicenseNameMap>(nameMap);
+
+    const handleSaveClick = (d: LicenseNameMap) => {
+        Rest.patch(auth, RestEndpoint.LicensePurlMap, d)
+            .then((res) => res.json())
+            .then((dto: LicenseNameMap) => setData(dto))
+            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
+            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+    };
 
     return (
         <>
@@ -20,13 +36,15 @@ export default function CollapsableNameMapTableRow({ nameMap, onDeleteRequest }:
                 sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
-                <TableCell>{nameMap.nameMatch}</TableCell>
-                <TableCell>{nameMap.spdxId}</TableCell>
+                <TableCell>{data.nameMatch}</TableCell>
+                <TableCell>{data.spdxId}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow nameMap={nameMap} onDeleteRequest={() => onDeleteRequest(nameMap)} />
+                        <EditableTableRow nameMap={data}
+                                          onSaveClick={handleSaveClick}
+                                          onDeleteRequest={() => onDeleteRequest(data)} />
                     </Collapse>
                 </TableCell>
             </TableRow>

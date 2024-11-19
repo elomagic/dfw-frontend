@@ -5,6 +5,11 @@ import {UserAccount} from "../../../DTOs.ts";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
+import {useTranslation} from "react-i18next";
+import {useAuth} from "../../../auth/useAuth.ts";
+import * as Rest from "../../../RestClient.ts";
+import {RestEndpoint} from "../../../RestClient.ts";
+import {enqueueSnackbar} from "notistack";
 
 interface CollapsableUserTableRowProps {
     user: UserAccount
@@ -13,7 +18,18 @@ interface CollapsableUserTableRowProps {
 
 export default function CollapsableUserTableRow({ user, onDeleteRequest }: Readonly<CollapsableUserTableRowProps>) {
 
+    const { t } = useTranslation();
+    const auth = useAuth();
     const [open, setOpen] = useState<boolean>(false);
+    const [data, setData] = useState<UserAccount>(user);
+
+    const handleSaveClick = (d: UserAccount) => {
+        Rest.patch(auth, RestEndpoint.User, d)
+            .then((res) => res.json())
+            .then((dto: UserAccount) => setData(dto))
+            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
+            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+    };
 
     return (
         <>
@@ -21,14 +37,16 @@ export default function CollapsableUserTableRow({ user, onDeleteRequest }: Reado
                 sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
-                <TableCell>{user.mailAddress}</TableCell>
-                <TableCell>{user.enabled ? <Check color="success" /> : ""}</TableCell>
-                <TableCell>{user.displayName}</TableCell>
+                <TableCell>{data.mailAddress}</TableCell>
+                <TableCell>{data.enabled ? <Check color="success" /> : ""}</TableCell>
+                <TableCell>{data.displayName}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow user={user} onDeleteRequest={() => onDeleteRequest(user)} />
+                        <EditableTableRow user={data}
+                                          onSaveClick={handleSaveClick}
+                                          onDeleteRequest={() => onDeleteRequest(data)} />
                     </Collapse>
                 </TableCell>
             </TableRow>

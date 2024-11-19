@@ -7,6 +7,10 @@ export const validateInputs = (fields: FormFieldValidationProperty[], onResult: 
     for (const field of fields) {
         const value = document.getElementById(field.name) as HTMLInputElement;
 
+        if (!value.value) {
+            continue;
+        }
+
         if (field.minLength != undefined && value.value.length < field.minLength) {
             onResult(field.name, field.name + " must at least {field.minLength} long");
             result = true;

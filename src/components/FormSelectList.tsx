@@ -9,7 +9,7 @@ import {KeyLabelItem} from "./FormSelect.tsx";
 import Grid from "@mui/material/Grid2";
 import {Add, RemoveCircle} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SelectItemDialog from "./SelectItemDialog.tsx";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 
@@ -25,7 +25,7 @@ export default function FormSelectList({ label, selectables, gridSize, onChange,
 
     const { t } = useTranslation();
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
-    const [ values, setValues ] = useState<string[]>(value);
+    const [ values, setValues ] = useState<string[]>([]);
 
     const handleCloseDialog = (cancel: boolean, keys: string[]) => {
         setDialogOpen(false);
@@ -40,8 +40,13 @@ export default function FormSelectList({ label, selectables, gridSize, onChange,
     }
 
     const handleDeleteClick = (key: string) => {
-        onChange(selectables.filter(item => item.key !== key).map(item => item.key));
+        const v = values.filter(item => item !== key);
+        onChange(v);
     }
+
+    useEffect(() => {
+        setValues(value);
+    }, [value]);
 
     return (
         <>
@@ -56,13 +61,13 @@ export default function FormSelectList({ label, selectables, gridSize, onChange,
                         {selectables
                             .filter(item => values.includes(item.key))
                             .map((item) => (
-                            <ListItem key={item.key}
-                                      secondaryAction={
-                                          <IconButton edge="end" aria-label="remove">
-                                              <RemoveCircle color="error" onClick={() => handleDeleteClick(item.key)}/>
-                                          </IconButton>
-                                      }
-                                      disablePadding>
+                                <ListItem key={item.key}
+                                          disablePadding
+                                          secondaryAction={
+                                                <IconButton edge="end" aria-label="remove">
+                                                    <RemoveCircle color="error" onClick={() => handleDeleteClick(item.key)}/>
+                                                </IconButton>}
+                                >
                                 <ListItemText id={item.key} primary={item.label} />
                             </ListItem>)
                         )}
