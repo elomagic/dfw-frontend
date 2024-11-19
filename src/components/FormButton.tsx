@@ -4,12 +4,15 @@ import {DeleteForever, Save} from "@mui/icons-material";
 import Grid from "@mui/material/Grid2";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
+import {useAuth} from "../auth/useAuth.ts";
 
 interface FormButtonSaveProps {
     label?: string;
     startIcon?: React.ReactNode;
     onClick?: MouseEventHandler | undefined;
     onDeleteClick?: MouseEventHandler | undefined;
+    updateRole?: string;
+    deleteRole?: string;
 }
 
 /**
@@ -20,13 +23,14 @@ interface FormButtonSaveProps {
  * @param onDeleteClick Optional. If not set, the "delete" button not visible
  * @constructor
  */
-export default function FormButton({label, startIcon, onClick, onDeleteClick}: Readonly<FormButtonSaveProps>) {
+export default function FormButton({label, startIcon, onClick, onDeleteClick, updateRole, deleteRole}: Readonly<FormButtonSaveProps>) {
 
+    const auth = useAuth();
     const { t } = useTranslation();
 
     return (
         <Grid size={12} display="flex" flexDirection="row">
-            {onClick &&
+            {(updateRole === undefined || auth.roles.includes(updateRole)) && onClick &&
                 <Button variant="contained"
                         onClick={onClick}
                         size="small"
@@ -37,7 +41,7 @@ export default function FormButton({label, startIcon, onClick, onDeleteClick}: R
 
             <Box flexGrow={1} />
 
-            {onDeleteClick &&
+            {(deleteRole === undefined || auth.roles.includes(deleteRole)) && onDeleteClick &&
                 <Button variant="contained"
                         color="error"
                         onClick={onDeleteClick}

@@ -90,9 +90,7 @@ const executeRequest = (auth: AuthContextProps, url: RequestInfo, requestOptions
             } else if (res.status >= 400) {
                 let text = res.statusText;
                 if (text === "") {
-                    if (res.status === 401) {
-                        text = i18next.t("unauthorized");
-                    } else if (res.status === 403) {
+                    if (res.status === 403) {
                         text = i18next.t("forbidden");
                     } else if (res.status === 404) {
                         text = i18next.t("not-found");

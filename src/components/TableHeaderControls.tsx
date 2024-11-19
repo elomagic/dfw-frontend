@@ -1,18 +1,22 @@
 import {Box, Button, IconButton, TextField} from "@mui/material";
 import {Add, Refresh} from "@mui/icons-material";
+import {useAuth} from "../auth/useAuth.ts";
 
 interface TableHeaderControlsProps {
     createCaption?: string;
     onCreateClicked?: () => void;
     onFilterChanged: (filter: string) => void;
     onRefresh: () => void;
+    createRole?: string;
 }
 
-export default function TableHeaderControls({ createCaption, onCreateClicked, onFilterChanged, onRefresh }: Readonly<TableHeaderControlsProps>) {
+export default function TableHeaderControls({ createCaption, onCreateClicked, onFilterChanged, onRefresh, createRole }: Readonly<TableHeaderControlsProps>) {
+
+    const auth = useAuth();
 
     return (
         <Box display="flex" flexDirection="row" marginBottom={2}>
-            {onCreateClicked &&
+            {(createRole === undefined || auth.roles.includes(createRole)) && onCreateClicked &&
                 <Button variant="outlined"
                         onClick={onCreateClicked}
                         size="small"
@@ -21,7 +25,9 @@ export default function TableHeaderControls({ createCaption, onCreateClicked, on
                 </Button>
             }
             <Box flexGrow={1} />
-            <TextField size="small" onChange={e => {onFilterChanged(e.target.value)}} />
+            {onFilterChanged &&
+                <TextField size="small" onChange={e => {onFilterChanged(e.target.value)}} />
+            }
             <IconButton aria-label="refresh" onClick={onRefresh}><Refresh /></IconButton>
         </Box>
     );
