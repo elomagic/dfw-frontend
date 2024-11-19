@@ -53,7 +53,9 @@ export default function FormSelectList({ label, selectables, gridSize, onChange,
                         border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px', padding: '8px 14px',
                         overflow: "auto"
                     }}>
-                        {selectables.map((item) => (
+                        {selectables
+                            .filter(item => values.includes(item.key))
+                            .map((item) => (
                             <ListItem key={item.key}
                                       secondaryAction={
                                           <IconButton edge="end" aria-label="remove">
