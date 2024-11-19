@@ -15,6 +15,7 @@ import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import {LicensePurlMap} from "../../../DTOs.ts";
 import CollapsablePurlMapTableRow from "./CollapsablePurlMapTableRow.tsx";
 import CreatePurlMapDialog from "./CreatePurlMapDialog.tsx";
+import {Role} from "../../../auth/Auth.tsx";
 
 export default function PurlMapTab() {
 
@@ -66,6 +67,7 @@ export default function PurlMapTab() {
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
+                                 createRole={Role.LICENSE_PURL_MAP_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">

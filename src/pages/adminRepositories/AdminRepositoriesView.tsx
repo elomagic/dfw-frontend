@@ -15,6 +15,7 @@ import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateRepositoryDialog from "./CreateRepositoryDialog.tsx";
 import {enqueueSnackbar} from "notistack";
 import YesNoDialog from "../../components/YesNoDialog.tsx";
+import {Role} from "../../auth/Auth.tsx";
 
 export default function AdminRepositoriesView() {
 
@@ -66,6 +67,7 @@ export default function AdminRepositoriesView() {
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
+                                 createRole={Role.REPOSITORY_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">

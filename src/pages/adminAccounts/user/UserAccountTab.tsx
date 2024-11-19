@@ -15,6 +15,7 @@ import CollapsableUserTableRow from "./CollapsableUserTableRow.tsx";
 import CreateUserDialog from "./CreateUserDialog.tsx";
 import {enqueueSnackbar} from "notistack";
 import YesNoDialog from "../../../components/YesNoDialog.tsx";
+import {Role} from "../../../auth/Auth.tsx";
 
 export default function UserAccountTab() {
 
@@ -66,6 +67,7 @@ export default function UserAccountTab() {
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
+                                 createRole={Role.USERACCOUNT_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">

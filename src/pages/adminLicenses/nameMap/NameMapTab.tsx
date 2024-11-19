@@ -15,6 +15,7 @@ import {enqueueSnackbar} from "notistack";
 import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import CollapsableNameMapTableRow from "./CollapsableNameMapTableRow.tsx";
 import CreateNameMapDialog from "./CreateNameMapDialog.tsx";
+import {Role} from "../../../auth/Auth.tsx";
 
 export default function NameMapTab() {
 
@@ -66,6 +67,7 @@ export default function NameMapTab() {
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
+                                 createRole={Role.LICENSE_NAME_MAP_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
