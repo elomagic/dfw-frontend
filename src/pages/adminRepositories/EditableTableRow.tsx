@@ -1,6 +1,6 @@
-import {Repository} from "../../DTOs.ts";
+import {CredentialData, Repository} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {InputAdornment} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import {validateInputs} from "../../FormFieldProperties.ts";
@@ -13,6 +13,7 @@ import FormButton from "../../components/FormButton.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
+import {FormSelect, KeyLabelItem} from "../../components/FormSelect.tsx";
 
 const fields: FormFieldValidationProperty[] = [
     { name : "name", minLength: 1 },
@@ -34,7 +35,9 @@ export default function EditableTableRow({ repository, onDeleteRequest }: Readon
     const [name, setName] = useState(repository.name);
     const [description, setDescription] = useState(repository.description);
     const [baseUri, setBaseUri] = useState(repository.baseUri);
-    const [credentialId, setCredentialId] = useState(repository.credentialId);
+    const [credentialId, setCredentialId] = useState<string>(repository.credentialId ?? "-");
+
+    const [credentialsIds, setCredentialsIds] = useState<KeyLabelItem[]>([{ key: "-", label: "-"}]);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
     const [baseUriErrorMessage, setBaseUriErrorMessage] = useState<string|undefined>(undefined);
@@ -70,6 +73,18 @@ export default function EditableTableRow({ repository, onDeleteRequest }: Readon
             .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
     };
 
+    useEffect(() => {
+        Rest.get(auth, Rest.RestEndpoint.Credential)
+            .then((res) => res.json())
+            .then((rs: CredentialData[]) => rs.map(c => { return { "key": c.credentialId, "label": c.credentialId} as KeyLabelItem }))
+            .then((cd: KeyLabelItem[]) => {
+                cd.unshift({ key: "-", label: "-"});
+                return cd;
+            })
+            .then((kl: KeyLabelItem[]) => setCredentialsIds(kl))
+            .catch((err: Error) => enqueueSnackbar("Getting credential list failed: " + err.message, { variant: 'error'} ));
+    }, [auth]);
+
     return (
         <Grid container spacing={2} marginTop={2} marginBottom={2}>
             <FormTextField id="name"
@@ -81,14 +96,14 @@ export default function EditableTableRow({ repository, onDeleteRequest }: Readon
                                  required
                                  gridSize={6}
             />
-            <FormTextField id={"description"}
+            <FormTextField id="description"
                                  value={description}
                                  onChange={e => setDescription(e.target.value)}
                                  label={t("description")}
                                  gridSize={6}
             />
 
-            <FormTextField id={"baseUrl"}
+            <FormTextField id="baseUrl"
                                  type={"url"}
                                  value={baseUri}
                                  errorMessage={baseUriErrorMessage}
@@ -97,15 +112,15 @@ export default function EditableTableRow({ repository, onDeleteRequest }: Readon
                                  required
                                  gridSize={6}
             />
-            <FormTextField id={"credentialId"}
-                                 value={credentialId}
-                                 errorMessage={baseUriErrorMessage}
-                                 onChange={e => setCredentialId(e.target.value)}
-                                 label={t("credentialId")}
-                                 gridSize={6}
+            <FormSelect id="credentialId"
+                        value={credentialId}
+                        label={t("credentialId")}
+                        items={credentialsIds}
+                        onChange={(e) => setCredentialId(e.target.value as string)}
+                        gridSize={6}
             />
 
-            <FormTextField id={"type"}
+            <FormTextField id="type"
                                  value={repository.type}
                                  label={t("type")}
                                  gridSize={6}
