@@ -51,5 +51,15 @@
   "user-account-members": "Benutzer-Mitglieder",
   "user-accounts": "Benutzerkonten",
   "username": "Benutzername",
-  "yes": "Ja"
+  "yes": "Ja",
+  "continue": "",
+  "create": "",
+  "saving-data-failed": "Das Speichern von Daten ist fehlgeschlagen: {{Meldung}}",
+  "creation-failed": "Erstellung fehlgeschlagen: {{Meldung}}",
+  "vulnerabilities": "Vulnerabilities",
+  "create-credential": "Zugangsdaten erstellen",
+  "delete-credential": "Zugangsdaten löschen",
+  "credentialId": "Zugangsdaten ID",
+  "name-mappings": "Namenszuordnungen",
+  "purl-mappings": "PURL Zuordnungen"
 }
