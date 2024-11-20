@@ -16,14 +16,13 @@ import {validateInputs} from "../../FormFieldProperties.ts";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
 
-
 const fields: FormFieldValidationProperty[] = [
     { name : "credentialId", minLength: 1 },
 ];
 
 interface CreateUserProps {
     open: boolean;
-    handleClose: (created: boolean) => void;
+    handleClose: (dto: CredentialData|undefined) => void;
 }
 
 export default function CreateCredentialDialog({ open, handleClose }: Readonly<CreateUserProps>) {
@@ -60,21 +59,15 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
 
         Rest
             .post(auth, RestEndpoint.Credential, data)
-            .then(res => {
-                if (res.status >= 400) {
-                    return Promise.reject(new Error(res.statusText));
-                }
-                return res;
-            })
-            .then(() => handleClose(true))
+            .then(() => handleClose(data))
             .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Creation failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("creation-failed", { message: err.message }), { variant: 'error' } ));
     }
 
     return (
         <Dialog
             open={open}
-            onClose={handleClose}
+            onClose={() => handleClose(undefined)}
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-credential")}</DialogTitle>
@@ -129,7 +122,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                 )}
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(false)}>{t("cancel")}</Button>
+                <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
                 <Button variant="contained" onClick={handleCreateClick}>
                     {t("create")}
                 </Button>

@@ -29,7 +29,7 @@ export default function CollapsableTableRow({ repository, onDeleteRequest }: Rea
             .then((res) => res.json())
             .then((dto: Repository) => setData(dto))
             .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("saving-data-failed", { message: err.message}), { variant: 'error'} ));
     };
 
     return (

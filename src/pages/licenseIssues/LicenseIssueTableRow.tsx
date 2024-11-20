@@ -1,7 +1,7 @@
 import {LicenseViolation} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import Grid from "@mui/material/Grid2";
-import FormButton from "../../components/FormButton.tsx";
+import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 
 interface EditableTableRowProps {
@@ -21,14 +21,14 @@ export default function LicenseIssueTableRow({ licenseViolation, onDeleteRequest
                            readOnly
                            gridSize={6}
             />
-            <FormTextField id={"description"}
+            <FormTextField id="description"
                            value={licenseViolation.licenses.join(", ")}
                            label={t("licenses")}
                            readOnly
                            gridSize={6}
             />
 
-            <FormButton onDeleteClick={onDeleteRequest}/>
+            <FormButtons onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

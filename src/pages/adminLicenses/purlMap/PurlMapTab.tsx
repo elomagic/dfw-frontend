@@ -39,10 +39,14 @@ export default function PurlMapTab() {
             });
     }, [t, auth]);
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = (dto: LicensePurlMap|undefined) => {
         setDialogOpen(false);
         refresh();
-        // todo Select new record?
+
+        if (dto) {
+            setFilter(dto.purlMatch);
+        }
+
     }
 
     const handleDeleteRequest = (pm: LicensePurlMap) => {
@@ -92,7 +96,7 @@ export default function PurlMapTab() {
                 </Table>
             </TableContainer>
 
-            <CreatePurlMapDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <CreatePurlMapDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-purl-mapping")}
                          text={`Do ya really want to delete the PURL match '${selectedEntity?.purlMatch}'?`}
                          open={deleteOpen}

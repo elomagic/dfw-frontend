@@ -39,10 +39,13 @@ export default function CredentialsView() {
             });
     }, [t, auth]);
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = (dto: CredentialData|undefined) => {
         setDialogOpen(false);
         refresh();
-        //todo Select new record?
+
+        if (dto) {
+            setFilter(dto.credentialId);
+        }
     }
 
     const handleDeleteRequest = (c: CredentialData) => {
@@ -93,7 +96,7 @@ export default function CredentialsView() {
                 </Table>
             </TableContainer>
 
-            <CreateCredentialDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <CreateCredentialDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-credential")}
                          text={`Do ya really want to delete the credential '${selectedEntity?.credentialId}'?`}
                          open={deleteOpen}

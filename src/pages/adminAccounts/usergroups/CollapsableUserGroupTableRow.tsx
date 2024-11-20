@@ -27,7 +27,7 @@ export default function CollapsableUserGroupTableRow({ userGroup, onDeleteReques
             .then((res) => res.json())
             .then((dto: UserAccountGroup) => setData(dto))
             .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("saving-data-failed", { message: err.message}), { variant: 'error' } ));
     };
 
     return (

@@ -15,7 +15,7 @@ import {enqueueSnackbar} from "notistack";
 
 interface CreateUserGroupProps {
     open: boolean;
-    handleClose: (created: boolean) => void;
+    handleClose: (dto: UserAccountGroup|undefined) => void;
 }
 
 export default function CreateUserGroupDialog({ open, handleClose }: Readonly<CreateUserGroupProps>) {
@@ -33,21 +33,15 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Cr
 
         Rest
             .post(auth, RestEndpoint.UserGroup, data)
-            .then(res => {
-                if (res.status >= 400) {
-                    return Promise.reject(new Error(res.statusText));
-                }
-                return res;
-            })
-            .then(() => handleClose(true))
+            .then(() => handleClose(data))
             .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Creation failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("creation-failed", { message: err.message }), { variant: 'error' } ));
     }
 
     return (
         <Dialog
             open={open}
-            onClose={handleClose}
+            onClose={() => handleClose(undefined)}
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-user-group")}</DialogTitle>
@@ -72,7 +66,7 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Cr
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(false)}>{t("cancel")}</Button>
+                <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
                 <Button variant="contained" onClick={handleCreateClick}>
                     {t("create")}
                 </Button>

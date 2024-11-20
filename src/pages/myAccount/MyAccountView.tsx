@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid2";
 import {validateInputs} from "../../FormFieldProperties.ts";
 import {UserAccount} from "../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
-import FormButton from "../../components/FormButton.tsx";
+import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
 import {FormSelect} from "../../components/FormSelect.tsx";
@@ -51,7 +51,7 @@ export default function MyAccountView() {
 
         Rest.patch(auth, RestEndpoint.UserSelf, data)
             .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Saving data failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("saving-data-failed", { message: err.message}), { variant: 'error'} ));
     };
 
     return (
@@ -84,7 +84,7 @@ export default function MyAccountView() {
                                 gridSize={6}
                     />
 
-                    <FormButton onSaveClick={handleSaveClick}/>
+                    <FormButtons onSaveClick={handleSaveClick}/>
                 </Grid>
             </Card>
         </Box>

@@ -39,10 +39,13 @@ export default function NameMapTab() {
             });
     }, [t, auth]);
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = (dto: LicenseNameMap|undefined) => {
         setDialogOpen(false);
         refresh();
-        // todo Select new record?
+
+        if (dto) {
+            setFilter(dto.nameMatch);
+        }
     }
 
     const handleDeleteRequest = (nm: LicenseNameMap) => {
@@ -92,7 +95,7 @@ export default function NameMapTab() {
                 </Table>
             </TableContainer>
 
-            <CreateNameMapDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <CreateNameMapDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-name-mapping")}
                          text={`Do ya really want to delete the name match '${selectedEntity?.nameMatch}'?`}
                          open={deleteOpen}

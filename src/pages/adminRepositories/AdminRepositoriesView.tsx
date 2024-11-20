@@ -39,10 +39,13 @@ export default function AdminRepositoriesView() {
             });
     }, [t, auth]);
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = (dto: Repository|undefined) => {
         setDialogOpen(false);
         refresh();
-        //todo Select new record?
+
+        if (dto) {
+            setFilter(dto.name);
+        }
     }
 
     const handleDeleteRequest = (r: Repository) => {
@@ -95,7 +98,7 @@ export default function AdminRepositoriesView() {
                 </Table>
             </TableContainer>
 
-            <CreateRepositoryDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <CreateRepositoryDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-repository")}
                          text={`Do ya really want to delete the repository '${selectedEntity?.name}'?`}
                          open={deleteOpen}

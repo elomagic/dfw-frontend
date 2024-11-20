@@ -6,7 +6,7 @@ import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {License, LicensePurlMap} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
-import FormButton from "../../../components/FormButton.tsx";
+import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
@@ -32,7 +32,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
     const [spdxId, setSpdxId] = useState<string>(purlMap.spdxId);
     const [spdxList, setSpdxList] = useState<KeyLabelItem[]>([]);
 
-    const [purlErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
+    const [purlErrorMessage, setPurlErrorMessage] = useState<string|undefined>(undefined);
 
     useEffect(() => {
         Rest.get(auth, Rest.RestEndpoint.License)
@@ -46,7 +46,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
         if (validateInputs(fields, (fieldName, result) => {
             switch (fieldName) {
                 case "purlMatch": {
-                    setNameErrorMessage(result);
+                    setPurlErrorMessage(result);
                     break;
                 }
             }
@@ -77,7 +77,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
                         gridSize={6}
             />
 
-            <FormButton onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

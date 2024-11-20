@@ -6,7 +6,7 @@ import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {License, LicenseNameMap} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
-import FormButton from "../../../components/FormButton.tsx";
+import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
@@ -77,7 +77,7 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
                         gridSize={6}
             />
 
-            <FormButton onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

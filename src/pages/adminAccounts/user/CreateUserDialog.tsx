@@ -15,7 +15,7 @@ import {enqueueSnackbar} from "notistack";
 
 interface CreateUserProps {
     open: boolean;
-    handleClose: (created: boolean) => void;
+    handleClose: (dto: UserAccount|undefined) => void;
 }
 
 export default function CreateUserDialog({ open, handleClose }: Readonly<CreateUserProps>) {
@@ -35,21 +35,15 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<CreateU
 
         Rest
             .post(auth, RestEndpoint.User, data)
-            .then(res => {
-                if (res.status >= 400) {
-                    return Promise.reject(new Error(res.statusText));
-                }
-                return res;
-            })
-            .then(() => handleClose(true))
+            .then(() => handleClose(data))
             .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Creation failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("creation-failed", { message: err.message }), { variant: 'error' } ));
     }
 
     return (
         <Dialog
             open={open}
-            onClose={handleClose}
+            onClose={() => handleClose (undefined)}
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-user-account")}</DialogTitle>
@@ -74,7 +68,7 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<CreateU
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(false)}>{t("cancel")}</Button>
+                <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
                 <Button variant="contained" onClick={handleCreateClick}>
                     {t("create")}
                 </Button>

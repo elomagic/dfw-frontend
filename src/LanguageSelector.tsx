@@ -4,6 +4,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {ImageListItem, ListItemText, MenuItem} from "@mui/material";
 import './LanguageSelector.css';
 import {useState} from "react";
+import {enqueueSnackbar} from "notistack";
 // TODO require('dayjs/locale/de')
 
 export const getStoredLanguage = (): string => {
@@ -21,7 +22,10 @@ export default function LanguageSelector() {
         const l = event.target.value
         setLanguage(l);
         dayjs.locale(l)
-        i18n.changeLanguage(l);
+
+        i18n.changeLanguage(l)
+            .catch((err) => enqueueSnackbar("Error during language change: " + err.message, { variant: 'error'} ));
+
         localStorage.setItem("language", l);
     };
 
@@ -32,13 +36,13 @@ export default function LanguageSelector() {
             value={language}
             onChange={handleChange}
         >
-            <MenuItem value={"en"} className="LanguageSelector Item">
+            <MenuItem value="en" className="LanguageSelector Item">
                 <ImageListItem>
                     <img src="flag-us.svg" style={{height: "unset", width: "unset"}} alt='us'/>
                 </ImageListItem>
                 <ListItemText primary="EN"/>
             </MenuItem>
-            <MenuItem value={"de"} className="LanguageSelector Item">
+            <MenuItem value="de" className="LanguageSelector Item">
                 <ImageListItem>
                     <img src="flag-de.svg" style={{height: "unset", width: "unset"}} alt='de'/>
                 </ImageListItem>

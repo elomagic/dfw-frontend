@@ -16,7 +16,7 @@ import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
 
 interface CreateNameMapProps {
     open: boolean;
-    handleClose: (created: boolean) => void;
+    handleClose: (dto: LicenseNameMap|undefined) => void;
 }
 
 export default function CreateNameMapDialog({ open, handleClose }: Readonly<CreateNameMapProps>) {
@@ -35,15 +35,9 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Crea
 
         Rest
             .post(auth, RestEndpoint.LicenseNameMap, data)
-            .then(res => {
-                if (res.status >= 400) {
-                    return Promise.reject(new Error(res.statusText));
-                }
-                return res;
-            })
-            .then(() => handleClose(true))
+            .then(() => handleClose(data))
             .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar("Creation failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar(t("creation-failed", { message: err.message }), { variant: 'error' } ));
     }
 
     useEffect(() => {
@@ -57,7 +51,7 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Crea
     return (
         <Dialog
             open={open}
-            onClose={handleClose}
+            onClose={() => handleClose(undefined)}
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-name-mapping")}</DialogTitle>
@@ -83,7 +77,7 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Crea
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(false)}>{t("cancel")}</Button>
+                <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
                 <Button variant="contained" onClick={handleCreateClick}>
                     {t("create")}
                 </Button>

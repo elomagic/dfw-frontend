@@ -39,8 +39,6 @@ export default function SelectItemDialog({ open, handleClose, value, selectables
         setChecked(value)
     }, [value]);
 
-    // TODO Remove selected items from selectables
-
     return (
         <Dialog
             open={open}

@@ -39,10 +39,13 @@ export default function UserAccountGroupTab() {
             });
     }, [t, auth]);
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = (dto: UserAccountGroup|undefined) => {
         setDialogOpen(false);
         refresh();
-        //todo Select new record?
+
+        if (dto) {
+            setFilter(dto.name);
+        }
     }
 
     const handleDeleteRequest = (ug: UserAccountGroup) => {
@@ -91,7 +94,7 @@ export default function UserAccountGroupTab() {
                 </Table>
             </TableContainer>
 
-            <CreateUserGroupDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <CreateUserGroupDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-user-group")}
                          text={`Do ya really want to delete the user group '${selectedEntity?.name}'?`}
                          open={deleteOpen}

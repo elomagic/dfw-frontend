@@ -35,14 +35,17 @@ export default function UserAccountTab() {
             })
             .catch((err: Error) => {
                 setRows([])
-                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } );
             });
     }, [t, auth]);
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = (dto: UserAccount|undefined) => {
         setDialogOpen(false);
         refresh();
-        // todo Select new record?
+
+        if (dto) {
+            setFilter(dto.mailAddress)
+        }
     }
 
     const handleDeleteRequest = (u: UserAccount) => {
@@ -53,7 +56,7 @@ export default function UserAccountTab() {
     const handleDelete = () => {
         Rest.deleteResource(auth, Rest.RestEndpoint.User, selectedEntity?.id)
             .then(() => refresh())
-            .catch((err: Error) => enqueueSnackbar(t("deleting-failed", { message: err.message }), { variant: 'error'} ))
+            .catch((err: Error) => enqueueSnackbar(t("deleting-failed", { message: err.message }), { variant: 'error' } ))
             .finally(() => setDeleteOpen(false))
     }
 
@@ -93,7 +96,7 @@ export default function UserAccountTab() {
                 </Table>
             </TableContainer>
 
-            <CreateUserDialog open={dialogOpen} handleClose={handleCloseDialog} />
+            <CreateUserDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-user-account")}
                          text={`Do ya really want to delete the user account '${selectedEntity?.mailAddress}'?`}
                          open={deleteOpen}

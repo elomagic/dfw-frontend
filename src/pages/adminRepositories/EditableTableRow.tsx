@@ -8,7 +8,7 @@ import * as Rest from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
 import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
 import {enqueueSnackbar} from "notistack";
-import FormButton from "../../components/FormButton.tsx";
+import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
@@ -70,8 +70,8 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                 return cd;
             })
             .then((kl: KeyLabelItem[]) => setCredentialsIds(kl))
-            .catch((err: Error) => enqueueSnackbar("Getting credential list failed: " + err.message, { variant: 'error'} ));
-    }, [auth]);
+            .catch((err: Error) => enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } ));
+    }, [auth, t]);
 
     return (
         <Grid container spacing={2} marginTop={2} marginBottom={2}>
@@ -92,7 +92,7 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
             />
 
             <FormTextField id="baseUrl"
-                                 type={"url"}
+                                 type="url"
                                  value={baseUri}
                                  errorMessage={baseUriErrorMessage}
                                  onChange={e => setBaseUri(e.target.value)}
@@ -126,7 +126,7 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                           gridSize={6}
             />
 
-            <FormButton onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

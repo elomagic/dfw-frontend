@@ -3,7 +3,7 @@ import {useState} from "react";
 import Grid from "@mui/material/Grid2";
 import {validateInputs} from "../../../FormFieldProperties.ts";
 import {UserAccount} from "../../../DTOs.ts";
-import FormButton from "../../../components/FormButton.tsx";
+import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../../components/FormCheckBox.tsx";
 import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
@@ -87,7 +87,7 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
                         gridSize={6}
             />
 
-            <FormButton onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

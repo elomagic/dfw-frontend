@@ -9,8 +9,8 @@ import {useAuth} from "../auth/useAuth.ts";
 interface FormButtonSaveProps {
     label?: string;
     startIcon?: React.ReactNode;
-    onSaveClick?: MouseEventHandler | undefined;
-    onDeleteClick?: MouseEventHandler | undefined;
+    onSaveClick?: MouseEventHandler;
+    onDeleteClick?: MouseEventHandler;
     updateRole?: string;
     deleteRole?: string;
 }
@@ -23,7 +23,7 @@ interface FormButtonSaveProps {
  * @param onDeleteClick Optional. If not set, the "delete" button not visible
  * @constructor
  */
-export default function FormButton({label, startIcon, onSaveClick, onDeleteClick, updateRole, deleteRole}: Readonly<FormButtonSaveProps>) {
+export default function FormButtons({label, startIcon, onSaveClick, onDeleteClick, updateRole, deleteRole}: Readonly<FormButtonSaveProps>) {
 
     const auth = useAuth();
     const { t } = useTranslation();

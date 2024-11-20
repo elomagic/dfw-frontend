@@ -8,7 +8,7 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
 import FormSelectList from "../../../components/FormSelectList.tsx";
-import FormButton from "../../../components/FormButton.tsx";
+import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
 
@@ -46,12 +46,12 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
             .then((items: KeyLabelItem[]) => {
                 setAllUsers(items);
             })
-            .catch((err: Error) => enqueueSnackbar("Getting users failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar("Getting users failed: " + err.message, { variant: 'error' } ));
 
         Rest.get(auth, Rest.RestEndpoint.Role)
             .then((res) => res.json())
             .then((rs: string[]) => setAllRoles(rs))
-            .catch((err: Error) => enqueueSnackbar("Getting roles failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => enqueueSnackbar("Getting roles failed: " + err.message, { variant: 'error' } ));
     }, [auth]);
 
     const handleUserMembersChanged = (selectedMembers: string[]) => {
@@ -104,7 +104,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
                             gridSize={6}
             />
 
-            <FormButton onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }
