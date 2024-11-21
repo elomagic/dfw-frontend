@@ -1,13 +1,27 @@
-import {Box} from "@mui/material";
-import {useTranslation} from "react-i18next";
+import LicencesPie from "./LicensesPie.tsx";
+import Grid from "@mui/material/Grid2";
 
 export default function DashboardView() {
 
-    const { t } = useTranslation();
-
     return (
-        <Box margin={3}>
-            {t("dashboard")}
-        </Box>
+        <Grid container spacing={2} marginTop={2} marginBottom={2}>
+            <Grid size={4}>
+                { /* TODO Counter > License in triage */ }
+                <LicencesPie />
+            </Grid>
+            <Grid size={4}>
+                <LicencesPie />
+            </Grid>
+            <Grid size={4}>
+                <LicencesPie />
+            </Grid>
+
+            <Grid size={6}>
+                { /* TODO Chart > Blocked By Vulnerability score */ }
+            </Grid>
+            <Grid size={6}>
+                { /* TODO Chart > Blocked By License Violation */ }
+            </Grid>
+        </Grid>
     );
 }
