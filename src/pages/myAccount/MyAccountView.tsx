@@ -1,17 +1,19 @@
 import {Box, Card} from "@mui/material";
 import {useAuth} from "../../auth/useAuth.ts";
 import {useTranslation} from "react-i18next";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import Grid from "@mui/material/Grid2";
 import {validateInputs} from "../../FormFieldProperties.ts";
-import {UserAccount} from "../../DTOs.ts";
+import {UserAccount, UserAccountApiKey} from "../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
 import {FormSelect} from "../../components/FormSelect.tsx";
+import FormList from "../../components/FormList.tsx";
+import CreateApiKeyDialog from "./CreateApiKeyDialog.tsx";
 
 const fields: FormFieldValidationProperty[] = [
     { name : "displayName", minLength: 1 },
@@ -24,7 +26,10 @@ export default function MyAccountView() {
 
     const [mailAddress] = useState(auth.mailAddress);
     const [displayName, setDisplayName] = useState(auth.displayName);
-    const [language, setLanguage] = useState<string>(auth.language ?? "EN");
+    const [language, setLanguage] = useState<string>(auth.language ?? "en");
+    const [apiKeys, setApiKeys] = useState<UserAccountApiKey[]>([]);
+
+    const [openCreate, setOpenCreate] = useState<boolean>(false);
 
     const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string|undefined>('');
 
@@ -43,16 +48,46 @@ export default function MyAccountView() {
         const data: UserAccount = {
             mailAddress: auth.mailAddress ?? "",
             displayName: displayName ?? "",
-            language: language ?? "EN",
+            language: language ?? "en",
             // Following properties will be ignored by server
             enabled: false,
             changePassword: true,
+            apiKeys: apiKeys
         }
 
         Rest.patch(auth, RestEndpoint.UserSelf, data)
             .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
             .catch((err: Error) => enqueueSnackbar(t("saving-data-failed", { message: err.message}), { variant: 'error'} ));
     };
+
+
+    const handleApiKeysChanged = (keys: UserAccountApiKey[]) => {
+        setApiKeys(keys);
+        // (auth.apiKeys ?? []).map(k => { return { key: k.id ?? "", label: k.comment }})
+    }
+
+    const handleCloseKeyDialog = (data: UserAccountApiKey|undefined) => {
+        setOpenCreate(false);
+
+        if (!data) {
+            return
+        }
+
+        const newData = [...apiKeys];
+        newData.push(data);
+
+        setApiKeys(newData);
+    }
+
+    useEffect(() => {
+        Rest.get(auth, RestEndpoint.UserSelf)
+            .then((res) => res.json())
+            .then((dto: UserAccount) => setApiKeys(dto.apiKeys ?? []))
+            .catch((err: Error) => {
+                setApiKeys([])
+                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+            });
+    }, [auth, t]);
 
     return (
         <Box margin={3}>
@@ -77,16 +112,26 @@ export default function MyAccountView() {
                                 value={language}
                                 label={t("language")}
                                 items={[
-                                    { "key": "EN", "label": t("english") },
-                                    { "key": "DE", "label": t("german") },
+                                    { "key": "en", "label": t("english") },
+                                    { "key": "de", "label": t("german") },
                                 ]}
                                 onChange={(e) => setLanguage(e.target.value as string)}
                                 gridSize={6}
+                    />
+                    <FormList<UserAccountApiKey>
+                        value={apiKeys}
+                        label={t("api-keys")}
+                        keyExtractor={(item) => { return item.id ?? ""}}
+                        labelExtractor={(item) => { return item.comment ?? ""}}
+                        onChange={handleApiKeysChanged}
+                        onAddClick={() => setOpenCreate(true)}
+                        gridSize={6}
                     />
 
                     <FormButtons onSaveClick={handleSaveClick}/>
                 </Grid>
             </Card>
+            <CreateApiKeyDialog open={openCreate} handleClose={(data) => handleCloseKeyDialog(data)} />
         </Box>
     );
 }

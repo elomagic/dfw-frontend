@@ -23,6 +23,13 @@ export declare interface Repository {
     lastUpdate?: string;
 }
 
+export declare interface UserAccountApiKey {
+    id?: string;
+    apiKey?: string;
+    comment: string;
+    created?: string;
+}
+
 export declare interface UserAccount {
     id?: string;
     mailAddress: string;
@@ -31,6 +38,7 @@ export declare interface UserAccount {
     enabled: boolean;
     changePassword: boolean;
     lastPasswordChange?: string;
+    apiKeys?: UserAccountApiKey[];
 }
 
 export declare interface UserAccountGroup {

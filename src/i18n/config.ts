@@ -31,7 +31,7 @@ i18n.use(initReactI18next).init({
     }
 })
     .then(() => dayjs.locale(language))
-    .catch((reason: any) => console.log(reason));
+    .catch((reason) => console.log(reason));
 
 i18n.languages = ['en', 'de'];
 

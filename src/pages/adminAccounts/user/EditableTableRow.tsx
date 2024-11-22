@@ -77,11 +77,11 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
             />
 
             <FormSelect id="language"
-                        value={language ?? "EN"}
+                        value={language ?? "en"}
                         label={t("language")}
                         items={[
-                            { "key": "EN", "label": t("english") },
-                            { "key": "DE", "label": t("german") },
+                            { "key": "en", "label": t("english") },
+                            { "key": "de", "label": t("german") },
                         ]}
                         onChange={(e) => setLanguage(e.target.value as string)}
                         gridSize={6}

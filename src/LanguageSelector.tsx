@@ -40,13 +40,13 @@ export default function LanguageSelector() {
                 <ImageListItem>
                     <img src="flag-us.svg" style={{height: "unset", width: "unset"}} alt='us'/>
                 </ImageListItem>
-                <ListItemText primary="EN"/>
+                <ListItemText primary="en"/>
             </MenuItem>
             <MenuItem value="de" className="LanguageSelector Item">
                 <ImageListItem>
                     <img src="flag-de.svg" style={{height: "unset", width: "unset"}} alt='de'/>
                 </ImageListItem>
-                <ListItemText primary="DE"/>
+                <ListItemText primary="de"/>
             </MenuItem>
 
         </Select>
