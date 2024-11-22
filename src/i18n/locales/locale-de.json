@@ -44,7 +44,7 @@
   "password": "Passwort",
   "password-validation": "Passwort-Überprüfung",
   "purl": "PURL",
-  "purl-mappings": "PURL Zuordnungen"
+  "purl-mappings": "PURL Zuordnungen",
   "repositories": "Repositories",
   "reset-password": "Passwort zurücksetzen",
   "roles": "Rollen",
@@ -61,5 +61,5 @@
   "user-accounts": "Benutzerkonten",
   "username": "Benutzername",
   "vulnerabilities": "Vulnerabilities",
-  "yes": "Ja",
+  "yes": "Ja"
 }

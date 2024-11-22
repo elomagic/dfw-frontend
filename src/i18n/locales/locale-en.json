@@ -6,6 +6,7 @@
   "admin-repositories": "Admin Repositories",
   "admin-accounts": "Admin Accounts",
   "app.title": "Dependency Firewall",
+  "api-key": "API Key",
   "backend": "Backend",
   "baseUrl": "Base URL",
   "builtOn": "Built On",
