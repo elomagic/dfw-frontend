@@ -1,5 +1,4 @@
 import {Paper} from "@mui/material";
-import {useTranslation} from "react-i18next";
 import ReactEChartsCore from "echarts-for-react/lib/core";
 import * as echarts from "echarts/core";
 import {GridComponent, LegendComponent, TitleComponent, TooltipComponent} from "echarts/components";
@@ -8,9 +7,6 @@ import {CanvasRenderer} from "echarts/renderers";
 import {KeyLabelItem} from "../../components/FormSelect.tsx";
 import {EChartsOption} from "echarts-for-react";
 import {useEffect, useState} from "react";
-import {useAuth} from "../../auth/useAuth.ts";
-import * as Rest from "../../RestClient.ts"
-import {enqueueSnackbar} from "notistack";
 
 // Register the required components
 echarts.use(
@@ -19,6 +15,8 @@ echarts.use(
 
 function createOption(items: KeyLabelItem[]): EChartsOption {
     const dataItems = items.map((i) => { return { value: i.key, name: i.label }});// items.reverse();
+
+    console.log(dataItems)
 
     return {
         title: {
@@ -34,7 +32,14 @@ function createOption(items: KeyLabelItem[]): EChartsOption {
                 name: 'License',
                 type: 'pie',
                 radius: '50%',
-                data: { dataItems },
+                data:  [
+                    { value: 17, name: 'Apache-2.0' },
+                    { value: 12, name: 'MIT' },
+                    { value: 10, name: 'BSD-3-Clause' },
+                    { value: 9, name: 'BSD-2-Clause' },
+                    { value: 8, name: 'EPL-2.0' },
+                    { value: 7, name: 'EPL-1.0' }
+                ],
                 emphasis: {
                     itemStyle: {
                         shadowBlur: 40,
@@ -49,10 +54,9 @@ function createOption(items: KeyLabelItem[]): EChartsOption {
 
 export default function LicencesPie() {
 
-    const auth = useAuth();
-    const { t } = useTranslation();
     const [option, setOption] = useState<EChartsOption|undefined>(undefined);
 
+    /*
     useEffect(() => {
         Rest.get(auth, Rest.RestEndpoint.License, "LicensesInUse")
             .then((res) => res.json() )
@@ -62,6 +66,11 @@ export default function LicencesPie() {
             })
             .catch((err: Error) => enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } ));
     }, [t, auth]);
+    */
+
+    useEffect(() => {
+        setOption(createOption([]))
+    }, []);
 
     return (
         <Paper>
