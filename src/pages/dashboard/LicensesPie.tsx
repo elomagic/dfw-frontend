@@ -79,6 +79,7 @@ export default function LicencesPie() {
                 option={option}
                 notMerge={true}
                 lazyUpdate={true}
+                theme={"dark"}
             />}
         </Paper>
     );
