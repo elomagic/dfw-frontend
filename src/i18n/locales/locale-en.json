@@ -15,6 +15,7 @@
   "change-password": "Change Password",
   "continue": "Continue",
   "create": "Create",
+  "create-api-key": "Create API Key",
   "create-credential": "Create Credential",
   "create-name-mapping": "Create Name Mapping",
   "create-purl-mapping": "Create PURL Mapping",

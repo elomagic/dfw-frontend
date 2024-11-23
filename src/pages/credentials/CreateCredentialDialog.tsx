@@ -12,13 +12,8 @@ import {useAuth} from "../../auth/useAuth.ts";
 import {AuthenticationMode, CredentialData} from "../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
 import {FormSelect} from "../../components/FormSelect.tsx";
-import {validateInputs} from "../../FormFieldProperties.ts";
+import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
 import FormTextField from "../../components/FormTextField.tsx";
-import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
-
-const fields: FormFieldValidationProperty[] = [
-    { name : "credentialId", minLength: 1 },
-];
 
 interface CreateUserProps {
     open: boolean;
@@ -38,14 +33,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
     const [credentialIdErrorMessage, setCredentialIdErrorMessage] = useState<string|undefined>(undefined);
 
     const handleCreateClick = () => {
-        if (validateInputs(fields, (fieldName, result) => {
-            switch (fieldName) {
-                case "credentialId": {
-                    setCredentialIdErrorMessage(result);
-                    break;
-                }
-            }
-        })) {
+        if (!validateRequiredText(credentialId, setCredentialIdErrorMessage)) {
             return;
         }
 
@@ -81,7 +69,10 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                 <FormTextField id="credentialId"
                                      value={credentialId}
                                      errorMessage={credentialIdErrorMessage}
-                                     onChange={e => setCredentialId(e.target.value)}
+                                     onChange={e => {
+                                         validateRequiredUrl(e.target.value, setCredentialIdErrorMessage);
+                                         setCredentialId(e.target.value);
+                                     }}
                                      label={t("credentialId")}
                                      autoFocus
                                      required

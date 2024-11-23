@@ -1,20 +1,14 @@
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid2";
-import {validateInputs} from "../../../FormFieldProperties.ts";
+import {validateRequiredText} from "../../../Validators.ts";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {License, LicensePurlMap} from "../../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
 import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
-import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
-
-const fields: FormFieldValidationProperty[] = [
-    { name : "purlMatch", minLength: 1 },
-    { name : "spdxId", minLength: 1 },
-];
 
 interface EditableTableRowProps {
     purlMap: LicensePurlMap
@@ -43,14 +37,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
     }, [auth]);
 
     const handleSaveClick = () => {
-        if (validateInputs(fields, (fieldName, result) => {
-            switch (fieldName) {
-                case "purlMatch": {
-                    setPurlErrorMessage(result);
-                    break;
-                }
-            }
-        })) {
+        if (!validateRequiredText(purlMatch, setPurlErrorMessage)) {
             return;
         }
 
@@ -62,7 +49,10 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
             <FormTextField id="purlMatch"
                                  value={purlMatch}
                                  errorMessage={purlErrorMessage}
-                                 onChange={e => setPurlMatch(e.target.value)}
+                                 onChange={e => {
+                                     validateRequiredText(e.target.value, setPurlErrorMessage);
+                                     setPurlMatch(e.target.value);
+                                 }}
                                  label={t("purl-match")}
                                  autoFocus
                                  required

@@ -5,19 +5,14 @@ import {useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import Grid from "@mui/material/Grid2";
-import {validateInputs} from "../../FormFieldProperties.ts";
+import {validateRequiredText} from "../../Validators.ts";
 import {UserAccount, UserAccountApiKey} from "../../DTOs.ts";
 import {enqueueSnackbar} from "notistack";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
-import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
 import {FormSelect} from "../../components/FormSelect.tsx";
 import FormList from "../../components/FormList.tsx";
 import CreateApiKeyDialog from "./CreateApiKeyDialog.tsx";
-
-const fields: FormFieldValidationProperty[] = [
-    { name : "displayName", minLength: 1 },
-];
 
 export default function MyAccountView() {
 
@@ -31,17 +26,10 @@ export default function MyAccountView() {
 
     const [openCreate, setOpenCreate] = useState<boolean>(false);
 
-    const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string|undefined>('');
+    const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string|undefined>(undefined);
 
     const handleSaveClick = () => {
-        if (validateInputs(fields, (fieldName, result) => {
-            switch (fieldName) {
-                case "displayName": {
-                    setDisplayNameErrorMessage(result);
-                    break;
-                }
-            }
-        })) {
+        if (!validateRequiredText(displayName, setDisplayNameErrorMessage)) {
             return;
         }
 
@@ -63,7 +51,6 @@ export default function MyAccountView() {
 
     const handleApiKeysChanged = (keys: UserAccountApiKey[]) => {
         setApiKeys(keys);
-        // (auth.apiKeys ?? []).map(k => { return { key: k.id ?? "", label: k.comment }})
     }
 
     const handleCloseKeyDialog = (data: UserAccountApiKey|undefined) => {
@@ -99,13 +86,16 @@ export default function MyAccountView() {
                                          gridSize={6}
                     />
                     <FormTextField id="displayName"
-                                         value={displayName}
-                                         errorMessage={displayNameErrorMessage}
-                                         onChange={e => setDisplayName(e.target.value)}
-                                         label={t("displayName")}
-                                         autoFocus
-                                         required
-                                         gridSize={6}
+                                   value={displayName}
+                                   errorMessage={displayNameErrorMessage}
+                                     onChange={e => {
+                                         setDisplayName(e.target.value)
+                                         validateRequiredText(e.target.value, setDisplayNameErrorMessage)
+                                     }}
+                                     label={t("displayName")}
+                                     autoFocus
+                                     required
+                                     gridSize={6}
                     />
 
                     <FormSelect id="language"
@@ -121,7 +111,6 @@ export default function MyAccountView() {
                     <FormList<UserAccountApiKey>
                         value={apiKeys}
                         label={t("api-keys")}
-                        keyExtractor={(item) => { return item.id ?? ""}}
                         labelExtractor={(item) => { return item.comment ?? ""}}
                         onChange={handleApiKeysChanged}
                         onAddClick={() => setOpenCreate(true)}

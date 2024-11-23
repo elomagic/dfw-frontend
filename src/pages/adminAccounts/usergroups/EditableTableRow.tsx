@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid2";
-import {validateInputs} from "../../../FormFieldProperties.ts";
+import {validateRequiredText} from "../../../Validators.ts";
 import {KeyLabelItem} from "../../../components/FormSelect.tsx";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
@@ -10,11 +10,6 @@ import {enqueueSnackbar} from "notistack";
 import FormSelectList from "../../../components/FormSelectList.tsx";
 import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
-import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
-
-const fields: FormFieldValidationProperty[] = [
-    { name : "name", minLength: 1 },
-];
 
 interface EditableTableRowProps {
     group: UserAccountGroup
@@ -63,14 +58,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
     }
 
     const handleSaveClick = () => {
-        if (validateInputs(fields, (fieldName, result) => {
-            switch (fieldName) {
-                case "name": {
-                    setNameErrorMessage(result);
-                    break;
-                }
-            }
-        })) {
+        if(!validateRequiredText(name, setNameErrorMessage)) {
             return;
         }
 
@@ -82,7 +70,10 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
             <FormTextField id="name"
                                  value={name}
                                  errorMessage={nameErrorMessage}
-                                 onChange={e => setName(e.target.value)}
+                                 onChange={e => {
+                                     setName(e.target.value);
+                                     validateRequiredText(e.target.value, setNameErrorMessage);
+                                 }}
                                  label={t("name")}
                                  autoFocus
                                  required

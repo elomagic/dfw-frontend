@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import {InputAdornment} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import {validateInputs} from "../../FormFieldProperties.ts";
+import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
 import * as Rest from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
 import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
@@ -11,13 +11,7 @@ import {enqueueSnackbar} from "notistack";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
-import {FormFieldValidationProperty} from "../../components/FormBuilder.ts";
 import {FormSelect, KeyLabelItem} from "../../components/FormSelect.tsx";
-
-const fields: FormFieldValidationProperty[] = [
-    { name : "name", minLength: 1 },
-    { name : "baseUri", minLength: 8 },
-];
 
 interface EditableTableRowProps {
     repository: Repository
@@ -43,18 +37,8 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
     const [baseUriErrorMessage, setBaseUriErrorMessage] = useState<string|undefined>(undefined);
 
     const handleSaveClick = () => {
-        if (validateInputs(fields, (fieldName, result) => {
-            switch (fieldName) {
-                case "name": {
-                    setNameErrorMessage(result);
-                    break;
-                }
-                case "baseUri": {
-                    setBaseUriErrorMessage(result);
-                    break;
-                }
-            }
-        })) {
+        if (!validateRequiredText(name, setNameErrorMessage)
+            || !validateRequiredUrl(baseUri, setBaseUriErrorMessage)) {
             return;
         }
 
@@ -78,7 +62,10 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
             <FormTextField id="name"
                                  value={name}
                                  errorMessage={nameErrorMessage}
-                                 onChange={e => setName(e.target.value)}
+                                 onChange={e => {
+                                     validateRequiredText(e.target.value, setNameErrorMessage);
+                                     setName(e.target.value);
+                                 }}
                                  label={t("name")}
                                  autoFocus
                                  required
@@ -95,7 +82,10 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                                  type="url"
                                  value={baseUri}
                                  errorMessage={baseUriErrorMessage}
-                                 onChange={e => setBaseUri(e.target.value)}
+                                 onChange={e => {
+                                     validateRequiredUrl(e.target.value, setBaseUriErrorMessage);
+                                     setBaseUri(e.target.value)
+                                 }}
                                  label={t("baseUrl")}
                                  required
                                  gridSize={6}

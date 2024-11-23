@@ -1,17 +1,12 @@
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
-import {validateInputs} from "../../../FormFieldProperties.ts";
+import {validateRequiredText} from "../../../Validators.ts";
 import {UserAccount} from "../../../DTOs.ts";
 import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../../components/FormCheckBox.tsx";
-import {FormFieldValidationProperty} from "../../../components/FormBuilder.ts";
 import {FormSelect} from "../../../components/FormSelect.tsx";
-
-const fields: FormFieldValidationProperty[] = [
-    { name : "displayName", minLength: 1 },
-];
 
 interface EditableTableRowProps {
     user: UserAccount
@@ -32,16 +27,10 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
     const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string|undefined>(undefined);
 
     const handleSaveClick = () => {
-        if (validateInputs(fields, (fieldName, result) => {
-            switch (fieldName) {
-                case "displayName": {
-                    setDisplayNameErrorMessage(result);
-                    break;
-                }
-            }
-        })) {
+        if (!validateRequiredText(displayName, setDisplayNameErrorMessage)) {
             return;
         }
+
 
         onSaveClick({id: user.id, mailAddress, displayName, language, enabled, changePassword});
     };
@@ -56,7 +45,10 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
             <FormTextField id="displayName"
                                  value={displayName}
                                  errorMessage={displayNameErrorMessage}
-                                 onChange={e => setDisplayName(e.target.value)}
+                                 onChange={e => {
+                                     setDisplayName(e.target.value);
+                                     validateRequiredText(e.target.value, setDisplayNameErrorMessage);
+                                 }}
                                  label={t("displayName")}
                                  autoFocus
                                  required

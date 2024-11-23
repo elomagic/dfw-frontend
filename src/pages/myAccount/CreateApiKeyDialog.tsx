@@ -8,6 +8,8 @@ import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import {UserAccountApiKey} from "../../DTOs.ts";
 import FormTextField from "../../components/FormTextField.tsx";
+import { v4 as uuidv4 } from 'uuid';
+import {validateRequiredText} from "../../Validators.ts";
 
 interface CreateApiKyProps {
     open: boolean;
@@ -21,27 +23,33 @@ export default function CreateApiKeyDialog({ open, handleClose }: Readonly<Creat
     const [comment, setComment] = useState("");
     const [apiKey, setApiKey] = useState("");
 
-    const handleCreateClick = () => {
-        const data: UserAccountApiKey = {
-            id: comment,
-            apiKey,
-            comment
-        }
+    const [descriptionErrorMessage, setDescriptionErrorMessage] = useState<string|undefined>('');
 
-       handleClose(data);
+    const handleCreateClick = () => {
+        if (validateRequiredText(comment, setDescriptionErrorMessage)) {
+            const data: UserAccountApiKey = {
+                id: comment,
+                apiKey,
+                comment
+            }
+
+            handleClose(data);
+        }
     }
 
     useEffect(() => {
-        setApiKey("todo random key");
-    }, []);
+        if (open) {
+            setComment("");
+            setApiKey(uuidv4());
+        }
+    }, [open]);
 
     return (
         <Dialog
             open={open}
-            onClose={() => handleClose (undefined)}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
+            PaperProps={{ sx: { width: "500px", backgroundImage: 'none' }}}
         >
-            <DialogTitle>{t("create-user-account")}</DialogTitle>
+            <DialogTitle>{t("create-api-key")}</DialogTitle>
             <DialogContent
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
             >
@@ -49,13 +57,17 @@ export default function CreateApiKeyDialog({ open, handleClose }: Readonly<Creat
                     Please enter usage for your new API Key
                 </DialogContentText>
                 <FormTextField
-                    id="comment"
+                    id="description"
                     type="text"
                     value={comment}
-                    onChange={e => setComment(e.target.value)}
+                    onChange={e => {
+                        validateRequiredText(e.target.value, setDescriptionErrorMessage);
+                        setComment(e.target.value);
+                    }}
                     autoFocus
                     required
-                    label={t("comment")}
+                    errorMessage={descriptionErrorMessage}
+                    label={t("description")}
                 />
                 <FormTextField
                     id="apiKey"
@@ -64,6 +76,9 @@ export default function CreateApiKeyDialog({ open, handleClose }: Readonly<Creat
                     label={t("api-key")}
                     readOnly
                 />
+                <DialogContentText>
+                    Copy the generated API Key and store it somewhere safe before you continue !!!
+                </DialogContentText>
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
