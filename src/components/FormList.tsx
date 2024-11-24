@@ -11,25 +11,66 @@ import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 import { v4 as uuidv4 } from 'uuid';
+import {ItemId} from "./FormSelect.tsx";
+
+interface UnwrappedFormListProps<T> {
+    values: ItemId<T>[];
+    label: string;
+    labelItemExtractor: (item: T) => string;
+    onAddClick?: () => void;
+    onDeleteClick: (itemId: string) => void;
+    gridSize?: GridSize;
+}
+
+
+function UnwrappedFormList<T>({ values, label, labelItemExtractor, onAddClick, onDeleteClick }: Readonly<UnwrappedFormListProps<T>>) {
+
+    const { t } = useTranslation();
+
+    return (
+        <>
+            {label}
+            <List sx={{
+                width: '100%', minHeight: '56px', maxHeight: '200px', margin: '6px 0 6px 0',
+                border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px', padding: '8px 14px',
+                overflow: "auto"
+            }}>
+                {values
+                    .map((item) => (
+                        <ListItem key={item._itemId}
+                                  disablePadding
+                                  secondaryAction={
+                                      <IconButton edge="end" aria-label="remove" sx={{ padding: 0 }}>
+                                          <RemoveCircle color="error" onClick={() => onDeleteClick(item._itemId)}/>
+                                      </IconButton>}
+                        >
+                            <ListItemText id={item._itemId} primary={labelItemExtractor(item)} />
+                        </ListItem>)
+                    )}
+            </List>
+            {onAddClick &&
+                <Button variant="outlined"
+                        onClick={onAddClick}
+                        size="small"
+                        startIcon={<Add />}>
+                    {t("add")}
+                </Button>
+            }
+        </>
+    );
+}
 
 interface FormListProps<T> {
     value: T[];
     label: string;
-    labelExtractor: (item: T) => string;
+    labelItemExtractor: (item: T) => string;
     onChange: (selected: T[]) => void;
     onAddClick?: () => void;
     gridSize?: GridSize;
 }
 
-export default function FormList<T>({ value, label, labelExtractor, gridSize, onChange, onAddClick }: Readonly<FormListProps<T>>) {
+export default function FormList<T>({ value, label, labelItemExtractor, gridSize, onChange, onAddClick }: Readonly<FormListProps<T>>) {
 
-    // For internal managing, create my own item ID
-    type ItemId<T> = T & {    // '{}' can be replaced with 'any'
-        _itemId: string;
-    };
-
-
-    const { t } = useTranslation();
     const [ values, setValues ] = useState<ItemId<T>[]>([]);
 
     const handleDeleteClick = (key: string) => {
@@ -45,34 +86,11 @@ export default function FormList<T>({ value, label, labelExtractor, gridSize, on
         <>
             { gridSize && (
                 <Grid size={gridSize}>
-                    {label}
-                    <List sx={{
-                        width: '100%', minHeight: '56px', maxHeight: '200px', margin: '6px 0 6px 0',
-                        border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px', padding: '8px 14px',
-                        overflow: "auto"
-                    }}>
-                        {values
-                            .map((item) => (
-                                <ListItem key={item._itemId}
-                                          disablePadding
-                                          secondaryAction={
-                                                <IconButton edge="end" aria-label="remove" sx={{ padding: 0 }}>
-                                                    <RemoveCircle color="error" onClick={() => handleDeleteClick(item._itemId)}/>
-                                                </IconButton>}
-                                >
-                                <ListItemText id={item._itemId} primary={labelExtractor(item)} />
-                            </ListItem>)
-                        )}
-                    </List>
-                    {onAddClick &&
-                        <Button variant="outlined"
-                                onClick={onAddClick}
-                                size="small"
-                                startIcon={<Add />}>
-                        {t("add")}
-                    </Button>
-                    }
+                    <UnwrappedFormList values={values} label={label} labelItemExtractor={labelItemExtractor} onDeleteClick={(itemId) => handleDeleteClick(itemId)} />
                 </Grid>
+            )}
+            { !gridSize && (
+                <UnwrappedFormList values={values} label={label} labelItemExtractor={labelItemExtractor} onDeleteClick={(itemId) => handleDeleteClick(itemId)} onAddClick={onAddClick} />
             )}
         </>
     );

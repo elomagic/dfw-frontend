@@ -5,33 +5,35 @@ import {
     ListItem,
     ListItemText
 } from "@mui/material";
-import {KeyLabelItem} from "./FormSelect.tsx";
 import Grid from "@mui/material/Grid2";
 import {Add, RemoveCircle} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import SelectItemDialog from "./SelectItemDialog.tsx";
 import {GridSize} from "@mui/material/Grid2/Grid2";
+import {v4 as uuidv4} from "uuid";
+import {ItemId} from "./FormSelect.tsx";
 
-interface FormSelectListProps {
-    value: string[];
-    selectables: KeyLabelItem[];
+interface FormSelectListProps<T> {
+    value: T[];
+    selectables: T[];
     label: string;
-    onChange: (selectedKeys: string[]) => void;
+    labelItemExtractor: (item: T) => string;
+    onChange: (selected: T[]) => void;
     gridSize?: GridSize;
 }
 
-export default function FormSelectList({ label, selectables, gridSize, onChange, value}: Readonly<FormSelectListProps>) {
+export default function FormSelectList<T> ({ label, selectables, gridSize, onChange, value, labelItemExtractor}: Readonly<FormSelectListProps<T>>) {
 
     const { t } = useTranslation();
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
-    const [ values, setValues ] = useState<string[]>([]);
+    const [ values, setValues ] = useState<ItemId<T>[]>([]);
 
-    const handleCloseDialog = (cancel: boolean, keys: string[]) => {
+    const handleCloseDialog = (cancel: boolean, items: ItemId<T>[]) => {
         setDialogOpen(false);
         if (!cancel) {
-            setValues(keys)
-            onChange(keys);
+            setValues(items)
+            onChange(items);
         }
     }
 
@@ -40,12 +42,13 @@ export default function FormSelectList({ label, selectables, gridSize, onChange,
     }
 
     const handleDeleteClick = (key: string) => {
-        const v = values.filter(item => item !== key);
+        const v = values.filter(item => item._itemId !== key);
         onChange(v);
     }
 
     useEffect(() => {
-        setValues(value);
+        // TODO Sync _itemId with selectables
+        setValues(value.map(item => ({ ...item, _itemId: uuidv4() })));
     }, [value]);
 
     return (
@@ -58,17 +61,16 @@ export default function FormSelectList({ label, selectables, gridSize, onChange,
                         border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px', padding: '8px 14px',
                         overflow: "auto"
                     }}>
-                        {selectables
-                            .filter(item => values.includes(item.key))
+                        {values
                             .map((item) => (
-                                <ListItem key={item.key}
+                                <ListItem key={item._itemId}
                                           disablePadding
                                           secondaryAction={
                                                 <IconButton edge="end" aria-label="remove">
-                                                    <RemoveCircle color="error" onClick={() => handleDeleteClick(item.key)}/>
+                                                    <RemoveCircle color="error" onClick={() => handleDeleteClick(item._itemId)}/>
                                                 </IconButton>}
                                 >
-                                <ListItemText id={item.key} primary={item.label} />
+                                <ListItemText id={item._itemId} primary={labelItemExtractor(item)} />
                             </ListItem>)
                         )}
                     </List>
@@ -80,7 +82,13 @@ export default function FormSelectList({ label, selectables, gridSize, onChange,
                     </Button>
                 </Grid>
             )}
-            <SelectItemDialog open={dialogOpen} handleClose={handleCloseDialog} value={values} selectables={selectables} />
+            <SelectItemDialog<ItemId<T>>
+                open={dialogOpen}
+                handleClose={handleCloseDialog}
+                value={values}
+                selectables={selectables.map(item => ({ ...item, _itemId: uuidv4() }))}
+                labelItemExtractor={(item => labelItemExtractor(item))}
+            />
         </>
     );
 }

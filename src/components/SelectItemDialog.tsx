@@ -7,27 +7,32 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import {Checkbox, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import {KeyLabelItem} from "./FormSelect.tsx";
+import {ItemId} from "./FormSelect.tsx";
 
-interface SelectItemDialogProps {
+interface SelectItemDialogProps<T> {
+    value: ItemId<T>[];
+    selectables: ItemId<T>[];
+    labelItemExtractor: (item: ItemId<T>) => string;
     open: boolean;
-    handleClose: (cancel: boolean, keys: string[]) => void;
-    value: string[];
-    selectables: KeyLabelItem[];
+    handleClose: (cancel: boolean, items: ItemId<T>[]) => void;
 }
 
-export default function SelectItemDialog({ open, handleClose, value, selectables }: Readonly<SelectItemDialogProps>) {
+export default function SelectItemDialogIdItem<T>({ open, handleClose, value, selectables, labelItemExtractor }: Readonly<SelectItemDialogProps<T>>) {
 
     const { t } = useTranslation();
 
     const [checked, setChecked] = useState<string[]>([]);
 
-    const handleToggleItem = (item: KeyLabelItem) => {
-        const currentIndex = checked.indexOf(item.key);
+    const resolveCheckedItems = (allItems: ItemId<T>[], checked: string[]): ItemId<T>[] => {
+        return allItems.filter(item => checked.indexOf(item._itemId) !== -1);
+    }
+
+    const handleToggleItem = (item: ItemId<T>) => {
+        const currentIndex = checked.indexOf(item._itemId);
         const newChecked = [...checked];
 
         if (currentIndex === -1) {
-            newChecked.push(item.key);
+            newChecked.push(item._itemId);
         } else {
             newChecked.splice(currentIndex, 1);
         }
@@ -36,13 +41,13 @@ export default function SelectItemDialog({ open, handleClose, value, selectables
     }
 
     useEffect(() => {
-        setChecked(value)
+        setChecked(value.map(item => item._itemId))
     }, [value]);
 
     return (
         <Dialog
             open={open}
-            onClose={() => handleClose(true, checked)}
+            onClose={() => handleClose(true, resolveCheckedItems(selectables, checked))}
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("select-items-dialog-title")}</DialogTitle>
@@ -63,14 +68,14 @@ export default function SelectItemDialog({ open, handleClose, value, selectables
 
                         return (
                             <ListItemButton
-                                key={item.key}
+                                key={item._itemId}
                                 role="listitem"
                                 sx={{ p: 0 }}
                                 onClick={() => handleToggleItem(item)}
                             >
                                 <ListItemIcon>
                                     <Checkbox
-                                        checked={checked.includes(item.key)}
+                                        checked={checked.includes(item._itemId)}
                                         tabIndex={-1}
                                         disableRipple
                                         inputProps={{
@@ -78,15 +83,15 @@ export default function SelectItemDialog({ open, handleClose, value, selectables
                                         }}
                                     />
                                 </ListItemIcon>
-                                <ListItemText  id={labelId} primary={item.label}/>
+                                <ListItemText  id={labelId} primary={labelItemExtractor(item)}/>
                             </ListItemButton>
                         );
                     })}
                 </List>
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(true, checked)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={() => handleClose(false, checked)}>
+                <Button onClick={() => handleClose(true, resolveCheckedItems(selectables, checked))}>{t("cancel")}</Button>
+                <Button variant="contained" onClick={() => handleClose(false, resolveCheckedItems(selectables, checked))}>
                     {t("ok")}
                 </Button>
             </DialogActions>

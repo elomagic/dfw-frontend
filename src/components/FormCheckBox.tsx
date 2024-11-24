@@ -11,33 +11,31 @@ interface FormCheckboxProps {
     gridSize?: GridSize;
 }
 
+function UnwrappedFormCheckBox({ id, value, onChange, label}: Readonly<FormCheckboxProps>) {
+    return (
+        <FormControl>
+            <FormControlLabel
+                control={<Checkbox onChange={onChange}/>}
+                id={id}
+                name={id}
+                checked={value}
+                label={label}
+            />
+        </FormControl>
+    );
+}
+
 export function FormCheckbox({ id, value, onChange, label, gridSize}: Readonly<FormCheckboxProps>) {
 
     return (
         <>
             {gridSize && (
                 <Grid size={gridSize}>
-                    <FormControl>
-                        <FormControlLabel
-                            control={<Checkbox onChange={onChange}/>}
-                            id={id}
-                            name={id}
-                            checked={value}
-                            label={label}
-                        />
-                    </FormControl>
+                    <UnwrappedFormCheckBox id={id} value={value} label={label} onChange={onChange} />
                 </Grid>
             )}
             {!gridSize && (
-                <FormControl>
-                    <FormControlLabel
-                        control={<Checkbox onChange={onChange}/>}
-                        id={id}
-                        name={id}
-                        checked={value}
-                        label={label}
-                    />
-                </FormControl>
+                <UnwrappedFormCheckBox id={id} value={value} label={label} onChange={onChange} />
             )}
         </>
     );

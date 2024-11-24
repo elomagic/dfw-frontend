@@ -69,7 +69,11 @@ export default function MyAccountView() {
     useEffect(() => {
         Rest.get(auth, RestEndpoint.UserSelf)
             .then((res) => res.json())
-            .then((dto: UserAccount) => setApiKeys(dto.apiKeys ?? []))
+            .then((dto: UserAccount) => {
+                setDisplayName(dto.displayName);
+                setLanguage(dto.language);
+                setApiKeys(dto.apiKeys ?? []);
+            })
             .catch((err: Error) => {
                 setApiKeys([])
                 enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
@@ -111,7 +115,7 @@ export default function MyAccountView() {
                     <FormList<UserAccountApiKey>
                         value={apiKeys}
                         label={t("api-keys")}
-                        labelExtractor={(item) => { return item.comment ?? ""}}
+                        labelItemExtractor={(item) => { return item.comment ?? ""}}
                         onChange={handleApiKeysChanged}
                         onAddClick={() => setOpenCreate(true)}
                         gridSize={6}

@@ -30,7 +30,8 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
         const data: Repository = {
             name,
             type,
-            enabled: false
+            enabled: false,
+            groupPermissions: []
         }
 
         Rest
