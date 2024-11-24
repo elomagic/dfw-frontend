@@ -10,14 +10,14 @@ import {Checkbox, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/m
 import {ItemId} from "./FormSelect.tsx";
 
 interface SelectItemDialogProps<T> {
-    open: boolean;
-    handleClose: (cancel: boolean, items: T[]) => void;
     value: ItemId<T>[];
-    labelItemExtractor: (item: T) => string;
     selectables: ItemId<T>[];
+    labelItemExtractor: (item: ItemId<T>) => string;
+    open: boolean;
+    handleClose: (cancel: boolean, items: ItemId<T>[]) => void;
 }
 
-export default function SelectItemDialog<T>({ open, handleClose, value, selectables, labelItemExtractor }: Readonly<SelectItemDialogProps<T>>) {
+export default function SelectItemDialogIdItem<T>({ open, handleClose, value, selectables, labelItemExtractor }: Readonly<SelectItemDialogProps<T>>) {
 
     const { t } = useTranslation();
 

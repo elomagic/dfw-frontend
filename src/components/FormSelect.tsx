@@ -7,7 +7,7 @@ import {GridSize} from "@mui/material/Grid2/Grid2";
 
 // For internal managing, create my own item ID
 // TODO Must be moved in a separate file
-export declare type ItemId<T> = T & {    // '{}' can be replaced with 'any'
+export declare type ItemId<T> = T & {
     _itemId: string;
 };
 
@@ -25,6 +25,15 @@ interface FormSelectProps {
     gridSize?: GridSize;
 }
 
+/**
+ * Select aka ComboBox
+ * @param id
+ * @param value
+ * @param onChange
+ * @param label
+ * @param items
+ * @constructor
+ */
 function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<FormSelectProps>) {
 
     return (

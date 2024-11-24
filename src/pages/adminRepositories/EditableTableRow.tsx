@@ -1,4 +1,4 @@
-import {CredentialData, Repository} from "../../DTOs.ts";
+import {CredentialData, Repository, UserAccountGroup} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import {InputAdornment} from "@mui/material";
@@ -12,6 +12,7 @@ import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormSelect, KeyLabelItem} from "../../components/FormSelect.tsx";
+import FormSelectList from "../../components/FormSelectList.tsx";
 
 interface EditableTableRowProps {
     repository: Repository
@@ -30,8 +31,10 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
     const [description, setDescription] = useState(repository.description);
     const [baseUri, setBaseUri] = useState(repository.baseUri);
     const [credentialId, setCredentialId] = useState<string>(repository.credentialId ?? "-");
+    const [groupPermissions, setGroupPermissions] = useState<UserAccountGroup[]>([]);
 
     const [credentialsIds, setCredentialsIds] = useState<KeyLabelItem[]>([{ key: "-", label: "-"}]);
+    const [allGroups, setAllGroups] = useState<UserAccountGroup[]>([]);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
     const [baseUriErrorMessage, setBaseUriErrorMessage] = useState<string|undefined>(undefined);
@@ -42,7 +45,7 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
             return;
         }
 
-        onSaveClick({id, enabled, type: repository.type, name, description, baseUri, credentialId});
+        onSaveClick({id, enabled, type: repository.type, name, description, baseUri, credentialId, groupPermissions});
     };
 
     useEffect(() => {
@@ -54,6 +57,11 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                 return cd;
             })
             .then((kl: KeyLabelItem[]) => setCredentialsIds(kl))
+            .catch((err: Error) => enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } ));
+
+        Rest.get(auth, Rest.RestEndpoint.UserGroup)
+            .then((res) => res.json())
+            .then((rs: UserAccountGroup[]) => setAllGroups(rs))
             .catch((err: Error) => enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } ));
     }, [auth, t]);
 
@@ -114,6 +122,15 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                           label={t("enabled")}
                           onChange={e => setEnabled(e.target.checked)}
                           gridSize={6}
+            />
+
+            <FormSelectList<UserAccountGroup>
+                value={groupPermissions}
+                selectables={allGroups}
+                label={t("roles")}
+                labelItemExtractor={(item: UserAccountGroup) => item.name}
+                onChange={(items) => setGroupPermissions(items)}
+                gridSize={6}
             />
 
             <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>

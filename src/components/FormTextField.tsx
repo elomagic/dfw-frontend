@@ -18,6 +18,37 @@ interface FormTextFieldProps {
     startAdornment?: ReactNode;
 }
 
+function UnwrappedTextField({id, type, value, errorMessage, onChange, label, required, autoFocus, readOnly, startAdornment}: Readonly<FormTextFieldProps>) {
+
+    return (
+        <FormControl fullWidth>
+            <TextField
+                id={id}
+                name={id}
+                type={type ?? "text"}
+                value={value}
+                label={label}
+                onChange={onChange}
+                fullWidth
+                required={required}
+                autoFocus={autoFocus}
+                variant="outlined"
+                error={errorMessage != undefined}
+                helperText={errorMessage}
+                color={errorMessage == undefined ? 'primary' : 'error'}
+                sx={{ ariaLabel: {label}}}
+                slotProps={{
+                    input: {
+                        readOnly: readOnly,
+                        startAdornment: startAdornment
+                    },
+                }}
+            />
+        </FormControl>
+    );
+}
+
+
 /**
  *
  * @param id Id and name of the HTML input field
@@ -39,57 +70,33 @@ export default function FormTextField({id, type, value, errorMessage, onChange, 
         <>
             { gridSize && (
                 <Grid size={gridSize}>
-                    <FormControl fullWidth>
-                        <TextField
-                            id={id}
-                            name={id}
-                            type={type ?? "text"}
-                            value={value}
-                            label={label}
-                            onChange={onChange}
-                            fullWidth
-                            required={required}
-                            autoFocus={autoFocus}
-                            variant="outlined"
-                            error={errorMessage != undefined}
-                            helperText={errorMessage}
-                            color={errorMessage == undefined ? 'primary' : 'error'}
-                            sx={{ ariaLabel: {label}}}
-                            slotProps={{
-                                input: {
-                                    readOnly: readOnly,
-                                    startAdornment: startAdornment
-                                },
-                            }}
-                        />
-                    </FormControl>
+                    <UnwrappedTextField
+                        id={id}
+                        value={value}
+                        type={type}
+                        label={label}
+                        onChange={onChange}
+                        readOnly={readOnly}
+                        startAdornment={startAdornment}
+                        autoFocus={autoFocus}
+                        required={required}
+                        errorMessage={errorMessage}
+                    />
                 </Grid>
             )}
             { !gridSize && (
-                <FormControl fullWidth>
-                    <TextField
-                        id={id}
-                        name={id}
-                        type={type ?? "text"}
-                        value={value}
-                        label={label}
-                        onChange={onChange}
-                        fullWidth
-                        required={required}
-                        autoFocus={autoFocus}
-                        variant="outlined"
-                        error={errorMessage != undefined}
-                        helperText={errorMessage}
-                        color={errorMessage == undefined ? 'primary' : 'error'}
-                        sx={{ ariaLabel: {label}}}
-                        slotProps={{
-                            input: {
-                                readOnly: readOnly,
-                                startAdornment: startAdornment
-                            },
-                        }}
-                    />
-                </FormControl>
+                <UnwrappedTextField
+                    id={id}
+                    value={value}
+                    type={type}
+                    label={label}
+                    onChange={onChange}
+                    readOnly={readOnly}
+                    startAdornment={startAdornment}
+                    autoFocus={autoFocus}
+                    required={required}
+                    errorMessage={errorMessage}
+                />
             )}
         </>
     );

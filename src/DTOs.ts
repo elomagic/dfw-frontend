@@ -1,9 +1,12 @@
 export declare type RepositoryTypes = "MAVEN" | "NPM" | "DOCKER" | "NUGET"
 export declare type AuthenticationMode = "BASIC" | "BEARER"
 
-// Name of the dto must differ from "Credential"
-export declare interface CredentialData {
+export declare interface IdItem {    // '{}' can be replaced with 'any'
     id?: string;
+}
+
+// Name of the dto must differ from "Credential"
+export declare interface CredentialData extends IdItem {
     credentialId: string;
     mode: AuthenticationMode;
     username: string;
@@ -11,26 +14,14 @@ export declare interface CredentialData {
     passphrase: string;
 }
 
-export declare interface Repository {
-    id?: string;
-    type: RepositoryTypes;
-    enabled: boolean;
-    name: string;
-    description?: string;
-    baseUri?: string;
-    credentialId?: string;
-    created?: string;
-    lastUpdate?: string;
-}
-
-export declare interface UserAccountApiKey {
+export declare interface UserAccountApiKey extends IdItem {
     id?: string;
     apiKey?: string;
     comment: string;
     created?: string;
 }
 
-export declare interface UserAccount {
+export declare interface UserAccount extends IdItem {
     id?: string;
     mailAddress: string;
     displayName: string;
@@ -41,11 +32,24 @@ export declare interface UserAccount {
     apiKeys?: UserAccountApiKey[];
 }
 
-export declare interface UserAccountGroup {
+export declare interface UserAccountGroup extends IdItem {
     id?: string;
     name: string;
-    userAccountMailAddresses: string[];
+    userAccounts: UserAccount[];
     roles: string[];
+}
+
+export declare interface Repository extends IdItem {
+    id?: string;
+    type: RepositoryTypes;
+    enabled: boolean;
+    name: string;
+    description?: string;
+    baseUri?: string;
+    credentialId?: string;
+    created?: string;
+    lastUpdate?: string;
+    groupPermissions: UserAccountGroup[];
 }
 
 export declare interface Version {
@@ -64,7 +68,7 @@ export declare interface License {
     isOsiApproved: boolean;
 }
 
-export interface LicenseNameMap {
+export interface LicenseNameMap extends IdItem {
     id?: string;
     nameMatch: string;
     spdxId: string;
@@ -81,13 +85,13 @@ export declare interface LicensePermitted {
     spdxId: string;
 }
 
-export declare interface LicensePurlMap {
+export declare interface LicensePurlMap extends IdItem {
     id?: string;
     purlMatch: string;
     spdxId: string;
 }
 
-export declare interface LicenseViolation {
+export declare interface LicenseViolation extends IdItem {
     id: string;
     purl: string;
     licenses: string[];

@@ -2,7 +2,6 @@ import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../../Validators.ts";
-import {KeyLabelItem} from "../../../components/FormSelect.tsx";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
@@ -24,10 +23,10 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
 
     const [id] = useState(group.id);
     const [name, setName] = useState(group.name);
-    const [userMembers, setUserMembers] = useState<string[]>(group.userAccountMailAddresses); // Key = mailAddress
+    const [userMembers, setUserMembers] = useState<UserAccount[]>(group.userAccounts); // Key = mailAddress
     const [roles, setRoles] = useState<string[]>(group.roles);
 
-    const [allUsers, setAllUsers] = useState<KeyLabelItem[]>([]);
+    const [allUsers, setAllUsers] = useState<UserAccount[]>([]);
     const [allRoles, setAllRoles] = useState<string[]>([]);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
@@ -35,12 +34,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
     useEffect(() => {
         Rest.get(auth, Rest.RestEndpoint.User)
             .then((res) => res.json())
-            .then((dtos: UserAccount[]) => {
-                return dtos.map(u => { return { "key": u.mailAddress, "label": u.mailAddress} as KeyLabelItem })
-            })
-            .then((items: KeyLabelItem[]) => {
-                setAllUsers(items);
-            })
+            .then((dtos: UserAccount[]) => setAllUsers(dtos))
             .catch((err: Error) => enqueueSnackbar("Getting users failed: " + err.message, { variant: 'error' } ));
 
         Rest.get(auth, Rest.RestEndpoint.Role)
@@ -49,7 +43,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
             .catch((err: Error) => enqueueSnackbar("Getting roles failed: " + err.message, { variant: 'error' } ));
     }, [auth]);
 
-    const handleUserMembersChanged = (selectedMembers: string[]) => {
+    const handleUserMembersChanged = (selectedMembers: UserAccount[]) => {
         setUserMembers(selectedMembers);
     }
 
@@ -62,7 +56,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
             return;
         }
 
-        onSaveClick({id, name, roles, userAccountMailAddresses: userMembers});
+        onSaveClick({id, name, roles, userAccounts: userMembers});
     };
 
     return (
@@ -82,17 +76,21 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
 
             <Grid size={6} />
 
-            <FormSelectList value={userMembers}
-                            selectables={allUsers}
-                            label={t("user-account-members")}
-                            onChange={handleUserMembersChanged}
-                            gridSize={6}
+            <FormSelectList<UserAccount>
+                value={userMembers}
+                selectables={allUsers}
+                label={t("user-account-members")}
+                onChange={handleUserMembersChanged}
+                labelItemExtractor={(item) => item.mailAddress}
+                gridSize={6}
             />
-            <FormSelectList value={roles}
-                            selectables={allRoles.map(r => { return { "key": r, "label": r} as KeyLabelItem })}
-                            label={t("roles")}
-                            onChange={handleRolesChanged}
-                            gridSize={6}
+            <FormSelectList<string>
+                value={roles}
+                selectables={allRoles}
+                label={t("roles")}
+                onChange={handleRolesChanged}
+                labelItemExtractor={(item) => item}
+                gridSize={6}
             />
 
             <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
