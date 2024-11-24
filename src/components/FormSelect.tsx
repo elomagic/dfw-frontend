@@ -4,13 +4,6 @@ import Select from "@mui/material/Select";
 import {SelectInputProps} from "@mui/material/Select/SelectInput";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 
-
-// For internal managing, create my own item ID
-// TODO Must be moved in a separate file
-export declare type ItemId<T> = T & {
-    _itemId: string;
-};
-
 export declare interface KeyLabelItem {
     key: string;
     label: string;

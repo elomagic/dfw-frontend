@@ -7,12 +7,12 @@ import {useState} from "react";
 import {enqueueSnackbar} from "notistack";
 // TODO require('dayjs/locale/de')
 
-export const getStoredLanguage = (): string => {
-    const l = localStorage.getItem("language");
-    return l ?? "en";
-}
-
 export default function LanguageSelector() {
+
+    const getStoredLanguage = (): string => {
+        const l = localStorage.getItem("language");
+        return l ?? "en";
+    }
 
     const [language, setLanguage] = useState<string>(getStoredLanguage());
 

@@ -11,7 +11,7 @@ import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 import { v4 as uuidv4 } from 'uuid';
-import {ItemId} from "./FormSelect.tsx";
+import {ItemId} from "../DTOs.ts";
 
 interface UnwrappedFormListProps<T> {
     values: ItemId<T>[];

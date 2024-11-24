@@ -7,7 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import {Checkbox, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import {ItemId} from "./FormSelect.tsx";
+import {ItemId} from "../DTOs.ts";
 
 interface SelectItemDialogProps<T> {
     value: ItemId<T>[];

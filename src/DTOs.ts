@@ -1,6 +1,11 @@
 export declare type RepositoryTypes = "MAVEN" | "NPM" | "DOCKER" | "NUGET"
 export declare type AuthenticationMode = "BASIC" | "BEARER"
 
+// For internal managing, create my own item ID
+export declare type ItemId<T> = T & {
+    _itemId: string;
+};
+
 export declare interface IdItem {    // '{}' can be replaced with 'any'
     id?: string;
 }
