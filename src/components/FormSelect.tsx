@@ -4,6 +4,13 @@ import Select from "@mui/material/Select";
 import {SelectInputProps} from "@mui/material/Select/SelectInput";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 
+
+// For internal managing, create my own item ID
+// TODO Must be moved in a separate file
+export declare type ItemId<T> = T & {    // '{}' can be replaced with 'any'
+    _itemId: string;
+};
+
 export declare interface KeyLabelItem {
     key: string;
     label: string;
@@ -18,43 +25,39 @@ interface FormSelectProps {
     gridSize?: GridSize;
 }
 
+function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<FormSelectProps>) {
+
+    return (
+        <>
+            <FormControl>
+                <InputLabel id={id}>{label}</InputLabel>
+                <Select
+                    labelId={id}
+                    id={id}
+                    value={value}
+                    label={label}
+                    variant="outlined"
+                    onChange={onChange}
+                    fullWidth
+                >
+                    {items.map((item) => (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>))}
+                </Select>
+            </FormControl>
+        </>
+    );
+}
+
 export function FormSelect({ id, value, onChange, label, items, gridSize}: Readonly<FormSelectProps>) {
 
     return (
         <>
             { gridSize && (
                 <Grid size={gridSize}>
-                    <FormControl fullWidth>
-                        <InputLabel id={id}>{label}</InputLabel>
-                        <Select
-                            labelId={id}
-                            id={id}
-                            value={value}
-                            label={label}
-                            variant="outlined"
-                            onChange={onChange}
-                            fullWidth
-                        >
-                            {items.map((item) => (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>))}
-                        </Select>
-                    </FormControl>
+                    <UnwrappedFormSelect id={id} value={value} label={label} items={items} onChange={onChange} />
                 </Grid>
             )}
             { !gridSize && (
-                <FormControl>
-                    <InputLabel id={id}>{label}</InputLabel>
-                    <Select
-                        labelId={id}
-                        id={id}
-                        value={value}
-                        label={label}
-                        variant="outlined"
-                        onChange={onChange}
-                        fullWidth
-                    >
-                        {items.map((item) => (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>))}
-                    </Select>
-                </FormControl>
+                <UnwrappedFormSelect id={id} value={value} label={label} items={items} onChange={onChange} />
             )}
         </>
     );
