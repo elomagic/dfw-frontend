@@ -31,7 +31,7 @@ function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<Form
 
     return (
         <>
-            <FormControl>
+            <FormControl fullWidth={true}>
                 <InputLabel id={id}>{label}</InputLabel>
                 <Select
                     labelId={id}
