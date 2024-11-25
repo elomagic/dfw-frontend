@@ -40,7 +40,7 @@ export default function CreateApiKeyDialog({ open, handleClose }: Readonly<Creat
     useEffect(() => {
         if (open) {
             setComment("");
-            setApiKey(uuidv4());
+            setApiKey(`dfw${btoa(uuidv4())}`);
         }
     }, [open]);
 
