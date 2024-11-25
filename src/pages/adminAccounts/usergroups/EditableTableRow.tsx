@@ -16,6 +16,10 @@ interface EditableTableRowProps {
     onDeleteRequest: () => void
 }
 
+interface StringWrapperItem {
+    value: string;
+}
+
 export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
@@ -24,10 +28,10 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
     const [id] = useState(group.id);
     const [name, setName] = useState(group.name);
     const [userMembers, setUserMembers] = useState<UserAccount[]>(group.userAccounts); // Key = mailAddress
-    const [roles, setRoles] = useState<string[]>(group.roles);
+    const [roles, setRoles] = useState<StringWrapperItem[]>(group.roles.map(r => ({value: r})));
 
     const [allUsers, setAllUsers] = useState<UserAccount[]>([]);
-    const [allRoles, setAllRoles] = useState<string[]>([]);
+    const [allRoles, setAllRoles] = useState<StringWrapperItem[]>([]);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
 
@@ -39,7 +43,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
 
         Rest.get(auth, Rest.RestEndpoint.Role)
             .then((res) => res.json())
-            .then((rs: string[]) => setAllRoles(rs))
+            .then((rs: string[]) => setAllRoles(rs.map(r => ({value: r}))))
             .catch((err: Error) => enqueueSnackbar("Getting roles failed: " + err.message, { variant: 'error' } ));
     }, [auth]);
 
@@ -47,7 +51,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
         setUserMembers(selectedMembers);
     }
 
-    const handleRolesChanged = (selectedRoles: string[]) => {
+    const handleRolesChanged = (selectedRoles: StringWrapperItem[]) => {
         setRoles(selectedRoles);
     }
 
@@ -56,7 +60,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
             return;
         }
 
-        onSaveClick({id, name, roles, userAccounts: userMembers});
+        onSaveClick({id, name, roles: roles.map(r => r.value), userAccounts: userMembers});
     };
 
     return (
@@ -84,12 +88,12 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
                 labelItemExtractor={(item) => item.mailAddress}
                 gridSize={6}
             />
-            <FormSelectList<string>
+            <FormSelectList<StringWrapperItem>
                 value={roles}
                 selectables={allRoles}
                 label={t("roles")}
                 onChange={handleRolesChanged}
-                labelItemExtractor={(item) => item}
+                labelItemExtractor={(item) => item.value}
                 gridSize={6}
             />
 
