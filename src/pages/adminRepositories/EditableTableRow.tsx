@@ -68,35 +68,35 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
     return (
         <Grid container spacing={2} marginTop={2} marginBottom={2}>
             <FormTextField id="name"
-                                 value={name}
-                                 errorMessage={nameErrorMessage}
-                                 onChange={e => {
-                                     validateRequiredText(e.target.value, setNameErrorMessage);
-                                     setName(e.target.value);
-                                 }}
-                                 label={t("name")}
-                                 autoFocus
-                                 required
-                                 gridSize={6}
+                           value={name}
+                           errorMessage={nameErrorMessage}
+                           onChange={e => {
+                               validateRequiredText(e.target.value, setNameErrorMessage);
+                               setName(e.target.value);
+                           }}
+                           label={t("name")}
+                           autoFocus
+                           required
+                           gridSize={6}
             />
             <FormTextField id="description"
-                                 value={description}
-                                 onChange={e => setDescription(e.target.value)}
-                                 label={t("description")}
-                                 gridSize={6}
+                           value={description}
+                           onChange={e => setDescription(e.target.value)}
+                           label={t("description")}
+                           gridSize={6}
             />
 
             <FormTextField id="baseUrl"
-                                 type="url"
-                                 value={baseUri}
-                                 errorMessage={baseUriErrorMessage}
-                                 onChange={e => {
-                                     validateRequiredUrl(e.target.value, setBaseUriErrorMessage);
-                                     setBaseUri(e.target.value)
-                                 }}
-                                 label={t("baseUrl")}
-                                 required
-                                 gridSize={6}
+                           type="url"
+                           value={baseUri}
+                           errorMessage={baseUriErrorMessage}
+                           onChange={e => {
+                               validateRequiredUrl(e.target.value, setBaseUriErrorMessage);
+                               setBaseUri(e.target.value)
+                           }}
+                           label={t("baseUrl")}
+                           required
+                           gridSize={6}
             />
             <FormSelect id="credentialId"
                         value={credentialId}
@@ -107,15 +107,15 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
             />
 
             <FormTextField id="type"
-                                 value={repository.type}
-                                 label={t("type")}
-                                 gridSize={6}
-                                 readOnly
-                                 startAdornment={(
-                                     <InputAdornment position="start">
-                                         <RepositoryTypeIcon type={repository.type} />
-                                     </InputAdornment>
-                                )}
+                           value={repository.type}
+                           label={t("type")}
+                           gridSize={6}
+                           readOnly
+                           startAdornment={(
+                               <InputAdornment position="start">
+                                   <RepositoryTypeIcon type={repository.type} />
+                               </InputAdornment>
+                           )}
             />
             <FormCheckbox id="enabled"
                           value={enabled}
@@ -128,7 +128,8 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                 value={groupPermissions}
                 selectables={allGroups}
                 label={t("roles")}
-                labelItemExtractor={(item: UserAccountGroup) => item.name}
+                getItemId={(item: UserAccountGroup) => item.id ?? ""}
+                getItemLabel={(item: UserAccountGroup) => item.name}
                 onChange={(items) => setGroupPermissions(items)}
                 gridSize={6}
             />
