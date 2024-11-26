@@ -43,7 +43,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
 
         Rest.get(auth, Rest.RestEndpoint.Role)
             .then((res) => res.json())
-            .then((rs: string[]) => setAllRoles(rs.map(r => ({value: r}))))
+            .then((rs: string[]) => setAllRoles(rs.sort((a, b) => a.localeCompare(b)).map(r => ({value: r}))))
             .catch((err: Error) => enqueueSnackbar("Getting roles failed: " + err.message, { variant: 'error' } ));
     }, [auth]);
 
@@ -85,7 +85,8 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
                 selectables={allUsers}
                 label={t("user-account-members")}
                 onChange={handleUserMembersChanged}
-                labelItemExtractor={(item) => item.mailAddress}
+                getItemId={(item) => item.mailAddress}
+                getItemLabel={(item) => item.mailAddress}
                 gridSize={6}
             />
             <FormSelectList<StringWrapperItem>
@@ -93,7 +94,8 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
                 selectables={allRoles}
                 label={t("roles")}
                 onChange={handleRolesChanged}
-                labelItemExtractor={(item) => item.value}
+                getItemId={(item) => item.value}
+                getItemLabel={(item) => item.value}
                 gridSize={6}
             />
 

@@ -11,19 +11,19 @@ import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import SelectItemDialog from "./SelectItemDialog.tsx";
 import {GridSize} from "@mui/material/Grid2/Grid2";
-import {v4 as uuidv4} from "uuid";
 import {ItemId} from "../DTOs.ts";
 
 interface FormSelectListProps<T> {
     value: T[];
     selectables: T[];
     label: string;
-    labelItemExtractor: (item: T) => string;
+    getItemId: (item: T) => string;
+    getItemLabel: (item: T) => string;
     onChange: (selected: T[]) => void;
     gridSize?: GridSize;
 }
 
-export default function FormSelectList<T> ({ label, selectables, gridSize, onChange, value, labelItemExtractor}: Readonly<FormSelectListProps<T>>) {
+export default function FormSelectList<T> ({ value, selectables, onChange, getItemId, getItemLabel, label, gridSize }: Readonly<FormSelectListProps<T>>) {
 
     const { t } = useTranslation();
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
@@ -48,7 +48,7 @@ export default function FormSelectList<T> ({ label, selectables, gridSize, onCha
 
     useEffect(() => {
         // TODO Sync _itemId with selectables
-        setValues(value.map(item => ({ ...item, _itemId: uuidv4() })));
+        setValues(value.map(item => ({ ...item, _itemId: getItemId(item) })));
     }, [value]);
 
     return (
@@ -70,7 +70,7 @@ export default function FormSelectList<T> ({ label, selectables, gridSize, onCha
                                                     <RemoveCircle color="error" onClick={() => handleDeleteClick(item._itemId)}/>
                                                 </IconButton>}
                                 >
-                                <ListItemText id={item._itemId} primary={labelItemExtractor(item)} />
+                                <ListItemText id={item._itemId} primary={getItemLabel(item)} />
                             </ListItem>)
                         )}
                     </List>
@@ -86,8 +86,8 @@ export default function FormSelectList<T> ({ label, selectables, gridSize, onCha
                 open={dialogOpen}
                 handleClose={handleCloseDialog}
                 value={values}
-                selectables={selectables.map(item => ({ ...item, _itemId: uuidv4() }))}
-                labelItemExtractor={(item => labelItemExtractor(item))}
+                selectables={selectables.map(item => ({ ...item, _itemId: getItemId(item) }))}
+                labelItemExtractor={(item => getItemLabel(item))}
             />
         </>
     );
