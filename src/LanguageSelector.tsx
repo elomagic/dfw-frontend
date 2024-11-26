@@ -34,6 +34,7 @@ export default function LanguageSelector() {
             className="LanguageSelector"
             color="primary"
             value={language}
+            variant={"outlined"}
             onChange={handleChange}
         >
             <MenuItem value="en" className="LanguageSelector Item">

@@ -5,19 +5,19 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import {useEffect, useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {Checkbox, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {ItemId} from "../DTOs.ts";
 
 interface SelectItemDialogProps<T> {
     value: ItemId<T>[];
     selectables: ItemId<T>[];
-    labelItemExtractor: (item: ItemId<T>) => string;
+    getItemLabel: (item: ItemId<T>) => ReactNode;
     open: boolean;
     handleClose: (cancel: boolean, items: ItemId<T>[]) => void;
 }
 
-export default function SelectItemDialogIdItem<T>({ open, handleClose, value, selectables, labelItemExtractor }: Readonly<SelectItemDialogProps<T>>) {
+export default function SelectItemDialogIdItem<T>({ open, handleClose, value, selectables, getItemLabel }: Readonly<SelectItemDialogProps<T>>) {
 
     const { t } = useTranslation();
 
@@ -83,7 +83,7 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
                                         }}
                                     />
                                 </ListItemIcon>
-                                <ListItemText  id={labelId} primary={labelItemExtractor(item)}/>
+                                <ListItemText  id={labelId} primary={getItemLabel(item)}/>
                             </ListItemButton>
                         );
                     })}

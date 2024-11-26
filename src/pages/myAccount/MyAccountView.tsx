@@ -115,7 +115,7 @@ export default function MyAccountView() {
                     <FormList<UserAccountApiKey>
                         value={apiKeys}
                         label={t("api-keys")}
-                        labelItemExtractor={(item) => { return item.comment ?? ""}}
+                        getItemLabel={(item) => { return item.comment ?? ""}}
                         onChange={handleApiKeysChanged}
                         onAddClick={() => setOpenCreate(true)}
                         gridSize={6}

@@ -8,7 +8,7 @@ import {
 import Grid from "@mui/material/Grid2";
 import {Add, RemoveCircle} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
-import {useEffect, useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import SelectItemDialog from "./SelectItemDialog.tsx";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 import {ItemId} from "../DTOs.ts";
@@ -18,7 +18,7 @@ interface FormSelectListProps<T> {
     selectables: T[];
     label: string;
     getItemId: (item: T) => string;
-    getItemLabel: (item: T) => string;
+    getItemLabel: (item: T) => ReactNode;
     onChange: (selected: T[]) => void;
     gridSize?: GridSize;
 }
@@ -87,7 +87,7 @@ export default function FormSelectList<T> ({ value, selectables, onChange, getIt
                 handleClose={handleCloseDialog}
                 value={values}
                 selectables={selectables.map(item => ({ ...item, _itemId: getItemId(item) }))}
-                labelItemExtractor={(item => getItemLabel(item))}
+                getItemLabel={(item => getItemLabel(item))}
             />
         </>
     );
