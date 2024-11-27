@@ -17,6 +17,7 @@
   "create": "Create",
   "create-api-key": "Create API Key",
   "create-credential": "Create Credential",
+  "create-exception-rule": "Create Exception Rule...",
   "create-name-mapping": "Create Name Mapping",
   "create-purl-mapping": "Create PURL Mapping",
   "create-repository": "Create Repository",

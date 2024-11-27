@@ -3,6 +3,8 @@ import {useTranslation} from "react-i18next";
 import Grid from "@mui/material/Grid2";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
+import {useState} from "react";
+import CreatePurlMapDialog from "../adminLicenses/purlMap/CreatePurlMapDialog.tsx";
 
 interface EditableTableRowProps {
     licenseViolation: LicenseViolation
@@ -12,6 +14,7 @@ interface EditableTableRowProps {
 export default function LicenseIssueTableRow({ licenseViolation, onDeleteRequest }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
+    const [ createOpen, setCreateOpen ] = useState<boolean>(false);
 
     return (
         <Grid container spacing={2} marginTop={2} marginBottom={2}>
@@ -27,8 +30,12 @@ export default function LicenseIssueTableRow({ licenseViolation, onDeleteRequest
                            readOnly
                            gridSize={6}
             />
-
-            <FormButtons onDeleteClick={onDeleteRequest}/>
+            {/* Create exception button */}
+            <FormButtons onSaveClick={() => setCreateOpen(true)}
+                         labelLeftButton={t("create-exception-rule")}
+                         onDeleteClick={onDeleteRequest}
+            />
+            <CreatePurlMapDialog open={createOpen} handleClose={() => setCreateOpen(false)} />
         </Grid>
     );
 }

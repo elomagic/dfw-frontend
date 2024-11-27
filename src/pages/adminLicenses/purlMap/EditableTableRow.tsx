@@ -9,6 +9,7 @@ import {enqueueSnackbar} from "notistack";
 import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
+import FormTextArea from "../../../components/FormTextArea.tsx";
 
 interface EditableTableRowProps {
     purlMap: LicensePurlMap
@@ -24,6 +25,8 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
     const [id] = useState(purlMap.id);
     const [purlMatch, setPurlMatch] = useState<string>(purlMap.purlMatch);
     const [spdxId, setSpdxId] = useState<string>(purlMap.spdxId);
+    const [comment, setComment] = useState<string|undefined>(purlMap.comment);
+
     const [spdxList, setSpdxList] = useState<KeyLabelItem[]>([]);
 
     const [purlErrorMessage, setPurlErrorMessage] = useState<string|undefined>(undefined);
@@ -41,7 +44,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
             return;
         }
 
-        onSaveClick({id, purlMatch, spdxId});
+        onSaveClick({id, purlMatch, spdxId, comment});
     };
 
     return (
@@ -65,6 +68,14 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
                         items={spdxList}
                         onChange={(e) => setSpdxId(e.target.value as string)}
                         gridSize={6}
+            />
+
+            <FormTextArea id="comment"
+                          value={comment}
+                          label={t("comment")}
+                          minRows={6}
+                          onChange={(e) => setComment(e.target.value as string)}
+                          gridSize={6}
             />
 
             <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>

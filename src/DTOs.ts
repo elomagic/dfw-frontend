@@ -77,6 +77,14 @@ export interface LicenseNameMap extends IdItem {
     id?: string;
     nameMatch: string;
     spdxId: string;
+    comment?: string;
+}
+
+export declare interface LicensePurlMap extends IdItem {
+    id?: string;
+    purlMatch: string;
+    spdxId: string;
+    comment?: string;
 }
 
 export declare interface LicensePackage {
@@ -87,12 +95,6 @@ export declare interface LicensePackage {
 }
 
 export declare interface LicensePermitted {
-    spdxId: string;
-}
-
-export declare interface LicensePurlMap extends IdItem {
-    id?: string;
-    purlMatch: string;
     spdxId: string;
 }
 

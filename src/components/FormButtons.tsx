@@ -7,7 +7,8 @@ import {useTranslation} from "react-i18next";
 import {useAuth} from "../auth/useAuth.ts";
 
 interface FormButtonSaveProps {
-    label?: string;
+    labelLeftButton?: string;
+    labelRightButton?: string;
     startIcon?: React.ReactNode;
     onSaveClick?: MouseEventHandler;
     onDeleteClick?: MouseEventHandler;
@@ -17,13 +18,14 @@ interface FormButtonSaveProps {
 
 /**
  *
- * @param label Default "Save"
+ * @param labelLeftButton Default "Save"
+ * @param labelRightButton Default "Delete"
  * @param startIcon Default "Save" icon
  * @param onClick Optional. If not set, first button not visible
  * @param onDeleteClick Optional. If not set, the "delete" button not visible
  * @constructor
  */
-export default function FormButtons({label, startIcon, onSaveClick, onDeleteClick, updateRole, deleteRole}: Readonly<FormButtonSaveProps>) {
+export default function FormButtons({labelLeftButton, labelRightButton, startIcon, onSaveClick, onDeleteClick, updateRole, deleteRole}: Readonly<FormButtonSaveProps>) {
 
     const auth = useAuth();
     const { t } = useTranslation();
@@ -35,7 +37,7 @@ export default function FormButtons({label, startIcon, onSaveClick, onDeleteClic
                         onClick={onSaveClick}
                         size="small"
                         startIcon={startIcon ?? <Save />}>
-                    {label ?? t("save")}
+                    {labelLeftButton ?? t("save")}
                 </Button>
             }
 
@@ -47,7 +49,7 @@ export default function FormButtons({label, startIcon, onSaveClick, onDeleteClic
                         onClick={onDeleteClick}
                         size="small"
                         startIcon={startIcon ?? <DeleteForever />}>
-                    {label ?? t("delete")}
+                    {labelRightButton ?? t("delete")}
                 </Button>
             }
         </Grid>

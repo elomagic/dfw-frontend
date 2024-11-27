@@ -9,6 +9,7 @@ import {enqueueSnackbar} from "notistack";
 import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
+import FormTextArea from "../../../components/FormTextArea.tsx";
 
 interface EditableTableRowProps {
     nameMap: LicenseNameMap,
@@ -24,6 +25,8 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
     const [id] = useState(nameMap.id);
     const [nameMatch, setNameMatch] = useState<string>(nameMap.nameMatch);
     const [spdxId, setSpdxId] = useState<string>(nameMap.spdxId);
+    const [comment, setComment] = useState<string|undefined>(nameMap.comment);
+
     const [spdxList, setSpdxList] = useState<KeyLabelItem[]>([]);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
@@ -41,7 +44,7 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
             return;
         }
 
-        onSaveClick({id, nameMatch, spdxId});
+        onSaveClick({id, nameMatch, spdxId, comment});
     };
 
     return (
@@ -58,13 +61,20 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
                            required
                            gridSize={6}
             />
-
             <FormSelect id="spdxId"
                         value={spdxId}
                         label={t("spdx-id")}
                         items={spdxList}
                         onChange={(e) => setSpdxId(e.target.value as string)}
                         gridSize={6}
+            />
+
+            <FormTextArea id="comment"
+                          value={comment}
+                          label={t("comment")}
+                          minRows={6}
+                          onChange={(e) => setComment(e.target.value as string)}
+                          gridSize={6}
             />
 
             <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>

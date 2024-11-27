@@ -7,6 +7,7 @@
   "builtOn": "Erbaut Am",
   "cancel": "Abbrechen",
   "create-credential": "Zugangsdaten erstellen",
+  "create-exception-rule": "Ausnahmeregel erstellen...",
   "create-repository": "Repository erstellen",
   "creation-failed": "Erstellung fehlgeschlagen: {{Meldung}}",
   "credentialId": "Zugangsdaten ID",
