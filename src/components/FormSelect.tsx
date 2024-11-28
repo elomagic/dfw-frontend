@@ -1,8 +1,9 @@
-import {FormControl, InputLabel, MenuItem} from "@mui/material";
+import {FormControl, MenuItem} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import Select from "@mui/material/Select";
 import {SelectInputProps} from "@mui/material/Select/SelectInput";
 import {GridSize} from "@mui/material/Grid2/Grid2";
+import {Fieldset} from "./FieldSet.tsx";
 
 export declare interface KeyLabelItem {
     key: string;
@@ -30,9 +31,8 @@ interface FormSelectProps {
 function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<FormSelectProps>) {
 
     return (
-        <>
+        <Fieldset>
             <FormControl fullWidth={true}>
-                <InputLabel id={id}>{label}</InputLabel>
                 <Select
                     labelId={id}
                     id={id}
@@ -45,7 +45,7 @@ function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<Form
                     {items.map((item) => (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>))}
                 </Select>
             </FormControl>
-        </>
+        </Fieldset>
     );
 }
 
