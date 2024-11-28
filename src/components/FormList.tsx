@@ -12,6 +12,7 @@ import {ReactNode, useEffect, useState} from "react";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 import { v4 as uuidv4 } from 'uuid';
 import {ItemId} from "../DTOs.ts";
+import {Fieldset} from "./Fieldset.tsx";
 
 interface UnwrappedFormListProps<T> {
     values: ItemId<T>[];
@@ -29,11 +30,9 @@ function UnwrappedFormList<T>({ values, label, getItemLabel, onAddClick, onDelet
 
     return (
         <>
-            {label}
+        <Fieldset label={label}>
             <List sx={{
-                width: '100%', minHeight: '56px', maxHeight: '200px', margin: '6px 0 6px 0',
-                border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px', padding: '8px 14px',
-                overflow: "auto"
+                width: '100%', minHeight: '32px', maxHeight: '100px', overflow: "auto", padding: 0
             }}>
                 {values
                     .map((item) => (
@@ -48,11 +47,13 @@ function UnwrappedFormList<T>({ values, label, getItemLabel, onAddClick, onDelet
                         </ListItem>)
                     )}
             </List>
+        </Fieldset>
             {onAddClick &&
                 <Button variant="outlined"
                         onClick={onAddClick}
                         size="small"
-                        startIcon={<Add />}>
+                        startIcon={<Add />}
+                        sx={{ mt: "8px", mb: "8px" }}>
                     {t("add")}
                 </Button>
             }
@@ -86,7 +87,7 @@ export default function FormList<T>({ value, label, getItemLabel, gridSize, onCh
         <>
             { gridSize && (
                 <Grid size={gridSize}>
-                    <UnwrappedFormList values={values} label={label} getItemLabel={getItemLabel} onDeleteClick={(itemId) => handleDeleteClick(itemId)} />
+                    <UnwrappedFormList values={values} label={label} getItemLabel={getItemLabel} onDeleteClick={(itemId) => handleDeleteClick(itemId)} onAddClick={onAddClick} />
                 </Grid>
             )}
             { !gridSize && (

@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid2";
 import Select from "@mui/material/Select";
 import {SelectInputProps} from "@mui/material/Select/SelectInput";
 import {GridSize} from "@mui/material/Grid2/Grid2";
-import {Fieldset} from "./FieldSet.tsx";
+import {Fieldset} from "./Fieldset.tsx";
 
 export declare interface KeyLabelItem {
     key: string;
@@ -31,14 +31,13 @@ interface FormSelectProps {
 function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<FormSelectProps>) {
 
     return (
-        <Fieldset>
+        <Fieldset label={label}>
             <FormControl fullWidth={true}>
                 <Select
                     labelId={id}
                     id={id}
                     value={value}
-                    label={label}
-                    variant="outlined"
+                    variant="standard"
                     onChange={onChange}
                     fullWidth
                 >
