@@ -2,11 +2,12 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from "react-router-dom";
 import { Divider, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { BugReport, Info, Settings } from "@mui/icons-material";
+import { Info, Settings } from "@mui/icons-material";
 import {GoLaw} from "react-icons/go";
 import {TbDatabaseCog, TbLockCog} from "react-icons/tb";
 import {RiUserSettingsLine} from "react-icons/ri";
 import {AiOutlineDashboard} from "react-icons/ai";
+import {FaShieldVirus} from "react-icons/fa";
 
 export default function AppMenuItems() {
 
@@ -28,7 +29,7 @@ export default function AppMenuItems() {
             </ListItemButton>
                 <ListItemButton component={RouterLink} to='vulnerabilities'>
                 <ListItemIcon>
-                    <BugReport className='fs15em'/>
+                    <FaShieldVirus className='fs15em'/>
                 </ListItemIcon>
                 <ListItemText primary={t("vulnerabilities")}/>
             </ListItemButton>

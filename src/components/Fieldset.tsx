@@ -6,6 +6,14 @@ interface FieldsetProps {
     children: React.ReactNode;
 }
 
+/**
+ * Gives for component, string what ever, a smart border with a border label.
+ *
+ * @param label Label of the border
+ * @param children Components children's
+ * @param props Any other props
+ */
+
 export const Fieldset = ({ label, children, ...props }: FieldsetProps) => {
     return (
         <Box component="fieldset" {...props}
@@ -13,7 +21,7 @@ export const Fieldset = ({ label, children, ...props }: FieldsetProps) => {
                  borderColor: "rgba(255, 255, 255, 0.3)",
                  borderRadius: 1,
                  borderWidth: 1,
-                 margin: 0,
+                 margin: "-9px 0 0 0",
                  "&:hover": {
                      borderColor: "white"
                  },
