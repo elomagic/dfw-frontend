@@ -73,6 +73,7 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
                           value={comment}
                           label={t("comment")}
                           minRows={6}
+                          maxRows={6}
                           onChange={(e) => setComment(e.target.value as string)}
                           gridSize={6}
             />

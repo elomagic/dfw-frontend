@@ -1,6 +1,6 @@
 import {OutlinedInputProps} from "@mui/material/OutlinedInput";
 import Grid from "@mui/material/Grid2";
-import {FormControl, TextareaAutosize, TextField} from "@mui/material";
+import {FormControl, TextField} from "@mui/material";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 
 interface FormTextAreaProps {
@@ -21,27 +21,29 @@ function UnwrappedTextArea({id, value, errorMessage, minRows, maxRows, onChange,
 
     return (
         <FormControl fullWidth>
-            {/* TODO label and error message */}
-            {label}
-            <TextareaAutosize
+            <TextField
                 id={id}
                 name={id}
+                type={"text"}
                 value={value}
-                minRows={minRows}
-                maxRows={maxRows}
-                autoFocus={autoFocus}
-                required={required}
-                readOnly={readOnly}
-                color={errorMessage == undefined ? 'primary' : 'error'}
-                onChange={onChange}
-            />
-            <TextField
                 label={label}
+                onChange={onChange}
                 fullWidth
+                required={required}
+                autoFocus={autoFocus}
                 variant="outlined"
                 error={errorMessage != undefined}
                 helperText={errorMessage}
+                multiline
+                rows={minRows}
+                maxRows={maxRows}
+                color={errorMessage == undefined ? 'primary' : 'error'}
                 sx={{ ariaLabel: {label}}}
+                slotProps={{
+                    input: {
+                        readOnly: readOnly
+                    }
+                }}
             />
         </FormControl>
     );
