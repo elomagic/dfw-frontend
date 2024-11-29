@@ -67,6 +67,6 @@ jobs:
             --request POST \
             --url "https://api.github.com/repos/elomagic/repository/dispatches" \
             --header "Accept: application/vnd.github+json" \
-            --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            --header "Authorization: Bearer ${{ secrets.PAT }}" \
             --header "X-GitHub-Api-Version: 2022-11-28" \
             --data "{\"event_type\": \"trigger-workflow\", \"client_payload\": {\"skip_owasp_check\": true, \"unit\": false, \"integration\": true}}"
