@@ -1,7 +1,7 @@
 import {AuthContextProps} from "./auth/Auth.tsx";
 import i18next from "i18next";
 
-const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_URL : window.location.host;
+const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_URL : `${window.location.protocol}//${window.location.host}`;
 
 export enum RestEndpoint {
 
