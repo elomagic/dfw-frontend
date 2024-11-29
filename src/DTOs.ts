@@ -10,6 +10,11 @@ export declare interface IdItem {    // '{}' can be replaced with 'any'
     id?: string;
 }
 
+export declare interface ErrorResponse {
+    statusCode: string;
+    message: string;
+}
+
 // Name of the dto must differ from "Credential"
 export declare interface CredentialData extends IdItem {
     credentialId: string;

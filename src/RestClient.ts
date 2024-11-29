@@ -74,8 +74,6 @@ const applyBearerToken = (auth: AuthContextProps | undefined, headers: HeadersIn
 
 const executeRequest = (auth: AuthContextProps, url: RequestInfo, requestOptions: RequestInit): Promise<Response> => {
 
-
-
     try {
         requestOptions.headers = applyBearerToken(auth, requestOptions?.headers);
     } catch (err) {
@@ -123,7 +121,8 @@ export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponen
         mode: 'cors',
         method: 'GET',
         headers: {
-            "Accept": "application/json",
+            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
+            'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
     };
 
@@ -147,8 +146,9 @@ export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object
         mode: 'cors',
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
+            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
             'Content-Type': 'application/json',
+            'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
     };
 
@@ -172,8 +172,9 @@ export const patch = (auth: AuthContextProps, endpoint: RestEndpoint, dto: objec
         mode: 'cors',
         method: 'PATCH',
         headers: {
-            'Accept': 'application/json',
+            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
             'Content-Type': 'application/json',
+            'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
     };
 
@@ -190,25 +191,9 @@ export const postFormData = (auth: AuthContextProps, endpoint: RestEndpoint, dat
         mode: 'cors',
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
+            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
             // Content-Type will be set during FormData
-        },
-    };
-
-    return executeRequest(auth, url, requestOptions);
-}
-
-export const putFormData = (auth: AuthContextProps, endpoint: RestEndpoint, data: FormData): Promise<Response> => {
-
-    const url: RequestInfo = createUrl(endpoint, undefined);
-
-    const requestOptions: RequestInit = {
-        body: data,
-        mode: 'cors',
-        method: 'PUT',
-        headers: {
-            'Accept': 'application/json',
-            // Content-Type will be set during FormData
+            'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
     };
 
@@ -222,6 +207,10 @@ export const deleteResource = (auth: AuthContextProps, endpoint: RestEndpoint, u
     const requestOptions: RequestInit = {
         mode: 'cors',
         method: 'DELETE',
+        headers: {
+            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
+            'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
+        }
     };
 
     return executeRequest(auth, url, requestOptions);

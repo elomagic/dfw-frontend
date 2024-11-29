@@ -105,7 +105,8 @@ export const AuthProvider = (authProvider: AuthProviderProps): JSX.Element => {
                 method: 'GET',
                 headers: {
                     "Authorization": `Bearer ${auth?.accessToken}`,
-                    "Accept": "*/*",
+                    'Accept': 'application/json, application/vnd.elomagic.dfw+json',
+                    'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
                 },
             };
 
