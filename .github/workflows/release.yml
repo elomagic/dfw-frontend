@@ -63,7 +63,6 @@ jobs:
       - name: Trigger workflow elomagic/repository:release
         run: | 
           curl --location \
-            --verbose \
             --request POST \
             --url "https://api.github.com/repos/elomagic/repository/dispatches" \
             --header "Accept: application/vnd.github+json" \
