@@ -69,7 +69,9 @@ declare interface AuthenticationResponse {
 export const AuthProvider = (authProvider: AuthProviderProps): JSX.Element => {
 
     const getAuthBaseUrl = (): string => {
-        return import.meta.env.DEV ? import.meta.env.VITE_AUTH_URL : window.location.host;
+        const url = import.meta.env.DEV ? import.meta.env.VITE_AUTH_URL : window.location.host;
+        console.debug("AuthBaseUrl=", url);
+        return url;
     }
 
     const _auth: AuthContextProps = {
