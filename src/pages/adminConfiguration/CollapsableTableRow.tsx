@@ -23,7 +23,7 @@ export default function CollapsableTableRow({ configuration, onResetRequest }: R
     const [data, setData] = useState<Configuration>(configuration);
 
     const handleSaveClick = (d: Configuration) => {
-        Rest.put(auth, RestEndpoint.Repository, d)
+        Rest.put(auth, RestEndpoint.Configuration, d)
             .then((res) => res.json())
             .then((dto: Configuration) => setData(dto))
             .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))

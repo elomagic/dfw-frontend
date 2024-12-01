@@ -14,7 +14,6 @@ import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import {enqueueSnackbar} from "notistack";
 import YesNoDialog from "../../components/YesNoDialog.tsx";
-import {Role} from "../../auth/Auth.tsx";
 
 export default function AdminConfigurationView() {
 
@@ -43,7 +42,7 @@ export default function AdminConfigurationView() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.Repository, selectedEntity?.key)
+        Rest.deleteResource(auth, Rest.RestEndpoint.Configuration, selectedEntity?.key)
             .then(() => refresh())
             .catch((err: Error) => enqueueSnackbar(t("reset-failed", { message: err.message }), { variant: 'error'} ))
             .finally(() => setDeleteOpen(false))
@@ -57,7 +56,6 @@ export default function AdminConfigurationView() {
         <Box margin={3}>
             <TableHeaderControls onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
-                                 createRole={Role.REPOSITORY_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
@@ -82,8 +80,8 @@ export default function AdminConfigurationView() {
                 </Table>
             </TableContainer>
 
-            <YesNoDialog title={t("delete-repository")}
-                         text={`Do ya really want to reset the value for key '${selectedEntity?.key}'?`}
+            <YesNoDialog title={t("reset-property")}
+                         text={`Do ya really want to reset the value for property '${selectedEntity?.key}'?`}
                          open={deleteOpen}
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}
