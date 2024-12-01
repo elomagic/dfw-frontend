@@ -5,6 +5,7 @@ const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_UR
 
 export enum RestEndpoint {
 
+    Configuration = "/api/v1/configuration",
     Credential = "/api/v1/credential",
     License = "/api/v1/license/spdx",
     LicenseNameMap = "/api/v1/license/nameMap",
@@ -145,6 +146,25 @@ export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object
         body: data,
         mode: 'cors',
         method: 'POST',
+        headers: {
+            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
+            'Content-Type': 'application/json',
+            'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
+        },
+    };
+
+    return executeRequest(auth, url, requestOptions);
+}
+
+export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
+
+    const url: RequestInfo = createUrl(endpoint, undefined);
+    const data = JSON.stringify(dto);
+
+    const requestOptions: RequestInit = {
+        body: data,
+        mode: 'cors',
+        method: 'PUT',
         headers: {
             'Accept': 'application/json, application/vnd.elomagic.dfw+json',
             'Content-Type': 'application/json',
