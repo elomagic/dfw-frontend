@@ -8,6 +8,7 @@ import {TbDatabaseCog, TbLockCog} from "react-icons/tb";
 import {RiUserSettingsLine} from "react-icons/ri";
 import {AiOutlineDashboard} from "react-icons/ai";
 import {FaShieldVirus} from "react-icons/fa";
+import {GrConfigure} from "react-icons/gr";
 
 export default function AppMenuItems() {
 
@@ -62,6 +63,13 @@ export default function AppMenuItems() {
                     <TbLockCog className='fs15em'/>
                 </ListItemIcon>
                 <ListItemText primary={t("admin-credentials")}/>
+            </ListItemButton>
+
+            <ListItemButton component={RouterLink} to='admin-configuration'>
+                <ListItemIcon>
+                    <GrConfigure className='fs15em'/>
+                </ListItemIcon>
+                <ListItemText primary={t("configuration")}/>
             </ListItemButton>
 
             <Divider sx={{my: 1}}/>

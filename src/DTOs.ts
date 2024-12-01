@@ -6,13 +6,23 @@ export declare type ItemId<T> = T & {
     _itemId: string;
 };
 
-export declare interface IdItem {    // '{}' can be replaced with 'any'
+export declare interface CreateUpdated {
+    created?: string
+    lastUpdated? : string;
+}
+
+export declare interface IdItem extends CreateUpdated {    // '{}' can be replaced with 'any'
     id?: string;
 }
 
 export declare interface ErrorResponse {
     statusCode: string;
     message: string;
+}
+
+export declare interface Configuration extends CreateUpdated {
+    key: string;
+    value: string;
 }
 
 // Name of the dto must differ from "Credential"
