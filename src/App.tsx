@@ -21,7 +21,7 @@ import LanguageSelector from "./LanguageSelector.tsx";
 import UserSessionButton from "./UserSessionButton.tsx";
 import ThemeModeSelector from './ThemeModeSelector';
 import AppMenuItems from "./AppMenuItems.tsx";
-import {AuthContextProps} from "./auth/Auth.tsx";
+import {AuthContextProps, Role} from "./auth/Auth.tsx";
 import DashboardView from "./pages/dashboard/DashboardView.tsx";
 import {ProtectedRoute} from "./auth/ProtectedRoute.tsx";
 import AccountsView from "./pages/adminAccounts/AccountsView.tsx";
@@ -179,52 +179,33 @@ function App() {
                         >
                             {/* Toolbar is placeholder, otherwise the Container element will be covered by the header. */}
                             <Toolbar />
-                            {/*
-                            LICENSE_NAME_MAP_CREATE,
-                            LICENSE_NAME_MAP_READ,
-                            LICENSE_NAME_MAP_UPDATE,
-                            LICENSE_NAME_MAP_DELETE,
 
-                            LICENSE_PERMITTED_CREATE,
-                            LICENSE_PERMITTED_READ,
-                            LICENSE_PERMITTED_UPDATE,
-                            LICENSE_PERMITTED_DELETE,
-
-                            LICENSE_PURL_MAP_CREATE,
-                            LICENSE_PURL_MAP_READ,
-                            LICENSE_PURL_MAP_UPDATE,
-                            LICENSE_PURL_MAP_DELETE,
-
-                            REPOSITORY_CREATE,
-                            REPOSITORY_READ,
-                            REPOSITORY_UPDATE,
-                            REPOSITORY_DELETE,
-
-                            USERACCOUNT_CREATE,
-                            USERACCOUNT_READ,
-                            USERACCOUNT_UPDATE,
-                            USERACCOUNT_DELETE,
-
-                            USERACCOUNT_GROUP_CREATE,
-                            USERACCOUNT_GROUP_READ,
-                            USERACCOUNT_GROUP_UPDATE,
-                            USERACCOUNT_GROUP_DELETE;
-                            */}
                             <Routes>
-                                <Route path='license-issues' element={<ProtectedRoute><LicenseIssuesView /></ProtectedRoute>}/>
-                                <Route path='vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                                <Route path='license-issues'
+                                       element={<ProtectedRoute><LicenseIssuesView /></ProtectedRoute>}/>
+                                <Route path='vulnerabilities'
+                                       element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
 
-                                <Route path='admin-licenses' element={<ProtectedRoute><AdminLicensesView /></ProtectedRoute>}/>
-                                <Route path='admin-vulnerabilities' element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
-                                <Route path='admin-repositories' element={<ProtectedRoute><AdminRepositoriesView /></ProtectedRoute>}/>
-                                <Route path='admin-accounts' element={<ProtectedRoute><AccountsView /></ProtectedRoute>}/>
-                                <Route path='admin-credentials' element={<ProtectedRoute><CredentialsView /></ProtectedRoute>}/>
-                                <Route path='admin-configuration' element={<ProtectedRoute><AdminConfigurationView /></ProtectedRoute>}/>
+                                <Route path='admin-licenses'
+                                       element={<ProtectedRoute roles={[Role.LICENSE_NAME_MAP_READ, Role.LICENSE_PURL_MAP_READ]}><AdminLicensesView /></ProtectedRoute>}/>
+                                <Route path='admin-vulnerabilities'
+                                       element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                                <Route path='admin-repositories'
+                                       element={<ProtectedRoute roles={Role.REPOSITORY_READ}><AdminRepositoriesView /></ProtectedRoute>}/>
+                                <Route path='admin-accounts'
+                                       element={<ProtectedRoute roles={[Role.USERACCOUNT_READ, Role.USERACCOUNT_GROUP_READ]}><AccountsView /></ProtectedRoute>}/>
+                                <Route path='admin-credentials'
+                                       element={<ProtectedRoute roles={Role.CREDENTIAL_READ}><CredentialsView /></ProtectedRoute>}/>
+                                <Route path='admin-configuration'
+                                       element={<ProtectedRoute roles={Role.CONFIGURATION_READ}><AdminConfigurationView /></ProtectedRoute>}/>
 
-                                <Route path='my-account' element={<MyAccountView />}/>
-                                <Route path='change-password' element={<ProtectedRoute><ChangePasswortView /></ProtectedRoute>}/>
+                                <Route path='my-account'
+                                       element={<MyAccountView />}/>
+                                <Route path='change-password'
+                                       element={<ProtectedRoute><ChangePasswortView /></ProtectedRoute>}/>
 
-                                <Route path='about' element={<AboutView />}/>
+                                <Route path='about'
+                                       element={<AboutView />}/>
                                 {/*
                                 <Route path='dsgvo' element={<ProtectedRoute><DSGVOView /></ProtectedRoute>}/>
                                 <Route path='imprint' element={<ProtectedRoute><ImprintView /></ProtectedRoute>}/>

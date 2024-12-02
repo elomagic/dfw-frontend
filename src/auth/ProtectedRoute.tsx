@@ -14,14 +14,14 @@ const hasRole = (auth: AuthContextProps, roles: string[]|string): boolean => {
 }
 
 declare interface ProtectedProps {
-    roles?: string[];
+    roles?: string[] | string;
     children?: ReactNode;
 }
 
 export const ProtectedRoute = (props: ProtectedProps) => {
     const auth = useAuth();
     const location = useLocation();
-
+    
     if (!auth.isAuthenticated || (props.roles !== undefined && !hasRole(auth, props.roles))) {
         return (<Navigate to="/home" replace state={{ from: location }} />);
     }

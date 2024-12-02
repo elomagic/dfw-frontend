@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid2";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {useTranslation} from "react-i18next";
+import {Role} from "../../auth/Auth.tsx";
 
 interface EditableTableRowProps {
     configuration: Configuration;
@@ -33,6 +34,7 @@ export default function EditableTableRow({ configuration, keyMeta, onSaveClick, 
             />
 
             <FormButtons labelRightButton={t("reset")}
+                         roleRightButton={Role.CONFIGURATION_UPDATE}
                          onSaveClick={() => onSaveClick({key, value})}
                          onDeleteClick={onResetRequest}/>
         </Grid>

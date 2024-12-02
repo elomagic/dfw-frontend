@@ -32,6 +32,7 @@ export default function FormButtons({labelLeftButton, labelRightButton, startIco
 
     return (
         <Grid size={12} display="flex" flexDirection="row">
+            {/* TODO Hide Grid cell when not button is visible*/}
             {(roleLeftButton === undefined || auth.roles.includes(roleLeftButton)) && onSaveClick &&
                 <Button variant="contained"
                         onClick={onSaveClick}
