@@ -1,6 +1,6 @@
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import {Configuration} from "../../DTOs.ts";
+import {Configuration, ConfigurationKeyMeta} from "../../DTOs.ts";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
@@ -12,10 +12,11 @@ import {enqueueSnackbar} from "notistack";
 
 interface CollapsableTableRowProps {
     configuration: Configuration;
+    keyMeta: ConfigurationKeyMeta | undefined;
     onResetRequest: (r: Configuration) => void;
 }
 
-export default function CollapsableTableRow({ configuration, onResetRequest }: Readonly<CollapsableTableRowProps>) {
+export default function CollapsableTableRow({ configuration, keyMeta, onResetRequest }: Readonly<CollapsableTableRowProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -37,12 +38,13 @@ export default function CollapsableTableRow({ configuration, onResetRequest }: R
                 onClick={()=> setOpen(!open)}
             >
                 <TableCell>{data.key}</TableCell>
-                <TableCell>{data.value}</TableCell>
+                <TableCell>{!keyMeta || !keyMeta.secret ? data.value : "******"}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <EditableTableRow configuration={data}
+                                          keyMeta={keyMeta}
                                           onSaveClick={handleSaveClick}
                                           onResetRequest={() => onResetRequest(data)} />
                     </Collapse>

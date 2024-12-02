@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts"
-import {Configuration} from "../../DTOs.ts";
+import {Configuration, ConfigurationKeyMeta} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
@@ -23,6 +23,8 @@ export default function AdminConfigurationView() {
     const [ filter, setFilter ] = useState<string>("");
     const [ deleteOpen, setDeleteOpen ] = useState<boolean>(false);
     const [ selectedEntity, setSelectedEntity ] = useState<Configuration>();
+
+    const [ configurationKeyMetas, setConfigurationKeyMetas ] = useState<ConfigurationKeyMeta[]>([]);
 
     const refresh = useCallback(() => {
         Rest.get(auth, Rest.RestEndpoint.Configuration)
@@ -52,6 +54,13 @@ export default function AdminConfigurationView() {
         refresh();
     }, [refresh]);
 
+    useEffect(() => {
+        Rest.get(auth, Rest.RestEndpoint.ConfigurationKey)
+            .then((res) => res.json())
+            .then((rs: ConfigurationKeyMeta[]) => setConfigurationKeyMetas(rs))
+            .catch((err: Error) => enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } ));
+    }, []);
+
     return (
         <Box margin={3}>
             <TableHeaderControls onFilterChanged={f => setFilter(f)}
@@ -72,6 +81,7 @@ export default function AdminConfigurationView() {
                             .map((row) => (
                                 <CollapsableTableRow key={row.key}
                                                      configuration={row}
+                                                     keyMeta={configurationKeyMetas.find(m => m.key == row.key)}
                                                      onResetRequest={(c) => handleResetRequest(c)}
                                 />
                             ))

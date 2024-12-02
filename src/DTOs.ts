@@ -20,6 +20,14 @@ export declare interface ErrorResponse {
     message: string;
 }
 
+export declare interface ConfigurationKeyMeta {
+    key: string,
+    dataType: string,
+    group: string,
+    subgroup: string,
+    secret: boolean
+}
+
 export declare interface Configuration extends CreateUpdated {
     key: string;
     value: string;

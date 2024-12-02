@@ -59,6 +59,7 @@
   "password": "Password",
   "password-validation": "Password Validation",
   "passphrase": "Passphrase",
+  "property": "Property",
   "purl": "PURL",
   "purl-mappings": "PURL Mappings",
   "purl-match": "PURL Match",
@@ -77,6 +78,7 @@
   "user-accounts": "User Accounts",
   "user-account-members": "User Account Members",
   "username": "Username",
+  "value": "Value",
   "vulnerabilities": "Vulnerabilities",
   "yes": "yes"
 }
