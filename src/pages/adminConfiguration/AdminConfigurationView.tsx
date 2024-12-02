@@ -59,7 +59,7 @@ export default function AdminConfigurationView() {
             .then((res) => res.json())
             .then((rs: ConfigurationKeyMeta[]) => setConfigurationKeyMetas(rs))
             .catch((err: Error) => enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } ));
-    }, []);
+    }, [auth, t]);
 
     return (
         <Box margin={3}>
