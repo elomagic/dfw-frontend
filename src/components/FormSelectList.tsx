@@ -13,17 +13,20 @@ import SelectItemDialog from "./SelectItemDialog.tsx";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 import {ItemId} from "../DTOs.ts";
 import {Fieldset} from "./Fieldset.tsx";
+import {useAuth} from "../auth/useAuth.ts";
 
 interface UnwrappedFormSelectListProps<T> {
     values: ItemId<T>[];
     label: string;
+    editRole?: string;
     getItemLabel: (item: T) => ReactNode;
     onAddClick: () => void;
     onDeleteClick: (itemId: ItemId<T>) => void;
 }
 
-function UnwrappedFormSelectList<T>({ values, getItemLabel, label, onAddClick, onDeleteClick }: Readonly<UnwrappedFormSelectListProps<T>>) {
+function UnwrappedFormSelectList<T>({ values, getItemLabel, label, editRole, onAddClick, onDeleteClick }: Readonly<UnwrappedFormSelectListProps<T>>) {
 
+    const auth = useAuth();
     const { t } = useTranslation();
 
     return (
@@ -37,9 +40,11 @@ function UnwrappedFormSelectList<T>({ values, getItemLabel, label, onAddClick, o
                             <ListItem key={item._itemId}
                                       disablePadding
                                       secondaryAction={
-                                          <IconButton edge="end" aria-label="remove">
-                                              <RemoveCircle color="error" onClick={() => onDeleteClick(item)}/>
-                                          </IconButton>}
+                                          (editRole === undefined || auth.roles.includes(editRole)) &&
+                                              <IconButton edge="end" aria-label="remove">
+                                                  <RemoveCircle color="error" onClick={() => onDeleteClick(item)}/>
+                                              </IconButton>
+                                            }
                             >
                                 <ListItemText id={item._itemId} primary={getItemLabel(item)} />
                             </ListItem>)
@@ -47,14 +52,16 @@ function UnwrappedFormSelectList<T>({ values, getItemLabel, label, onAddClick, o
                 </List>
 
             </Fieldset>
-            <Button variant="outlined"
-                    onClick={onAddClick}
-                    size="small"
-                    startIcon={<Add />}
-                    sx={{ mt: "8px", mb: "8px" }}
-            >
-                {t("add")}
-            </Button>
+            { (editRole === undefined || auth.roles.includes(editRole)) &&
+                <Button variant="outlined"
+                        onClick={onAddClick}
+                        size="small"
+                        startIcon={<Add />}
+                        sx={{ mt: "8px", mb: "8px" }}
+                >
+                    {t("add")}
+                </Button>
+            }
         </>
     );
 }
@@ -63,13 +70,15 @@ interface FormSelectListProps<T> {
     value: T[];
     selectables: T[];
     label: string;
+    editRole?: string;
+    gridSize?: GridSize;
     getItemId: (item: T) => string;
     getItemLabel: (item: T) => ReactNode;
     onChange: (selected: T[]) => void;
-    gridSize?: GridSize;
+
 }
 
-export default function FormSelectList<T> ({ value, selectables, onChange, getItemId, getItemLabel, label, gridSize }: Readonly<FormSelectListProps<T>>) {
+export default function FormSelectList<T> ({ value, selectables, label, editRole, gridSize, onChange, getItemId, getItemLabel }: Readonly<FormSelectListProps<T>>) {
 
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
     const [ values, setValues ] = useState<ItemId<T>[]>([]);
@@ -102,6 +111,7 @@ export default function FormSelectList<T> ({ value, selectables, onChange, getIt
                     <UnwrappedFormSelectList values={values}
                                              getItemLabel={getItemLabel}
                                              label={label}
+                                             editRole={editRole}
                                              onAddClick={handleAddClick}
                                              onDeleteClick={(item) => handleDeleteClick(item._itemId)} />
                 </Grid>
@@ -110,6 +120,7 @@ export default function FormSelectList<T> ({ value, selectables, onChange, getIt
                 <UnwrappedFormSelectList values={values}
                                          getItemLabel={getItemLabel}
                                          label={label}
+                                         editRole={editRole}
                                          onAddClick={handleAddClick}
                                          onDeleteClick={(item) => handleDeleteClick(item._itemId)} />
             )}

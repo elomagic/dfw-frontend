@@ -70,7 +70,7 @@ export default function AdminRepositoriesView() {
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
-                                 createRole={Role.REPOSITORY_CREATE}
+                                 role={Role.REPOSITORY_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">

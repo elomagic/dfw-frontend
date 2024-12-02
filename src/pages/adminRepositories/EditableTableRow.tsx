@@ -13,6 +13,7 @@ import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormSelect, KeyLabelItem} from "../../components/FormSelect.tsx";
 import FormSelectList from "../../components/FormSelectList.tsx";
+import {Role} from "../../auth/Auth.tsx";
 
 interface EditableTableRowProps {
     repository: Repository
@@ -128,13 +129,17 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                 value={groupPermissions}
                 selectables={allGroups}
                 label={t("roles")}
+                editRole={Role.REPOSITORY_UPDATE}
+                gridSize={6}
                 getItemId={(item: UserAccountGroup) => item.id ?? ""}
                 getItemLabel={(item: UserAccountGroup) => item.name}
                 onChange={(items) => setGroupPermissions(items)}
-                gridSize={6}
             />
 
-            <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButtons roleRightButton={Role.REPOSITORY_UPDATE}
+                         roleLeftButton={Role.REPOSITORY_DELETE}
+                         onSaveClick={handleSaveClick}
+                         onDeleteClick={onDeleteRequest}/>
         </Grid>
     );
 }

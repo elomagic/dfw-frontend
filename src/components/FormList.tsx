@@ -13,19 +13,21 @@ import {GridSize} from "@mui/material/Grid2/Grid2";
 import { v4 as uuidv4 } from 'uuid';
 import {ItemId} from "../DTOs.ts";
 import {Fieldset} from "./Fieldset.tsx";
+import {useAuth} from "../auth/useAuth.ts";
 
 interface UnwrappedFormListProps<T> {
     values: ItemId<T>[];
     label: string;
+    editRole?: string;
+    gridSize?: GridSize;
     getItemLabel: (item: T) => ReactNode;
     onAddClick?: () => void;
     onDeleteClick: (itemId: string) => void;
-    gridSize?: GridSize;
 }
 
+function UnwrappedFormList<T>({ values, label, getItemLabel, editRole, onAddClick, onDeleteClick }: Readonly<UnwrappedFormListProps<T>>) {
 
-function UnwrappedFormList<T>({ values, label, getItemLabel, onAddClick, onDeleteClick }: Readonly<UnwrappedFormListProps<T>>) {
-
+    const auth = useAuth();
     const { t } = useTranslation();
 
     return (
@@ -39,6 +41,7 @@ function UnwrappedFormList<T>({ values, label, getItemLabel, onAddClick, onDelet
                         <ListItem key={item._itemId}
                                   disablePadding
                                   secondaryAction={
+                                      (editRole === undefined || auth.roles.includes(editRole)) &&
                                       <IconButton edge="end" aria-label="remove" sx={{ padding: 0 }}>
                                           <RemoveCircle color="error" onClick={() => onDeleteClick(item._itemId)}/>
                                       </IconButton>}
@@ -48,7 +51,7 @@ function UnwrappedFormList<T>({ values, label, getItemLabel, onAddClick, onDelet
                     )}
             </List>
         </Fieldset>
-            {onAddClick &&
+            { (editRole === undefined || auth.roles.includes(editRole)) && onAddClick &&
                 <Button variant="outlined"
                         onClick={onAddClick}
                         size="small"

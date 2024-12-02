@@ -8,16 +8,16 @@ interface TableHeaderControlsProps {
     onCreateClicked?: () => void;
     onFilterChanged: (filter: string) => void;
     onRefresh: () => void;
-    createRole?: Role;
+    role?: Role;
 }
 
-export default function TableHeaderControls({ createCaption, onCreateClicked, onFilterChanged, onRefresh, createRole }: Readonly<TableHeaderControlsProps>) {
+export default function TableHeaderControls({ createCaption, role, onCreateClicked, onFilterChanged, onRefresh }: Readonly<TableHeaderControlsProps>) {
 
     const auth = useAuth();
 
     return (
         <Box display="flex" flexDirection="row" marginBottom={2}>
-            {(createRole === undefined || auth.roles.includes(createRole)) && onCreateClicked &&
+            {(role === undefined || auth.roles.includes(role)) && onCreateClicked &&
                 <Button variant="outlined"
                         onClick={onCreateClicked}
                         size="small"

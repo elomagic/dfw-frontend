@@ -71,7 +71,7 @@ export default function PurlMapTab() {
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
-                                 createRole={Role.LICENSE_PURL_MAP_CREATE}
+                                 role={Role.LICENSE_PURL_MAP_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">

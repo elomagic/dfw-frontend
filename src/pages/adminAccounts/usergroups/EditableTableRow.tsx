@@ -9,6 +9,7 @@ import {enqueueSnackbar} from "notistack";
 import FormSelectList from "../../../components/FormSelectList.tsx";
 import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
+import {Role} from "../../../auth/Auth.tsx";
 
 interface EditableTableRowProps {
     group: UserAccountGroup
@@ -84,6 +85,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
                 value={userMembers}
                 selectables={allUsers}
                 label={t("user-account-members")}
+                editRole={Role.USERACCOUNT_GROUP_UPDATE}
                 onChange={handleUserMembersChanged}
                 getItemId={(item) => item.mailAddress}
                 getItemLabel={(item) => item.mailAddress}
@@ -93,13 +95,18 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
                 value={roles}
                 selectables={allRoles}
                 label={t("roles")}
+                editRole={Role.USERACCOUNT_GROUP_UPDATE}
                 onChange={handleRolesChanged}
                 getItemId={(item) => item.value}
                 getItemLabel={(item) => item.value}
                 gridSize={6}
             />
 
-            <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButtons roleLeftButton={Role.USERACCOUNT_GROUP_UPDATE}
+                         roleRightButton={Role.USERACCOUNT_GROUP_DELETE}
+                         onSaveClick={handleSaveClick}
+                         onDeleteClick={onDeleteRequest}
+            />
         </Grid>
     );
 }

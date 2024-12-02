@@ -70,7 +70,7 @@ export default function NameMapTab() {
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
-                                 createRole={Role.LICENSE_NAME_MAP_CREATE}
+                                 role={Role.LICENSE_NAME_MAP_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">

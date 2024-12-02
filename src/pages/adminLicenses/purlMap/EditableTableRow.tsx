@@ -10,6 +10,7 @@ import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
 import FormTextArea from "../../../components/FormTextArea.tsx";
+import {Role} from "../../../auth/Auth.tsx";
 
 interface EditableTableRowProps {
     purlMap: LicensePurlMap
@@ -74,11 +75,15 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
                           value={comment}
                           label={t("comment")}
                           minRows={6}
-                          onChange={(e) => setComment(e.target.value as string)}
+                          onChange={(e) => setComment(e.target.value)}
                           gridSize={6}
             />
 
-            <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButtons roleLeftButton={Role.LICENSE_PURL_MAP_UPDATE}
+                         roleRightButton={Role.LICENSE_PURL_MAP_DELETE}
+                         onSaveClick={handleSaveClick}
+                         onDeleteClick={onDeleteRequest}
+            />
         </Grid>
     );
 }

@@ -67,10 +67,10 @@ export default function CredentialsView() {
     return (
         <Box margin={3}>
             <TableHeaderControls createCaption={t("create-credential")}
+                                 role={Role.CREDENTIAL_CREATE}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
-                                 createRole={Role.CREDENTIAL_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">

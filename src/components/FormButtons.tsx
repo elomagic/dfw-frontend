@@ -9,11 +9,11 @@ import {useAuth} from "../auth/useAuth.ts";
 interface FormButtonSaveProps {
     labelLeftButton?: string;
     labelRightButton?: string;
+    roleLeftButton?: string;
+    roleRightButton?: string;
     startIcon?: React.ReactNode;
     onSaveClick?: MouseEventHandler;
     onDeleteClick?: MouseEventHandler;
-    updateRole?: string;
-    deleteRole?: string;
 }
 
 /**
@@ -25,14 +25,14 @@ interface FormButtonSaveProps {
  * @param onDeleteClick Optional. If not set, the "delete" button not visible
  * @constructor
  */
-export default function FormButtons({labelLeftButton, labelRightButton, startIcon, onSaveClick, onDeleteClick, updateRole, deleteRole}: Readonly<FormButtonSaveProps>) {
+export default function FormButtons({labelLeftButton, labelRightButton, startIcon, onSaveClick, onDeleteClick, roleLeftButton, roleRightButton}: Readonly<FormButtonSaveProps>) {
 
     const auth = useAuth();
     const { t } = useTranslation();
 
     return (
         <Grid size={12} display="flex" flexDirection="row">
-            {(updateRole === undefined || auth.roles.includes(updateRole)) && onSaveClick &&
+            {(roleLeftButton === undefined || auth.roles.includes(roleLeftButton)) && onSaveClick &&
                 <Button variant="contained"
                         onClick={onSaveClick}
                         size="small"
@@ -43,7 +43,7 @@ export default function FormButtons({labelLeftButton, labelRightButton, startIco
 
             <Box flexGrow={1} />
 
-            {(deleteRole === undefined || auth.roles.includes(deleteRole)) && onDeleteClick &&
+            {(roleRightButton === undefined || auth.roles.includes(roleRightButton)) && onDeleteClick &&
                 <Button variant="contained"
                         color="error"
                         onClick={onDeleteClick}

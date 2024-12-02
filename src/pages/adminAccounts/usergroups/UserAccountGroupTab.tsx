@@ -70,7 +70,7 @@ export default function UserAccountGroupTab() {
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
-                                 createRole={Role.USERACCOUNT_GROUP_CREATE}
+                                 role={Role.USERACCOUNT_GROUP_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">

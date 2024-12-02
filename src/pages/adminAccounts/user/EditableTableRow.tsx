@@ -7,6 +7,7 @@ import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../../components/FormCheckBox.tsx";
 import {FormSelect} from "../../../components/FormSelect.tsx";
+import {Role} from "../../../auth/Auth.tsx";
 
 interface EditableTableRowProps {
     user: UserAccount
@@ -79,7 +80,11 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
                         gridSize={6}
             />
 
-            <FormButtons onSaveClick={handleSaveClick} onDeleteClick={onDeleteRequest}/>
+            <FormButtons roleLeftButton={Role.USERACCOUNT_UPDATE}
+                         roleRightButton={Role.USERACCOUNT_DELETE}
+                         onSaveClick={handleSaveClick}
+                         onDeleteClick={onDeleteRequest}
+            />
         </Grid>
     );
 }
