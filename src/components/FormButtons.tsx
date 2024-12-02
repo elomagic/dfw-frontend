@@ -21,8 +21,8 @@ interface FormButtonSaveProps {
  * @param labelLeftButton Default "Save"
  * @param labelRightButton Default "Delete"
  * @param startIcon Default "Save" icon
- * @param onClick Optional. If not set, first button not visible
- * @param onDeleteClick Optional. If not set, the "delete" button not visible
+ * @param onLeftClick Optional. If not set, first button not visible
+ * @param onRightClick Optional. If not set, the "delete" button not visible
  * @constructor
  */
 export default function FormButtons({labelLeftButton, labelRightButton, startIcon, onSaveClick, onDeleteClick, roleLeftButton, roleRightButton}: Readonly<FormButtonSaveProps>) {
@@ -30,30 +30,38 @@ export default function FormButtons({labelLeftButton, labelRightButton, startIco
     const auth = useAuth();
     const { t } = useTranslation();
 
+    const isVisible = (): boolean => {
+        return (onSaveClick !== undefined && (roleLeftButton === undefined || auth.roles.includes(roleLeftButton)))
+            || (onDeleteClick !== undefined && (roleRightButton === undefined || auth.roles.includes(roleRightButton)));
+    }
+
     return (
-        <Grid size={12} display="flex" flexDirection="row">
-            {/* TODO Hide Grid cell when not button is visible*/}
-            {(roleLeftButton === undefined || auth.roles.includes(roleLeftButton)) && onSaveClick &&
-                <Button variant="contained"
-                        onClick={onSaveClick}
-                        size="small"
-                        startIcon={startIcon ?? <Save />}>
-                    {labelLeftButton ?? t("save")}
-                </Button>
-            }
+        <>
+            {isVisible() &&
+            <Grid size={12} display="flex" flexDirection="row">
+                {(roleLeftButton === undefined || auth.roles.includes(roleLeftButton)) && onSaveClick &&
+                    <Button variant="contained"
+                            onClick={onSaveClick}
+                            size="small"
+                            startIcon={startIcon ?? <Save />}>
+                        {labelLeftButton ?? t("save")}
+                    </Button>
+                }
 
-            <Box flexGrow={1} />
+                <Box flexGrow={1} />
 
-            {(roleRightButton === undefined || auth.roles.includes(roleRightButton)) && onDeleteClick &&
-                <Button variant="contained"
-                        color="error"
-                        onClick={onDeleteClick}
-                        size="small"
-                        startIcon={startIcon ?? <DeleteForever />}>
-                    {labelRightButton ?? t("delete")}
-                </Button>
+                {(roleRightButton === undefined || auth.roles.includes(roleRightButton)) && onDeleteClick &&
+                    <Button variant="contained"
+                            color="error"
+                            onClick={onDeleteClick}
+                            size="small"
+                            startIcon={startIcon ?? <DeleteForever />}>
+                        {labelRightButton ?? t("delete")}
+                    </Button>
+                }
+            </Grid>
             }
-        </Grid>
+        </>
     );
 
 }
