@@ -35,7 +35,7 @@ export default function UserAccountTab() {
             })
             .catch((err: Error) => {
                 setRows([])
-                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } );
+                enqueueSnackbar(t("getting-data-failed", { message: err.message }), { variant: 'error' } );
             });
     }, [t, auth]);
 
@@ -97,8 +97,8 @@ export default function UserAccountTab() {
             </TableContainer>
 
             <CreateUserDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
-            <YesNoDialog title={t("delete-user-account")}
-                         text={`Do ya really want to delete the user account '${selectedEntity?.mailAddress}'?`}
+            <YesNoDialog title={t("pages.admin-accounts.user.dialog.delete.title")}
+                         text={t("pages.admin-accounts.user.dialog.delete.text", {mailAddress: selectedEntity?.mailAddress})}
                          open={deleteOpen}
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}

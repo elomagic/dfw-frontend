@@ -56,6 +56,41 @@
   "name-match": "Name Match",
   "no": "No",
   "not-found": "Not found",
+  "pages": {
+    "admin-accounts": {
+      "user": {
+        "dialog.delete.title": "Delete User Account",
+        "dialog.delete.text": "Do ya really want to delete the user account '{{mailAddress}}'?"
+      },
+      "user-groups": {
+
+      }
+    },
+    "admin-configuration": {
+      "dialog.reset.title": "Reset Property",
+      "dialog.reset.text": "Do ya really want to reset the value for property '{{key}}'?"
+    },
+    "admin-licenses": {
+
+    },
+    "admin-repositories": {
+
+    },
+    "credentials": {
+
+    },
+    "dashboard": {
+    },
+    "license-issues": {
+
+    },
+    "my-account": {
+
+    },
+    "signin": {
+
+    }
+  },
   "password": "Password",
   "password-validation": "Password Validation",
   "passphrase": "Passphrase",
@@ -67,7 +102,6 @@
   "reset": "Reset",
   "reset-failed": "Reset failed",
   "reset-password": "Reset Password",
-  "reset-property": "Reset Property",
   "roles": "Roles",
   "saving-data-failed": "Saving data failed: {{message}}",
   "sign-in": "Sign in",

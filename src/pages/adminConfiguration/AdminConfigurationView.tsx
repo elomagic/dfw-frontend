@@ -90,8 +90,8 @@ export default function AdminConfigurationView() {
                 </Table>
             </TableContainer>
 
-            <YesNoDialog title={t("reset-property")}
-                         text={`Do ya really want to reset the value for property '${selectedEntity?.key}'?`}
+            <YesNoDialog title={t("pages.admin-configuration.dialog.reset.title")}
+                         text={t("pages.admin-configuration.dialog.reset.text", {key: selectedEntity?.key})}
                          open={deleteOpen}
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}
