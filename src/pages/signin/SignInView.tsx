@@ -52,12 +52,9 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 export default function SignInView() {
 
     const { t } = useTranslation();
-    // const navigate = useNavigate()
     const auth = useAuth();
-    const [emailError, setEmailError] = useState(false);
-    const [emailErrorMessage, setEmailErrorMessage] = useState('');
-    const [passwordError, setPasswordError] = useState(false);
-    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+    const [emailErrorMessage, setEmailErrorMessage] = useState<string|undefined>(undefined);
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState<string|undefined>(undefined);
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -71,7 +68,7 @@ export default function SignInView() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (emailError || passwordError) {
+        if (emailErrorMessage || passwordErrorMessage) {
             return;
         }
 
@@ -87,19 +84,15 @@ export default function SignInView() {
         const password = document.getElementById('password') as HTMLInputElement;
 
         if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-            setEmailError(true);
             setEmailErrorMessage('Please enter a valid email address.');
         } else {
-            setEmailError(false);
-            setEmailErrorMessage('');
+            setEmailErrorMessage(undefined);
         }
 
         if (!password.value || password.value.length < 6) {
-            setPasswordError(true);
             setPasswordErrorMessage('Password must be at least 6 characters long.');
         } else {
-            setPasswordError(false);
-            setPasswordErrorMessage('');
+            setPasswordErrorMessage(undefined);
         }
     };
 
@@ -137,7 +130,7 @@ export default function SignInView() {
                     <FormControl>
                         <FormLabel htmlFor="mailAddress">{t("email")}</FormLabel>
                         <TextField
-                            error={emailError}
+                            error={emailErrorMessage !== undefined}
                             helperText={emailErrorMessage}
                             id="mailAddress"
                             type="email"
@@ -148,7 +141,7 @@ export default function SignInView() {
                             required
                             fullWidth
                             variant="outlined"
-                            color={emailError ? 'error' : 'primary'}
+                            color={emailErrorMessage === undefined ? 'primary' : 'error'}
                             sx={{ ariaLabel: 'mailAddress' }}
                         />
                     </FormControl>
@@ -167,7 +160,7 @@ export default function SignInView() {
                             </Link>
                         </Box>
                         <TextField
-                            error={passwordError}
+                            error={passwordErrorMessage !== undefined}
                             helperText={passwordErrorMessage}
                             name="password"
                             placeholder="••••••"
@@ -178,7 +171,7 @@ export default function SignInView() {
                             required
                             fullWidth
                             variant="outlined"
-                            color={passwordError ? 'error' : 'primary'}
+                            color={passwordErrorMessage === undefined ? 'primary' : 'error'}
                         />
                     </FormControl>
 

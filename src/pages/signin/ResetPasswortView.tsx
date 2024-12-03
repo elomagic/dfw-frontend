@@ -55,16 +55,14 @@ export default function ResetPasswortView() {
     const auth = useAuth();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const [emailError, setEmailError] = useState(false);
-    const [emailErrorMessage, setEmailErrorMessage] = useState('');
-    const [passwordError, setPasswordError] = useState(false);
-    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+    const [emailErrorMessage, setEmailErrorMessage] = useState<string|undefined>(undefined);
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState<string|undefined>(undefined);
     const [token, setToken] = useState<string>('');
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (emailError || passwordError) {
+        if (emailErrorMessage || passwordErrorMessage) {
             return;
         }
 
@@ -76,7 +74,6 @@ export default function ResetPasswortView() {
             })
             .catch((reason) => {
                 console.error(reason);
-                setPasswordError(true);
                 setPasswordErrorMessage('Somme went wrong during password reset.');
             });
     };
@@ -87,22 +84,17 @@ export default function ResetPasswortView() {
         const passwordValidation = document.getElementById('validatePassword') as HTMLInputElement;
 
         if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-            setEmailError(true);
             setEmailErrorMessage('Please enter a valid email address.');
         } else {
-            setEmailError(false);
-            setEmailErrorMessage('');
+            setEmailErrorMessage(undefined);
         }
 
         if ((!password.value || password.value.length < 6) && (!passwordValidation.value || passwordValidation.value.length < 6)) {
-            setPasswordError(true);
             setPasswordErrorMessage('Password must be at least 6 characters long.');
         } else if (password !== passwordValidation) {
-            setPasswordError(true);
             setPasswordErrorMessage('Passwords are not identically.');
         } else {
-            setPasswordError(false);
-            setPasswordErrorMessage('');
+            setPasswordErrorMessage(undefined);
         }
 
     };
@@ -152,7 +144,7 @@ export default function ResetPasswortView() {
                     <FormControl>
                         <FormLabel htmlFor="mailAddress">{t("email")}</FormLabel>
                         <TextField
-                            error={emailError}
+                            error={emailErrorMessage !== undefined}
                             helperText={emailErrorMessage}
                             id="mailAddress"
                             type="email"
@@ -163,7 +155,7 @@ export default function ResetPasswortView() {
                             required
                             fullWidth
                             variant="outlined"
-                            color={emailError ? 'error' : 'primary'}
+                            color={emailErrorMessage ? 'primary' : 'error'}
                             sx={{ ariaLabel: 'mailAddress' }}
                         />
                     </FormControl>
@@ -171,7 +163,7 @@ export default function ResetPasswortView() {
                     <FormControl>
                         <FormLabel htmlFor="newPassword">{t("password")}</FormLabel>
                         <TextField
-                            error={passwordError}
+                            error={passwordErrorMessage !== undefined}
                             helperText={passwordErrorMessage}
                             name="newPassword"
                             placeholder="••••••"
@@ -182,7 +174,7 @@ export default function ResetPasswortView() {
                             required
                             fullWidth
                             variant="outlined"
-                            color={passwordError ? 'error' : 'primary'}
+                            color={passwordErrorMessage ? 'primary' : 'error'}
                             sx={{ ariaLabel: 'password' }}
                         />
                     </FormControl>
@@ -190,7 +182,7 @@ export default function ResetPasswortView() {
                     <FormControl>
                         <FormLabel htmlFor="validatePassword">{t("password-validation")}</FormLabel>
                         <TextField
-                            error={passwordError}
+                            error={passwordErrorMessage !== undefined}
                             helperText={passwordErrorMessage}
                             name="validatePassword"
                             placeholder="••••••"
@@ -201,7 +193,7 @@ export default function ResetPasswortView() {
                             required
                             fullWidth
                             variant="outlined"
-                            color={passwordError ? 'error' : 'primary'}
+                            color={passwordErrorMessage ? 'primary' : 'error'}
                             sx={{ ariaLabel: 'password' }}
                         />
                     </FormControl>

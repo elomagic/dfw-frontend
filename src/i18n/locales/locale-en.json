@@ -60,7 +60,7 @@
     "admin-accounts": {
       "user": {
         "dialog.delete.title": "Delete User Account",
-        "dialog.delete.text": "Do ya really want to delete the user account '{{mailAddress}}'?"
+        "dialog.delete.text": "Do ya really want to delete the user account '{{mailAddress}}' ?"
       },
       "user-groups": {
 
@@ -68,7 +68,7 @@
     },
     "admin-configuration": {
       "dialog.reset.title": "Reset Property",
-      "dialog.reset.text": "Do ya really want to reset the value for property '{{key}}'?"
+      "dialog.reset.text": "Do ya really want to reset the value for property '{{key}}' ?"
     },
     "admin-licenses": {
 
@@ -88,7 +88,7 @@
 
     },
     "signin": {
-
+      "dialog.forgot-password.text": "Enter your account&apos;s email address, and we&apos;ll send you a link to reset your password."
     }
   },
   "password": "Password",
