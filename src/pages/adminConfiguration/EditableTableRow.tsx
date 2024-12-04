@@ -39,7 +39,7 @@ export default function EditableTableRow({ configuration, keyMeta, onSaveClick, 
                               onChange={(e) => setValue(e.target.checked ? "true" : "false")}
                 />
             )}
-            {keyMeta && (
+            {keyMeta && keyMeta.dataType !== "BOOLEAN" && (
                 <FormTextField id={key}
                                value={value} type={getType()}
                                label={key}

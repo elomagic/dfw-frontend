@@ -1,6 +1,6 @@
 import {SwitchBaseProps} from "@mui/material/internal/SwitchBase";
 import Grid from "@mui/material/Grid2";
-import {Checkbox, FormControl, FormControlLabel} from "@mui/material";
+import {FormControl, FormControlLabel, Switch} from "@mui/material";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 
 interface FormCheckboxProps {
@@ -15,7 +15,7 @@ function UnwrappedFormCheckBox({ id, value, onChange, label}: Readonly<FormCheck
     return (
         <FormControl>
             <FormControlLabel
-                control={<Checkbox onChange={onChange}/>}
+                control={<Switch onChange={onChange}/>}
                 id={id}
                 name={id}
                 checked={value}
