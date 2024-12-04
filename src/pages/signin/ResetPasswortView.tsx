@@ -1,6 +1,6 @@
 import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typography} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import {useEffect, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import {useNavigate, useSearchParams} from "react-router-dom";
@@ -59,7 +59,7 @@ export default function ResetPasswortView() {
     const [passwordErrorMessage, setPasswordErrorMessage] = useState<string|undefined>(undefined);
     const [token, setToken] = useState<string>('');
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         if (emailErrorMessage || passwordErrorMessage) {
@@ -74,7 +74,7 @@ export default function ResetPasswortView() {
             })
             .catch((reason) => {
                 console.error(reason);
-                setPasswordErrorMessage('Somme went wrong during password reset.');
+                setPasswordErrorMessage(t("dialog.reset-password.reset.error"));
             });
     };
 
@@ -84,15 +84,15 @@ export default function ResetPasswortView() {
         const passwordValidation = document.getElementById('validatePassword') as HTMLInputElement;
 
         if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-            setEmailErrorMessage('Please enter a valid email address.');
+            setEmailErrorMessage(t("dialog.reset-password.validation.error1"));
         } else {
             setEmailErrorMessage(undefined);
         }
 
         if ((!password.value || password.value.length < 6) && (!passwordValidation.value || passwordValidation.value.length < 6)) {
-            setPasswordErrorMessage('Password must be at least 6 characters long.');
+            setPasswordErrorMessage(t("dialog.reset-password.validation.error2"));
         } else if (password !== passwordValidation) {
-            setPasswordErrorMessage('Passwords are not identically.');
+            setPasswordErrorMessage(t("dialog.reset-password.validation.error3"));
         } else {
             setPasswordErrorMessage(undefined);
         }

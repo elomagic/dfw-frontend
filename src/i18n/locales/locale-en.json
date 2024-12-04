@@ -88,7 +88,13 @@
 
     },
     "signin": {
-      "dialog.forgot-password.text": "Enter your account&apos;s email address, and we&apos;ll send you a link to reset your password."
+      "dialog.forgot-password.text": "Enter your account&apos;s email address, and we&apos;ll send you a link to reset your password.",
+      "dialog.reset-password.reset.error": "Something went wrong during password reset.",
+      "dialog.reset-password.validation.error2": "Password must be at least 6 characters long.",
+      "dialog.reset-password.validation.error3": "Passwords are not identically.",
+      "dialog.reset-password.validation.error1": "Please enter a valid email address.",
+      "dialog.signin.validation.error1": "Please enter a valid email address.",
+      "dialog.signin.validation.error2": "Password must be at least 6 characters long."
     }
   },
   "password": "Password",

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {FormEvent, useState} from "react";
 import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typography} from "@mui/material";
 // import { useNavigate } from "react-router-dom"
 import MuiCard from '@mui/material/Card';
@@ -6,6 +6,7 @@ import Link from "@mui/material/Link";
 import ForgotPasswordDialog from "./ForgotPasswordDialog.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
+import {enqueueSnackbar} from "notistack";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -65,7 +66,7 @@ export default function SignInView() {
         setOpen(false);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         if (emailErrorMessage || passwordErrorMessage) {
@@ -75,8 +76,7 @@ export default function SignInView() {
         const data = new FormData(event.currentTarget);
 
         auth.signinRedirect(data)
-            .catch((reason) => console.error(reason));
-
+            .catch((err: Error) => enqueueSnackbar(t("login-failed", { message: err.message }), { variant: 'error'} ));
     };
 
     const validateInputs = () => {
@@ -84,13 +84,13 @@ export default function SignInView() {
         const password = document.getElementById('password') as HTMLInputElement;
 
         if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-            setEmailErrorMessage('Please enter a valid email address.');
+            setEmailErrorMessage(t("dialog.signin.validation.error1"));
         } else {
             setEmailErrorMessage(undefined);
         }
 
         if (!password.value || password.value.length < 6) {
-            setPasswordErrorMessage('Password must be at least 6 characters long.');
+            setPasswordErrorMessage(t("dialog.signin.validation.error2"));
         } else {
             setPasswordErrorMessage(undefined);
         }
