@@ -5,6 +5,7 @@ import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {useTranslation} from "react-i18next";
 import {Role} from "../../auth/Auth.tsx";
+import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 
 interface EditableTableRowProps {
     configuration: Configuration;
@@ -20,18 +21,33 @@ export default function EditableTableRow({ configuration, keyMeta, onSaveClick, 
     const [key] = useState(configuration.key);
     const [value, setValue] = useState(configuration.value);
 
+    const getType = () => {
+        if (keyMeta && keyMeta.dataType === "INTEGER") {
+            return "number";
+        }
+
+        return !keyMeta || keyMeta.secret ? "password" : "text";
+    }
+
     return (
         <Grid container spacing={2} marginTop={2} marginBottom={2}>
-            <FormTextField id="key"
-                           value={value}
-                           type={!keyMeta || !keyMeta.secret ? "text" : "password"}
-                           onChange={e => {
-                               setValue(e.target.value);
-                           }}
-                           label={key}
-                           autoFocus
-                           gridSize={12}
-            />
+            {keyMeta && keyMeta.dataType === "BOOLEAN" && (
+                <FormCheckbox id={key}
+                              value={value === "true"}
+                              label={key}
+                              gridSize={12}
+                              onChange={(e) => setValue(e.target.checked ? "true" : "false")}
+                />
+            )}
+            {keyMeta && (
+                <FormTextField id={key}
+                               value={value} type={getType()}
+                               label={key}
+                               autoFocus
+                               gridSize={12}
+                               onChange={e => setValue(e.target.value)}
+                />
+            )}
 
             <FormButtons labelRightButton={t("reset")}
                          roleRightButton={Role.CONFIGURATION_UPDATE}
