@@ -34,7 +34,7 @@ export default function EditableTableRow({ configuration, keyMeta, onSaveClick, 
             {keyMeta && keyMeta.dataType === "BOOLEAN" && (
                 <FormCheckbox id={key}
                               value={value === "true"}
-                              label={key}
+                              label={key.split("_")[key.split("_").length-1]}
                               gridSize={12}
                               onChange={(e) => setValue(e.target.checked ? "true" : "false")}
                 />
@@ -42,7 +42,7 @@ export default function EditableTableRow({ configuration, keyMeta, onSaveClick, 
             {keyMeta && keyMeta.dataType !== "BOOLEAN" && (
                 <FormTextField id={key}
                                value={value} type={getType()}
-                               label={key}
+                               label={key.split("_")[key.split("_").length-1]}
                                autoFocus
                                gridSize={12}
                                onChange={e => setValue(e.target.value)}
