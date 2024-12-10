@@ -37,7 +37,7 @@ export default function CollapsableTableRow({ configuration, keyMeta, onResetReq
                 sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
-                <TableCell>{data.key.replaceAll("_", " » ")}</TableCell>
+                <TableCell>{data.key.replace(/_/g, " » ")}</TableCell>
                 <TableCell>
                     {
                         keyMeta && !keyMeta.secret ? data.value : "******"
