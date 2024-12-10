@@ -29,8 +29,11 @@ export default function AdminConfigurationView() {
     const refresh = useCallback(() => {
         Rest.get(auth, Rest.RestEndpoint.Configuration)
             .then((res) => res.json())
-            .then((reps: Configuration[]) => {
-                setRows(reps);
+            .then((entities: Configuration[]) => {
+                return entities.sort((a, b) => a.key.localeCompare(b.key));
+            })
+            .then((entities: Configuration[]) => {
+                setRows(entities);
             })
             .catch((err: Error) => {
                 setRows([])
@@ -77,7 +80,7 @@ export default function AdminConfigurationView() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.key.toLowerCase().includes(filter)))
+                            .filter(dto => ("" === filter || dto.key.toLowerCase().includes(filter)))
                             .map((row) => (
                                 <CollapsableTableRow key={row.key}
                                                      configuration={row}
