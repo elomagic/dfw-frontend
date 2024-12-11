@@ -66,9 +66,7 @@ export default function AdminConfigurationView() {
 
     return (
         <Box margin={3}>
-            <TableHeaderControls onFilterChanged={f => setFilter(f)}
-                                 onRefresh={refresh}
-            />
+            <TableHeaderControls onFilterChanged={f => setFilter(f)} onRefresh={refresh}/>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
