@@ -13,11 +13,12 @@ import {RestEndpoint} from "../../RestClient.ts";
 import {enqueueSnackbar} from "notistack";
 
 interface CollapsableTableRowProps {
-    repository: Repository
+    repository: Repository;
+    internalBaseUrl: string;
     onDeleteRequest: (r: Repository) => void;
 }
 
-export default function CollapsableTableRow({ repository, onDeleteRequest }: Readonly<CollapsableTableRowProps>) {
+export default function CollapsableTableRow({ repository, internalBaseUrl, onDeleteRequest }: Readonly<CollapsableTableRowProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -43,6 +44,7 @@ export default function CollapsableTableRow({ repository, onDeleteRequest }: Rea
                 <TableCell>{data.enabled ? <Check color="success" /> : ""}</TableCell>
                 <TableCell>{data.description}</TableCell>
                 <TableCell>{data.baseUri}</TableCell>
+                <TableCell>{`${internalBaseUrl}/repository/${data.name}`}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>

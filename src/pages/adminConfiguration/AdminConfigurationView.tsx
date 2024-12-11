@@ -73,7 +73,7 @@ export default function AdminConfigurationView() {
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>{t("property")}</TableCell>
+                            <TableCell width={"500px"}>{t("property")}</TableCell>
                             <TableCell>{t("value")}</TableCell>
                         </TableRow>
                     </TableHead>

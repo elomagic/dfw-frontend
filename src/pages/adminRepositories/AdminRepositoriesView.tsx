@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts"
-import {Repository} from "../../DTOs.ts";
+import {Configuration, Repository} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
@@ -22,6 +22,7 @@ export default function AdminRepositoriesView() {
     const { t } = useTranslation();
     const auth = useAuth();
     const [ rows, setRows ] = useState<Repository[]>([]);
+    const [ internalBaseUrl, setInternalBaseUrl ] = useState<string>("https://?");
     const [ filter, setFilter ] = useState<string>("");
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
     const [ deleteOpen, setDeleteOpen ] = useState<boolean>(false);
@@ -64,6 +65,19 @@ export default function AdminRepositoriesView() {
         refresh();
     }, [refresh]);
 
+    useEffect(() => {
+        Rest.get(auth, Rest.RestEndpoint.Configuration)
+            .then((res) => res.json())
+            .then((entities: Configuration[]) => {
+                return entities.filter((e) => e.key === "COMMON_BASE_URL")[0];
+            })
+            .then((c: Configuration) => setInternalBaseUrl(c.value))
+            .catch((err: Error) => {
+                setRows([])
+                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+            });
+    }, [auth, t]);
+
     return (
         <Box margin={3}>
             <TableHeaderControls createCaption={t("create-repository")}
@@ -76,11 +90,12 @@ export default function AdminRepositoriesView() {
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>{t("type")}</TableCell>
+                            <TableCell width={"60px"}>{t("type")}</TableCell>
                             <TableCell>{t("name")}</TableCell>
-                            <TableCell>{t("enabled")}</TableCell>
+                            <TableCell width={"60px"}>{t("enabled")}</TableCell>
                             <TableCell>{t("description")}</TableCell>
-                            <TableCell>{t("url")}</TableCell>
+                            <TableCell>{t("external-url")}</TableCell>
+                            <TableCell>{t("internal-url")}</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -90,6 +105,7 @@ export default function AdminRepositoriesView() {
                             .map((row) => (
                                 <CollapsableTableRow key={row.name}
                                                      repository={row}
+                                                     internalBaseUrl={internalBaseUrl}
                                                      onDeleteRequest={(id) => handleDeleteRequest(id)}
                                 />
                             ))

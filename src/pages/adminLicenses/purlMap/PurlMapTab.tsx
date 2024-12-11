@@ -77,8 +77,8 @@ export default function PurlMapTab() {
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>{t("purl-match")}</TableCell>
-                            <TableCell>{t("spdx-id")}</TableCell>
+                            <TableCell width={"50%"}>{t("purl-match")}</TableCell>
+                            <TableCell width={"50%"}>{t("spdx-id")}</TableCell>
                         </TableRow>
                     </TableHead>
 

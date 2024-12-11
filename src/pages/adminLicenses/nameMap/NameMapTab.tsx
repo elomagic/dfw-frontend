@@ -76,8 +76,8 @@ export default function NameMapTab() {
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>{t("name-match")}</TableCell>
-                            <TableCell>{t("spdx-id")}</TableCell>
+                            <TableCell width={"50%"}>{t("name-match")}</TableCell>
+                            <TableCell width={"50%"}>{t("spdx-id")}</TableCell>
                         </TableRow>
                     </TableHead>
 

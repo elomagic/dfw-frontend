@@ -76,8 +76,8 @@ export default function CredentialsView() {
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>{t("credentialId")}</TableCell>
-                            <TableCell>{t("mode")}</TableCell>
+                            <TableCell width={"300px"}>{t("credentialId")}</TableCell>
+                            <TableCell width={"200px"}>{t("mode")}</TableCell>
                             <TableCell>{t("action")}</TableCell>
                         </TableRow>
                     </TableHead>

@@ -76,8 +76,8 @@ export default function UserAccountTab() {
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>{t("mailAddress")}</TableCell>
-                            <TableCell>{t("enabled")}</TableCell>
+                            <TableCell width={"400px"}>{t("mailAddress")}</TableCell>
+                            <TableCell width={"60px"}>{t("enabled")}</TableCell>
                             <TableCell>{t("displayName")}</TableCell>
                         </TableRow>
                     </TableHead>
