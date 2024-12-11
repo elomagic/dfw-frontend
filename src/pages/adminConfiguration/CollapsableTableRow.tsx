@@ -9,6 +9,8 @@ import {useAuth} from "../../auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import {enqueueSnackbar} from "notistack";
+import {FaHourglass} from "react-icons/fa6";
+import {ImCheckboxChecked, ImCheckboxUnchecked} from "react-icons/im";
 
 interface CollapsableTableRowProps {
     configuration: Configuration;
@@ -39,8 +41,10 @@ export default function CollapsableTableRow({ configuration, keyMeta, onResetReq
             >
                 <TableCell>{data.key.replace(/_/g, " » ")}</TableCell>
                 <TableCell>
+                    { !keyMeta && <FaHourglass />}
                     {
-                        keyMeta && !keyMeta.secret ? data.value : "******"
+                        keyMeta && !keyMeta.secret ? (keyMeta.dataType === "BOOLEAN" ? (data.value === "true" ? <ImCheckboxChecked /> : <ImCheckboxUnchecked />) : data.value)
+                            : "******"
                     }
                 </TableCell>
             </TableRow>
