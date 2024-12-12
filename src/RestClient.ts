@@ -5,6 +5,7 @@ const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_UR
 
 export enum RestEndpoint {
 
+    Component = "/api/v1/component",
     Configuration = "/api/v1/configuration",
     ConfigurationKey = "/api/v1/configurationKey",
     Credential = "/api/v1/credential",

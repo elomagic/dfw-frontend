@@ -5,6 +5,7 @@ import './TitleHeader.css';
 
 const getTitleKey = (path: string): string => {
     switch (path) {
+        case '/components': return 'components';
         case '/license-issues': return 'license-issues';
         case '/vulnerabilities': return 'vulnerabilities';
 

@@ -39,6 +39,7 @@ import ResetPasswortView from "./pages/signin/ResetPasswortView.tsx";
 import {SnackbarProvider} from "notistack";
 import CredentialsView from "./pages/credentials/CredentialsView.tsx";
 import AdminConfigurationView from "./pages/adminConfiguration/AdminConfigurationView.tsx";
+import ComponentsView from "./pages/components/ComponentsView.tsx";
 
 const drawerWidth: number = 240;
 
@@ -181,6 +182,8 @@ function App() {
                             <Toolbar />
 
                             <Routes>
+                                <Route path='components'
+                                       element={<ProtectedRoute><ComponentsView /></ProtectedRoute>}/>
                                 <Route path='license-issues'
                                        element={<ProtectedRoute><LicenseIssuesView /></ProtectedRoute>}/>
                                 <Route path='vulnerabilities'

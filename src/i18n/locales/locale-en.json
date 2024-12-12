@@ -14,6 +14,7 @@
   "cancel": "Cancel",
   "change-password": "Change Password",
   "comment": "Comment",
+  "components": "Components",
   "configuration": "Configuration",
   "continue": "Continue",
   "create": "Create",
@@ -53,6 +54,7 @@
   "mode": "Mode",
   "my-account": "My Account",
   "name": "Name",
+  "namespace": "Namespace",
   "name-mappings": "Name Mappings",
   "name-match": "Name Match",
   "no": "No",
@@ -123,6 +125,7 @@
   "user-account-members": "User Account Members",
   "username": "Username",
   "value": "Value",
+  "version": "Version",
   "vulnerabilities": "Vulnerabilities",
   "yes": "yes"
 }

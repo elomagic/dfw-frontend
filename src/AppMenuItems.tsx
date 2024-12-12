@@ -9,6 +9,7 @@ import {RiUserSettingsLine} from "react-icons/ri";
 import {AiOutlineDashboard} from "react-icons/ai";
 import {FaShieldVirus} from "react-icons/fa";
 import {GrConfigure} from "react-icons/gr";
+import {BiSolidComponent} from "react-icons/bi";
 
 export default function AppMenuItems() {
 
@@ -21,6 +22,12 @@ export default function AppMenuItems() {
                     <AiOutlineDashboard className='fs15em'/>
                 </ListItemIcon>
                 <ListItemText primary={t('dashboard')}/>
+            </ListItemButton>
+            <ListItemButton component={RouterLink} to='components'>
+                <ListItemIcon>
+                    <BiSolidComponent className='fs15em'/>
+                </ListItemIcon>
+                <ListItemText primary={t('component')}/>
             </ListItemButton>
             <ListItemButton component={RouterLink} to='license-issues'>
                 <ListItemIcon>
