@@ -12,7 +12,7 @@ import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
 import {Repository, RepositoryTypes} from "../../DTOs.ts";
 import {FormSelect} from "../../components/FormSelect.tsx";
-import {enqueueSnackbar} from "notistack";
+import { toaster } from '../../Toaster.ts';
 
 interface ForgotPasswordProps {
     open: boolean;
@@ -37,8 +37,8 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
         Rest
             .post(auth, RestEndpoint.Repository, data)
             .then(() => handleClose(data))
-            .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar(t("creation-failed", { message: err.message }), { variant: 'error' } ));
+            .then(() => toaster(t("successful-created"), 'success'))
+            .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));
     }
 
     return (

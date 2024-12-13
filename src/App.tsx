@@ -36,7 +36,6 @@ import AboutView from "./pages/commons/AboutView.tsx";
 import MyAccountView from "./pages/myAccount/MyAccountView.tsx";
 import ChangePasswortView from "./pages/signin/ChangePasswortView.tsx";
 import ResetPasswortView from "./pages/signin/ResetPasswortView.tsx";
-import {SnackbarProvider} from "notistack";
 import CredentialsView from "./pages/credentials/CredentialsView.tsx";
 import AdminConfigurationView from "./pages/adminConfiguration/AdminConfigurationView.tsx";
 import ComponentsView from "./pages/components/ComponentsView.tsx";
@@ -109,7 +108,6 @@ function App() {
 
     return (
         <ThemeProvider theme={darkTheme}>
-            <SnackbarProvider autoHideDuration={2500} anchorOrigin={{vertical: "top", horizontal: "center" }} preventDuplicate={true}/>
             <CssBaseline />
             <BrowserRouter>
                 {!auth.isAuthenticated &&

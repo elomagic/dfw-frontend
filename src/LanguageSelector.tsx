@@ -4,7 +4,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {ImageListItem, ListItemText, MenuItem} from "@mui/material";
 import './LanguageSelector.css';
 import {useState} from "react";
-import {enqueueSnackbar} from "notistack";
+import {toaster} from "./Toaster.ts";
 // TODO require('dayjs/locale/de')
 
 export default function LanguageSelector() {
@@ -24,7 +24,7 @@ export default function LanguageSelector() {
         dayjs.locale(l)
 
         i18n.changeLanguage(l)
-            .catch((err) => enqueueSnackbar("Error during language change: " + err.message, { variant: 'error'} ));
+            .catch((err) => toaster("Error during language change: " + err.message, 'error'));
 
         localStorage.setItem("language", l);
     };

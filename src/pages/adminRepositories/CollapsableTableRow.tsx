@@ -10,7 +10,7 @@ import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
-import {enqueueSnackbar} from "notistack";
+import {toaster} from "../../Toaster.ts";
 
 interface CollapsableTableRowProps {
     repository: Repository;
@@ -29,8 +29,8 @@ export default function CollapsableTableRow({ repository, internalBaseUrl, onDel
         Rest.patch(auth, RestEndpoint.Repository, d)
             .then((res) => res.json())
             .then((dto: Repository) => setData(dto))
-            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar(t("saving-data-failed", { message: err.message}), { variant: 'error'} ));
+            .then(() => toaster(t("successful-saved"), 'success'))
+            .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
 
     return (

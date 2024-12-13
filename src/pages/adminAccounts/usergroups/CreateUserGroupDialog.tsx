@@ -11,7 +11,7 @@ import {RestEndpoint} from "../../../RestClient.ts"
 import {useAuth} from "../../../auth/useAuth.ts";
 import {useState} from "react";
 import {UserAccountGroup} from "../../../DTOs.ts";
-import {enqueueSnackbar} from "notistack";
+import {toaster} from "../../../Toaster.ts";
 
 interface CreateUserGroupProps {
     open: boolean;
@@ -34,8 +34,8 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Cr
         Rest
             .post(auth, RestEndpoint.UserGroup, data)
             .then(() => handleClose(data))
-            .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar(t("creation-failed", { message: err.message }), { variant: 'error' } ));
+            .then(() => toaster(t("successful-created"), 'success'))
+            .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));
     }
 
     return (

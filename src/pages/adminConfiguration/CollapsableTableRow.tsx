@@ -8,9 +8,9 @@ import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
-import {enqueueSnackbar} from "notistack";
 import {FaHourglass} from "react-icons/fa6";
 import {ImCheckboxChecked, ImCheckboxUnchecked} from "react-icons/im";
+import {toaster} from "../../Toaster.ts";
 
 interface CollapsableTableRowProps {
     configuration: Configuration;
@@ -29,8 +29,8 @@ export default function CollapsableTableRow({ configuration, keyMeta, onResetReq
         Rest.put(auth, RestEndpoint.Configuration, d)
             .then((res) => res.json())
             .then((dto: Configuration) => setData(dto))
-            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar(t("saving-data-failed", { message: err.message}), { variant: 'error'} ));
+            .then(() => toaster(t("successful-saved"), 'success'))
+            .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
 
     return (

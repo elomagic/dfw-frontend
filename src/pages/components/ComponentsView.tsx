@@ -5,8 +5,8 @@ import * as Rest from "../../RestClient.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
-import {enqueueSnackbar} from "notistack";
 import ComponentTableRow from "./ComponentTableRow.tsx";
+import {toaster} from "../../Toaster.ts";
 
 export default function ComponentsView() {
 
@@ -23,7 +23,7 @@ export default function ComponentsView() {
             })
             .catch((err: Error) => {
                 setRows([])
-                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+                toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
     }, [t, auth]);
 

@@ -6,8 +6,8 @@ import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import YesNoDialog from "../../components/YesNoDialog.tsx";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
-import {enqueueSnackbar} from "notistack";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
+import {toaster} from "../../Toaster.ts";
 
 export default function LicenseIssuesView() {
 
@@ -26,7 +26,7 @@ export default function LicenseIssuesView() {
             })
             .catch((err: Error) => {
                 setRows([])
-                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+                toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
     }, [t, auth]);
 
@@ -38,7 +38,7 @@ export default function LicenseIssuesView() {
     const handleDelete = () => {
         Rest.deleteResource(auth, Rest.RestEndpoint.LicenseViolation, selectedEntity?.id)
             .then(() => refresh())
-            .catch((err: Error) => enqueueSnackbar(t("deleting-failed", { message: err.message }), { variant: 'error'} ))
+            .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))
     }
 

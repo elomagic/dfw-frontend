@@ -5,11 +5,11 @@ import {validateRequiredText} from "../../../Validators.ts";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
-import {enqueueSnackbar} from "notistack";
 import FormSelectList from "../../../components/FormSelectList.tsx";
 import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {Role} from "../../../auth/Auth.tsx";
+import {toaster} from "../../../Toaster.ts";
 
 interface EditableTableRowProps {
     group: UserAccountGroup
@@ -40,12 +40,12 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
         Rest.get(auth, Rest.RestEndpoint.User)
             .then((res) => res.json())
             .then((dtos: UserAccount[]) => setAllUsers(dtos))
-            .catch((err: Error) => enqueueSnackbar("Getting users failed: " + err.message, { variant: 'error' } ));
+            .catch((err: Error) => toaster("Getting users failed: " + err.message, 'error'));
 
         Rest.get(auth, Rest.RestEndpoint.Role)
             .then((res) => res.json())
             .then((rs: string[]) => setAllRoles(rs.sort((a, b) => a.localeCompare(b)).map(r => ({value: r}))))
-            .catch((err: Error) => enqueueSnackbar("Getting roles failed: " + err.message, { variant: 'error' } ));
+            .catch((err: Error) => toaster("Getting roles failed: " + err.message, 'error'));
     }, [auth]);
 
     const handleUserMembersChanged = (selectedMembers: UserAccount[]) => {

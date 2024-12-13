@@ -7,13 +7,13 @@ import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
 import * as Rest from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
 import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
-import {enqueueSnackbar} from "notistack";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormSelect, KeyLabelItem} from "../../components/FormSelect.tsx";
 import FormSelectList from "../../components/FormSelectList.tsx";
 import {Role} from "../../auth/Auth.tsx";
+import {toaster} from "../../Toaster.ts";
 
 interface EditableTableRowProps {
     repository: Repository
@@ -58,12 +58,12 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                 return cd;
             })
             .then((kl: KeyLabelItem[]) => setCredentialsIds(kl))
-            .catch((err: Error) => enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } ));
+            .catch((err: Error) => toaster(t("getting-data-failed",  { message: err.message }), 'error'));
 
         Rest.get(auth, Rest.RestEndpoint.UserGroup)
             .then((res) => res.json())
             .then((rs: UserAccountGroup[]) => setAllGroups(rs))
-            .catch((err: Error) => enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } ));
+            .catch((err: Error) => toaster(t("getting-data-failed",  { message: err.message }), 'error'));
     }, [auth, t]);
 
     return (

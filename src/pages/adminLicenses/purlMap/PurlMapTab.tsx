@@ -10,12 +10,12 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../../RestClient.ts";
 import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
-import {enqueueSnackbar} from "notistack";
 import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import {LicensePurlMap} from "../../../DTOs.ts";
 import CollapsablePurlMapTableRow from "./CollapsablePurlMapTableRow.tsx";
 import CreatePurlMapDialog from "./CreatePurlMapDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
+import {toaster} from "../../../Toaster.ts";
 
 export default function PurlMapTab() {
 
@@ -35,7 +35,7 @@ export default function PurlMapTab() {
             })
             .catch((err: Error) => {
                 setRows([])
-                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+                toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
     }, [t, auth]);
 
@@ -57,7 +57,7 @@ export default function PurlMapTab() {
     const handleDelete = () => {
         Rest.deleteResource(auth, Rest.RestEndpoint.LicensePurlMap, selectedEntity?.id)
             .then(() => refresh())
-            .catch((err: Error) => enqueueSnackbar(t("deleting-failed", { message: err.message }), { variant: 'error'} ))
+            .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))
     }
 

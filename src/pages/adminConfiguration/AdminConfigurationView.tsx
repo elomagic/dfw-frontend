@@ -12,8 +12,8 @@ import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import {enqueueSnackbar} from "notistack";
 import YesNoDialog from "../../components/YesNoDialog.tsx";
+import { toaster } from "../../Toaster.ts";
 
 export default function AdminConfigurationView() {
 
@@ -37,7 +37,7 @@ export default function AdminConfigurationView() {
             })
             .catch((err: Error) => {
                 setRows([])
-                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+                toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
     }, [t, auth]);
 
@@ -49,7 +49,7 @@ export default function AdminConfigurationView() {
     const handleDelete = () => {
         Rest.deleteResource(auth, Rest.RestEndpoint.Configuration, selectedEntity?.key)
             .then(() => refresh())
-            .catch((err: Error) => enqueueSnackbar(t("reset-failed", { message: err.message }), { variant: 'error'} ))
+            .catch((err: Error) => toaster(t("reset-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))
     }
 
@@ -61,7 +61,7 @@ export default function AdminConfigurationView() {
         Rest.get(auth, Rest.RestEndpoint.ConfigurationKey)
             .then((res) => res.json())
             .then((rs: ConfigurationKeyMeta[]) => setConfigurationKeyMetas(rs))
-            .catch((err: Error) => enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error' } ));
+            .catch((err: Error) => toaster(t("getting-data-failed",  { message: err.message }), 'error'));
     }, [auth, t]);
 
     return (

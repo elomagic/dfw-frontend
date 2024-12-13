@@ -7,12 +7,12 @@ import {RestEndpoint} from "../../RestClient.ts";
 import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../Validators.ts";
 import {UserAccount, UserAccountApiKey} from "../../DTOs.ts";
-import {enqueueSnackbar} from "notistack";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormSelect} from "../../components/FormSelect.tsx";
 import FormList from "../../components/FormList.tsx";
 import CreateApiKeyDialog from "./CreateApiKeyDialog.tsx";
+import { toaster } from "../../Toaster.ts";
 
 export default function MyAccountView() {
 
@@ -44,8 +44,8 @@ export default function MyAccountView() {
         }
 
         Rest.patch(auth, RestEndpoint.UserSelf, data)
-            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar(t("saving-data-failed", { message: err.message}), { variant: 'error'} ));
+            .then(() => toaster(t("successful-saved"), 'success'))
+            .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
 
 
@@ -76,7 +76,7 @@ export default function MyAccountView() {
             })
             .catch((err: Error) => {
                 setApiKeys([])
-                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+                toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
     }, [auth, t]);
 

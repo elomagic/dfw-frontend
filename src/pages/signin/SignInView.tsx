@@ -6,7 +6,7 @@ import Link from "@mui/material/Link";
 import ForgotPasswordDialog from "./ForgotPasswordDialog.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import {enqueueSnackbar} from "notistack";
+import {toaster} from "../../Toaster.ts";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -76,7 +76,7 @@ export default function SignInView() {
         const data = new FormData(event.currentTarget);
 
         auth.signinRedirect(data)
-            .catch((err: Error) => enqueueSnackbar(t("login-failed", { message: err.message }), { variant: 'error'} ));
+            .catch((err: Error) => toaster(t("login-failed", { message: err.message }), 'error'));
     };
 
     const validateInputs = () => {

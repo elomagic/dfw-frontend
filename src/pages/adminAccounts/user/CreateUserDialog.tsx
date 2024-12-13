@@ -11,7 +11,7 @@ import {RestEndpoint} from "../../../RestClient.ts"
 import {useAuth} from "../../../auth/useAuth.ts";
 import {useState} from "react";
 import {UserAccount} from "../../../DTOs.ts";
-import {enqueueSnackbar} from "notistack";
+import {toaster} from "../../../Toaster.ts";
 
 interface CreateUserProps {
     open: boolean;
@@ -36,8 +36,8 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<CreateU
         Rest
             .post(auth, RestEndpoint.User, data)
             .then(() => handleClose(data))
-            .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar(t("creation-failed", { message: err.message }), { variant: 'error' } ));
+            .then(() => toaster(t("successful-created"), 'success'))
+            .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));
     }
 
     return (

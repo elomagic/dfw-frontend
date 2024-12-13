@@ -10,10 +10,10 @@ import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {AuthenticationMode, CredentialData} from "../../DTOs.ts";
-import {enqueueSnackbar} from "notistack";
 import {FormSelect} from "../../components/FormSelect.tsx";
 import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
 import FormTextField from "../../components/FormTextField.tsx";
+import {toaster} from "../../Toaster.ts";
 
 interface CreateUserProps {
     open: boolean;
@@ -48,8 +48,8 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
         Rest
             .post(auth, RestEndpoint.Credential, data)
             .then(() => handleClose(data))
-            .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar(t("creation-failed", { message: err.message }), { variant: 'error' } ));
+            .then(() => toaster(t("successful-created"), 'success'))
+            .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));
     }
 
     return (

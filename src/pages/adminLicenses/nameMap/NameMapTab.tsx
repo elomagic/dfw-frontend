@@ -11,11 +11,11 @@ import {useCallback, useEffect, useState} from "react";
 import {LicenseNameMap} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
 import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
-import {enqueueSnackbar} from "notistack";
 import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import CollapsableNameMapTableRow from "./CollapsableNameMapTableRow.tsx";
 import CreateNameMapDialog from "./CreateNameMapDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
+import {toaster} from "../../../Toaster.ts";
 
 export default function NameMapTab() {
 
@@ -35,7 +35,7 @@ export default function NameMapTab() {
             })
             .catch((err: Error) => {
                 setRows([])
-                enqueueSnackbar(t("getting-data-failed",  { message: err.message }), { variant: 'error'} );
+                toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
     }, [t, auth]);
 
@@ -56,7 +56,7 @@ export default function NameMapTab() {
     const handleDelete = () => {
         Rest.deleteResource(auth, Rest.RestEndpoint.LicenseNameMap, selectedEntity?.id)
             .then(() => refresh())
-            .catch((err: Error) => enqueueSnackbar(t("deleting-failed", { message: err.message }), { variant: 'error'} ))
+            .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))
     }
 

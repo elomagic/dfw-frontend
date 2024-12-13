@@ -9,7 +9,7 @@ import {useTranslation} from "react-i18next";
 import {useAuth} from "../../../auth/useAuth.ts";
 import * as Rest from "../../../RestClient.ts";
 import {RestEndpoint} from "../../../RestClient.ts";
-import {enqueueSnackbar} from "notistack";
+import {toaster} from "../../../Toaster.ts";
 
 interface CollapsableUserTableRowProps {
     user: UserAccount
@@ -27,8 +27,8 @@ export default function CollapsableUserTableRow({ user, onDeleteRequest }: Reado
         Rest.patch(auth, RestEndpoint.User, d)
             .then((res) => res.json())
             .then((dto: UserAccount) => setData(dto))
-            .then(() => enqueueSnackbar(t("successful-saved"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar(t("saving-data-failed", { message: err.message}), { variant: 'error' } ));
+            .then(() => toaster(t("successful-saved"), 'success'))
+            .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
 
     return (

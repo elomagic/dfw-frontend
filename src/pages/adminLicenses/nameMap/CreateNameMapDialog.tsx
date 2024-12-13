@@ -10,9 +10,9 @@ import {RestEndpoint} from "../../../RestClient.ts"
 import {useAuth} from "../../../auth/useAuth.ts";
 import {useEffect, useState} from "react";
 import {License, LicenseNameMap} from "../../../DTOs.ts";
-import {enqueueSnackbar} from "notistack";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
+import {toaster} from "../../../Toaster.ts";
 
 interface CreateNameMapProps {
     open: boolean;
@@ -36,8 +36,8 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Crea
         Rest
             .post(auth, RestEndpoint.LicenseNameMap, data)
             .then(() => handleClose(data))
-            .then(() => enqueueSnackbar(t("successful-created"), { variant: 'success'} ))
-            .catch((err: Error) => enqueueSnackbar(t("creation-failed", { message: err.message }), { variant: 'error' } ));
+            .then(() => toaster(t("successful-created"), 'success'))
+            .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));
     }
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Crea
             .then((res) => res.json())
             .then((rs: License[]) => rs.map(l => { return { "key": l.licenseId, "label": l.name} as KeyLabelItem })) // setSpdxList(rs))
             .then((kl: KeyLabelItem[]) => setSpdxList(kl))
-            .catch((err: Error) => enqueueSnackbar("Getting spdx list failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => toaster("Getting spdx list failed: " + err.message, 'error'));
     }, [auth]);
 
     return (

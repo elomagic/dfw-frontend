@@ -5,12 +5,12 @@ import {validateRequiredText} from "../../../Validators.ts";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {License, LicensePurlMap} from "../../../DTOs.ts";
-import {enqueueSnackbar} from "notistack";
 import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
 import FormTextArea from "../../../components/FormTextArea.tsx";
 import {Role} from "../../../auth/Auth.tsx";
+import { toaster } from "../../../Toaster.ts";
 
 interface EditableTableRowProps {
     purlMap: LicensePurlMap
@@ -37,7 +37,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
             .then((res) => res.json())
             .then((rs: License[]) => rs.map(l => { return { "key": l.licenseId, "label": l.name} as KeyLabelItem })) // setSpdxList(rs))
             .then((kl: KeyLabelItem[]) => setSpdxList(kl))
-            .catch((err: Error) => enqueueSnackbar("Getting spdx list failed: " + err.message, { variant: 'error'} ));
+            .catch((err: Error) => toaster("Getting spdx list failed: " + err.message, 'error'));
     }, [auth]);
 
     const handleSaveClick = () => {

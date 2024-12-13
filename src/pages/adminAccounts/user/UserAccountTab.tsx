@@ -13,9 +13,9 @@ import * as Rest from "../../../RestClient.ts";
 import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
 import CollapsableUserTableRow from "./CollapsableUserTableRow.tsx";
 import CreateUserDialog from "./CreateUserDialog.tsx";
-import {enqueueSnackbar} from "notistack";
 import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
+import { toaster } from "../../../Toaster.ts";
 
 export default function UserAccountTab() {
 
@@ -35,7 +35,7 @@ export default function UserAccountTab() {
             })
             .catch((err: Error) => {
                 setRows([])
-                enqueueSnackbar(t("getting-data-failed", { message: err.message }), { variant: 'error' } );
+                toaster(t("getting-data-failed", { message: err.message }), 'error');
             });
     }, [t, auth]);
 
@@ -56,7 +56,7 @@ export default function UserAccountTab() {
     const handleDelete = () => {
         Rest.deleteResource(auth, Rest.RestEndpoint.User, selectedEntity?.id)
             .then(() => refresh())
-            .catch((err: Error) => enqueueSnackbar(t("deleting-failed", { message: err.message }), { variant: 'error' } ))
+            .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))
     }
 
