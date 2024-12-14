@@ -1,17 +1,17 @@
 import './TitleHeader.css';
-import {Bounce, toast} from "react-toastify";
+import {Bounce, toast, ToastOptions} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-// enqueueSnackbar("Error during language change: " + err.message, { variant: 'error'} ));
 export const toaster = (text: string, variant: 'error'|'info'|'success'): void => {
 
-    const config = {
-        // position:  "top-center",
+    const config: ToastOptions = {
+        position: "top-center",
         autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
+        progress: 0,
         theme: "colored",
         transition: Bounce,
     };

@@ -39,6 +39,7 @@ import ResetPasswortView from "./pages/signin/ResetPasswortView.tsx";
 import CredentialsView from "./pages/credentials/CredentialsView.tsx";
 import AdminConfigurationView from "./pages/adminConfiguration/AdminConfigurationView.tsx";
 import ComponentsView from "./pages/components/ComponentsView.tsx";
+import {ToastContainer} from "react-toastify";
 
 const drawerWidth: number = 240;
 
@@ -108,6 +109,7 @@ function App() {
 
     return (
         <ThemeProvider theme={darkTheme}>
+            <ToastContainer />
             <CssBaseline />
             <BrowserRouter>
                 {!auth.isAuthenticated &&
