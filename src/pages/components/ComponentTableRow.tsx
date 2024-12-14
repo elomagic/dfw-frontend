@@ -16,6 +16,7 @@ export default function ComponentTableRow({component}: Readonly<TableRowProps>) 
             <TableCell>{component.namespace}</TableCell>
             <TableCell>{component.name}</TableCell>
             <TableCell>{component.version}</TableCell>
+            <TableCell>{component.licenses.map(l => l.name).join(", ")}</TableCell>
         </TableRow>
     );
 }

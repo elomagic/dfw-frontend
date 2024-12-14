@@ -28,6 +28,12 @@ export declare interface ConfigurationKeyMeta {
     secret: boolean
 }
 
+export declare interface ComponentLicense extends IdItem {
+    name?: string;
+    url?: string;
+    comment?: string;
+}
+
 export declare interface Component extends IdItem {
     type: RepositoryTypes;
     purl: string;
@@ -36,6 +42,7 @@ export declare interface Component extends IdItem {
     version: string;
     qualifiers: string;
     subpath: string;
+    licenses: ComponentLicense[]
 }
 
 export declare interface Configuration extends CreateUpdated {
