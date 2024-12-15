@@ -33,6 +33,7 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
     const [baseUri, setBaseUri] = useState(repository.baseUri);
     const [credentialId, setCredentialId] = useState<string>(repository.credentialId ?? "-");
     const [groupPermissions, setGroupPermissions] = useState<UserAccountGroup[]>([]);
+    const [forwardHeaders, setForwardHeaders] = useState(repository.enabled);
 
     const [credentialsIds, setCredentialsIds] = useState<KeyLabelItem[]>([{ key: "-", label: "-"}]);
     const [allGroups, setAllGroups] = useState<UserAccountGroup[]>([]);
@@ -46,7 +47,16 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
             return;
         }
 
-        onSaveClick({id, enabled, type: repository.type, name, description, baseUri, credentialId, groupPermissions});
+        onSaveClick({
+            id,
+            enabled,
+            type: repository.type,
+            name, description,
+            baseUri,
+            credentialId,
+            groupPermissions,
+            forwardHeaders
+        });
     };
 
     useEffect(() => {
@@ -118,11 +128,18 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                                </InputAdornment>
                            )}
             />
+            <FormCheckbox id="forwardHeaders"
+                          value={forwardHeaders}
+                          label={t("forwardHeaders")}
+                          onChange={e => setForwardHeaders(e.target.checked)}
+                          gridSize={6}
+            />
+
             <FormCheckbox id="enabled"
                           value={enabled}
                           label={t("enabled")}
                           onChange={e => setEnabled(e.target.checked)}
-                          gridSize={6}
+                          gridSize={12}
             />
 
             <FormSelectList<UserAccountGroup>

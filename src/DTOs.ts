@@ -95,6 +95,7 @@ export declare interface Repository extends IdItem {
     created?: string;
     lastUpdate?: string;
     groupPermissions: UserAccountGroup[];
+    forwardHeaders: boolean;
 }
 
 export declare interface Version {

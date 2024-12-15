@@ -31,7 +31,8 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
             name,
             type,
             enabled: false,
-            groupPermissions: []
+            groupPermissions: [],
+            forwardHeaders: false
         }
 
         Rest
