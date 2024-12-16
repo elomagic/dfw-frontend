@@ -1,7 +1,4 @@
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import {Configuration, ConfigurationKeyMeta} from "../../DTOs.ts";
-import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
 import {useTranslation} from "react-i18next";
@@ -11,6 +8,8 @@ import {RestEndpoint} from "../../RestClient.ts";
 import {FaHourglass} from "react-icons/fa6";
 import {ImCheckboxChecked, ImCheckboxUnchecked} from "react-icons/im";
 import {toaster} from "../../Toaster.ts";
+import {TableCell, TableRow} from "../../components/ui/table.tsx";
+import {Collapsible, CollapsibleContent} from "../../components/ui/collapsible.tsx";
 
 interface CollapsableTableRowProps {
     configuration: Configuration;
@@ -35,10 +34,7 @@ export default function CollapsableTableRow({ configuration, keyMeta, onResetReq
 
     return (
         <>
-            <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
-                onClick={()=> setOpen(!open)}
-            >
+            <TableRow onClick={()=> setOpen(!open)}>
                 <TableCell>{data.key.replace(/_/g, " » ")}</TableCell>
                 <TableCell>
                     { !keyMeta && <FaHourglass />}
@@ -50,12 +46,14 @@ export default function CollapsableTableRow({ configuration, keyMeta, onResetReq
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow configuration={data}
-                                          keyMeta={keyMeta}
-                                          onSaveClick={handleSaveClick}
-                                          onResetRequest={() => onResetRequest(data)} />
-                    </Collapse>
+                    <Collapsible open={open}>
+                        <CollapsibleContent>
+                            <EditableTableRow configuration={data}
+                                              keyMeta={keyMeta}
+                                              onSaveClick={handleSaveClick}
+                                              onResetRequest={() => onResetRequest(data)} />
+                        </CollapsibleContent>
+                    </Collapsible>
                 </TableCell>
             </TableRow>
         </>

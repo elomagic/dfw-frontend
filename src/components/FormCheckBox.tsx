@@ -1,38 +1,32 @@
-import {SwitchBaseProps} from "@mui/material/internal/SwitchBase";
-import Grid from "@mui/material/Grid2";
-import {FormControl, FormControlLabel, Switch} from "@mui/material";
-import {GridSize} from "@mui/material/Grid2/Grid2";
+import {GridItem, GridSize} from "../components/Grids.tsx";
+import {Switch} from "../components/ui/switch.tsx";
+import {Label} from "../components/ui/label.tsx";
 
 interface FormCheckboxProps {
     id: string;
     value: boolean;
     label: string;
-    onChange: SwitchBaseProps['onChange'];
+    onChange: (check:boolean) => void;
     gridSize?: GridSize;
 }
 
 function UnwrappedFormCheckBox({ id, value, onChange, label}: Readonly<FormCheckboxProps>) {
     return (
-        <FormControl>
-            <FormControlLabel
-                control={<Switch onChange={onChange}/>}
-                id={id}
-                name={id}
-                checked={value}
-                label={label}
-            />
-        </FormControl>
+        <>
+            <Switch id={id} checked={value} onCheckedChange={onChange}/>
+            <Label htmlFor={id}>{label}</Label>
+        </>
     );
 }
 
-export function FormCheckbox({ id, value, onChange, label, gridSize}: Readonly<FormCheckboxProps>) {
+export function FormCheckbox({id, value, onChange, label, gridSize}: Readonly<FormCheckboxProps>) {
 
     return (
         <>
             {gridSize && (
-                <Grid size={gridSize}>
+                <GridItem size={gridSize}>
                     <UnwrappedFormCheckBox id={id} value={value} label={label} onChange={onChange} />
-                </Grid>
+                </GridItem>
             )}
             {!gridSize && (
                 <UnwrappedFormCheckBox id={id} value={value} label={label} onChange={onChange} />

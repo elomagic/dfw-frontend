@@ -1,6 +1,5 @@
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
-import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../../Validators.ts";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
@@ -10,6 +9,7 @@ import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
+import {Grid, GridItem} from "../../../components/Grids.tsx";
 
 interface EditableTableRowProps {
     group: UserAccountGroup
@@ -65,7 +65,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
     };
 
     return (
-        <Grid container spacing={2} marginTop={2} marginBottom={2}>
+        <Grid>
             <FormTextField id="name"
                                  value={name}
                                  errorMessage={nameErrorMessage}
@@ -79,7 +79,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
                                  gridSize={6}
             />
 
-            <Grid size={6} />
+            <GridItem size={6} />
 
             <FormSelectList<UserAccount>
                 value={userMembers}

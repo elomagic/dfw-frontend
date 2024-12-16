@@ -1,19 +1,14 @@
-import {
-    Button,
-    IconButton,
-    List,
-    ListItem,
-    ListItemText
-} from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import {Add, RemoveCircle} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
 import {ReactNode, useEffect, useState} from "react";
-import {GridSize} from "@mui/material/Grid2/Grid2";
 import { v4 as uuidv4 } from 'uuid';
 import {ItemId} from "../DTOs.ts";
-import {Fieldset} from "./Fieldset.tsx";
 import {useAuth} from "../auth/useAuth.ts";
+import {Button} from "../components/ui/button.tsx";
+import {MdDeleteForever} from "react-icons/md";
+import {IoMdAddCircleOutline} from "react-icons/io";
+import {GridItem, GridSize} from "../components/Grids.tsx";
+import {FormItem} from "../components/FormItem.tsx";
+import {ScrollArea} from "../components/ui/scroll-area.tsx";
 
 interface UnwrappedFormListProps<T> {
     values: ItemId<T>[];
@@ -32,33 +27,27 @@ function UnwrappedFormList<T>({ values, label, getItemLabel, editRole, onAddClic
 
     return (
         <>
-        <Fieldset label={label}>
-            <List sx={{
-                width: '100%', minHeight: '32px', maxHeight: '100px', overflow: "auto", padding: 0
-            }}>
-                {values
-                    .map((item) => (
-                        <ListItem key={item._itemId}
-                                  disablePadding
-                                  secondaryAction={
-                                      (editRole === undefined || auth.roles.includes(editRole)) &&
-                                      <IconButton edge="end" aria-label="remove" sx={{ padding: 0 }}>
-                                          <RemoveCircle color="error" onClick={() => onDeleteClick(item._itemId)}/>
-                                      </IconButton>}
-                        >
-                            <ListItemText id={item._itemId} primary={getItemLabel(item)} />
-                        </ListItem>)
-                    )}
-            </List>
-        </Fieldset>
+        <FormItem label={label}>
+            <ScrollArea style={{ width: '100%', minHeight: '32px', maxHeight: '100px', overflow: "auto", padding: 0}}>
+                {values.map((item) => (
+                    <div>
+                        <label>{getItemLabel(item)}</label>
+                        { (editRole === undefined || auth.roles.includes(editRole)) && <Button size="icon"
+                                aria-label="remove"
+                                color="error"
+                                onClick={() => onDeleteClick(item._itemId)}>
+                            <MdDeleteForever />
+                        </Button>
+                        }
+                    </div>
+                ))}
+            </ScrollArea>
+        </FormItem>
             { (editRole === undefined || auth.roles.includes(editRole)) && onAddClick &&
-                <Button variant="outlined"
-                        onClick={onAddClick}
-                        size="small"
-                        startIcon={<Add />}
-                        sx={{ mt: "8px", mb: "8px" }}>
-                    {t("add")}
-                </Button>
+                    <Button variant="outline" onClick={onAddClick} size="sm">
+                        <IoMdAddCircleOutline />
+                        {t("add")}
+                    </Button>
             }
         </>
     );
@@ -89,9 +78,9 @@ export default function FormList<T>({ value, label, getItemLabel, gridSize, onCh
     return (
         <>
             { gridSize && (
-                <Grid size={gridSize}>
+                <GridItem size={gridSize}>
                     <UnwrappedFormList values={values} label={label} getItemLabel={getItemLabel} onDeleteClick={(itemId) => handleDeleteClick(itemId)} onAddClick={onAddClick} />
-                </Grid>
+                </GridItem>
             )}
             { !gridSize && (
                 <UnwrappedFormList values={values} label={label} getItemLabel={getItemLabel} onDeleteClick={(itemId) => handleDeleteClick(itemId)} onAddClick={onAddClick} />

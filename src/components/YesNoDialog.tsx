@@ -1,14 +1,13 @@
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle, Slide,
-} from '@mui/material';
-import {TransitionProps} from "@mui/material/transitions";
-import {forwardRef, ReactElement, Ref} from "react";
 import {useTranslation} from "react-i18next";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
+} from "../components/ui/dialog.tsx";
+import {Button} from "../components/ui/button.tsx";
 
 interface YesNoDialogProps {
     title: string;
@@ -20,39 +19,32 @@ interface YesNoDialogProps {
     onNoClick: () => void;
 }
 
-const Transition = forwardRef(function Transition(
-    props: TransitionProps & {
-        children: ReactElement<any, any>;
-    },
-    ref: Ref<unknown>,
-) {
-    return <Slide direction="down" ref={ref} {...props}/>;
-});
-
 const YesNoDialog = ({
-                                                              title,
-                                                              text,
-                                                              captionYes,
-                                                              captionNo,
-                                                              open,
-                                                              onYesClick,
-                                                              onNoClick,
-                                                          }: Readonly<YesNoDialogProps>) => {
+                         title,
+                         text,
+                         captionYes,
+                         captionNo,
+                         open,
+                         onYesClick,
+                         onNoClick
+}: Readonly<YesNoDialogProps>) => {
 
     const { t } = useTranslation();
 
     return (
-        <Dialog open={open} onClose={onNoClick} TransitionComponent={Transition} keepMounted>
-            <DialogTitle>{title}</DialogTitle>
+        <Dialog open={open} onOpenChange={(s) => !s && onNoClick}>
             <DialogContent>
-                <DialogContentText id="yes-no-dialog-description">
-                    {text}
-                </DialogContentText>
+                <DialogHeader>
+                    <DialogTitle>{title}</DialogTitle>
+                    <DialogDescription id="yes-no-dialog-description">{text}</DialogDescription>
+                </DialogHeader>
+
+                <DialogFooter>
+                    <Button onClick={onNoClick}>{captionNo ?? t("cancel")}</Button>
+                    <Button onClick={onYesClick}>{captionYes ?? t("yes")}</Button>
+                </DialogFooter>
             </DialogContent>
-            <DialogActions>
-                <Button onClick={onNoClick}>{captionNo ?? t("cancel")}</Button>
-                <Button onClick={onYesClick}>{captionYes ?? t("yes")}</Button>
-            </DialogActions>
+
         </Dialog>
     );
 };

@@ -1,7 +1,8 @@
-import {Box, Button, IconButton, TextField} from "@mui/material";
-import {Add, Refresh} from "@mui/icons-material";
 import {useAuth} from "../auth/useAuth.ts";
 import {Role} from "../auth/Auth.tsx";
+import {Button} from "../components/ui/button.tsx";
+import {IoMdAddCircleOutline, IoMdRefresh} from "react-icons/io";
+import {Input} from "../components/ui/input.tsx";
 
 interface TableHeaderControlsProps {
     createCaption?: string;
@@ -16,20 +17,20 @@ export default function TableHeaderControls({ createCaption, role, onCreateClick
     const auth = useAuth();
 
     return (
-        <Box display="flex" flexDirection="row" marginBottom={2}>
+        <div style={{display: "flex", flexDirection: "row", marginBottom: 2}} >
             {(role === undefined || auth.roles.includes(role)) && onCreateClicked &&
-                <Button variant="outlined"
-                        onClick={onCreateClicked}
-                        size="small"
-                        startIcon={<Add />}>
+                <Button variant="outline" onClick={onCreateClicked} size="sm">
+                    <IoMdAddCircleOutline/>
                     {createCaption}
                 </Button>
             }
-            <Box flexGrow={1} />
+
+            <div style={{flexGrow: 1}} />
+
             {onFilterChanged &&
-                <TextField size="small" onChange={e => {onFilterChanged(e.target.value)}} />
+                <Input onChange={e => {onFilterChanged(e.target.value)}} />
             }
-            <IconButton aria-label="refresh" onClick={onRefresh}><Refresh /></IconButton>
-        </Box>
+            <Button size="icon" aria-label="refresh" onClick={onRefresh}><IoMdRefresh/></Button>
+        </div>
     );
 }

@@ -1,11 +1,4 @@
 import {useTranslation} from "react-i18next";
-import {Box, Paper} from "@mui/material";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import TableBody from "@mui/material/TableBody";
-import TableContainer from "@mui/material/TableContainer";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../../RestClient.ts";
@@ -16,6 +9,7 @@ import CollapsablePurlMapTableRow from "./CollapsablePurlMapTableRow.tsx";
 import CreatePurlMapDialog from "./CreatePurlMapDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "../../../components/ui/table.tsx";
 
 export default function PurlMapTab() {
 
@@ -66,35 +60,34 @@ export default function PurlMapTab() {
     }, [refresh]);
 
     return (
-        <Box>
+        <>
             <TableHeaderControls createCaption={t("create-purl-mapping")}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
                                  role={Role.LICENSE_PURL_MAP_CREATE}
             />
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 900 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell width={"50%"}>{t("purl-match")}</TableCell>
-                            <TableCell width={"50%"}>{t("spdx-id")}</TableCell>
-                        </TableRow>
-                    </TableHead>
 
-                    <TableBody>
-                        {rows
-                            .filter(r => ("" === filter || r.purlMatch.toLowerCase().includes(filter)))
-                            .map((row) => (
-                                <CollapsablePurlMapTableRow key={row.id}
-                                                         purlMap={row}
-                                                         onDeleteRequest={(id) => handleDeleteRequest(id)}
-                                />
-                            ))
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Table style={{ minWidth: 900 }} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell width={"50%"}>{t("purl-match")}</TableCell>
+                        <TableCell width={"50%"}>{t("spdx-id")}</TableCell>
+                    </TableRow>
+                </TableHead>
+
+                <TableBody>
+                    {rows
+                        .filter(r => ("" === filter || r.purlMatch.toLowerCase().includes(filter)))
+                        .map((row) => (
+                            <CollapsablePurlMapTableRow key={row.id}
+                                                     purlMap={row}
+                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
+                            />
+                        ))
+                    }
+                </TableBody>
+            </Table>
 
             <CreatePurlMapDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-purl-mapping")}
@@ -103,6 +96,6 @@ export default function PurlMapTab() {
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}
             />
-        </Box>
+        </>
     );
 }

@@ -1,5 +1,4 @@
 import * as React from "react";
-import {Box, Typography} from "@mui/material";
 
 interface FieldsetProps {
     label?: string;
@@ -16,30 +15,31 @@ interface FieldsetProps {
 
 export const Fieldset = ({ label, children, ...props }: FieldsetProps) => {
     return (
-        <Box component="fieldset" {...props}
-             sx={{
+        <fieldset {...props}
+             style={{
                  borderColor: "rgba(255, 255, 255, 0.3)",
                  borderRadius: 1,
                  borderWidth: 1,
                  margin: "-9px 0 0 0",
-                 "&:hover": {
-                     borderColor: "white"
+                 /*
+                 '&:hover': {
+                     borderColor: "white",
                  },
                  "&:focus-within": {
                      borderColor: "#90caf9",
                      borderWidth: 2,
                  }
+                 */
              }}
         >
-            {label && (<Typography
-                component="legend"
-                sx={{
+            {label && (<legend
+                style={{
                     color: "rgba(255, 255, 255, 0.7)",
                     fontSize: '0.75rem',
                 }}>
                 {label}
-            </Typography>)}
+            </legend>)}
             {children}
-        </Box>
+        </fieldset>
     );
 };

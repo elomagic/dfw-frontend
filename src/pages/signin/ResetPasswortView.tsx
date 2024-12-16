@@ -1,12 +1,14 @@
-import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typography} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {FormEvent, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useAuth} from "../../auth/useAuth.ts";
-import MuiCard from "@mui/material/Card";
+import {Button} from "../../components/ui/button.tsx";
+import {Input} from "../../components/ui/input.tsx";
+import {Label} from "../../components/ui/label.tsx";
 
+/*
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -48,7 +50,7 @@ const ResetPasswordContainer = styled(Stack)(({ theme }) => ({
         }),
     },
 }));
-
+*/
 export default function ResetPasswortView() {
 
     const { t } = useTranslation();
@@ -104,110 +106,75 @@ export default function ResetPasswortView() {
     }, [searchParams]);
 
     return (
-        <ResetPasswordContainer direction="column" justifyContent="space-between">
-            <Card variant="outlined">
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+            <div>
 
-                <Typography
-                    component="h2"
-                    variant="h4"
-                    sx={{ width: '100%', fontSize: 'unset' }}
-                >
-                    {t("app.title")}
-                </Typography>
+                <h2>{t("app.title")}</h2>
 
-                <Typography
-                    component="h1"
-                    variant="h4"
-                    sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
-                >
-                    {t("reset-password")}
-                </Typography>
+                <h1>{t("reset-password")}</h1>
 
-                <Box
-                    component="form"
-                    onSubmit={handleSubmit}
-                    noValidate
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        gap: 2,
-                    }}
-                >
-                    <input
-                        type="hidden"
-                        id="resetToken"
-                        name="resetToken"
-                        defaultValue={token}
-                    />
-
-                    <FormControl>
-                        <FormLabel htmlFor="mailAddress">{t("email")}</FormLabel>
-                        <TextField
-                            error={emailErrorMessage !== undefined}
-                            helperText={emailErrorMessage}
-                            id="mailAddress"
-                            type="email"
-                            name="mailAddress"
-                            placeholder="your@email.com"
-                            autoComplete="email"
-                            autoFocus
-                            required
-                            fullWidth
-                            variant="outlined"
-                            color={emailErrorMessage ? 'primary' : 'error'}
-                            sx={{ ariaLabel: 'mailAddress' }}
+                <form onSubmit={handleSubmit}>
+                    <div className="flex flex-col gap-6">
+                        <Input
+                            type="hidden"
+                            id="resetToken"
+                            name="resetToken"
+                            defaultValue={token}
                         />
-                    </FormControl>
 
-                    <FormControl>
-                        <FormLabel htmlFor="newPassword">{t("password")}</FormLabel>
-                        <TextField
-                            error={passwordErrorMessage !== undefined}
-                            helperText={passwordErrorMessage}
-                            name="newPassword"
-                            placeholder="••••••"
-                            type="password"
-                            id="newPassword"
-                            autoComplete="current-password"
-                            autoFocus
-                            required
-                            fullWidth
-                            variant="outlined"
-                            color={passwordErrorMessage ? 'primary' : 'error'}
-                            sx={{ ariaLabel: 'password' }}
-                        />
-                    </FormControl>
+                        <div className="grid gap-2">
+                            <Label htmlFor="mailAddress">{t("email")}</Label>
+                            <Input
+                                id="mailAddress"
+                                name="mailAddress"
+                                type="email"
+                                placeholder="your@email.com"
+                                autoComplete="email"
+                                autoFocus
+                                required
+                                color={emailErrorMessage === undefined ? 'primary' : 'error'}
+                                style={{width: "100%"}}
+                            />
+                            {emailErrorMessage && <span className="text-red-500">{emailErrorMessage}</span>}
+                        </div>
 
-                    <FormControl>
-                        <FormLabel htmlFor="validatePassword">{t("password-validation")}</FormLabel>
-                        <TextField
-                            error={passwordErrorMessage !== undefined}
-                            helperText={passwordErrorMessage}
-                            name="validatePassword"
-                            placeholder="••••••"
-                            type="password"
-                            id="validatePassword"
-                            autoComplete="current-password"
-                            autoFocus
-                            required
-                            fullWidth
-                            variant="outlined"
-                            color={passwordErrorMessage ? 'primary' : 'error'}
-                            sx={{ ariaLabel: 'password' }}
-                        />
-                    </FormControl>
+                        <div className="grid gap-2">
+                            <Label htmlFor="newPassword">{t("password")}</Label>
+                            <Input
+                                id="newPassword"
+                                name="newPassword"
+                                type="password"
+                                placeholder="••••••"
+                                autoComplete="current-password"
+                                required
+                                color={passwordErrorMessage === undefined ? 'primary' : 'error'}
+                                style={{width: "100%"}}
+                            />
+                            {passwordErrorMessage && <span className="text-red-500">{passwordErrorMessage}</span>}
+                        </div>
 
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        onClick={validateInputs}
-                    >
-                        {t("reset-password")}
-                    </Button>
-                </Box>
-            </Card>
-        </ResetPasswordContainer>
+                        <div className="grid gap-2">
+                            <Label htmlFor="validatePassword">{t("password-validation")}</Label>
+                            <Input
+                                id="validatePassword"
+                                name="validatePassword"
+                                type="password"
+                                placeholder="••••••"
+                                autoComplete="current-password"
+                                required
+                                color={passwordErrorMessage === undefined ? 'primary' : 'error'}
+                                style={{width: "100%"}}
+                            />
+                            {passwordErrorMessage && <span className="text-red-500">{passwordErrorMessage}</span>}
+                        </div>
+
+                        <Button type="submit" style={{width: "100%"}} onClick={validateInputs}>
+                            {t("reset-password")}
+                        </Button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     );
 }

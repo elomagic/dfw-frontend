@@ -1,13 +1,18 @@
 import {useTranslation} from "react-i18next";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
 import {ReactNode, useEffect, useState} from "react";
-import {Checkbox, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {ItemId} from "../DTOs.ts";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
+} from "../components/ui/dialog.tsx";
+import {Button} from "../components/ui/button.tsx";
+import {ScrollArea} from "../components/ui/scroll-area.tsx";
+import {Label} from "../components/ui/label.tsx";
+import {Checkbox} from "../components/ui/checkbox.tsx";
 
 interface SelectItemDialogProps<T> {
     value: ItemId<T>[];
@@ -45,56 +50,30 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
     }, [value]);
 
     return (
-        <Dialog
-            open={open}
-            onClose={() => handleClose(true, resolveCheckedItems(selectables, checked))}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
-        >
-            <DialogTitle>{t("select-items-dialog-title")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
-                <DialogContentText>
-                    {t("select-items-dialog-description")}
-                </DialogContentText>
+        <Dialog open={open} onOpenChange={(s) => !s && handleClose(true, resolveCheckedItems(selectables, checked))}>
 
-                <List sx={{
-                    width: '100%', height: 400, margin: '6px 0 6px 0',
-                    border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px', padding: '8px 14px',
-                    overflow: "auto"
-                }}>
-                    {selectables.map((item) => {
-                        const labelId = `list-item-${value}-label`;
+            <DialogContent style={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+                <DialogHeader>
+                    <DialogTitle>{t("select-items-dialog-title")}</DialogTitle>
+                    <DialogDescription>{t("select-items-dialog-description")}</DialogDescription>
+                </DialogHeader>
 
-                        return (
-                            <ListItemButton
-                                key={item._itemId}
-                                role="listitem"
-                                sx={{ p: 0 }}
-                                onClick={() => handleToggleItem(item)}
-                            >
-                                <ListItemIcon>
-                                    <Checkbox
-                                        checked={checked.includes(item._itemId)}
-                                        tabIndex={-1}
-                                        disableRipple
-                                        inputProps={{
-                                            'aria-labelledby': labelId,
-                                        }}
-                                    />
-                                </ListItemIcon>
-                                <ListItemText  id={labelId} primary={getItemLabel(item)}/>
-                            </ListItemButton>
-                        );
-                    })}
-                </List>
+                <ScrollArea style={{ height: "400px", width: "100%" }}>
+                    {selectables.map((item) => (
+                        <div>
+                            <Checkbox id={item._itemId} checked={checked.includes(item._itemId)} onCheckedChange={() => handleToggleItem(item)}/>
+                            <Label htmlFor={item._itemId}>{getItemLabel(item)}</Label>
+                        </div>
+                    ))}
+                </ScrollArea>
+
+                <DialogFooter>
+                    <Button variant="outline" onClick={() => handleClose(true, resolveCheckedItems(selectables, checked))}>{t("cancel")}</Button>
+                    <Button onClick={() => handleClose(false, resolveCheckedItems(selectables, checked))}>
+                        {t("ok")}
+                    </Button>
+                </DialogFooter>
             </DialogContent>
-            <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(true, resolveCheckedItems(selectables, checked))}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={() => handleClose(false, resolveCheckedItems(selectables, checked))}>
-                    {t("ok")}
-                </Button>
-            </DialogActions>
         </Dialog>
     );
 }

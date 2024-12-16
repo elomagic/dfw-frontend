@@ -1,10 +1,11 @@
 import {MouseEventHandler} from "react";
-import {Box, Button} from "@mui/material";
-import {DeleteForever, Save} from "@mui/icons-material";
-import Grid from "@mui/material/Grid2";
 import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../auth/useAuth.ts";
+import {Button} from "../components/ui/button.tsx";
+import {MdDeleteForever} from "react-icons/md";
+import {FaSave} from "react-icons/fa";
+import {GridItem} from "../components/Grids.tsx";
 
 interface FormButtonSaveProps {
     labelLeftButton?: string;
@@ -38,28 +39,21 @@ export default function FormButtons({labelLeftButton, labelRightButton, startIco
     return (
         <>
             {isVisible() &&
-            <Grid size={12} display="flex" flexDirection="row">
+            <GridItem size={12} style={{ display: "flex", flexDirection: "row"}}>
                 {(roleLeftButton === undefined || auth.roles.includes(roleLeftButton)) && onSaveClick &&
-                    <Button variant="contained"
-                            onClick={onSaveClick}
-                            size="small"
-                            startIcon={startIcon ?? <Save />}>
-                        {labelLeftButton ?? t("save")}
+                    <Button onClick={onSaveClick} size="sm">
+                        {startIcon ?? <FaSave/>}{labelLeftButton ?? t("save")}
                     </Button>
                 }
 
-                <Box flexGrow={1} />
+                <div style={{ flexGrow: 1 }} />
 
                 {(roleRightButton === undefined || auth.roles.includes(roleRightButton)) && onDeleteClick &&
-                    <Button variant="contained"
-                            color="error"
-                            onClick={onDeleteClick}
-                            size="small"
-                            startIcon={startIcon ?? <DeleteForever />}>
-                        {labelRightButton ?? t("delete")}
+                    <Button color="error" onClick={onDeleteClick} size="sm">
+                        <MdDeleteForever/> {labelRightButton ?? t("delete")}
                     </Button>
                 }
-            </Grid>
+            </GridItem>
             }
         </>
     );

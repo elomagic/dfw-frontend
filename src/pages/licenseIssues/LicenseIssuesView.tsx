@@ -1,4 +1,3 @@
-import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useCallback, useEffect, useState} from "react";
 import {LicenseViolation} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
@@ -8,6 +7,8 @@ import YesNoDialog from "../../components/YesNoDialog.tsx";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import {toaster} from "../../Toaster.ts";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "../../components/ui/table.tsx";
+import {ContentTile} from "../../components/ContentTile.tsx";
 
 export default function LicenseIssuesView() {
 
@@ -47,32 +48,31 @@ export default function LicenseIssuesView() {
     }, [refresh]);
 
     return (
-        <Box margin={3}>
+        <ContentTile>
             <TableHeaderControls onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
             />
-            <TableContainer component={Paper}>
-                <Table aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{t("purl")}</TableCell>
-                            <TableCell>{t("licenses")}</TableCell>
-                        </TableRow>
-                    </TableHead>
 
-                    <TableBody>
-                        {rows
-                            .filter(r => ("" === filter || r.purl.toLowerCase().includes(filter)))
-                            .map((row) => (
-                                <CollapsableTableRow key={row.id}
-                                                     licenseViolation={row}
-                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
-                                />
-                            ))
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Table aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>{t("purl")}</TableCell>
+                        <TableCell>{t("licenses")}</TableCell>
+                    </TableRow>
+                </TableHead>
+
+                <TableBody>
+                    {rows
+                        .filter(r => ("" === filter || r.purl.toLowerCase().includes(filter)))
+                        .map((row) => (
+                            <CollapsableTableRow key={row.id}
+                                                 licenseViolation={row}
+                                                 onDeleteRequest={(id) => handleDeleteRequest(id)}
+                            />
+                        ))
+                    }
+                </TableBody>
+            </Table>
 
             <YesNoDialog title={t("delete-repository")}
                          text={t("Do ya really want to delete the issue with PURL {{purl}}", { purl: selectedEntity?.purl})}
@@ -80,6 +80,6 @@ export default function LicenseIssuesView() {
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}
             />
-        </Box>
+        </ContentTile>
     );
 }

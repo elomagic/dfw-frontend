@@ -1,6 +1,5 @@
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
-import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../../Validators.ts";
 import {UserAccount} from "../../../DTOs.ts";
 import FormButtons from "../../../components/FormButtons.tsx";
@@ -8,6 +7,7 @@ import FormTextField from "../../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../../components/FormCheckBox.tsx";
 import {FormSelect} from "../../../components/FormSelect.tsx";
 import {Role} from "../../../auth/Auth.tsx";
+import {Grid} from "../../../components/Grids.tsx";
 
 interface EditableTableRowProps {
     user: UserAccount
@@ -37,7 +37,7 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
     };
 
     return (
-        <Grid container spacing={2} marginTop={2} marginBottom={2}>
+        <Grid>
             <FormTextField id="mailAddress"
                                  value={mailAddress}
                                  label={t("mailAddress")}
@@ -59,13 +59,13 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
             <FormCheckbox id="enabled"
                           value={enabled}
                           label={t("enabled")}
-                          onChange={e => setEnabled(e.target.checked)}
+                          onChange={e => setEnabled(e)}
                           gridSize={6}
             />
             <FormCheckbox id="changePassword"
                           value={changePassword}
                           label={t("changePassword")}
-                          onChange={e => setChangePassword(e.target.checked)}
+                          onChange={e => setChangePassword(e)}
                           gridSize={6}
             />
 
@@ -76,7 +76,7 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
                             { "key": "en", "label": t("english") },
                             { "key": "de", "label": t("german") },
                         ]}
-                        onChange={(e) => setLanguage(e.target.value as string)}
+                        onChange={(e) => setLanguage(e)}
                         gridSize={6}
             />
 

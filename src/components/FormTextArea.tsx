@@ -1,51 +1,39 @@
-import {OutlinedInputProps} from "@mui/material/OutlinedInput";
-import Grid from "@mui/material/Grid2";
-import {FormControl, TextField} from "@mui/material";
-import {GridSize} from "@mui/material/Grid2/Grid2";
+import {GridItem, GridSize} from "../components/Grids.tsx";
+import {FormItem} from "../components/FormItem.tsx";
+import {Textarea} from "../components/ui/textarea.tsx";
+import {ChangeEventHandler} from "react";
 
 interface FormTextAreaProps {
     id: string;
-    minRows?: number | string;
-    maxRows?: number | string;
+    minRows?: number;
     value: string | undefined;
     errorMessage?: string;
     label: string;
     required?: boolean;
     autoFocus?: boolean;
-    onChange?: OutlinedInputProps['onChange'];
+    onChange?: ChangeEventHandler<HTMLTextAreaElement>;
     gridSize?: GridSize;
     readOnly?: boolean;
 }
 
-function UnwrappedTextArea({id, value, errorMessage, minRows, maxRows, onChange, label, required, autoFocus, readOnly}: Readonly<FormTextAreaProps>) {
+function UnwrappedTextArea({id, value, errorMessage, minRows, onChange, label, required, autoFocus, readOnly}: Readonly<FormTextAreaProps>) {
 
     return (
-        <FormControl fullWidth>
-            <TextField
+        <FormItem htmlFor={id} label={label} errorMessage={errorMessage}>
+            <Textarea
                 id={id}
                 name={id}
-                type={"text"}
                 value={value}
-                label={label}
                 onChange={onChange}
-                fullWidth
+                style={{ height: "100%" }}
                 required={required}
                 autoFocus={autoFocus}
-                variant="outlined"
-                error={errorMessage != undefined}
-                helperText={errorMessage}
-                multiline
                 rows={minRows}
-                maxRows={maxRows}
                 color={errorMessage == undefined ? 'primary' : 'error'}
-                sx={{ ariaLabel: {label}}}
-                slotProps={{
-                    input: {
-                        readOnly: readOnly
-                    }
-                }}
+                aria-label={label}
+                readOnly={readOnly}
             />
-        </FormControl>
+        </FormItem>
     );
 }
 
@@ -64,25 +52,24 @@ function UnwrappedTextArea({id, value, errorMessage, minRows, maxRows, onChange,
  * @param readOnly
  * @constructor
  */
-export default function FormTextArea({id, value, errorMessage, minRows, maxRows, onChange, label, required, autoFocus, gridSize, readOnly}: Readonly<FormTextAreaProps>) {
+export default function FormTextArea({id, value, errorMessage, minRows, onChange, label, required, autoFocus, gridSize, readOnly}: Readonly<FormTextAreaProps>) {
 
     return (
         <>
             { gridSize && (
-                <Grid size={gridSize}>
+                <GridItem size={gridSize}>
                     <UnwrappedTextArea
                         id={id}
                         value={value}
                         label={label}
                         minRows={minRows}
-                        maxRows={maxRows}
                         readOnly={readOnly}
                         autoFocus={autoFocus}
                         required={required}
                         errorMessage={errorMessage}
                         onChange={onChange}
                     />
-                </Grid>
+                </GridItem>
             )}
             { !gridSize && (
                 <UnwrappedTextArea
@@ -90,7 +77,6 @@ export default function FormTextArea({id, value, errorMessage, minRows, maxRows,
                     value={value}
                     label={label}
                     minRows={minRows}
-                    maxRows={maxRows}
                     readOnly={readOnly}
                     autoFocus={autoFocus}
                     required={required}

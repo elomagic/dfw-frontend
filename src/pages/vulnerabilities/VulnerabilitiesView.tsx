@@ -1,13 +1,13 @@
-import {Box} from "@mui/material";
 import {useTranslation} from "react-i18next";
+import {ContentTile} from "../../components/ContentTile.tsx";
 
 export default function VulnerabilitiesView() {
 
     const { t } = useTranslation();
 
     return (
-        <Box margin={3}>
+        <ContentTile>
             {t("VulnerabilitiesView")}
-        </Box>
+        </ContentTile>
     );
 }

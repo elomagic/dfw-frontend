@@ -1,13 +1,15 @@
 import {FormEvent, useState} from "react";
-import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typography} from "@mui/material";
-// import { useNavigate } from "react-router-dom"
-import MuiCard from '@mui/material/Card';
-import Link from "@mui/material/Link";
 import ForgotPasswordDialog from "./ForgotPasswordDialog.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import {toaster} from "../../Toaster.ts";
+import {Button} from "../../components/ui/button.tsx";
+import {Label} from "../../components/ui/label.tsx";
+import { Input } from "../../components/ui/input.tsx";
+import {FormItem} from "../../components/FormItem.tsx";
+import {Card} from "../../components/ui/card.tsx";
 
+/*
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -49,6 +51,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
         }),
     },
 }));
+*/
 
 export default function SignInView() {
 
@@ -97,96 +100,76 @@ export default function SignInView() {
     };
 
     return (
-        <SignInContainer direction="column" justifyContent="space-between">
-            <Card variant="outlined">
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            minHeight: '100%',
+            height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
+            // backgroundImage: 'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
+            backgroundImage: 'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
+            backgroundRepeat: 'no-repeat',
+        }}>
+            <Card className="w-[350px]" style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignSelf: 'center',
+                width: '100%',
+                margin: 'auto',
+                maxWidth: '450px',
+                padding: '1rem',
+                gap: '1rem',
+                boxShadow: 'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
+            }}>
+                <h2 className="text-2xl">{t("app.title")}</h2>
 
-                <Typography
-                    component="h2"
-                    variant="h4"
-                    sx={{ width: '100%', fontSize: 'unset' }}
-                >
-                    {t("app.title")}
-                </Typography>
+                <h1 className="text-3xl">{t("sign-in")}</h1>
 
-                <Typography
-                    component="h1"
-                    variant="h4"
-                    sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
-                >
-                    {t("sign-in")}
-                </Typography>
-
-                <Box
-                    component="form"
-                    onSubmit={handleSubmit}
-                    noValidate
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        gap: 2,
-                    }}
-                >
-                    <FormControl>
-                        <FormLabel htmlFor="mailAddress">{t("email")}</FormLabel>
-                        <TextField
-                            error={emailErrorMessage !== undefined}
-                            helperText={emailErrorMessage}
+                <form onSubmit={handleSubmit}>
+                    <FormItem htmlFor="email" errorMessage={emailErrorMessage} label={t("email")}>
+                        <Input
                             id="mailAddress"
-                            type="email"
                             name="mailAddress"
+                            type="email"
                             placeholder="your@email.com"
                             autoComplete="email"
                             autoFocus
                             required
-                            fullWidth
-                            variant="outlined"
                             color={emailErrorMessage === undefined ? 'primary' : 'error'}
-                            sx={{ ariaLabel: 'mailAddress' }}
+                            style={{width: "100%"}}
                         />
-                    </FormControl>
+                    </FormItem>
 
-                    <FormControl>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <FormLabel htmlFor="password">{t("password")}</FormLabel>
-                            <Link
-                                component="button"
-                                type="button"
-                                onClick={handleClickOpen}
-                                variant="body2"
-                                sx={{ alignSelf: 'baseline' }}
-                            >
+                    <div className="grid gap-2">
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <Label htmlFor="password">{t("password")}</Label>
+                            <Button variant="link" onClick={handleClickOpen}>
                                 Forgot your password?
-                            </Link>
-                        </Box>
-                        <TextField
-                            error={passwordErrorMessage !== undefined}
-                            helperText={passwordErrorMessage}
-                            name="password"
-                            placeholder="••••••"
-                            type="password"
+                            </Button>
+                        </div>
+                        <Input
                             id="password"
+                            name="password"
+                            type="password"
+                            placeholder="••••••"
                             autoComplete="current-password"
-                            autoFocus
                             required
-                            fullWidth
-                            variant="outlined"
                             color={passwordErrorMessage === undefined ? 'primary' : 'error'}
+                            style={{width: "100%"}}
                         />
-                    </FormControl>
+                    </div>
 
-                    <ForgotPasswordDialog open={open} handleClose={handleClose} />
+                    <ForgotPasswordDialog open={open} handleClose={handleClose}/>
 
                     <Button
                         type="submit"
-                        fullWidth
-                        variant="contained"
+                        style={{width: "100%"}}
                         onClick={validateInputs}
                     >
                         {t("sign-in")}
                     </Button>
-                </Box>
+                </form>
             </Card>
-        </SignInContainer>
+        </div>
     );
 }

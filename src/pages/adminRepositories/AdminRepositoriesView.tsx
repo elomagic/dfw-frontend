@@ -1,10 +1,3 @@
-import {Box, Paper} from "@mui/material";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts"
 import {Configuration, Repository} from "../../DTOs.ts";
@@ -16,6 +9,8 @@ import CreateRepositoryDialog from "./CreateRepositoryDialog.tsx";
 import YesNoDialog from "../../components/YesNoDialog.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "../../components/ui/table.tsx";
+import {ContentTile} from "../../components/ContentTile.tsx";
 
 export default function AdminRepositoriesView() {
 
@@ -79,40 +74,39 @@ export default function AdminRepositoriesView() {
     }, [auth, t]);
 
     return (
-        <Box margin={3}>
+        <ContentTile>
             <TableHeaderControls createCaption={t("create-repository")}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
                                  role={Role.REPOSITORY_CREATE}
             />
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 900 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell width={"60px"}>{t("type")}</TableCell>
-                            <TableCell>{t("name")}</TableCell>
-                            <TableCell width={"60px"}>{t("enabled")}</TableCell>
-                            <TableCell>{t("description")}</TableCell>
-                            <TableCell>{t("external-url")}</TableCell>
-                            <TableCell>{t("internal-url")}</TableCell>
-                        </TableRow>
-                    </TableHead>
 
-                    <TableBody>
-                        {rows
-                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
-                            .map((row) => (
-                                <CollapsableTableRow key={row.name}
-                                                     repository={row}
-                                                     internalBaseUrl={internalBaseUrl}
-                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
-                                />
-                            ))
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Table style={{ minWidth: 900 }} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell width={"60px"}>{t("type")}</TableCell>
+                        <TableCell>{t("name")}</TableCell>
+                        <TableCell width={"60px"}>{t("enabled")}</TableCell>
+                        <TableCell>{t("description")}</TableCell>
+                        <TableCell>{t("external-url")}</TableCell>
+                        <TableCell>{t("internal-url")}</TableCell>
+                    </TableRow>
+                </TableHead>
+
+                <TableBody>
+                    {rows
+                        .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
+                        .map((row) => (
+                            <CollapsableTableRow key={row.name}
+                                                 repository={row}
+                                                 internalBaseUrl={internalBaseUrl}
+                                                 onDeleteRequest={(id) => handleDeleteRequest(id)}
+                            />
+                        ))
+                    }
+                </TableBody>
+            </Table>
 
             <CreateRepositoryDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-repository")}
@@ -121,6 +115,6 @@ export default function AdminRepositoriesView() {
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}
             />
-        </Box>
+        </ContentTile>
     );
 }

@@ -1,10 +1,9 @@
 import { CredentialData } from "../../DTOs.ts";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import {DeleteForever} from "@mui/icons-material";
-import {IconButton} from "@mui/material";
 import {useAuth} from "../../auth/useAuth.ts";
 import {Role} from "../../auth/Auth.tsx";
+import {TableCell, TableRow} from "../../components/ui/table.tsx";
+import {Button} from "../../components/ui/button.tsx";
+import {MdDeleteForever} from "react-icons/md";
 
 interface TableRowProps {
     credential: CredentialData;
@@ -16,13 +15,11 @@ export default function CredentialTableRow({ credential, onDeleteRequest }: Read
     const auth = useAuth();
 
     return (
-        <TableRow
-            sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
-        >
+        <TableRow>
             <TableCell>{credential.credentialId}</TableCell>
             <TableCell>{credential.mode}</TableCell>
             <TableCell>
-                {auth.roles.includes(Role.CREDENTIAL_DELETE) && <IconButton onClick={() => onDeleteRequest(credential)}><DeleteForever/></IconButton>}
+                {auth.roles.includes(Role.CREDENTIAL_DELETE) && <Button size="icon" onClick={() => onDeleteRequest(credential)}><MdDeleteForever/></Button>}
             </TableCell>
         </TableRow>
     );

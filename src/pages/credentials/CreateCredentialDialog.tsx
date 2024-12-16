@@ -1,10 +1,4 @@
 import {useState} from "react";
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
@@ -14,6 +8,15 @@ import {FormSelect} from "../../components/FormSelect.tsx";
 import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
 import FormTextField from "../../components/FormTextField.tsx";
 import {toaster} from "../../Toaster.ts";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
+} from "../../components/ui/dialog.tsx";
+import {Button} from "../../components/ui/button.tsx";
 
 interface CreateUserProps {
     open: boolean;
@@ -53,18 +56,12 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
     }
 
     return (
-        <Dialog
-            open={open}
-            onClose={() => handleClose(undefined)}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
-        >
-            <DialogTitle>{t("create-credential")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
-                <DialogContentText>
-                    Please enter credential details
-                </DialogContentText>
+        <Dialog open={open} onOpenChange={(s) => !s && handleClose(undefined)}>
+            <DialogContent style={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+                <DialogHeader>
+                    <DialogTitle>{t("create-credential")}</DialogTitle>
+                    <DialogDescription>Please enter credential details</DialogDescription>
+                </DialogHeader>
 
                 <FormTextField id="credentialId"
                                      value={credentialId}
@@ -85,7 +82,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                                 { "key": "BASIC", "label": "BASIC Authentication" },
                                 { "key": "BEARER", "label": "BEARER Token" },
                             ]}
-                            onChange={(e) => setMode(e.target.value as AuthenticationMode)}
+                            onChange={(e) => setMode(e as AuthenticationMode)}
                 />
 
                 {mode == "BASIC" && (
@@ -111,13 +108,14 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                                          label={t("passphrase")}
                     />
                 )}
+
+                <DialogFooter>
+                    <Button variant="outline" onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
+                    <Button onClick={handleCreateClick}>
+                        {t("create")}
+                    </Button>
+                </DialogFooter>
             </DialogContent>
-            <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
-            </DialogActions>
         </Dialog>
     );
 }

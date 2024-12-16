@@ -1,15 +1,19 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
+} from '../../components/ui/dialog.tsx';
+import {Button} from "../../components/ui/button.tsx";
+import {Input} from "../../components/ui/input.tsx";
+import {Label} from "../../components/ui/label.tsx";
 
 interface ForgotPasswordProps {
     open: boolean;
@@ -30,42 +34,40 @@ export default function ForgotPasswordDialog({ open, handleClose }: Readonly<For
     }
 
     return (
-        <Dialog
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-                component: 'form',
-                onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+        <Dialog open={open} onOpenChange={(s) => !s && handleClose}>
+            <DialogContent style={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+
+                <DialogHeader>
+                    <DialogTitle>{t("reset-password")}</DialogTitle>
+                    <DialogDescription>{t("dialog.forgot-password.text")}</DialogDescription>
+                </DialogHeader>
+
+                <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
                     event.preventDefault();
                     resetPassword(new FormData(event.currentTarget));
                     // TODO Mail successful send);
 
                     handleClose();
-                },
-                sx: { backgroundImage: 'none' },
-            }}
-        >
-            <DialogTitle>{t("reset-password")}</DialogTitle>
-            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
-                <DialogContentText>{t("dialog.forgot-password.text")}</DialogContentText>
-                <OutlinedInput
-                    autoFocus
-                    required
-                    margin="dense"
-                    id="mailAddress"
-                    name="mailAddress"
-                    label={t("emailAddress")}
-                    placeholder={t("emailAddress")}
-                    type="email"
-                    fullWidth
-                />
+                }}>
+                    <Label htmlFor="mailAddress">{t("emailAddress")}</Label>
+                    <Input
+                        autoFocus
+                        required
+                        id="mailAddress"
+                        name="mailAddress"
+                        placeholder={t("emailAddress")}
+                        type="email"
+                        style={{ width: "100%" }}
+                    />
+
+                    <DialogFooter>
+                        <Button variant="outline" onClick={handleClose}>{t("cancel")}</Button>
+                        <Button type="submit">
+                            {t("continue")}
+                        </Button>
+                    </DialogFooter>
+                </form>
             </DialogContent>
-            <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={handleClose}>{t("cancel")}</Button>
-                <Button variant="contained" type="submit">
-                    {t("continue")}
-                </Button>
-            </DialogActions>
         </Dialog>
     );
 }

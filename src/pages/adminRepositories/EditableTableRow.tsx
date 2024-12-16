@@ -1,12 +1,9 @@
 import {CredentialData, Repository, UserAccountGroup} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
-import {InputAdornment} from "@mui/material";
-import Grid from "@mui/material/Grid2";
 import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
 import * as Rest from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
-import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
@@ -14,6 +11,7 @@ import {FormSelect, KeyLabelItem} from "../../components/FormSelect.tsx";
 import FormSelectList from "../../components/FormSelectList.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
+import {Grid} from "../../components/Grids.tsx";
 
 interface EditableTableRowProps {
     repository: Repository
@@ -77,7 +75,7 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
     }, [auth, t]);
 
     return (
-        <Grid container spacing={2} marginTop={2} marginBottom={2}>
+        <Grid>
             <FormTextField id="name"
                            value={name}
                            errorMessage={nameErrorMessage}
@@ -113,7 +111,7 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                         value={credentialId}
                         label={t("credentialId")}
                         items={credentialsIds}
-                        onChange={(e) => setCredentialId(e.target.value as string)}
+                        onChange={(e) => setCredentialId(e)}
                         gridSize={6}
             />
 
@@ -122,23 +120,25 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                            label={t("type")}
                            gridSize={6}
                            readOnly
+                           /*
                            startAdornment={(
                                <InputAdornment position="start">
                                    <RepositoryTypeIcon type={repository.type} />
                                </InputAdornment>
                            )}
+                           */
             />
             <FormCheckbox id="forwardHeaders"
                           value={forwardHeaders}
                           label={t("forwardHeaders")}
-                          onChange={e => setForwardHeaders(e.target.checked)}
+                          onChange={e => setForwardHeaders(e)}
                           gridSize={6}
             />
 
             <FormCheckbox id="enabled"
                           value={enabled}
                           label={t("enabled")}
-                          onChange={e => setEnabled(e.target.checked)}
+                          onChange={e => setEnabled(e)}
                           gridSize={12}
             />
 

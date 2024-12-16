@@ -1,15 +1,18 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import {UserAccountApiKey} from "../../DTOs.ts";
 import FormTextField from "../../components/FormTextField.tsx";
 import { v4 as uuidv4 } from 'uuid';
 import {validateRequiredText} from "../../Validators.ts";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
+} from "../../components/ui/dialog.tsx";
+import {Button} from "../../components/ui/button.tsx";
 
 interface CreateApiKyProps {
     open: boolean;
@@ -45,17 +48,13 @@ export default function CreateApiKeyDialog({ open, handleClose }: Readonly<Creat
     }, [open]);
 
     return (
-        <Dialog
-            open={open}
-            PaperProps={{ sx: { width: "500px", backgroundImage: 'none' }}}
-        >
-            <DialogTitle>{t("create-api-key")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
-                <DialogContentText>
-                    Please enter usage for your new API Key
-                </DialogContentText>
+        <Dialog open={open}>
+            <DialogContent style={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+                <DialogHeader>
+                    <DialogTitle>{t("create-api-key")}</DialogTitle>
+                    <DialogDescription>Please enter usage for your new API Key</DialogDescription>
+                </DialogHeader>
+
                 <FormTextField
                     id="description"
                     type="text"
@@ -76,16 +75,15 @@ export default function CreateApiKeyDialog({ open, handleClose }: Readonly<Creat
                     label={t("api-key")}
                     readOnly
                 />
-                <DialogContentText>
-                    Copy the generated API Key and store it somewhere safe before you continue !!!
-                </DialogContentText>
+                <div>Copy the generated API Key and store it somewhere safe before you continue !!!</div>
+
+                <DialogFooter>
+                    <Button variant="outline" onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
+                    <Button onClick={handleCreateClick}>
+                        {t("create")}
+                    </Button>
+                </DialogFooter>
             </DialogContent>
-            <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
-            </DialogActions>
         </Dialog>
     );
 }

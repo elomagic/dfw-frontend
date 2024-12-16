@@ -1,9 +1,5 @@
-import TableCell from "@mui/material/TableCell";
-import {Check} from "@mui/icons-material";
-import TableRow from "@mui/material/TableRow";
 import {Repository} from "../../DTOs.ts";
 import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
-import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
 import {useTranslation} from "react-i18next";
@@ -11,6 +7,9 @@ import {useAuth} from "../../auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import {toaster} from "../../Toaster.ts";
+import {TableCell, TableRow} from "../../components/ui/table.tsx";
+import {Check} from "lucide-react";
+import {Collapsible, CollapsibleContent} from "../../components/ui/collapsible.tsx";
 
 interface CollapsableTableRowProps {
     repository: Repository;
@@ -35,10 +34,7 @@ export default function CollapsableTableRow({ repository, internalBaseUrl, onDel
 
     return (
         <>
-            <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
-                onClick={()=> setOpen(!open)}
-            >
+            <TableRow onClick={()=> setOpen(!open)}>
                 <TableCell><RepositoryTypeIcon type={data.type} /></TableCell>
                 <TableCell>{data.name}</TableCell>
                 <TableCell>{data.enabled ? <Check color="success" /> : ""}</TableCell>
@@ -48,11 +44,13 @@ export default function CollapsableTableRow({ repository, internalBaseUrl, onDel
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow repository={data}
-                                          onSaveClick={handleSaveClick}
-                                          onDeleteRequest={() => onDeleteRequest(data)} />
-                    </Collapse>
+                    <Collapsible open={open}>
+                        <CollapsibleContent>
+                            <EditableTableRow repository={data}
+                                              onSaveClick={handleSaveClick}
+                                              onDeleteRequest={() => onDeleteRequest(data)} />
+                        </CollapsibleContent>
+                    </Collapsible>
                 </TableCell>
             </TableRow>
         </>

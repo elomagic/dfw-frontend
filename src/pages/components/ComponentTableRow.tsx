@@ -1,7 +1,6 @@
 import {Component} from "../../DTOs.ts";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
+import {TableCell, TableRow} from "../../components/ui/table.tsx";
 
 interface TableRowProps {
     component: Component;
@@ -10,7 +9,7 @@ interface TableRowProps {
 export default function ComponentTableRow({component}: Readonly<TableRowProps>) {
 
     return (
-        <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}, backgroundColor: "#292929"}}>
+        <TableRow>
             <TableCell><RepositoryTypeIcon type={component.type} /></TableCell>
             <TableCell>{component.purl}</TableCell>
             <TableCell>{component.namespace}</TableCell>

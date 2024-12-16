@@ -1,7 +1,4 @@
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import {LicensePurlMap} from "../../../DTOs.ts";
-import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
 import * as Rest from "../../../RestClient.ts";
@@ -9,6 +6,8 @@ import {RestEndpoint} from "../../../RestClient.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {toaster} from "../../../Toaster.ts";
+import {TableCell, TableRow} from "../../../components/ui/table.tsx";
+import {Collapsible, CollapsibleContent} from "../../../components/ui/collapsible.tsx";
 
 interface CollapsablePurlMapTableRowProps {
     purlMap: LicensePurlMap
@@ -32,20 +31,19 @@ export default function CollapsablePurlMapTableRow({ purlMap, onDeleteRequest }:
 
     return (
         <>
-            <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
-                onClick={()=> setOpen(!open)}
-            >
+            <TableRow onClick={()=> setOpen(!open)}>
                 <TableCell>{data.purlMatch}</TableCell>
                 <TableCell>{data.spdxId}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow purlMap={data}
-                                          onSaveClick={handleSaveClick}
-                                          onDeleteRequest={() => onDeleteRequest(data)} />
-                    </Collapse>
+                    <Collapsible open={open}>
+                        <CollapsibleContent>
+                            <EditableTableRow purlMap={data}
+                                              onSaveClick={handleSaveClick}
+                                              onDeleteRequest={() => onDeleteRequest(data)} />
+                        </CollapsibleContent>
+                    </Collapsible>
                 </TableCell>
             </TableRow>
         </>

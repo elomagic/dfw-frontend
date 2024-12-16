@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import dayjs from "dayjs";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {ImageListItem, ListItemText, MenuItem} from "@mui/material";
 import './LanguageSelector.css';
 import {useState} from "react";
 import {toaster} from "./Toaster.ts";
+import {Select, SelectContent, SelectItem} from "./components/ui/select.tsx";
 // TODO require('dayjs/locale/de')
 
 export default function LanguageSelector() {
@@ -18,8 +17,7 @@ export default function LanguageSelector() {
 
     const { i18n } = useTranslation();
 
-    const handleChange = (event: SelectChangeEvent) => {
-        const l = event.target.value
+    const handleChange = (l: string) => {
         setLanguage(l);
         dayjs.locale(l)
 
@@ -31,25 +29,13 @@ export default function LanguageSelector() {
 
     return (
         <Select
-            className="LanguageSelector"
-            color="primary"
             value={language}
-            variant={"outlined"}
-            onChange={handleChange}
+            onValueChange={handleChange}
         >
-            <MenuItem value="en" className="LanguageSelector Item">
-                <ImageListItem>
-                    <img src="flag-us.svg" style={{height: "unset", width: "unset"}} alt='us'/>
-                </ImageListItem>
-                <ListItemText primary="en"/>
-            </MenuItem>
-            <MenuItem value="de" className="LanguageSelector Item">
-                <ImageListItem>
-                    <img src="flag-de.svg" style={{height: "unset", width: "unset"}} alt='de'/>
-                </ImageListItem>
-                <ListItemText primary="de"/>
-            </MenuItem>
-
+            <SelectContent>
+                <SelectItem value={"en"}><img src="flag-us.svg" style={{height: "unset", width: "unset"}} alt='us'/>EN</SelectItem>
+                <SelectItem value={"de"}><img src="flag-de.svg" style={{height: "unset", width: "unset"}} alt='de'/>DE</SelectItem>
+            </SelectContent>
         </Select>
     );
 

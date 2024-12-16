@@ -1,4 +1,3 @@
-import {Paper} from "@mui/material";
 import ReactEChartsCore from "echarts-for-react/lib/core";
 import * as echarts from "echarts/core";
 import {GridComponent, LegendComponent, TitleComponent, TooltipComponent} from "echarts/components";
@@ -73,7 +72,7 @@ export default function LicencesPie() {
     }, []);
 
     return (
-        <Paper>
+        <div>
             {option && <ReactEChartsCore
                 echarts={echarts}
                 option={option}
@@ -81,6 +80,6 @@ export default function LicencesPie() {
                 lazyUpdate={true}
                 theme={"dark"}
             />}
-        </Paper>
+        </div>
     );
 }

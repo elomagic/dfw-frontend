@@ -1,6 +1,5 @@
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
-import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../../Validators.ts";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
@@ -11,6 +10,7 @@ import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
 import FormTextArea from "../../../components/FormTextArea.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import { toaster } from "../../../Toaster.ts";
+import {Grid} from "../../../components/Grids.tsx";
 
 interface EditableTableRowProps {
     purlMap: LicensePurlMap
@@ -49,7 +49,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
     };
 
     return (
-        <Grid container spacing={2} marginTop={2} marginBottom={2}>
+        <Grid>
             <FormTextField id="purlMatch"
                                  value={purlMatch}
                                  errorMessage={purlErrorMessage}
@@ -67,7 +67,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
                         value={spdxId}
                         label={t("spdx-id")}
                         items={spdxList}
-                        onChange={(e) => setSpdxId(e.target.value as string)}
+                        onChange={(e) => setSpdxId(e)}
                         gridSize={6}
             />
 

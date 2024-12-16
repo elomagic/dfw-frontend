@@ -1,19 +1,14 @@
-import {
-    Button,
-    IconButton,
-    List,
-    ListItem,
-    ListItemText
-} from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import {Add, RemoveCircle} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
 import {ReactNode, useEffect, useState} from "react";
 import SelectItemDialog from "./SelectItemDialog.tsx";
-import {GridSize} from "@mui/material/Grid2/Grid2";
 import {ItemId} from "../DTOs.ts";
-import {Fieldset} from "./Fieldset.tsx";
 import {useAuth} from "../auth/useAuth.ts";
+import {Button} from "../components/ui/button.tsx";
+import {IoMdAddCircleOutline} from "react-icons/io";
+import {MdDeleteForever} from "react-icons/md";
+import {GridItem, GridSize} from "../components/Grids.tsx";
+import {FormItem} from "../components/FormItem.tsx";
+import {ScrollArea} from "../components/ui/scroll-area.tsx";
 
 interface UnwrappedFormSelectListProps<T> {
     values: ItemId<T>[];
@@ -31,34 +26,28 @@ function UnwrappedFormSelectList<T>({ values, getItemLabel, label, editRole, onA
 
     return (
         <>
-            <Fieldset label={label}>
-                <List sx={{
-                    width: '100%', minHeight: '32px', height: 300, overflow: "auto", padding: 0
-                }}>
-                    {values
-                        .map((item) => (
-                            <ListItem key={item._itemId}
-                                      disablePadding
-                                      secondaryAction={
-                                          (editRole === undefined || auth.roles.includes(editRole)) &&
-                                              <IconButton edge="end" aria-label="remove">
-                                                  <RemoveCircle color="error" onClick={() => onDeleteClick(item)}/>
-                                              </IconButton>
-                                            }
-                            >
-                                <ListItemText id={item._itemId} primary={getItemLabel(item)} />
-                            </ListItem>)
-                        )}
-                </List>
+            <FormItem label={label}>
+                <ScrollArea style={{width: '100%', minHeight: '32px', height: 300, overflow: "auto", padding: 0 }}>
+                    {values.map((item) => (
+                        <div>
+                            <label>{getItemLabel(item)}</label>
+                            { (editRole === undefined || auth.roles.includes(editRole)) && <Button
+                                size="icon"
+                                aria-label="remove"
+                                color="error"
+                                onClick={() => onDeleteClick(item)}>
+                                    <MdDeleteForever />
+                            </Button>
+                            }
+                        </div>
+                    ))}
+                </ScrollArea>
 
-            </Fieldset>
+            </FormItem>
+
             { (editRole === undefined || auth.roles.includes(editRole)) &&
-                <Button variant="outlined"
-                        onClick={onAddClick}
-                        size="small"
-                        startIcon={<Add />}
-                        sx={{ mt: "8px", mb: "8px" }}
-                >
+                <Button variant="outline" onClick={onAddClick} size="sm">
+                    <IoMdAddCircleOutline />
                     {t("add")}
                 </Button>
             }
@@ -107,14 +96,14 @@ export default function FormSelectList<T> ({ value, selectables, label, editRole
     return (
         <>
             { gridSize && (
-                <Grid size={gridSize}>
+                <GridItem size={gridSize}>
                     <UnwrappedFormSelectList values={values}
                                              getItemLabel={getItemLabel}
                                              label={label}
                                              editRole={editRole}
                                              onAddClick={handleAddClick}
                                              onDeleteClick={(item) => handleDeleteClick(item._itemId)} />
-                </Grid>
+                </GridItem>
             )}
             { !gridSize && (
                 <UnwrappedFormSelectList values={values}

@@ -1,9 +1,3 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../../RestClient.ts"
 import {RestEndpoint} from "../../../RestClient.ts"
@@ -13,6 +7,15 @@ import {License, LicensePurlMap} from "../../../DTOs.ts";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {toaster} from "../../../Toaster.ts";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
+} from "../../../components/ui/dialog.tsx";
+import {Button} from "../../../components/ui/button.tsx";
 
 interface CreatePurlMapProps {
     open: boolean;
@@ -49,18 +52,13 @@ export default function CreatePurlMapDialog({ open, handleClose }: Readonly<Crea
     }, [auth]);
 
     return (
-        <Dialog
-            open={open}
-            onClose={() => handleClose(undefined)}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
-        >
-            <DialogTitle>{t("create-purl-mapping")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
-                <DialogContentText>
-                    {t("please-enter-mapping-details")}
-                </DialogContentText>
+        <Dialog open={open} onOpenChange={(s) => !s && handleClose(undefined)}>
+            <DialogContent style={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+                <DialogHeader>
+                    <DialogTitle>{t("create-purl-mapping")}</DialogTitle>
+                    <DialogDescription>{t("please-enter-mapping-details")}</DialogDescription>
+                </DialogHeader>
+
                 <FormTextField id="purlMatch"
                                value={purlMatch}
                                onChange={e => setPurlMatch(e.target.value)}
@@ -73,16 +71,17 @@ export default function CreatePurlMapDialog({ open, handleClose }: Readonly<Crea
                             value={spdxId}
                             label={t("spdx-id")}
                             items={spdxList}
-                            onChange={(e) => setSpdxId(e.target.value as string)}
+                            onChange={(e) => setSpdxId(e)}
                             gridSize={6}
                 />
+
+                <DialogFooter>
+                    <Button variant="outline" onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
+                    <Button onClick={handleCreateClick}>
+                        {t("create")}
+                    </Button>
+                </DialogFooter>
             </DialogContent>
-            <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
-            </DialogActions>
         </Dialog>
     );
 }

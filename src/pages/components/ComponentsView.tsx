@@ -1,4 +1,3 @@
-import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useCallback, useEffect, useState} from "react";
 import {Component} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
@@ -7,6 +6,8 @@ import {useAuth} from "../../auth/useAuth.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import ComponentTableRow from "./ComponentTableRow.tsx";
 import {toaster} from "../../Toaster.ts";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "../../components/ui/table.tsx";
+import {ContentTile} from "../../components/ContentTile.tsx";
 
 export default function ComponentsView() {
 
@@ -32,33 +33,32 @@ export default function ComponentsView() {
     }, [refresh]);
 
     return (
-        <Box margin={3}>
+        <ContentTile>
             <TableHeaderControls onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
             />
-            <TableContainer component={Paper}>
-                <Table aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell width={"60px"}>{t("type")}</TableCell>
-                            <TableCell>{t("purl")}</TableCell>
-                            <TableCell>{t("namespace")}</TableCell>
-                            <TableCell>{t("name")}</TableCell>
-                            <TableCell>{t("version")}</TableCell>
-                            <TableCell>{t("licenses")}</TableCell>
-                        </TableRow>
-                    </TableHead>
 
-                    <TableBody>
-                        {rows
-                            .filter(r => ("" === filter || r.purl.toLowerCase().includes(filter)))
-                            .map((row) => (
-                                <ComponentTableRow key={row.id} component={row}/>
-                            ))
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Box>
+            <Table aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell width={"60px"}>{t("type")}</TableCell>
+                        <TableCell>{t("purl")}</TableCell>
+                        <TableCell>{t("namespace")}</TableCell>
+                        <TableCell>{t("name")}</TableCell>
+                        <TableCell>{t("version")}</TableCell>
+                        <TableCell>{t("licenses")}</TableCell>
+                    </TableRow>
+                </TableHead>
+
+                <TableBody>
+                    {rows
+                        .filter(r => ("" === filter || r.purl.toLowerCase().includes(filter)))
+                        .map((row) => (
+                            <ComponentTableRow key={row.id} component={row}/>
+                        ))
+                    }
+                </TableBody>
+            </Table>
+        </ContentTile>
     );
 }

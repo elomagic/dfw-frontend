@@ -1,10 +1,3 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
@@ -13,6 +6,17 @@ import {useState} from "react";
 import {Repository, RepositoryTypes} from "../../DTOs.ts";
 import {FormSelect} from "../../components/FormSelect.tsx";
 import { toaster } from '../../Toaster.ts';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle
+} from "../../components/ui/dialog.tsx";
+import {Button} from "../../components/ui/button.tsx";
+import {Input} from "../../components/ui/input.tsx";
+import {Label} from "../../components/ui/label.tsx";
 
 interface ForgotPasswordProps {
     open: boolean;
@@ -43,30 +47,25 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
     }
 
     return (
-        <Dialog
-            open={open}
-            onClose={() => handleClose(undefined)}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
-        >
-            <DialogTitle>{t("create-repository")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
-                <DialogContentText>
-                    Please enter the name and the type of the new repository
-                </DialogContentText>
-                <OutlinedInput
+        <Dialog open={open} onOpenChange={(s) => !s && handleClose(undefined)}>
+
+            <DialogContent style={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+                <DialogHeader>
+                    <DialogTitle>{t("create-repository")}</DialogTitle>
+                    <DialogDescription>Please enter the name and the type of the new repository</DialogDescription>
+                </DialogHeader>
+
+                <Label htmlFor="name">{t("name")}</Label>
+                <Input
                     id="name"
                     name="name"
                     value={name}
-                    onChange={e => setName(e.target.value)}
                     autoFocus
                     required
-                    margin="dense"
-                    label={t("name")}
                     placeholder={t("name")}
                     type="text"
-                    fullWidth
+                    style={ { width: "100%" } }
+                    onChange={e => setName(e.target.value)}
                 />
                 <FormSelect id="type"
                             value={type}
@@ -77,15 +76,16 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
                                 { "key": "DOCKER", "label": "DOCKER" },
                                 { "key": "NUGET", "label": "NUGET" },
                             ]}
-                            onChange={(e) => setType(e.target.value as RepositoryTypes)}
+                            onChange={(e) => setType(e as RepositoryTypes)}
                 />
+
+                <DialogFooter>
+                    <Button variant="outline" onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
+                    <Button onClick={handleCreateClick}>
+                        {t("create")}
+                    </Button>
+                </DialogFooter>
             </DialogContent>
-            <DialogActions sx={{ pb: 3, px: 3 }}>
-                <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
-            </DialogActions>
         </Dialog>
     );
 }

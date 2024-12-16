@@ -1,11 +1,4 @@
 import {useTranslation} from "react-i18next";
-import {Box, Paper} from "@mui/material";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import TableBody from "@mui/material/TableBody";
-import TableContainer from "@mui/material/TableContainer";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {LicenseNameMap} from "../../../DTOs.ts";
@@ -16,6 +9,7 @@ import CollapsableNameMapTableRow from "./CollapsableNameMapTableRow.tsx";
 import CreateNameMapDialog from "./CreateNameMapDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "../../../components/ui/table.tsx";
 
 export default function NameMapTab() {
 
@@ -65,35 +59,34 @@ export default function NameMapTab() {
     }, [refresh]);
 
     return (
-        <Box>
+        <>
             <TableHeaderControls createCaption={t("create-name-mapping")}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
                                  role={Role.LICENSE_NAME_MAP_CREATE}
             />
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 900 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell width={"50%"}>{t("name-match")}</TableCell>
-                            <TableCell width={"50%"}>{t("spdx-id")}</TableCell>
-                        </TableRow>
-                    </TableHead>
 
-                    <TableBody>
-                        {rows
-                            .filter(r => ("" === filter || r.nameMatch.toLowerCase().includes(filter)))
-                            .map((row) => (
-                                <CollapsableNameMapTableRow key={row.id}
-                                                         nameMap={row}
-                                                         onDeleteRequest={(id) => handleDeleteRequest(id)}
-                                />
-                            ))
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Table style={{ minWidth: 900 }} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell width={"50%"}>{t("name-match")}</TableCell>
+                        <TableCell width={"50%"}>{t("spdx-id")}</TableCell>
+                    </TableRow>
+                </TableHead>
+
+                <TableBody>
+                    {rows
+                        .filter(r => ("" === filter || r.nameMatch.toLowerCase().includes(filter)))
+                        .map((row) => (
+                            <CollapsableNameMapTableRow key={row.id}
+                                                     nameMap={row}
+                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
+                            />
+                        ))
+                    }
+                </TableBody>
+            </Table>
 
             <CreateNameMapDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-name-mapping")}
@@ -102,6 +95,6 @@ export default function NameMapTab() {
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}
             />
-        </Box>
+        </>
     );
 }

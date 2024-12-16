@@ -1,10 +1,3 @@
-import {Box, Paper} from "@mui/material";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts"
 import {Configuration, ConfigurationKeyMeta} from "../../DTOs.ts";
@@ -14,6 +7,8 @@ import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import YesNoDialog from "../../components/YesNoDialog.tsx";
 import { toaster } from "../../Toaster.ts";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "../../components/ui/table.tsx";
+import {ContentTile} from "../../components/ContentTile.tsx";
 
 export default function AdminConfigurationView() {
 
@@ -65,31 +60,30 @@ export default function AdminConfigurationView() {
     }, [auth, t]);
 
     return (
-        <Box margin={3}>
+        <ContentTile>
             <TableHeaderControls onFilterChanged={f => setFilter(f)} onRefresh={refresh}/>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 900 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell width={"500px"}>{t("property")}</TableCell>
-                            <TableCell>{t("value")}</TableCell>
-                        </TableRow>
-                    </TableHead>
 
-                    <TableBody>
-                        {rows
-                            .filter(dto => ("" === filter || dto.key.toLowerCase().includes(filter)))
-                            .map((row) => (
-                                <CollapsableTableRow key={row.key}
-                                                     configuration={row}
-                                                     keyMeta={configurationKeyMetas.find(m => m.key == row.key)}
-                                                     onResetRequest={(c) => handleResetRequest(c)}
-                                />
-                            ))
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Table style={{ minWidth: 900 }} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell width={"500px"}>{t("property")}</TableCell>
+                        <TableCell>{t("value")}</TableCell>
+                    </TableRow>
+                </TableHead>
+
+                <TableBody>
+                    {rows
+                        .filter(dto => ("" === filter || dto.key.toLowerCase().includes(filter)))
+                        .map((row) => (
+                            <CollapsableTableRow key={row.key}
+                                                 configuration={row}
+                                                 keyMeta={configurationKeyMetas.find(m => m.key == row.key)}
+                                                 onResetRequest={(c) => handleResetRequest(c)}
+                            />
+                        ))
+                    }
+                </TableBody>
+            </Table>
 
             <YesNoDialog title={t("pages.admin-configuration.dialog.reset.title")}
                          text={t("pages.admin-configuration.dialog.reset.text", {key: selectedEntity?.key})}
@@ -97,6 +91,6 @@ export default function AdminConfigurationView() {
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}
             />
-        </Box>
+        </ContentTile>
     );
 }

@@ -1,9 +1,6 @@
-import {FormControl, MenuItem} from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import Select from "@mui/material/Select";
-import {SelectInputProps} from "@mui/material/Select/SelectInput";
-import {GridSize} from "@mui/material/Grid2/Grid2";
-import {Fieldset} from "./Fieldset.tsx";
+import {GridItem, GridSize} from "../components/Grids.tsx";
+import {FormItem} from "../components/FormItem.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../components/ui/select.tsx";
 
 export declare interface KeyLabelItem {
     key: string;
@@ -15,7 +12,7 @@ interface FormSelectProps {
     value: string;
     label: string;
     items: KeyLabelItem[];
-    onChange: SelectInputProps['onChange'];
+    onChange: (value: string) => void;
     gridSize?: GridSize;
 }
 
@@ -31,20 +28,16 @@ interface FormSelectProps {
 function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<FormSelectProps>) {
 
     return (
-        <Fieldset label={label}>
-            <FormControl fullWidth={true}>
-                <Select
-                    labelId={id}
-                    id={id}
-                    value={value}
-                    variant="standard"
-                    onChange={onChange}
-                    fullWidth
-                >
-                    {items.map((item) => (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>))}
-                </Select>
-            </FormControl>
-        </Fieldset>
+        <FormItem label={label} htmlFor={id}>
+            <Select onValueChange={onChange} value={value}>
+                <SelectTrigger className="w-[280px]">
+                    <SelectValue placeholder={label} />
+                </SelectTrigger>
+                <SelectContent id={id}>
+                    {items.map((item) => (<SelectItem key={item.key} value={item.key}>{item.label}</SelectItem>))}
+                </SelectContent>
+            </Select>
+        </FormItem>
     );
 }
 
@@ -53,9 +46,9 @@ export function FormSelect({ id, value, onChange, label, items, gridSize}: Reado
     return (
         <>
             { gridSize && (
-                <Grid size={gridSize}>
+                <GridItem size={gridSize}>
                     <UnwrappedFormSelect id={id} value={value} label={label} items={items} onChange={onChange} />
-                </Grid>
+                </GridItem>
             )}
             { !gridSize && (
                 <UnwrappedFormSelect id={id} value={value} label={label} items={items} onChange={onChange} />

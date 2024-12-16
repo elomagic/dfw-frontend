@@ -1,10 +1,10 @@
 import {LicenseViolation} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
-import Grid from "@mui/material/Grid2";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {useState} from "react";
 import CreatePurlMapDialog from "../adminLicenses/purlMap/CreatePurlMapDialog.tsx";
+import {Grid} from "../../components/Grids.tsx";
 
 interface EditableTableRowProps {
     licenseViolation: LicenseViolation
@@ -17,7 +17,7 @@ export default function LicenseIssueTableRow({ licenseViolation, onDeleteRequest
     const [ createOpen, setCreateOpen ] = useState<boolean>(false);
 
     return (
-        <Grid container spacing={2} marginTop={2} marginBottom={2}>
+        <Grid>
             <FormTextField id="purl"
                            value={licenseViolation.purl}
                            label={t("purl")}

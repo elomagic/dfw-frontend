@@ -1,18 +1,18 @@
-import {Box, Card} from "@mui/material";
-import {useAuth} from "../../auth/useAuth.ts";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
-import {RestEndpoint} from "../../RestClient.ts";
-import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../Validators.ts";
-import {UserAccount, UserAccountApiKey} from "../../DTOs.ts";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormSelect} from "../../components/FormSelect.tsx";
 import FormList from "../../components/FormList.tsx";
 import CreateApiKeyDialog from "./CreateApiKeyDialog.tsx";
+import {useAuth} from "../../auth/useAuth.ts";
+import {RestEndpoint} from "../../RestClient.ts";
+import {UserAccount, UserAccountApiKey} from "@/DTOs.ts";
 import { toaster } from "../../Toaster.ts";
+import {Grid} from "../../components/Grids.tsx";
+import {ContentTile} from "../../components/ContentTile.tsx";
 
 export default function MyAccountView() {
 
@@ -81,50 +81,49 @@ export default function MyAccountView() {
     }, [auth, t]);
 
     return (
-        <Box margin={3}>
-            <Card>
-                <Grid container spacing={2} margin={2}>
-                    <FormTextField id="mailAddress"
-                                         value={mailAddress}
-                                         label={t("mailAddress")}
-                                         gridSize={6}
-                    />
-                    <FormTextField id="displayName"
-                                   value={displayName}
-                                   errorMessage={displayNameErrorMessage}
-                                     onChange={e => {
-                                         setDisplayName(e.target.value)
-                                         validateRequiredText(e.target.value, setDisplayNameErrorMessage)
-                                     }}
-                                     label={t("displayName")}
-                                     autoFocus
-                                     required
+        <ContentTile>
+            <Grid>
+                <FormTextField id="mailAddress"
+                                     value={mailAddress}
+                                     label={t("mailAddress")}
                                      gridSize={6}
-                    />
+                />
+                <FormTextField id="displayName"
+                               value={displayName}
+                               errorMessage={displayNameErrorMessage}
+                                 onChange={e => {
+                                     setDisplayName(e.target.value)
+                                     validateRequiredText(e.target.value, setDisplayNameErrorMessage)
+                                 }}
+                                 label={t("displayName")}
+                                 autoFocus
+                                 required
+                                 gridSize={6}
+                />
 
-                    <FormSelect id="language"
-                                value={language}
-                                label={t("language")}
-                                items={[
-                                    { "key": "en", "label": t("english") },
-                                    { "key": "de", "label": t("german") },
-                                ]}
-                                onChange={(e) => setLanguage(e.target.value as string)}
-                                gridSize={6}
-                    />
-                    <FormList<UserAccountApiKey>
-                        value={apiKeys}
-                        label={t("api-keys")}
-                        getItemLabel={(item) => { return item.comment ?? ""}}
-                        onChange={handleApiKeysChanged}
-                        onAddClick={() => setOpenCreate(true)}
-                        gridSize={6}
-                    />
+                <FormSelect id="language"
+                            value={language}
+                            label={t("language")}
+                            items={[
+                                { "key": "en", "label": t("english") },
+                                { "key": "de", "label": t("german") },
+                            ]}
+                            onChange={(e) => setLanguage(e)}
+                            gridSize={6}
+                />
+                <FormList<UserAccountApiKey>
+                    value={apiKeys}
+                    label={t("api-keys")}
+                    getItemLabel={(item) => { return item.comment ?? ""}}
+                    onChange={handleApiKeysChanged}
+                    onAddClick={() => setOpenCreate(true)}
+                    gridSize={6}
+                />
 
-                    <FormButtons onSaveClick={handleSaveClick}/>
-                </Grid>
-            </Card>
+                <FormButtons onSaveClick={handleSaveClick}/>
+            </Grid>
+
             <CreateApiKeyDialog open={openCreate} handleClose={(data) => handleCloseKeyDialog(data)} />
-        </Box>
+        </ContentTile>
     );
 }

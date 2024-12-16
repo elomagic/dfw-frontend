@@ -1,8 +1,7 @@
-import {HTMLInputTypeAttribute, ReactNode} from "react";
-import {OutlinedInputProps} from "@mui/material/OutlinedInput";
-import Grid from "@mui/material/Grid2";
-import {FormControl, TextField} from "@mui/material";
-import {GridSize} from "@mui/material/Grid2/Grid2";
+import {ChangeEventHandler, HTMLInputTypeAttribute, ReactNode} from "react";
+import {GridItem, GridSize} from "../components/Grids.tsx";
+import {Input} from "../components/ui/input.tsx";
+import {FormItem} from "../components/FormItem.tsx";
 
 interface FormTextFieldProps {
     id: string;
@@ -12,39 +11,30 @@ interface FormTextFieldProps {
     label: string;
     required?: boolean;
     autoFocus?: boolean;
-    onChange?: OutlinedInputProps['onChange'];
+    onChange?: ChangeEventHandler<HTMLInputElement>;
     gridSize?: GridSize;
     readOnly?: boolean;
     startAdornment?: ReactNode;
 }
 
-function UnwrappedTextField({id, type, value, errorMessage, onChange, label, required, autoFocus, readOnly, startAdornment}: Readonly<FormTextFieldProps>) {
+function UnwrappedTextField({id, type, value, errorMessage, onChange, label, required, autoFocus, readOnly}: Readonly<FormTextFieldProps>) {
 
     return (
-        <FormControl fullWidth>
-            <TextField
+        <FormItem htmlFor={id} errorMessage={errorMessage} label={label}>
+            <Input
                 id={id}
                 name={id}
                 type={type ?? "text"}
                 value={value}
-                label={label}
                 onChange={onChange}
-                fullWidth
                 required={required}
                 autoFocus={autoFocus}
-                variant="outlined"
-                error={errorMessage != undefined}
-                helperText={errorMessage}
                 color={errorMessage == undefined ? 'primary' : 'error'}
-                sx={{ ariaLabel: {label}}}
-                slotProps={{
-                    input: {
-                        readOnly: readOnly,
-                        startAdornment: startAdornment
-                    },
-                }}
+                aria-label={label}
+                style={{ width: "100%" }}
+                readOnly={readOnly}
             />
-        </FormControl>
+        </FormItem>
     );
 }
 
@@ -69,7 +59,7 @@ export default function FormTextField({id, type, value, errorMessage, onChange, 
     return (
         <>
             { gridSize && (
-                <Grid size={gridSize}>
+                <GridItem size={gridSize}>
                     <UnwrappedTextField
                         id={id}
                         value={value}
@@ -82,7 +72,7 @@ export default function FormTextField({id, type, value, errorMessage, onChange, 
                         required={required}
                         errorMessage={errorMessage}
                     />
-                </Grid>
+                </GridItem>
             )}
             { !gridSize && (
                 <UnwrappedTextField

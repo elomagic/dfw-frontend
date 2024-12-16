@@ -1,9 +1,8 @@
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import {LicenseViolation,} from "../../DTOs.ts";
-import {Collapse} from "@mui/material";
 import {useState} from "react";
 import LicenseIssueTableRow from "./LicenseIssueTableRow.tsx";
+import {TableCell, TableRow} from "../../components/ui/table.tsx";
+import {Collapsible, CollapsibleContent} from "../../components/ui/collapsible.tsx";
 
 interface CollapsableTableRowProps {
     licenseViolation: LicenseViolation
@@ -16,18 +15,17 @@ export default function CollapsableTableRow({ licenseViolation, onDeleteRequest 
 
     return (
         <>
-            <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
-                onClick={()=> setOpen(!open)}
-            >
+            <TableRow onClick={()=> setOpen(!open)}>
                 <TableCell>{licenseViolation.purl}</TableCell>
                 <TableCell>{licenseViolation.licenses.join(", ")}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <LicenseIssueTableRow licenseViolation={licenseViolation} onDeleteRequest={() => onDeleteRequest(licenseViolation)} />
-                    </Collapse>
+                    <Collapsible open={open}>
+                        <CollapsibleContent>
+                            <LicenseIssueTableRow licenseViolation={licenseViolation} onDeleteRequest={() => onDeleteRequest(licenseViolation)} />
+                        </CollapsibleContent>
+                    </Collapsible>
                 </TableCell>
             </TableRow>
         </>

@@ -1,21 +1,16 @@
-import {Box, Paper} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {CredentialData} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
-import TableContainer from "@mui/material/TableContainer";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import TableBody from "@mui/material/TableBody";
 import CredentialTableRow from "./CredentialTableRow.tsx";
 import YesNoDialog from "../../components/YesNoDialog.tsx";
 import CreateCredentialDialog from "./CreateCredentialDialog.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
+import {Table, TableBody, TableCell, TableHead, TableRow} from "../../components/ui/table.tsx";
+import {ContentTile} from "../../components/ContentTile.tsx";
 
 export default function CredentialsView() {
 
@@ -65,36 +60,35 @@ export default function CredentialsView() {
     }, [refresh]);
 
     return (
-        <Box margin={3}>
+        <ContentTile>
             <TableHeaderControls createCaption={t("create-credential")}
                                  role={Role.CREDENTIAL_CREATE}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
             />
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 900 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell width={"300px"}>{t("credentialId")}</TableCell>
-                            <TableCell width={"200px"}>{t("mode")}</TableCell>
-                            <TableCell>{t("action")}</TableCell>
-                        </TableRow>
-                    </TableHead>
 
-                    <TableBody>
-                        {rows
-                            .filter(r => ("" === filter || r.credentialId.toLowerCase().includes(filter)))
-                            .map((row) => (
-                                <CredentialTableRow key={row.credentialId}
-                                                    credential={row}
-                                                    onDeleteRequest={(id) => handleDeleteRequest(id)}
-                                />
-                            ))
-                        }
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Table style={{ minWidth: 900 }} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell width={"300px"}>{t("credentialId")}</TableCell>
+                        <TableCell width={"200px"}>{t("mode")}</TableCell>
+                        <TableCell>{t("action")}</TableCell>
+                    </TableRow>
+                </TableHead>
+
+                <TableBody>
+                    {rows
+                        .filter(r => ("" === filter || r.credentialId.toLowerCase().includes(filter)))
+                        .map((row) => (
+                            <CredentialTableRow key={row.credentialId}
+                                                credential={row}
+                                                onDeleteRequest={(id) => handleDeleteRequest(id)}
+                            />
+                        ))
+                    }
+                </TableBody>
+            </Table>
 
             <CreateCredentialDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-credential")}
@@ -103,6 +97,6 @@ export default function CredentialsView() {
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}
             />
-        </Box>
+        </ContentTile>
     );
 }

@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import './TitleHeader.css';
 
 const getTitleKey = (path: string): string => {
     switch (path) {
@@ -34,8 +33,6 @@ export default function TitleHeader() {
     }, [location])
 
     return (
-        <div style={{display: "flex"}}>
-            <span style={{width: "100%"}}>{t(titleKey)}</span>
-        </div>
+        <span>{t(titleKey)}</span>
     );
 }

@@ -1,12 +1,10 @@
-import {Box, Card} from "@mui/material";
-import Grid from '@mui/material/Grid2';
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import {useEffect, useState} from "react";
 import {Version} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
-import {GitHub} from "@mui/icons-material";
-import Link from "@mui/material/Link";
+import {Grid, GridItem} from "../../components/Grids.tsx";
+import {FaGithub} from "react-icons/fa";
 
 declare const __APP_VERSION__: string
 
@@ -30,35 +28,35 @@ export default function AboutView() {
     }, [auth]);
 
     return (
-        <Box margin={4} sx={{ display: "flex", flexDirection: "column" }}>
-            <Card sx={{ maxWidth: "800px", alignSelf: "center" }}>
-                <Grid container spacing={2} margin={2}>
-                    <Grid size={12}>
+        <div style={{ margin: 4, display: "flex", flexDirection: "column" }}>
+            <div style={{ maxWidth: "800px", alignSelf: "center" }}>
+                <Grid>
+                    <GridItem size={12}>
                         {t("app.title")}
-                    </Grid>
-                    <Grid size={6}>
+                    </GridItem>
+                    <GridItem size={6}>
                         {t("backend")} v{backendVersion}<br/>
                         {t("builtOn")}: {backendBuildOn}
-                        <Box>
-                            <GitHub fontSize="small"/> <Link href="https://github.com/elomagic/dfw-backend">GitHub</Link>
-                        </Box>
-                    </Grid>
-                    <Grid size={6}>
+                        <div>
+                            <FaGithub size="small"/> <a href="https://github.com/elomagic/dfw-backend">GitHub</a>
+                        </div>
+                    </GridItem>
+                    <GridItem size={6}>
                         {t("frontend")} v{frontendVersion}<br/>
                         {t("builtOn")}: {frontendBuildOn}<br/>
-                        <Box>
-                            <GitHub fontSize="small"/> <Link href="https://github.com/elomagic/dfw-frontend">GitHub</Link>
-                        </Box>
-                    </Grid>
-                    <Grid size={12}>
+                        <div>
+                            <FaGithub size="small"/> <a href="https://github.com/elomagic/dfw-frontend">GitHub</a>
+                        </div>
+                    </GridItem>
+                    <GridItem size={12}>
                         Licenses???
-                    </Grid>
-                    <Grid size={12} textAlign="center">
+                    </GridItem>
+                    <GridItem size={12}>
                         Copyright Carsten Rambow. All Rights Reserved.
-                    </Grid>
+                    </GridItem>
                 </Grid>
-            </Card>
-        </Box>
+            </div>
+        </div>
     );
 
 }
