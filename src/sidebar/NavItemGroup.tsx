@@ -3,7 +3,7 @@
 import type {IconType} from "react-icons";
 import {useTranslation} from "react-i18next";
 import {Link as RouterLink} from "react-router-dom";
-import {Box, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import {Box, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip} from "@mui/material";
 import {SvgIconComponent} from "@mui/icons-material";
 
 export function NavItemGroup({ links, open }: Readonly<{
@@ -67,7 +67,9 @@ export function NavItemGroup({ links, open }: Readonly<{
                                         mr: 'auto',
                                     },
                             ]}>
-                                <item.icon className='fs15em'/>
+                                <Tooltip title={t(item.name)}>
+                                    <item.icon className='fs15em'/>
+                                </Tooltip>
                             </ListItemIcon>
                             <ListItemText primary={(<span style={{fontSize: "0.90em"}}>{t(item.name)}</span>)}
                                           sx={[
