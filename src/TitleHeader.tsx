@@ -12,6 +12,7 @@ const getTitleKey = (path: string): string => {
         case '/admin-licenses': return 'admin-licenses';
         case '/admin-vulnerabilities': return 'admin-vulnerabilities';
         case '/admin-repositories': return 'admin-repositories';
+        case '/admin-policies': return 'admin-policies';
         case '/admin-accounts': return 'admin-accounts';
 
         case '/my-account': return 'my-account';

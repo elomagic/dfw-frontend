@@ -10,11 +10,15 @@ export declare interface KeyLabelItem {
     label: string;
 }
 
+export function mapToKeyLabelItemArray(items: string[]): KeyLabelItem[] {
+    return items.map(s => { return { key: s, label: s }});
+}
+
 interface FormSelectProps {
     id: string;
     value: string;
     label: string;
-    items: Array<KeyLabelItem | string>;
+    items: KeyLabelItem[];
     onChange: SelectInputProps['onChange'];
     gridSize?: GridSize;
 }
@@ -41,10 +45,7 @@ function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<Form
                     onChange={onChange}
                     fullWidth
                 >
-                    {items.map((item: KeyLabelItem | string) => (
-                        <MenuItem key={item instanceof String ? item as string : (item as KeyLabelItem).key}
-                                  value={item instanceof String ? item as string : (item as KeyLabelItem).key}>{item instanceof String ? item as string : (item as KeyLabelItem).label}
-                        </MenuItem>))}
+                    {items.map((item) => (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>))}
                 </Select>
             </FormControl>
         </Fieldset>

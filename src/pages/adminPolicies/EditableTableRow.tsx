@@ -6,7 +6,7 @@ import {validateRequiredText} from "../../Validators.ts";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
-import {FormSelect} from "../../components/FormSelect.tsx";
+import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
 import {Role} from "../../auth/Auth.tsx";
 
 interface EditableTableRowProps {
@@ -56,8 +56,8 @@ export default function EditableTableRow({ policy, onSaveClick, onDeleteRequest 
             />
             <FormSelect id="violationState"
                         value={violationState}
-                        label={t("violationState")}
-                        items={["FAIL", "WARN", "INFO"]}
+                        label={t("violation-state")}
+                        items={mapToKeyLabelItemArray(["FAIL", "WARN", "INFO"])}
                         onChange={(e) => setViolationState(e.target.value as ViolationState)}
                         gridSize={6}
             />

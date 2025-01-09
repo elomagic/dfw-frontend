@@ -99,7 +99,7 @@ export default function AdminPolicyView() {
 
             <CreatePolicyDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
             <YesNoDialog title={t("delete-policy")}
-                         text={`Do ya really want to delete the poloicy '${selectedEntity?.name}'?`}
+                         text={`Do ya really want to delete the policy '${selectedEntity?.name}'?`}
                          open={deleteOpen}
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}
