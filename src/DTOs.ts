@@ -1,5 +1,8 @@
 export declare type RepositoryTypes = "MAVEN" | "NPM" | "DOCKER" | "NUGET"
 export declare type AuthenticationMode = "BASIC" | "BEARER"
+export declare type ViolationState = "FAIL" | "WARN" | "INFO";
+export declare type ConditionType = "AGE" | "LICENSE_GROUP" | "SEVERTITY";
+export declare type ConditionOperator = "GREATER_THAN" | "IS" | "IS_NOT" | "SMALLER_THAN";
 
 // For internal managing, create my own item ID
 export declare type ItemId<T> = T & {
@@ -26,6 +29,19 @@ export declare interface ConfigurationKeyMeta {
     group: string,
     subgroup: string,
     secret: boolean
+}
+
+export declare interface PolicyCondition {
+    condition: ConditionType;
+    operator: ConditionOperator;
+    conditionalValue: string;
+}
+
+export declare interface Policy extends IdItem {
+    name: string;
+    violationState: ViolationState;
+    conditions: PolicyCondition[];
+    enabled: boolean;
 }
 
 export declare interface ComponentLicense extends IdItem {

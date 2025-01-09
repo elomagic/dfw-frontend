@@ -14,7 +14,7 @@ interface FormSelectProps {
     id: string;
     value: string;
     label: string;
-    items: KeyLabelItem[];
+    items: Array<KeyLabelItem | string>;
     onChange: SelectInputProps['onChange'];
     gridSize?: GridSize;
 }
@@ -41,7 +41,10 @@ function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<Form
                     onChange={onChange}
                     fullWidth
                 >
-                    {items.map((item) => (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>))}
+                    {items.map((item: KeyLabelItem | string) => (
+                        <MenuItem key={item instanceof String ? item as string : (item as KeyLabelItem).key}
+                                  value={item instanceof String ? item as string : (item as KeyLabelItem).key}>{item instanceof String ? item as string : (item as KeyLabelItem).label}
+                        </MenuItem>))}
                 </Select>
             </FormControl>
         </Fieldset>

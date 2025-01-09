@@ -14,6 +14,7 @@ export enum RestEndpoint {
     LicensePermitted = "/api/v1/license/permitted",
     LicensePurlMap = "/api/v1/license/purlMap",
     LicenseViolation = "/api/v1/license/violation",
+    Policy = "/api/v1/policy",
     Repository = "/api/v1/repository",
     Role = "/api/v1/role",
     User = "/api/v1/user",

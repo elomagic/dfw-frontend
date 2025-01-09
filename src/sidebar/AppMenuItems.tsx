@@ -10,6 +10,7 @@ import {FaShieldVirus} from "react-icons/fa";
 import {GrConfigure} from "react-icons/gr";
 import {BiSolidComponent} from "react-icons/bi";
 import {NavItemGroup} from "./NavItemGroup.tsx";
+import {MdPolicy} from "react-icons/md";
 
 const data = {
     navMain: {
@@ -55,6 +56,11 @@ const data = {
                 icon: TbDatabaseCog,
             },
             {
+                name: "policies",
+                url: "admin-policies",
+                icon: MdPolicy,
+            },
+            {
                 name: "credentials",
                 url: "admin-credentials",
                 icon: TbLockCog,
@@ -90,4 +96,5 @@ export default function AppMenuItems() {
             <NavItemGroup links={data.navOther} />
         </React.Fragment>
     );
+
 }

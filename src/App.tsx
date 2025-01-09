@@ -40,6 +40,7 @@ import CredentialsView from "./pages/credentials/CredentialsView.tsx";
 import AdminConfigurationView from "./pages/adminConfiguration/AdminConfigurationView.tsx";
 import ComponentsView from "./pages/components/ComponentsView.tsx";
 import {ToastContainer} from "react-toastify";
+import AdminPolicyView from "./pages/adminPolicies/AdminPoliciesView.tsx";
 
 const drawerWidth: number = 240;
 
@@ -195,6 +196,8 @@ function App() {
                                        element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
                                 <Route path='admin-repositories'
                                        element={<ProtectedRoute roles={Role.REPOSITORY_READ}><AdminRepositoriesView /></ProtectedRoute>}/>
+                                <Route path='admin-policies'
+                                       element={<ProtectedRoute roles={Role.POLICY_READ}><AdminPolicyView /></ProtectedRoute>}/>
                                 <Route path='admin-accounts'
                                        element={<ProtectedRoute roles={[Role.USERACCOUNT_READ, Role.USERACCOUNT_GROUP_READ]}><AccountsView /></ProtectedRoute>}/>
                                 <Route path='admin-credentials'
