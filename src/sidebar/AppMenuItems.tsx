@@ -1,7 +1,6 @@
 "use client"
 
-import * as React from 'react';
-import { Info, Settings } from "@mui/icons-material";
+import {Info, Settings} from "@mui/icons-material";
 import {GoLaw} from "react-icons/go";
 import {TbDatabaseCog, TbLockCog} from "react-icons/tb";
 import {RiUserSettingsLine} from "react-icons/ri";
@@ -11,6 +10,7 @@ import {GrConfigure} from "react-icons/gr";
 import {BiSolidComponent} from "react-icons/bi";
 import {NavItemGroup} from "./NavItemGroup.tsx";
 import {MdPolicy} from "react-icons/md";
+import {List} from "@mui/material";
 
 const data = {
     navMain: {
@@ -87,14 +87,14 @@ const data = {
         ]},
 }
 
-export default function AppMenuItems() {
+export default function AppMenuItems({ open }: Readonly<{ open: boolean }>) {
 
     return (
-        <React.Fragment>
-            <NavItemGroup links={data.navMain} />
-            <NavItemGroup links={data.navAdmin} />
-            <NavItemGroup links={data.navOther} />
-        </React.Fragment>
+        <List>
+            <NavItemGroup links={data.navMain} open={open}/>
+            <NavItemGroup links={data.navAdmin} open={open} />
+            <NavItemGroup links={data.navOther} open={open} />
+        </List>
     );
 
 }
