@@ -11,6 +11,7 @@ import {BiSolidComponent} from "react-icons/bi";
 import {NavItemGroup} from "./NavItemGroup.tsx";
 import {MdPolicy} from "react-icons/md";
 import {List} from "@mui/material";
+import {NavUser} from "./NavUser.tsx";
 
 const data = {
     navMain: {
@@ -94,6 +95,8 @@ export default function AppMenuItems({ open }: Readonly<{ open: boolean }>) {
             <NavItemGroup links={data.navMain} open={open}/>
             <NavItemGroup links={data.navAdmin} open={open} />
             <NavItemGroup links={data.navOther} open={open} />
+
+            <NavUser />
         </List>
     );
 

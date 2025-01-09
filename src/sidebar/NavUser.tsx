@@ -3,14 +3,34 @@
 import {AuthContextProps} from "../auth/Auth.tsx";
 import {useAuth} from "../auth/useAuth.ts";
 import {useTranslation} from "react-i18next";
-import {Link} from "react-router-dom";
-import {RiUser3Line, RiUserSettingsLine} from "react-icons/ri";
-import {Avatar, List, ListItem, ListItemAvatar, ListItemText} from "@mui/material";
+import {Link as RouterLink} from "react-router-dom";
+import {RiUserSettingsLine} from "react-icons/ri";
+import {
+    Avatar,
+    Divider,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem
+} from "@mui/material";
+import {Logout} from "@mui/icons-material";
+import {useState} from "react";
 export function NavUser() {
 
-    const { isMobile } = useSidebar()
     const { t } = useTranslation();
     const auth: AuthContextProps = useAuth();
+
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     // todo
     const avatarUrl = undefined;
@@ -23,65 +43,75 @@ export function NavUser() {
     return (
         <>
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                <ListItem>
+                <ListItem onClick={handleClick}>
                     <ListItemAvatar>
                         <Avatar alt={auth.displayName} src={avatarUrl} />
                     </ListItemAvatar>
                     <ListItemText primary={auth.displayName} secondary={auth.mailAddress} />
                 </ListItem>
             </List>
+            <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                slotProps={{
+                    paper: {
+                        elevation: 0,
+                        sx: {
+                            overflow: 'visible',
+                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                            mt: 1.5,
+                            '& .MuiAvatar-root': {
+                                width: 48,
+                                height: 48,
+                                ml: -0.5,
+                                mr: 1,
+                            },
+                            '&::before': {
+                                content: '""',
+                                display: 'block',
+                                position: 'absolute',
+                                top: 0,
+                                right: 14,
+                                width: 10,
+                                height: 10,
+                                bgcolor: 'background.paper',
+                                transform: 'translateY(-50%) rotate(45deg)',
+                                zIndex: 0,
+                            },
+                        },
+                    },
+                }}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            >
+                <ListItem>
+                    <ListItemAvatar>
+                        <Avatar alt={auth.displayName} src={avatarUrl} />
+                    </ListItemAvatar>
+                    <ListItemText primary={auth.displayName} secondary={auth.mailAddress} />
+                </ListItem>
 
-        <SidebarMenu>
-            <SidebarMenuItem>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <SidebarMenuButton
-                            size="lg"
-                            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                        >
-                            <Avatar className="h-8 w-8 rounded-lg">
-                                <AvatarImage src={avatarUrl} alt={auth.displayName} />
-                                <AvatarFallback className="rounded-lg"><RiUser3Line /></AvatarFallback>
-                            </Avatar>
-                            <div className="grid flex-1 text-left text-sm leading-tight">
-                                <span className="truncate font-semibold">{auth.displayName}</span>
-                                <span className="truncate text-xs">{auth.mailAddress}</span>
-                            </div>
-                            <ChevronsUpDown className="ml-auto size-4" />
-                        </SidebarMenuButton>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-                        side={isMobile ? "bottom" : "right"}
-                        align="end"
-                        sideOffset={4}
-                    >
-                        <DropdownMenuLabel className="p-0 font-normal">
-                            <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                                <Avatar className="h-8 w-8 rounded-lg">
-                                    <AvatarImage src={avatarUrl} alt={auth.displayName} />
-                                    <AvatarFallback className="rounded-lg"><RiUser3Line /></AvatarFallback>
-                                </Avatar>
-                                <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-semibold">{auth.displayName}</span>
-                                    <span className="truncate text-xs">{auth.mailAddress}</span>
-                                </div>
-                            </div>
-                        </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuGroup>
-                            <DropdownMenuItem asChild>
-                                <Link to="my-account"><RiUserSettingsLine /> {t('my-account')}</Link>
-                            </DropdownMenuItem>
-                        </DropdownMenuGroup>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={handleLogoutClick}>
-                            <LogOut /> {t('logout')}
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </SidebarMenuItem>
-        </SidebarMenu>
-            </>
+                <Divider />
+
+                <MenuItem component={RouterLink} to="my-account">
+                    <ListItemIcon>
+                        <RiUserSettingsLine fontSize="small" />
+                    </ListItemIcon>
+                    {t('my-account')}
+                </MenuItem>
+
+                <Divider />
+
+                <MenuItem onClick={handleLogoutClick}>
+                    <ListItemIcon>
+                        <Logout fontSize="small" />
+                    </ListItemIcon>
+                    {t('logout')}
+                </MenuItem>
+            </Menu>
+        </>
     )
 }
