@@ -20,7 +20,7 @@ import TitleHeader from "./TitleHeader.tsx";
 import LanguageSelector from "./LanguageSelector.tsx";
 import UserSessionButton from "./UserSessionButton.tsx";
 import ThemeModeSelector from './ThemeModeSelector';
-import AppMenuItems from "./AppMenuItems.tsx";
+import AppMenuItems from "./sidebar/AppMenuItems.tsx";
 import {AuthContextProps, Role} from "./auth/Auth.tsx";
 import DashboardView from "./pages/dashboard/DashboardView.tsx";
 import {ProtectedRoute} from "./auth/ProtectedRoute.tsx";
