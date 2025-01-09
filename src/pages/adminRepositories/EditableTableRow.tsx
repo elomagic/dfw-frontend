@@ -33,7 +33,7 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
     const [baseUri, setBaseUri] = useState(repository.baseUri);
     const [credentialId, setCredentialId] = useState<string>(repository.credentialId ?? "-");
     const [groupPermissions, setGroupPermissions] = useState<UserAccountGroup[]>([]);
-    const [forwardHeaders, setForwardHeaders] = useState(repository.enabled);
+    const [forwardHeaders, setForwardHeaders] = useState(repository.forwardHeaders);
 
     const [credentialsIds, setCredentialsIds] = useState<KeyLabelItem[]>([{ key: "-", label: "-"}]);
     const [allGroups, setAllGroups] = useState<UserAccountGroup[]>([]);
