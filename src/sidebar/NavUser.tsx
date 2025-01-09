@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import {Logout} from "@mui/icons-material";
 import {useState} from "react";
+import * as React from "react";
 export function NavUser() {
 
     const { t } = useTranslation();
@@ -25,7 +26,7 @@ export function NavUser() {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event: MouseEvent<HTMLElement>) => {
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {

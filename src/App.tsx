@@ -19,7 +19,6 @@ import MuiDrawer from '@mui/material/Drawer';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import TitleHeader from "./TitleHeader.tsx";
 import LanguageSelector from "./LanguageSelector.tsx";
-import UserSessionButton from "./UserSessionButton.tsx";
 import ThemeModeSelector from './ThemeModeSelector';
 import AppMenuItems from "./sidebar/AppMenuItems.tsx";
 import {AuthContextProps, Role} from "./auth/Auth.tsx";
@@ -186,7 +185,6 @@ function App() {
                                 </Typography>
                                 <LanguageSelector />
                                 <ThemeModeSelector />
-                                <UserSessionButton />
                             </Toolbar>
                         </AppBar>
 
