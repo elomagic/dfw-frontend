@@ -1,42 +1,48 @@
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import './TitleHeader.css';
+import {NavItemData} from "./NavItems.ts";
+import type {IconType} from "react-icons";
+import {SvgIconComponent} from "@mui/icons-material";
 
-const getTitleKey = (path: string): string => {
-    switch (path) {
-        case '/components': return 'components';
-        case '/license-issues': return 'license-issues';
-        case '/vulnerabilities': return 'vulnerabilities';
+declare type PathTitle = {
+    url: string,
+    title: string,
+    icon: IconType | SvgIconComponent;
+}
 
-        case '/admin-licenses': return 'admin-licenses';
-        case '/admin-vulnerabilities': return 'admin-vulnerabilities';
-        case '/admin-repositories': return 'admin-repositories';
-        case '/admin-policies': return 'admin-policies';
-        case '/admin-accounts': return 'admin-accounts';
+const getAllPathsTitle = (): PathTitle[] => {
 
-        case '/my-account': return 'my-account';
-        case '/change-password': return 'change-password';
-        case '/reset-password': return 'reset-password';
+    const items: PathTitle[] = [];
 
-        case '/about': return 'about';
+    NavItemData.navMain.items.forEach((item) => { items.push(item); });
+    NavItemData.navAdmin.items.forEach((item) => { items.push(item); });
+    NavItemData.navHelp.items.forEach((item) => { items.push(item); });
+    NavItemData.navOther.items.forEach((item) => { items.push(item); });
 
-        default: return 'app.title';
-    }
+    return items;
+}
+
+const getNavItem = (path: string): PathTitle | undefined => {
+
+    const p = path.replace("/", "");
+    return getAllPathsTitle().find((item) => { return item.url === p; });
+
 }
 
 export default function TitleHeader() {
     const { t } = useTranslation();
-    const [titleKey, setTitleKey] = useState<string>('');
+    const [navItem, setNavItem] = useState<PathTitle | undefined>(undefined);
     const location = useLocation();
 
     useEffect(() => {
-        setTitleKey(getTitleKey(location.pathname));
+        setNavItem(getNavItem(location.pathname));
     }, [location])
 
     return (
-        <div style={{display: "flex"}}>
-            <span style={{width: "100%"}}>{t(titleKey)}</span>
+        <div style={{display: "flex", alignItems: "center"}}>
+            {navItem && <navItem.icon style={{ height: "24", width: "24", fontSize: "24" }} />}
+            <span style={{ paddingLeft: 8 }}>{t(navItem?.title ?? 'app.title')}</span>
         </div>
     );
 }

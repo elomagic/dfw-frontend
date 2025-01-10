@@ -18,7 +18,6 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MuiDrawer from '@mui/material/Drawer';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import TitleHeader from "./TitleHeader.tsx";
-import LanguageSelector from "./LanguageSelector.tsx";
 import ThemeModeSelector from './ThemeModeSelector';
 import AppMenuItems from "./sidebar/AppMenuItems.tsx";
 import {AuthContextProps, Role} from "./auth/Auth.tsx";
@@ -183,7 +182,6 @@ function App() {
                                 >
                                     <TitleHeader/>
                                 </Typography>
-                                <LanguageSelector />
                                 <ThemeModeSelector />
                             </Toolbar>
                         </AppBar>

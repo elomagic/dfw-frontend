@@ -32,7 +32,7 @@ export function NavItemGroup({ links, open }: Readonly<{
                 transition: "opacity 0.5s, height 0.5s",
             }, open ? {
                 opacity: 1,
-                height: "10px"
+                height: "12px"
             } : {
                 opacity: 0,
                 height: 0
@@ -47,15 +47,10 @@ export function NavItemGroup({ links, open }: Readonly<{
                             component={RouterLink}
                             to={item.url}
                             sx={[
-                                {
-                                    minHeight: 48,
-                                    px: 2.5,},
-                                open ? {
-                                    justifyContent: 'initial',
-                                } : {
-                                    justifyContent: 'center',
-                                },
-                        ]}>
+                                { minHeight: 48, px: 2.5 },
+                                open ? { justifyContent: 'initial' } : { justifyContent: 'center' },
+                            ]}
+                        >
                             <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }} >
                                 <Tooltip title={t(item.tooltip)}>
                                     <item.icon className='fs15em'/>
@@ -63,16 +58,8 @@ export function NavItemGroup({ links, open }: Readonly<{
                             </ListItemIcon>
                             <ListItemText primary={(<span style={{fontSize: "0.90em", paddingLeft: "6px" }}>{t(item.name)}</span>)}
                                           sx={[
-                                              {
-                                                  transition: "opacity 0.5s",
-                                              },
-                                              open
-                                                  ? {
-                                                      opacity: 1,
-                                                  }
-                                                  : {
-                                                      opacity: 0,
-                                                  },
+                                              { transition: "opacity 0.5s" },
+                                              open ? { opacity: 1, } : { opacity: 0 },
                                           ]}/>
                         </ListItemButton>
                     </ListItem>
