@@ -11,6 +11,7 @@ export function NavItemGroup({ links, open }: Readonly<{
         groupName: string;
         items: {
             name: string;
+            tooltip: string;
             url: string;
             icon: IconType | SvgIconComponent;
         }[]
@@ -28,13 +29,14 @@ export function NavItemGroup({ links, open }: Readonly<{
                 fontWeight: 600,
                 color: "silver",
                 textOverflow: "ellipse",
-            },
-                open ? {
+                transition: "opacity 0.5s, height 0.5s",
+            }, open ? {
                 opacity: 1,
-                } : {
+                height: "10px"
+            } : {
                 opacity: 0,
-                    height: 0
-                },
+                height: 0
+            },
             ]}>
                 {t(links.groupName)}
             </Box>
@@ -47,32 +49,23 @@ export function NavItemGroup({ links, open }: Readonly<{
                             sx={[
                                 {
                                     minHeight: 48,
-                                    px: 2.5,
-                                },
+                                    px: 2.5,},
                                 open ? {
                                     justifyContent: 'initial',
                                 } : {
                                     justifyContent: 'center',
                                 },
                         ]}>
-                            <ListItemIcon sx={[
-                                {
-                                    minWidth: 0,
-                                    justifyContent: 'center',
-                                },
-                                open
-                                    ? {
-                                        mr: 1,
-                                    } : {
-                                        mr: 'auto',
-                                    },
-                            ]}>
-                                <Tooltip title={t(item.name)}>
+                            <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }} >
+                                <Tooltip title={t(item.tooltip)}>
                                     <item.icon className='fs15em'/>
                                 </Tooltip>
                             </ListItemIcon>
-                            <ListItemText primary={(<span style={{fontSize: "0.90em"}}>{t(item.name)}</span>)}
+                            <ListItemText primary={(<span style={{fontSize: "0.90em", paddingLeft: "6px" }}>{t(item.name)}</span>)}
                                           sx={[
+                                              {
+                                                  transition: "opacity 0.5s",
+                                              },
                                               open
                                                   ? {
                                                       opacity: 1,

@@ -19,21 +19,25 @@ const data = {
         items: [
             {
                 name: "dashboard",
+                tooltip: "dashboard",
                 url: "/",
                 icon: AiOutlineDashboard,
             },
             {
                 name: "components",
+                tooltip: "components",
                 url: "components",
                 icon: BiSolidComponent,
             },
             {
                 name: "license-issues",
+                tooltip: "license-issues",
                 url: "license-issues",
                 icon: GoLaw,
             },
             {
                 name: "vulnerabilities",
+                tooltip: "vulnerabilities",
                 url: "vulnerabilities",
                 icon: FaShieldVirus,
             },
@@ -42,37 +46,44 @@ const data = {
         groupName: "administration",
         items: [
             {
-                name: "admin-licenses",
+                name: "licenses",
+                tooltip: "admin-licenses",
                 url: "admin-licenses",
                 icon: Settings,
             },
             {
-                name: "admin-vulnerabilities",
+                name: "vulnerabilities",
+                tooltip: "admin-vulnerabilities",
                 url: "admin-vulnerabilities",
                 icon: Settings,
             },
             {
-                name: "admin-repositories",
+                name: "repositories",
+                tooltip: "admin-repositories",
                 url: "admin-repositories",
                 icon: TbDatabaseCog,
             },
             {
                 name: "policies",
+                tooltip: "policies",
                 url: "admin-policies",
                 icon: MdPolicy,
             },
             {
                 name: "credentials",
+                tooltip: "credentials",
                 url: "admin-credentials",
                 icon: TbLockCog,
             },
             {
                 name: "configuration",
+                tooltip: "configuration",
                 url: "admin-configuration",
                 icon: GrConfigure,
             },
             {
-                name: "admin-accounts",
+                name: "accounts",
+                tooltip: "admin-accounts",
                 url: "admin-accounts",
                 icon: RiUserSettingsLine,
             },
@@ -82,6 +93,7 @@ const data = {
         items: [
             {
                 name: "about",
+                tooltip: "about",
                 url: "about",
                 icon: Info,
             }
@@ -96,7 +108,7 @@ export default function AppMenuItems({ open }: Readonly<{ open: boolean }>) {
             <NavItemGroup links={data.navAdmin} open={open} />
             <NavItemGroup links={data.navOther} open={open} />
 
-            <NavUser />
+            <NavUser expand={open}/>
         </List>
     );
 

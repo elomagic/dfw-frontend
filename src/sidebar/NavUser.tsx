@@ -19,7 +19,8 @@ import {
 import {Logout} from "@mui/icons-material";
 import {useState} from "react";
 import * as React from "react";
-export function NavUser() {
+import {BsChevronExpand} from "react-icons/bs";
+export function NavUser({ expand }: Readonly<{ expand: boolean }>) {
 
     const { t } = useTranslation();
     const auth: AuthContextProps = useAuth();
@@ -45,10 +46,20 @@ export function NavUser() {
         <>
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                 <ListItem onClick={handleClick}>
-                    <ListItemAvatar>
-                        <Avatar alt={auth.displayName} src={avatarUrl} />
+                    <ListItemAvatar sx={{ minWidth: "40px" }}>
+                        <Avatar alt={auth.displayName} src={avatarUrl} sx={{ width: 32, height: 32 }} variant="rounded" />
                     </ListItemAvatar>
-                    <ListItemText primary={auth.displayName} secondary={auth.mailAddress} />
+
+                    {expand &&
+                        <>
+                            <ListItemText
+                                primary={<div style={{fontSize: "smaller", fontWeight: "bolder"}}>{auth.displayName}</div>}
+                                secondary={<div style={{fontSize: "smaller"}}>{auth.mailAddress}</div>}
+                            />
+
+                            <BsChevronExpand />
+                        </>
+                    }
                 </ListItem>
             </List>
             <Menu
@@ -61,12 +72,13 @@ export function NavUser() {
                     paper: {
                         elevation: 0,
                         sx: {
+                            border: "1px solid #2F2F2F",
                             overflow: 'visible',
                             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                             mt: 1.5,
                             '& .MuiAvatar-root': {
-                                width: 48,
-                                height: 48,
+                                width: 32,
+                                height: 32,
                                 ml: -0.5,
                                 mr: 1,
                             },
@@ -79,36 +91,36 @@ export function NavUser() {
                                 width: 10,
                                 height: 10,
                                 bgcolor: 'background.paper',
-                                transform: 'translateY(-50%) rotate(45deg)',
                                 zIndex: 0,
                             },
                         },
                     },
                 }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                transformOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'center' }}
             >
                 <ListItem>
-                    <ListItemAvatar>
-                        <Avatar alt={auth.displayName} src={avatarUrl} />
+                    <ListItemAvatar sx={{ minWidth: "30px" }}>
+                        <Avatar alt={auth.displayName} src={avatarUrl} variant="rounded" />
                     </ListItemAvatar>
-                    <ListItemText primary={auth.displayName} secondary={auth.mailAddress} />
+                    <ListItemText
+                        primary={<div style={{ fontSize: "smaller", fontWeight: "bolder" }}>{auth.displayName}</div>}
+                        secondary={<div style={{ fontSize: "smaller" }}>{auth.mailAddress}</div>}
+                    />
                 </ListItem>
 
                 <Divider />
 
-                <MenuItem component={RouterLink} to="my-account">
+                <MenuItem component={RouterLink} to="my-account" sx={{fontSize: "0.90em"}}>
                     <ListItemIcon>
-                        <RiUserSettingsLine fontSize="small" />
+                        <RiUserSettingsLine className='fs15em'/>
                     </ListItemIcon>
                     {t('my-account')}
                 </MenuItem>
 
-                <Divider />
-
-                <MenuItem onClick={handleLogoutClick}>
+                <MenuItem onClick={handleLogoutClick} sx={{fontSize: "0.90em"}}>
                     <ListItemIcon>
-                        <Logout fontSize="small" />
+                        <Logout className='fs15em' />
                     </ListItemIcon>
                     {t('logout')}
                 </MenuItem>
