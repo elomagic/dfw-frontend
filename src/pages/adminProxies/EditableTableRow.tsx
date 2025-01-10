@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid2";
 import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
 import * as Rest from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
-import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
+import ProxyTypeIcon from "../../components/ProxyTypeIcon.tsx";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
@@ -124,7 +124,7 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
                            readOnly
                            startAdornment={(
                                <InputAdornment position="start">
-                                   <RepositoryTypeIcon type={proxy.type} />
+                                   <ProxyTypeIcon type={proxy.type} />
                                </InputAdornment>
                            )}
             />

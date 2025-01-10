@@ -30,7 +30,6 @@
   "create-policy": "Create Policy",
   "create-proxy": "Create Proxy",
   "create-purl-mapping": "Create PURL Mapping",
-  "create-repository": "Create Repository",
   "create-user-account": "Create User Account",
   "create-user-group": "Create User Group",
   "creation-failed": "Creation failed: {{message}}",

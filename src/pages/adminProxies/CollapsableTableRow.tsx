@@ -2,7 +2,7 @@ import TableCell from "@mui/material/TableCell";
 import {Check} from "@mui/icons-material";
 import TableRow from "@mui/material/TableRow";
 import {Proxy} from "../../DTOs.ts";
-import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
+import ProxyTypeIcon from "../../components/ProxyTypeIcon.tsx";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
@@ -39,12 +39,12 @@ export default function CollapsableTableRow({ proxy, internalBaseUrl, onDeleteRe
                 sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
-                <TableCell><RepositoryTypeIcon type={data.type} /></TableCell>
+                <TableCell><ProxyTypeIcon type={data.type} /></TableCell>
                 <TableCell>{data.name}</TableCell>
                 <TableCell>{data.enabled ? <Check color="success" /> : ""}</TableCell>
                 <TableCell>{data.description}</TableCell>
                 <TableCell>{data.baseUri}</TableCell>
-                <TableCell>{`${internalBaseUrl}/repository/${data.name}`}</TableCell>
+                <TableCell>{`${internalBaseUrl}/proxy/${data.name}`}</TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>

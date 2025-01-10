@@ -10,7 +10,7 @@ import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
-import {Proxy, RepositoryTypes} from "../../DTOs.ts";
+import {Proxy, ProxyTypes} from "../../DTOs.ts";
 import {FormSelect} from "../../components/FormSelect.tsx";
 import { toaster } from '../../Toaster.ts';
 
@@ -24,7 +24,7 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Forgot
     const { t } = useTranslation();
     const auth = useAuth();
     const [name, setName] = useState("");
-    const [type, setType] = useState<RepositoryTypes>("NPM");
+    const [type, setType] = useState<ProxyTypes>("NPM");
 
     const handleCreateClick = () => {
         const data: Proxy = {
@@ -75,7 +75,7 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Forgot
                                 { "key": "DOCKER", "label": "DOCKER" },
                                 { "key": "NUGET", "label": "NUGET" },
                             ]}
-                            onChange={(e) => setType(e.target.value as RepositoryTypes)}
+                            onChange={(e) => setType(e.target.value as ProxyTypes)}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

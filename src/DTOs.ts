@@ -1,4 +1,4 @@
-export declare type RepositoryTypes = "MAVEN" | "NPM" | "DOCKER" | "NUGET"
+export declare type ProxyTypes = "MAVEN" | "NPM" | "DOCKER" | "NUGET"
 export declare type AuthenticationMode = "BASIC" | "BEARER"
 export declare type ViolationState = "FAIL" | "WARN" | "INFO";
 export declare type ConditionType = "AGE" | "LICENSE_GROUP" | "SEVERTITY";
@@ -51,7 +51,7 @@ export declare interface ComponentLicense extends IdItem {
 }
 
 export declare interface Component extends IdItem {
-    type: RepositoryTypes;
+    type: ProxyTypes;
     purl: string;
     namespace: string;
     name: string;
@@ -102,7 +102,7 @@ export declare interface UserAccountGroup extends IdItem {
 
 export declare interface Proxy extends IdItem {
     id?: string;
-    type: RepositoryTypes;
+    type: ProxyTypes;
     enabled: boolean;
     name: string;
     description?: string;
@@ -145,7 +145,7 @@ export declare interface LicensePurlMap extends IdItem {
 }
 
 export declare interface LicensePackage {
-    type: RepositoryTypes;
+    type: ProxyTypes;
     purl: string;
     groupId: string;
     licenseId: string;
