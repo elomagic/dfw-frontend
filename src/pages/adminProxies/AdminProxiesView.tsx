@@ -7,31 +7,31 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts"
-import {Configuration, Repository} from "../../DTOs.ts";
+import {Configuration, Proxy} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import CreateRepositoryDialog from "./CreateRepositoryDialog.tsx";
+import CreateProxyDialog from "./CreateProxyDialog.tsx";
 import YesNoDialog from "../../components/YesNoDialog.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
 
-export default function AdminRepositoriesView() {
+export default function AdminProxiesView() {
 
     const { t } = useTranslation();
     const auth = useAuth();
-    const [ rows, setRows ] = useState<Repository[]>([]);
+    const [ rows, setRows ] = useState<Proxy[]>([]);
     const [ internalBaseUrl, setInternalBaseUrl ] = useState<string>("https://?");
     const [ filter, setFilter ] = useState<string>("");
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
     const [ deleteOpen, setDeleteOpen ] = useState<boolean>(false);
-    const [ selectedEntity, setSelectedEntity ] = useState<Repository>();
+    const [ selectedEntity, setSelectedEntity ] = useState<Proxy>();
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.Repository)
+        Rest.get(auth, Rest.RestEndpoint.Proxy)
             .then((res) => res.json())
-            .then((reps: Repository[]) => {
+            .then((reps: Proxy[]) => {
                 setRows(reps);
             })
             .catch((err: Error) => {
@@ -40,7 +40,7 @@ export default function AdminRepositoriesView() {
             });
     }, [t, auth]);
 
-    const handleCloseDialog = (dto: Repository|undefined) => {
+    const handleCloseDialog = (dto: Proxy|undefined) => {
         setDialogOpen(false);
         refresh();
 
@@ -49,13 +49,13 @@ export default function AdminRepositoriesView() {
         }
     }
 
-    const handleDeleteRequest = (r: Repository) => {
+    const handleDeleteRequest = (r: Proxy) => {
         setSelectedEntity(r);
         setDeleteOpen(true);
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.Repository, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.RestEndpoint.Proxy, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))
@@ -80,11 +80,11 @@ export default function AdminRepositoriesView() {
 
     return (
         <Box margin={3}>
-            <TableHeaderControls createCaption={t("create-repository")}
+            <TableHeaderControls createCaption={t("create-proxy")}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
-                                 role={Role.REPOSITORY_CREATE}
+                                 role={Role.PROXY_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
@@ -104,7 +104,7 @@ export default function AdminRepositoriesView() {
                             .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
                             .map((row) => (
                                 <CollapsableTableRow key={row.name}
-                                                     repository={row}
+                                                     proxy={row}
                                                      internalBaseUrl={internalBaseUrl}
                                                      onDeleteRequest={(id) => handleDeleteRequest(id)}
                                 />
@@ -114,9 +114,9 @@ export default function AdminRepositoriesView() {
                 </Table>
             </TableContainer>
 
-            <CreateRepositoryDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
-            <YesNoDialog title={t("delete-repository")}
-                         text={`Do ya really want to delete the repository '${selectedEntity?.name}'?`}
+            <CreateProxyDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
+            <YesNoDialog title={t("pages.admin-accounts.user.dialog.delete.title")}
+                         text={t("pages.admin-proxies.dialog.delete.text", {name: selectedEntity?.name})}
                          open={deleteOpen}
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}

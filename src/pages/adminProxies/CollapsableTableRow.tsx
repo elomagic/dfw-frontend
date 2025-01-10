@@ -1,7 +1,7 @@
 import TableCell from "@mui/material/TableCell";
 import {Check} from "@mui/icons-material";
 import TableRow from "@mui/material/TableRow";
-import {Repository} from "../../DTOs.ts";
+import {Proxy} from "../../DTOs.ts";
 import RepositoryTypeIcon from "../../components/RepositoryTypeIcon.tsx";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
@@ -13,22 +13,22 @@ import {RestEndpoint} from "../../RestClient.ts";
 import {toaster} from "../../Toaster.ts";
 
 interface CollapsableTableRowProps {
-    repository: Repository;
+    proxy: Proxy;
     internalBaseUrl: string;
-    onDeleteRequest: (r: Repository) => void;
+    onDeleteRequest: (r: Proxy) => void;
 }
 
-export default function CollapsableTableRow({ repository, internalBaseUrl, onDeleteRequest }: Readonly<CollapsableTableRowProps>) {
+export default function CollapsableTableRow({ proxy, internalBaseUrl, onDeleteRequest }: Readonly<CollapsableTableRowProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
     const [open, setOpen] = useState<boolean>(false);
-    const [data, setData] = useState<Repository>(repository);
+    const [data, setData] = useState<Proxy>(proxy);
 
-    const handleSaveClick = (d: Repository) => {
-        Rest.patch(auth, RestEndpoint.Repository, d)
+    const handleSaveClick = (d: Proxy) => {
+        Rest.patch(auth, RestEndpoint.Proxy, d)
             .then((res) => res.json())
-            .then((dto: Repository) => setData(dto))
+            .then((dto: Proxy) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
@@ -49,7 +49,7 @@ export default function CollapsableTableRow({ repository, internalBaseUrl, onDel
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow repository={data}
+                        <EditableTableRow proxy={data}
                                           onSaveClick={handleSaveClick}
                                           onDeleteRequest={() => onDeleteRequest(data)} />
                     </Collapse>

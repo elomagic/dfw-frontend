@@ -100,7 +100,7 @@ export declare interface UserAccountGroup extends IdItem {
     roles: string[];
 }
 
-export declare interface Repository extends IdItem {
+export declare interface Proxy extends IdItem {
     id?: string;
     type: RepositoryTypes;
     enabled: boolean;

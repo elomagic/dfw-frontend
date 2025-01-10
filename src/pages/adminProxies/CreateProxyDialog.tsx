@@ -10,16 +10,16 @@ import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
-import {Repository, RepositoryTypes} from "../../DTOs.ts";
+import {Proxy, RepositoryTypes} from "../../DTOs.ts";
 import {FormSelect} from "../../components/FormSelect.tsx";
 import { toaster } from '../../Toaster.ts';
 
 interface ForgotPasswordProps {
     open: boolean;
-    handleClose: (dto: Repository|undefined) => void;
+    handleClose: (dto: Proxy|undefined) => void;
 }
 
-export default function CreateRepositoryDialog({ open, handleClose }: Readonly<ForgotPasswordProps>) {
+export default function CreateProxyDialog({ open, handleClose }: Readonly<ForgotPasswordProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -27,7 +27,7 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
     const [type, setType] = useState<RepositoryTypes>("NPM");
 
     const handleCreateClick = () => {
-        const data: Repository = {
+        const data: Proxy = {
             name,
             type,
             enabled: false,
@@ -36,7 +36,7 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
         }
 
         Rest
-            .post(auth, RestEndpoint.Repository, data)
+            .post(auth, RestEndpoint.Proxy, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));
@@ -48,13 +48,11 @@ export default function CreateRepositoryDialog({ open, handleClose }: Readonly<F
             onClose={() => handleClose(undefined)}
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
-            <DialogTitle>{t("create-repository")}</DialogTitle>
+            <DialogTitle>{t("create-proxy")}</DialogTitle>
             <DialogContent
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
             >
-                <DialogContentText>
-                    Please enter the name and the type of the new repository
-                </DialogContentText>
+                <DialogContentText>{t("pages.admin-proxies.dialog.create.text")}</DialogContentText>
                 <OutlinedInput
                     id="name"
                     name="name"

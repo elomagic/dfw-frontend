@@ -24,7 +24,7 @@ import {AuthContextProps, Role} from "./auth/Auth.tsx";
 import DashboardView from "./pages/dashboard/DashboardView.tsx";
 import {ProtectedRoute} from "./auth/ProtectedRoute.tsx";
 import AccountsView from "./pages/adminAccounts/AccountsView.tsx";
-import AdminRepositoriesView from "./pages/adminRepositories/AdminRepositoriesView.tsx";
+import AdminProxiesView from "./pages/adminProxies/AdminProxiesView.tsx";
 import LicenseIssuesView from "./pages/licenseIssues/LicenseIssuesView.tsx";
 import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
 import AdminLicensesView from "./pages/adminLicenses/AdminLicensesView.tsx";
@@ -216,8 +216,8 @@ function App() {
                                        element={<ProtectedRoute roles={[Role.LICENSE_NAME_MAP_READ, Role.LICENSE_PURL_MAP_READ]}><AdminLicensesView /></ProtectedRoute>}/>
                                 <Route path='admin-vulnerabilities'
                                        element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
-                                <Route path='admin-repositories'
-                                       element={<ProtectedRoute roles={Role.REPOSITORY_READ}><AdminRepositoriesView /></ProtectedRoute>}/>
+                                <Route path='admin-proxies'
+                                       element={<ProtectedRoute roles={Role.PROXY_READ}><AdminProxiesView /></ProtectedRoute>}/>
                                 <Route path='admin-policies'
                                        element={<ProtectedRoute roles={Role.POLICY_READ}><AdminPolicyView /></ProtectedRoute>}/>
                                 <Route path='admin-accounts'

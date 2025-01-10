@@ -3,9 +3,9 @@ import {BiSolidComponent} from "react-icons/bi";
 import {GoLaw} from "react-icons/go";
 import {FaShieldVirus} from "react-icons/fa";
 import {Info, Settings} from "@mui/icons-material";
-import {TbDatabaseCog, TbLockCog} from "react-icons/tb";
+import {TbLockCog} from "react-icons/tb";
 import {MdPolicy} from "react-icons/md";
-import {GrConfigure} from "react-icons/gr";
+import {GrConfigure, GrNavigate} from "react-icons/gr";
 import {RiAccountCircle2Line, RiUserSettingsLine} from "react-icons/ri";
 import {PiPasswordFill} from "react-icons/pi";
 
@@ -60,11 +60,11 @@ export const NavItemData = {
                 icon: Settings,
             },
             {
-                name: "repositories",
-                title: "admin-repositories",
-                tooltip: "admin-repositories",
-                url: "admin-repositories",
-                icon: TbDatabaseCog,
+                name: "proxies",
+                title: "admin-proxies",
+                tooltip: "admin-proxies",
+                url: "admin-proxies",
+                icon: GrNavigate,
             },
             {
                 name: "policies",

@@ -1,4 +1,4 @@
-import {CredentialData, Repository, UserAccountGroup} from "../../DTOs.ts";
+import {CredentialData, Proxy, UserAccountGroup} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import {InputAdornment} from "@mui/material";
@@ -16,24 +16,24 @@ import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
 
 interface EditableTableRowProps {
-    repository: Repository
-    onSaveClick: (data: Repository) => void;
+    proxy: Proxy
+    onSaveClick: (data: Proxy) => void;
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ repository, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
 
-    const [id] = useState(repository.id);
-    const [enabled, setEnabled] = useState(repository.enabled);
-    const [name, setName] = useState(repository.name);
-    const [description, setDescription] = useState(repository.description);
-    const [baseUri, setBaseUri] = useState(repository.baseUri);
-    const [credentialId, setCredentialId] = useState<string>(repository.credentialId ?? "-");
+    const [id] = useState(proxy.id);
+    const [enabled, setEnabled] = useState(proxy.enabled);
+    const [name, setName] = useState(proxy.name);
+    const [description, setDescription] = useState(proxy.description);
+    const [baseUri, setBaseUri] = useState(proxy.baseUri);
+    const [credentialId, setCredentialId] = useState<string>(proxy.credentialId ?? "-");
     const [groupPermissions, setGroupPermissions] = useState<UserAccountGroup[]>([]);
-    const [forwardHeaders, setForwardHeaders] = useState(repository.forwardHeaders);
+    const [forwardHeaders, setForwardHeaders] = useState(proxy.forwardHeaders);
 
     const [credentialsIds, setCredentialsIds] = useState<KeyLabelItem[]>([{ key: "-", label: "-"}]);
     const [allGroups, setAllGroups] = useState<UserAccountGroup[]>([]);
@@ -50,7 +50,7 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
         onSaveClick({
             id,
             enabled,
-            type: repository.type,
+            type: proxy.type,
             name, description,
             baseUri,
             credentialId,
@@ -118,13 +118,13 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
             />
 
             <FormTextField id="type"
-                           value={repository.type}
+                           value={proxy.type}
                            label={t("type")}
                            gridSize={6}
                            readOnly
                            startAdornment={(
                                <InputAdornment position="start">
-                                   <RepositoryTypeIcon type={repository.type} />
+                                   <RepositoryTypeIcon type={proxy.type} />
                                </InputAdornment>
                            )}
             />
@@ -146,15 +146,15 @@ export default function EditableTableRow({ repository, onSaveClick, onDeleteRequ
                 value={groupPermissions}
                 selectables={allGroups}
                 label={t("roles")}
-                editRole={Role.REPOSITORY_UPDATE}
+                editRole={Role.PROXY_UPDATE}
                 gridSize={6}
                 getItemId={(item: UserAccountGroup) => item.id ?? ""}
                 getItemLabel={(item: UserAccountGroup) => item.name}
                 onChange={(items) => setGroupPermissions(items)}
             />
 
-            <FormButtons roleRightButton={Role.REPOSITORY_UPDATE}
-                         roleLeftButton={Role.REPOSITORY_DELETE}
+            <FormButtons roleRightButton={Role.PROXY_UPDATE}
+                         roleLeftButton={Role.PROXY_DELETE}
                          onSaveClick={handleSaveClick}
                          onDeleteClick={onDeleteRequest}/>
         </Grid>

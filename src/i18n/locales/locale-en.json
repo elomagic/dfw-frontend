@@ -6,6 +6,7 @@
   "admin-credentials": "Admin Credentials",
   "admin-licenses": "Admin Licenses",
   "admin-policies": "Admin Policies",
+  "admin-proxies": "Admin Proxies",
   "admin-repositories": "Admin Repositories",
   "admin-vulnerabilities": "Admin Vulnerabilities",
   "administration": "Administration",
@@ -26,6 +27,8 @@
   "create-credential": "Create Credential",
   "create-exception-rule": "Create Exception Rule...",
   "create-name-mapping": "Create Name Mapping",
+  "create-policy": "Create Policy",
+  "create-proxy": "Create Proxy",
   "create-purl-mapping": "Create PURL Mapping",
   "create-repository": "Create Repository",
   "create-user-account": "Create User Account",
@@ -82,8 +85,10 @@
     "admin-licenses": {
 
     },
-    "admin-repositories": {
-
+    "admin-proxies": {
+      "dialog.create.text": "Please enter the name and the type of the new proxy",
+      "dialog.delete.title": "Delete Proxy",
+      "dialog.delete.text": "Do ya really want to delete the proxy '{{name}}' ?"
     },
     "credentials": {
 
@@ -111,6 +116,8 @@
   "passphrase": "Passphrase",
   "policies": "Policies",
   "property": "Property",
+  "proxies": "Proxies",
+  "proxy": "Proxy",
   "purl": "PURL",
   "purl-mappings": "PURL Mappings",
   "purl-match": "PURL Match",
