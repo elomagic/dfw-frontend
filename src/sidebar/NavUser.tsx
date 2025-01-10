@@ -50,16 +50,24 @@ export function NavUser({ expand }: Readonly<{ expand: boolean }>) {
                         <Avatar alt={auth.displayName} src={avatarUrl} sx={{ width: 32, height: 32 }} variant="rounded" />
                     </ListItemAvatar>
 
-                    {expand &&
-                        <>
-                            <ListItemText
-                                primary={<div style={{fontSize: "smaller", fontWeight: "bolder"}}>{auth.displayName}</div>}
-                                secondary={<div style={{fontSize: "smaller"}}>{auth.mailAddress}</div>}
-                            />
+                    <ListItemText
+                        primary={<div style={{fontSize: "smaller", fontWeight: "bolder"}}>{auth.displayName}</div>}
+                        secondary={<div style={{fontSize: "smaller"}}>{auth.mailAddress}</div>}
+                        sx={[
+                            {
+                                transition: "opacity 0.5s",
+                            },
+                            expand
+                                ? {
+                                    opacity: 1,
+                                }
+                                : {
+                                    opacity: 0,
+                                },
+                        ]}
+                    />
 
-                            <BsChevronExpand />
-                        </>
-                    }
+                    <BsChevronExpand />
                 </ListItem>
             </List>
             <Menu
