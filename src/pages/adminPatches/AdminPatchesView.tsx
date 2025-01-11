@@ -34,7 +34,7 @@ function a11yProps(index: number) {
     };
 }
 
-export default function AdminLicensesView() {
+export default function AdminPatchesView() {
 
     const { t } = useTranslation();
     const [value, setValue] = useState(0);

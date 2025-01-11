@@ -14,12 +14,12 @@ import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {toaster} from "../../../Toaster.ts";
 
-interface CreatePurlMapProps {
+interface ComponentProps {
     open: boolean;
     handleClose: (dto: LicensePurlMap|undefined) => void;
 }
 
-export default function CreatePurlMapDialog({ open, handleClose }: Readonly<CreatePurlMapProps>) {
+export default function CreatePurlMapDialog({ open, handleClose }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

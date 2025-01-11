@@ -13,12 +13,12 @@ import {UserAccount} from "../../../DTOs.ts";
 import {toaster} from "../../../Toaster.ts";
 import FormTextField from "../../../components/FormTextField.tsx";
 
-interface CreateUserProps {
+interface ComponentProps {
     open: boolean;
     handleClose: (dto: UserAccount|undefined) => void;
 }
 
-export default function CreateUserDialog({ open, handleClose }: Readonly<CreateUserProps>) {
+export default function CreateUserDialog({ open, handleClose }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

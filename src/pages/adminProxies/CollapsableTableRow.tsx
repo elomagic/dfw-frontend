@@ -12,13 +12,13 @@ import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import {toaster} from "../../Toaster.ts";
 
-interface CollapsableTableRowProps {
+interface ComponentProps {
     proxy: Proxy;
     internalBaseUrl: string;
     onDeleteRequest: (r: Proxy) => void;
 }
 
-export default function CollapsableTableRow({ proxy, internalBaseUrl, onDeleteRequest }: Readonly<CollapsableTableRowProps>) {
+export default function CollapsableTableRow({ proxy, internalBaseUrl, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

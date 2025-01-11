@@ -15,12 +15,12 @@ import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
 import FormTextField from "../../components/FormTextField.tsx";
 import {toaster} from "../../Toaster.ts";
 
-interface CreateUserProps {
+interface ComponentProps {
     open: boolean;
     handleClose: (dto: CredentialData|undefined) => void;
 }
 
-export default function CreateCredentialDialog({ open, handleClose }: Readonly<CreateUserProps>) {
+export default function CreateCredentialDialog({ open, handleClose }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

@@ -1,31 +1,32 @@
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import {LicenseNameMap} from "../../../DTOs.ts";
+import {License, LicenseGroup} from "../../DTOs.ts";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../../auth/useAuth.ts";
-import * as Rest from "../../../RestClient.ts";
-import {RestEndpoint} from "../../../RestClient.ts";
-import { toaster } from "../../../Toaster.ts";
+import {useAuth} from "../../auth/useAuth.ts";
+import * as Rest from "../../RestClient.ts";
+import {RestEndpoint} from "../../RestClient.ts";
+import {toaster} from "../../Toaster.ts";
 
-interface CollapsableNameMapTableRowProps {
-    nameMap: LicenseNameMap
-    onDeleteRequest: (nm: LicenseNameMap) => void;
+interface ComponentProps {
+    licenseGroup: LicenseGroup;
+    licenses: License[];
+    onDeleteRequest: (r: LicenseGroup) => void;
 }
 
-export default function CollapsableNameMapTableRow({ nameMap, onDeleteRequest }: Readonly<CollapsableNameMapTableRowProps>) {
+export default function CollapsableTableRow({ licenseGroup, licenses, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
     const [open, setOpen] = useState<boolean>(false);
-    const [data, setData] = useState<LicenseNameMap>(nameMap);
+    const [data, setData] = useState<LicenseGroup>(licenseGroup);
 
-    const handleSaveClick = (d: LicenseNameMap) => {
-        Rest.patch(auth, RestEndpoint.LicensePurlMap, d)
+    const handleSaveClick = (d: LicenseGroup) => {
+        Rest.patch(auth, RestEndpoint.LicenseGroup, d)
             .then((res) => res.json())
-            .then((dto: LicenseNameMap) => setData(dto))
+            .then((dto: LicenseGroup) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
@@ -36,13 +37,13 @@ export default function CollapsableNameMapTableRow({ nameMap, onDeleteRequest }:
                 sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
-                <TableCell>{data.nameMatch}</TableCell>
-                <TableCell>{data.spdxId}</TableCell>
+                <TableCell>{data.name}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell sx={{height: 0}} colSpan={3}>
+                <TableCell sx={{height: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow nameMap={data}
+                        <EditableTableRow licenseGroup={data}
+                                          licenses={licenses}
                                           onSaveClick={handleSaveClick}
                                           onDeleteRequest={() => onDeleteRequest(data)} />
                     </Collapse>

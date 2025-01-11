@@ -1,4 +1,4 @@
-import {Policy, ViolationState} from "../../DTOs.ts";
+import {LicenseGroup, Policy, PolicyCondition, ViolationState} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
@@ -8,14 +8,16 @@ import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
 import {Role} from "../../auth/Auth.tsx";
+import PolicyConditionsList from "./PolicyConditionsList.tsx";
 
-interface EditableTableRowProps {
+interface ComponentProps {
     policy: Policy
+    licenseGroups: LicenseGroup[];
     onSaveClick: (data: Policy) => void;
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ policy, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ policy, licenseGroups, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
 
@@ -23,8 +25,13 @@ export default function EditableTableRow({ policy, onSaveClick, onDeleteRequest 
     const [name, setName] = useState(policy.name);
     const [violationState, setViolationState] = useState<ViolationState>("FAIL");
     const [enabled, setEnabled] = useState(policy.enabled);
+    const [conditions, setConditions] = useState<PolicyCondition[]>(policy.conditions);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
+
+    const handleConditionsChanges = (newConditions: PolicyCondition[]) => {
+        setConditions(newConditions);
+    }
 
     const handleSaveClick = () => {
         if (!validateRequiredText(name, setNameErrorMessage)) {
@@ -36,7 +43,7 @@ export default function EditableTableRow({ policy, onSaveClick, onDeleteRequest 
             enabled,
             name,
             violationState,
-            conditions: []
+            conditions
         });
     };
 
@@ -68,6 +75,10 @@ export default function EditableTableRow({ policy, onSaveClick, onDeleteRequest 
                           onChange={e => setEnabled(e.target.checked)}
                           gridSize={12}
             />
+
+            <PolicyConditionsList policyConditions={conditions}
+                                  licenseGroups={licenseGroups}
+                                  onConditionsChange={handleConditionsChanges} />
 
             <FormButtons roleRightButton={Role.POLICY_UPDATE}
                          roleLeftButton={Role.POLICY_DELETE}

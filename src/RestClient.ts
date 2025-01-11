@@ -10,6 +10,7 @@ export enum RestEndpoint {
     ConfigurationKey = "/api/v1/configurationKey",
     Credential = "/api/v1/credential",
     License = "/api/v1/license/spdx",
+    LicenseGroup = "/api/v1/license/group",
     LicenseNameMap = "/api/v1/license/nameMap",
     LicensePermitted = "/api/v1/license/permitted",
     LicensePurlMap = "/api/v1/license/purlMap",

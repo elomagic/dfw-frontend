@@ -14,12 +14,12 @@ import FormTextField from "../../../components/FormTextField.tsx";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
 import {toaster} from "../../../Toaster.ts";
 
-interface CreateNameMapProps {
+interface ComponentProps {
     open: boolean;
     handleClose: (dto: LicenseNameMap|undefined) => void;
 }
 
-export default function CreateNameMapDialog({ open, handleClose }: Readonly<CreateNameMapProps>) {
+export default function CreateNameMapDialog({ open, handleClose }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

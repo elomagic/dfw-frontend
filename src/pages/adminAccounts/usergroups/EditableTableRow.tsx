@@ -11,7 +11,7 @@ import FormTextField from "../../../components/FormTextField.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
 
-interface EditableTableRowProps {
+interface ComponentProps {
     group: UserAccountGroup
     onSaveClick: (data: UserAccountGroup) => void;
     onDeleteRequest: () => void
@@ -21,7 +21,7 @@ interface StringWrapperItem {
     value: string;
 }
 
-export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

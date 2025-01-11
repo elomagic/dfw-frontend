@@ -1,51 +1,51 @@
 import {Box, Paper} from "@mui/material";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import {useCallback, useEffect, useState} from "react";
-import * as Rest from "../../RestClient.ts"
-import {LicenseGroup, Policy} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../auth/useAuth.ts";
 import TableHeaderControls from "../../components/TableHeaderControls.tsx";
-import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import YesNoDialog from "../../components/YesNoDialog.tsx";
 import {Role} from "../../auth/Auth.tsx";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
+import YesNoDialog from "../../components/YesNoDialog.tsx";
+import {useAuth} from "../../auth/useAuth.ts";
+import {useCallback, useEffect, useState} from "react";
+import {License, LicenseGroup} from "../../DTOs.ts";
+import * as Rest from "../../RestClient.ts";
 import {toaster} from "../../Toaster.ts";
-import CreatePolicyDialog from "./CreatePolicyDialog.tsx";
+import CollapsableTableRow from "./CollapsableTableRow.tsx";
+import CreateLicenseGroupDialog from "./CreateLicenseGroupDialog.tsx";
 
-export default function AdminPolicyView() {
+export default function AdminLicenseGroupsView() {
 
     const { t } = useTranslation();
     const auth = useAuth();
-    const [ rows, setRows ] = useState<Policy[]>([]);
+    const [ rows, setRows ] = useState<LicenseGroup[]>([]);
     const [ filter, setFilter ] = useState<string>("");
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
     const [ deleteOpen, setDeleteOpen ] = useState<boolean>(false);
-    const [ selectedEntity, setSelectedEntity ] = useState<Policy>();
-    const [ licenseGroups, setLicenseGroups ] = useState<LicenseGroup[]>([]);
+    const [ selectedEntity, setSelectedEntity ] = useState<LicenseGroup>();
+    const [ licenses, setLicenses ] = useState<License[]>([]);
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.Policy)
+        Rest.get(auth, Rest.RestEndpoint.LicenseGroup)
             .then((res) => res.json())
-            .then((reps: Policy[]) => {
-                setRows(reps);
+            .then((dto: LicenseGroup[]) => {
+                setRows(dto);
             })
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
 
-        Rest.get(auth, Rest.RestEndpoint.LicenseGroup)
+        Rest.get(auth, Rest.RestEndpoint.License)
             .then((res) => res.json())
-            .then((rs: LicenseGroup[]) => setLicenseGroups(rs))
+            .then((rs: License[]) => setLicenses(rs))
             .catch((err: Error) => toaster("Getting license group list failed: " + err.message, 'error'));
     }, [t, auth]);
 
-    const handleCloseDialog = (dto: Policy|undefined) => {
+    const handleCloseDialog = (dto: LicenseGroup | undefined) => {
         setDialogOpen(false);
         refresh();
 
@@ -54,17 +54,18 @@ export default function AdminPolicyView() {
         }
     }
 
-    const handleDeleteRequest = (r: Policy) => {
+    const handleDeleteRequest = (r: LicenseGroup) => {
         setSelectedEntity(r);
         setDeleteOpen(true);
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.Policy, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.RestEndpoint.LicenseGroup, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))
     }
+
 
     useEffect(() => {
         refresh();
@@ -72,20 +73,18 @@ export default function AdminPolicyView() {
 
     return (
         <Box margin={3}>
-            <TableHeaderControls createCaption={t("create-policy")}
+            <TableHeaderControls createCaption={t("create-license-group")}
+                                 filter={filter}
+                                 role={Role.LICENSE_GROUP_CREATE}
                                  onCreateClicked={() => setDialogOpen(true)}
                                  onFilterChanged={f => setFilter(f)}
                                  onRefresh={refresh}
-                                 role={Role.POLICY_CREATE}
             />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell width={"60px"}>{t("enabled")}</TableCell>
                             <TableCell>{t("name")}</TableCell>
-                            <TableCell width={"60px"}>{t("type")}</TableCell>
-                            <TableCell>{t("conditions-count")}</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -94,8 +93,8 @@ export default function AdminPolicyView() {
                             .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
                             .map((row) => (
                                 <CollapsableTableRow key={row.name}
-                                                     policy={row}
-                                                     licenseGroups={licenseGroups}
+                                                     licenseGroup={row}
+                                                     licenses={licenses}
                                                      onDeleteRequest={(id) => handleDeleteRequest(id)}
                                 />
                             ))
@@ -104,9 +103,10 @@ export default function AdminPolicyView() {
                 </Table>
             </TableContainer>
 
-            <CreatePolicyDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
-            <YesNoDialog title={t("delete-policy")}
-                         text={`Do ya really want to delete the policy '${selectedEntity?.name}'?`}
+            <CreateLicenseGroupDialog open={dialogOpen} handleClose={(dto) => handleCloseDialog(dto)} />
+
+            <YesNoDialog title={t("pages.admin-license-groups.dialog.delete.title")}
+                         text={t("pages.admin-license-groups.dialog.delete.text", {name: selectedEntity?.name})}
                          open={deleteOpen}
                          onYesClick={() => handleDelete()}
                          onNoClick={() => setDeleteOpen(false)}

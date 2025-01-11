@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../../Validators.ts";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
-import {License, LicenseNameMap} from "../../../DTOs.ts";
+import {License, LicensePurlMap} from "../../../DTOs.ts";
 import FormButtons from "../../../components/FormButtons.tsx";
 import FormTextField from "../../../components/FormTextField.tsx";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
@@ -12,25 +12,25 @@ import FormTextArea from "../../../components/FormTextArea.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import { toaster } from "../../../Toaster.ts";
 
-interface EditableTableRowProps {
-    nameMap: LicenseNameMap,
-    onSaveClick: (data: LicenseNameMap) => void;
-    onDeleteRequest: () => void
+interface ComponentProps {
+    purlMap: LicensePurlMap
+    onSaveClick: (data: LicensePurlMap) => void;
+    onDeleteRequest: () => void;
 }
 
-export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
 
-    const [id] = useState(nameMap.id);
-    const [nameMatch, setNameMatch] = useState<string>(nameMap.nameMatch);
-    const [spdxId, setSpdxId] = useState<string>(nameMap.spdxId);
-    const [comment, setComment] = useState<string|undefined>(nameMap.comment);
+    const [id] = useState(purlMap.id);
+    const [purlMatch, setPurlMatch] = useState<string>(purlMap.purlMatch);
+    const [spdxId, setSpdxId] = useState<string>(purlMap.spdxId);
+    const [comment, setComment] = useState<string|undefined>(purlMap.comment);
 
     const [spdxList, setSpdxList] = useState<KeyLabelItem[]>([]);
 
-    const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
+    const [purlErrorMessage, setPurlErrorMessage] = useState<string|undefined>(undefined);
 
     useEffect(() => {
         Rest.get(auth, Rest.RestEndpoint.License)
@@ -41,27 +41,28 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
     }, [auth]);
 
     const handleSaveClick = () => {
-        if (!validateRequiredText(nameMatch, setNameErrorMessage)) {
+        if (!validateRequiredText(purlMatch, setPurlErrorMessage)) {
             return;
         }
 
-        onSaveClick({id, nameMatch, spdxId, comment});
+        onSaveClick({id, purlMatch, spdxId, comment});
     };
 
     return (
         <Grid container spacing={2} marginTop={2} marginBottom={2}>
-            <FormTextField id="nameMatch"
-                           value={nameMatch}
-                           errorMessage={nameErrorMessage}
-                           onChange={e => {
-                               validateRequiredText(e.target.value, setNameErrorMessage);
-                               setNameMatch(e.target.value)
-                           }}
-                           label={t("name-match")}
-                           autoFocus
-                           required
-                           gridSize={6}
+            <FormTextField id="purlMatch"
+                                 value={purlMatch}
+                                 errorMessage={purlErrorMessage}
+                                 onChange={e => {
+                                     validateRequiredText(e.target.value, setPurlErrorMessage);
+                                     setPurlMatch(e.target.value);
+                                 }}
+                                 label={t("purl-match")}
+                                 autoFocus
+                                 required
+                                 gridSize={6}
             />
+
             <FormSelect id="spdxId"
                         value={spdxId}
                         label={t("spdx-id")}
@@ -74,13 +75,12 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
                           value={comment}
                           label={t("comment")}
                           minRows={6}
-                          maxRows={6}
                           onChange={(e) => setComment(e.target.value)}
                           gridSize={6}
             />
 
-            <FormButtons roleLeftButton={Role.LICENSE_NAME_MAP_UPDATE}
-                         roleRightButton={Role.LICENSE_NAME_MAP_DELETE}
+            <FormButtons roleLeftButton={Role.LICENSE_PURL_MAP_UPDATE}
+                         roleRightButton={Role.LICENSE_PURL_MAP_DELETE}
                          onSaveClick={handleSaveClick}
                          onDeleteClick={onDeleteRequest}
             />

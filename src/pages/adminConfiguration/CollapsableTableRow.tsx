@@ -12,13 +12,13 @@ import {FaHourglass} from "react-icons/fa6";
 import {ImCheckboxChecked, ImCheckboxUnchecked} from "react-icons/im";
 import {toaster} from "../../Toaster.ts";
 
-interface CollapsableTableRowProps {
+interface ComponentProps {
     configuration: Configuration;
     keyMeta: ConfigurationKeyMeta | undefined;
     onResetRequest: (r: Configuration) => void;
 }
 
-export default function CollapsableTableRow({ configuration, keyMeta, onResetRequest }: Readonly<CollapsableTableRowProps>) {
+export default function CollapsableTableRow({ configuration, keyMeta, onResetRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

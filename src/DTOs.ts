@@ -31,7 +31,7 @@ export declare interface ConfigurationKeyMeta {
     secret: boolean
 }
 
-export declare interface PolicyCondition {
+export declare interface PolicyCondition extends IdItem {
     condition: ConditionType;
     operator: ConditionOperator;
     conditionalValue: string;
@@ -128,6 +128,11 @@ export declare interface License {
     licenseId: string;
     seeAlso: string[];
     isOsiApproved: boolean;
+}
+
+export declare interface LicenseGroup extends IdItem {
+    id?: string;
+    name: string;
 }
 
 export interface LicenseNameMap extends IdItem {

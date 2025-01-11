@@ -3,11 +3,11 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import ProxyTypeIcon from "../../components/ProxyTypeIcon.tsx";
 
-interface TableRowProps {
+interface ComponentProps {
     component: Component;
 }
 
-export default function ComponentTableRow({component}: Readonly<TableRowProps>) {
+export default function ComponentTableRow({component}: Readonly<ComponentProps>) {
 
     return (
         <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}, backgroundColor: "#292929"}}>

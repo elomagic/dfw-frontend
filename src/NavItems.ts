@@ -1,9 +1,9 @@
 import {AiOutlineDashboard} from "react-icons/ai";
 import {BiSolidComponent} from "react-icons/bi";
 import {GoLaw} from "react-icons/go";
-import {FaShieldVirus} from "react-icons/fa";
-import {Info, Settings} from "@mui/icons-material";
-import {TbLockCog} from "react-icons/tb";
+import {FaBandAid, FaShieldVirus} from "react-icons/fa";
+import {Info} from "@mui/icons-material";
+import {TbLicense, TbLockCog} from "react-icons/tb";
 import {MdPolicy} from "react-icons/md";
 import {GrConfigure, GrNavigate} from "react-icons/gr";
 import {RiAccountCircle2Line, RiUserSettingsLine} from "react-icons/ri";
@@ -46,18 +46,18 @@ export const NavItemData = {
         groupName: "administration",
         items: [
             {
-                name: "licenses",
-                title: "admin-licenses",
-                tooltip: "admin-licenses",
-                url: "admin-licenses",
-                icon: Settings,
+                name: "patches",
+                title: "admin-patches",
+                tooltip: "admin-patches",
+                url: "admin-patches",
+                icon: FaBandAid,
             },
             {
-                name: "vulnerabilities",
-                title: "admin-vulnerabilities",
-                tooltip: "admin-vulnerabilities",
-                url: "admin-vulnerabilities",
-                icon: Settings,
+                name: "license-groups",
+                title: "admin-license-groups",
+                tooltip: "admin-license-groups",
+                url: "admin-license-groups",
+                icon: TbLicense,
             },
             {
                 name: "proxies",

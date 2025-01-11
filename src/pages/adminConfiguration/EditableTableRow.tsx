@@ -7,14 +7,14 @@ import {useTranslation} from "react-i18next";
 import {Role} from "../../auth/Auth.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 
-interface EditableTableRowProps {
+interface ComponentProps {
     configuration: Configuration;
     keyMeta: ConfigurationKeyMeta | undefined;
     onSaveClick: (data: Configuration) => void;
     onResetRequest: () => void;
 }
 
-export default function EditableTableRow({ configuration, keyMeta, onSaveClick, onResetRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ configuration, keyMeta, onSaveClick, onResetRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
 

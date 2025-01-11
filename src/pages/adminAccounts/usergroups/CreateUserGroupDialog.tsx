@@ -13,12 +13,12 @@ import {UserAccountGroup} from "../../../DTOs.ts";
 import {toaster} from "../../../Toaster.ts";
 import FormTextField from "../../../components/FormTextField.tsx";
 
-interface CreateUserGroupProps {
+interface ComponentProps {
     open: boolean;
     handleClose: (dto: UserAccountGroup|undefined) => void;
 }
 
-export default function CreateUserGroupDialog({ open, handleClose }: Readonly<CreateUserGroupProps>) {
+export default function CreateUserGroupDialog({ open, handleClose }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

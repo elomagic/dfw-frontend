@@ -9,13 +9,13 @@ import {FormCheckbox} from "../../../components/FormCheckBox.tsx";
 import {FormSelect} from "../../../components/FormSelect.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 
-interface EditableTableRowProps {
+interface ComponentProps {
     user: UserAccount
     onSaveClick: (data: UserAccount) => void;
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
 

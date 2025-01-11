@@ -11,12 +11,12 @@ import * as Rest from "../../../RestClient.ts";
 import {RestEndpoint} from "../../../RestClient.ts";
 import {toaster} from "../../../Toaster.ts";
 
-interface CollapsableUserTableRowProps {
+interface ComponentProps {
     user: UserAccount
     onDeleteRequest: (u: UserAccount) => void;
 }
 
-export default function CollapsableUserTableRow({ user, onDeleteRequest }: Readonly<CollapsableUserTableRowProps>) {
+export default function CollapsableUserTableRow({ user, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

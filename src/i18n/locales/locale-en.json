@@ -4,6 +4,7 @@
   "action": "Action",
   "admin-accounts": "Admin Accounts",
   "admin-credentials": "Admin Credentials",
+  "admin-license-groups": "Admin License Groups",
   "admin-licenses": "Admin Licenses",
   "admin-policies": "Admin Policies",
   "admin-proxies": "Admin Proxies",
@@ -21,11 +22,13 @@
   "comment": "Comment",
   "components": "Components",
   "configuration": "Configuration",
+  "condition": "Condition",
   "continue": "Continue",
   "create": "Create",
   "create-api-key": "Create API Key",
   "create-credential": "Create Credential",
   "create-exception-rule": "Create Exception Rule...",
+  "create-license-group": "Create License Group",
   "create-name-mapping": "Create Name Mapping",
   "create-policy": "Create Policy",
   "create-proxy": "Create Proxy",
@@ -47,6 +50,7 @@
   "emailAddress": "Email Address",
   "enabled": "Enabled",
   "english": "English",
+  "filter": "Filter",
   "forbidden": "Forbidden",
   "frontend": "Frontend",
   "german": "German",
@@ -55,6 +59,8 @@
   "http-error-code": "HTTP Error Code: {{status}}",
   "language": "Language",
   "license-issues": "License Issues",
+  "license-group": "License Group",
+  "license-groups": "License Groups",
   "licenses": "Licenses",
   "logout": "Logout",
   "mailAddress": "Mail Address",
@@ -67,6 +73,7 @@
   "namespace": "Namespace",
   "no": "No",
   "not-found": "Not found",
+  "operator": "Operator",
   "pages": {
     "admin-accounts": {
       "user": {
@@ -80,6 +87,11 @@
     "admin-configuration": {
       "dialog.reset.title": "Reset Property",
       "dialog.reset.text": "Do ya really want to reset the value for property '{{key}}' ?"
+    },
+    "admin-license-groups": {
+      "dialog.create.text": "Please enter the name of the new license group",
+      "dialog.delete.title": "Delete License Group",
+      "dialog.delete.text": "Do ya really want to delete the license group '{{name}}' ?"
     },
     "admin-licenses": {
 
@@ -113,6 +125,7 @@
   "password": "Password",
   "password-validation": "Password Validation",
   "passphrase": "Passphrase",
+  "patches": "Patches",
   "policies": "Policies",
   "property": "Property",
   "proxies": "Proxies",
@@ -124,6 +137,7 @@
   "reset": "Reset",
   "reset-failed": "Reset failed",
   "reset-password": "Reset Password",
+  "reset-view": "Reset View",
   "roles": "Roles",
   "saving-data-failed": "Saving data failed: {{message}}",
   "sign-in": "Sign in",

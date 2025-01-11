@@ -11,12 +11,12 @@ import FormTextField from "../../components/FormTextField.tsx";
 import { v4 as uuidv4 } from 'uuid';
 import {validateRequiredText} from "../../Validators.ts";
 
-interface CreateApiKyProps {
+interface ComponentProps {
     open: boolean;
     handleClose: (dto: UserAccountApiKey|undefined) => void;
 }
 
-export default function CreateApiKeyDialog({ open, handleClose }: Readonly<CreateApiKyProps>) {
+export default function CreateApiKeyDialog({ open, handleClose }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
 

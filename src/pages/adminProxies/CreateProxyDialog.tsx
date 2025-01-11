@@ -14,12 +14,12 @@ import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.ts
 import { toaster } from '../../Toaster.ts';
 import FormTextField from "../../components/FormTextField.tsx";
 
-interface ForgotPasswordProps {
+interface ComponentProps {
     open: boolean;
     handleClose: (dto: Proxy|undefined) => void;
 }
 
-export default function CreateProxyDialog({ open, handleClose }: Readonly<ForgotPasswordProps>) {
+export default function CreateProxyDialog({ open, handleClose }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

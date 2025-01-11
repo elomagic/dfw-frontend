@@ -69,7 +69,6 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
                         return (
                             <ListItemButton
                                 key={item._itemId}
-                                role="listitem"
                                 sx={{ p: 0 }}
                                 onClick={() => handleToggleItem(item)}
                             >

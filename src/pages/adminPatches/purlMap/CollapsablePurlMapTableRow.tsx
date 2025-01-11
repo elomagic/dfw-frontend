@@ -10,12 +10,12 @@ import {useTranslation} from "react-i18next";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {toaster} from "../../../Toaster.ts";
 
-interface CollapsablePurlMapTableRowProps {
+interface ComponentProps {
     purlMap: LicensePurlMap
     onDeleteRequest: (pm: LicensePurlMap) => void;
 }
 
-export default function CollapsablePurlMapTableRow({ purlMap, onDeleteRequest }: Readonly<CollapsablePurlMapTableRowProps>) {
+export default function CollapsablePurlMapTableRow({ purlMap, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

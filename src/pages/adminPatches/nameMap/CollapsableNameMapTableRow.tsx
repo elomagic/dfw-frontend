@@ -1,33 +1,31 @@
 import TableCell from "@mui/material/TableCell";
-import {Check} from "@mui/icons-material";
 import TableRow from "@mui/material/TableRow";
-import {LicenseGroup, Policy} from "../../DTOs.ts";
+import {LicenseNameMap} from "../../../DTOs.ts";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../auth/useAuth.ts";
-import * as Rest from "../../RestClient.ts";
-import {RestEndpoint} from "../../RestClient.ts";
-import {toaster} from "../../Toaster.ts";
+import {useAuth} from "../../../auth/useAuth.ts";
+import * as Rest from "../../../RestClient.ts";
+import {RestEndpoint} from "../../../RestClient.ts";
+import { toaster } from "../../../Toaster.ts";
 
 interface ComponentProps {
-    policy: Policy;
-    onDeleteRequest: (r: Policy) => void;
-    licenseGroups: LicenseGroup[];
+    nameMap: LicenseNameMap
+    onDeleteRequest: (nm: LicenseNameMap) => void;
 }
 
-export default function CollapsableTableRow({ policy, licenseGroups, onDeleteRequest }: Readonly<ComponentProps>) {
+export default function CollapsableNameMapTableRow({ nameMap, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
     const [open, setOpen] = useState<boolean>(false);
-    const [data, setData] = useState<Policy>(policy);
+    const [data, setData] = useState<LicenseNameMap>(nameMap);
 
-    const handleSaveClick = (d: Policy) => {
-        Rest.patch(auth, RestEndpoint.Policy, d)
+    const handleSaveClick = (d: LicenseNameMap) => {
+        Rest.patch(auth, RestEndpoint.LicensePurlMap, d)
             .then((res) => res.json())
-            .then((dto: Policy) => setData(dto))
+            .then((dto: LicenseNameMap) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
@@ -38,16 +36,13 @@ export default function CollapsableTableRow({ policy, licenseGroups, onDeleteReq
                 sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
                 onClick={()=> setOpen(!open)}
             >
-                <TableCell>{data.enabled ? <Check color="success" /> : ""}</TableCell>
-                <TableCell>{data.name}</TableCell>
-                <TableCell>{data.violationState}</TableCell>
-                <TableCell>{data.conditions?.length}</TableCell>
+                <TableCell>{data.nameMatch}</TableCell>
+                <TableCell>{data.spdxId}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell sx={{height: 0}} colSpan={5}>
+                <TableCell sx={{height: 0}} colSpan={3}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow policy={data}
-                                          licenseGroups={licenseGroups}
+                        <EditableTableRow nameMap={data}
                                           onSaveClick={handleSaveClick}
                                           onDeleteRequest={() => onDeleteRequest(data)} />
                     </Collapse>

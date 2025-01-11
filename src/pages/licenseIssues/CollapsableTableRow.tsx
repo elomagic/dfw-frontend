@@ -5,12 +5,12 @@ import {Collapse} from "@mui/material";
 import {useState} from "react";
 import LicenseIssueTableRow from "./LicenseIssueTableRow.tsx";
 
-interface CollapsableTableRowProps {
+interface ComponentProps {
     licenseViolation: LicenseViolation
     onDeleteRequest: (r: LicenseViolation) => void;
 }
 
-export default function CollapsableTableRow({ licenseViolation, onDeleteRequest }: Readonly<CollapsableTableRowProps>) {
+export default function CollapsableTableRow({ licenseViolation, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const [open, setOpen] = useState<boolean>(false);
 

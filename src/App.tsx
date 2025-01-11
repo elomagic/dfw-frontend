@@ -26,7 +26,7 @@ import AccountsView from "./pages/adminAccounts/AccountsView.tsx";
 import AdminProxiesView from "./pages/adminProxies/AdminProxiesView.tsx";
 import LicenseIssuesView from "./pages/licenseIssues/LicenseIssuesView.tsx";
 import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
-import AdminLicensesView from "./pages/adminLicenses/AdminLicensesView.tsx";
+import AdminPatchesView from "./pages/adminPatches/AdminPatchesView.tsx";
 import SignInView from "./pages/signin/SignInView.tsx";
 import {createTheme, useTheme} from "@mui/material/styles";
 import {useAuth} from "./auth/useAuth.ts";
@@ -39,6 +39,7 @@ import AdminConfigurationView from "./pages/adminConfiguration/AdminConfiguratio
 import ComponentsView from "./pages/components/ComponentsView.tsx";
 import {ToastContainer} from "react-toastify";
 import AdminPolicyView from "./pages/adminPolicies/AdminPoliciesView.tsx";
+import AdminLicenseGroupsView from "./pages/adminLicenses/AdminLicenseGroupsView.tsx";
 
 const drawerWidth: number = 240;
 
@@ -129,6 +130,20 @@ const darkTheme = createTheme({
         mode: 'dark',
     },
     components: {
+        MuiInputBase: {
+            styleOverrides: {
+                root: {
+                    fontSize: '0.9rem',
+                },
+            }
+        },
+        MuiMenuItem: {
+            styleOverrides: {
+                root: {
+                    fontSize: '0.9rem',
+                },
+            }
+        },
         MuiTableCell: {
             styleOverrides: {
                 root: {
@@ -221,10 +236,10 @@ function App() {
                                 <Route path='vulnerabilities'
                                        element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
 
-                                <Route path='admin-licenses'
-                                       element={<ProtectedRoute roles={[Role.LICENSE_NAME_MAP_READ, Role.LICENSE_PURL_MAP_READ]}><AdminLicensesView /></ProtectedRoute>}/>
-                                <Route path='admin-vulnerabilities'
-                                       element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
+                                <Route path='admin-patches'
+                                       element={<ProtectedRoute roles={[Role.LICENSE_NAME_MAP_READ, Role.LICENSE_PURL_MAP_READ]}><AdminPatchesView /></ProtectedRoute>}/>
+                                <Route path='admin-license-groups'
+                                       element={<ProtectedRoute roles={Role.LICENSE_GROUP_READ} ><AdminLicenseGroupsView /></ProtectedRoute>}/>
                                 <Route path='admin-proxies'
                                        element={<ProtectedRoute roles={Role.PROXY_READ}><AdminProxiesView /></ProtectedRoute>}/>
                                 <Route path='admin-policies'

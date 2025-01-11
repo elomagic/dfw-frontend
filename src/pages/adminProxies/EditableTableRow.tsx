@@ -15,13 +15,13 @@ import FormSelectList from "../../components/FormSelectList.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
 
-interface EditableTableRowProps {
+interface ComponentProps {
     proxy: Proxy
     onSaveClick: (data: Proxy) => void;
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

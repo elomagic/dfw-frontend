@@ -4,14 +4,14 @@ import Grid from "@mui/material/Grid2";
 import FormButtons from "../../components/FormButtons.tsx";
 import FormTextField from "../../components/FormTextField.tsx";
 import {useState} from "react";
-import CreatePurlMapDialog from "../adminLicenses/purlMap/CreatePurlMapDialog.tsx";
+import CreatePurlMapDialog from "../adminPatches/purlMap/CreatePurlMapDialog.tsx";
 
-interface EditableTableRowProps {
+interface ComponentProps {
     licenseViolation: LicenseViolation
     onDeleteRequest: () => void
 }
 
-export default function LicenseIssueTableRow({ licenseViolation, onDeleteRequest }: Readonly<EditableTableRowProps>) {
+export default function LicenseIssueTableRow({ licenseViolation, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const [ createOpen, setCreateOpen ] = useState<boolean>(false);

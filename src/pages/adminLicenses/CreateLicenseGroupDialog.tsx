@@ -8,34 +8,35 @@ import {useTranslation} from "react-i18next";
 import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
-import {useState} from "react";
-import {Policy, ViolationState} from "../../DTOs.ts";
-import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
+import {useEffect, useState} from "react";
+import {LicenseGroup} from "../../DTOs.ts";
 import { toaster } from '../../Toaster.ts';
 import FormTextField from "../../components/FormTextField.tsx";
 
 interface ComponentProps {
     open: boolean;
-    handleClose: (dto: Policy|undefined) => void;
+    handleClose: (dto: LicenseGroup|undefined) => void;
 }
 
-export default function CreatePolicyDialog({ open, handleClose }: Readonly<ComponentProps>) {
+export default function CreateLicenseGroupDialog({ open, handleClose }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
     const [name, setName] = useState("");
-    const [violationState, setViolationState] = useState<ViolationState>("FAIL");
+
+    // Reset dialog on open
+    useEffect(() => {
+        if (open) {
+            setName("");
+        }
+    }, [open]);
 
     const handleCreateClick = () => {
-        const data: Policy = {
-            name,
-            violationState,
-            enabled: false,
-            conditions: []
+        const data: LicenseGroup = {
+            name
         }
 
-        Rest
-            .post(auth, RestEndpoint.Policy, data)
+        Rest.post(auth, RestEndpoint.LicenseGroup, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));
@@ -47,25 +48,17 @@ export default function CreatePolicyDialog({ open, handleClose }: Readonly<Compo
             onClose={() => handleClose(undefined)}
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
-            <DialogTitle>{t("create-policy")}</DialogTitle>
+            <DialogTitle>{t("create-license-group")}</DialogTitle>
             <DialogContent
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
             >
-                <DialogContentText>
-                    Please enter the name and the violation state of the new policy
-                </DialogContentText>
+                <DialogContentText>{t("pages.admin-license-groups.dialog.create.text")}</DialogContentText>
                 <FormTextField id="name"
                                value={name}
                                onChange={e => setName(e.target.value)}
                                label={t("name")}
                                autoFocus
                                required
-                />
-                <FormSelect id="type"
-                            value={violationState}
-                            label={t("type")}
-                            items={mapToKeyLabelItemArray(["FAIL", "WARN", "INFO"])}
-                            onChange={(e) => setViolationState(e.target.value as ViolationState)}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

@@ -6,12 +6,12 @@ import {IconButton} from "@mui/material";
 import {useAuth} from "../../auth/useAuth.ts";
 import {Role} from "../../auth/Auth.tsx";
 
-interface TableRowProps {
+interface ComponentProps {
     credential: CredentialData;
     onDeleteRequest: (cd: CredentialData) => void;
 }
 
-export default function CredentialTableRow({ credential, onDeleteRequest }: Readonly<TableRowProps>) {
+export default function CredentialTableRow({ credential, onDeleteRequest }: Readonly<ComponentProps>) {
 
     const auth = useAuth();
 
