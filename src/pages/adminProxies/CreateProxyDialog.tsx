@@ -4,15 +4,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
 import {Proxy, ProxyTypes} from "../../DTOs.ts";
-import {FormSelect} from "../../components/FormSelect.tsx";
+import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
 import { toaster } from '../../Toaster.ts';
+import FormTextField from "../../components/FormTextField.tsx";
 
 interface ForgotPasswordProps {
     open: boolean;
@@ -53,28 +53,17 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Forgot
                 sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
             >
                 <DialogContentText>{t("pages.admin-proxies.dialog.create.text")}</DialogContentText>
-                <OutlinedInput
-                    id="name"
-                    name="name"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    autoFocus
-                    required
-                    margin="dense"
-                    label={t("name")}
-                    placeholder={t("name")}
-                    type="text"
-                    fullWidth
+                <FormTextField id="purlMatch"
+                               value={name}
+                               onChange={e => setName(e.target.value)}
+                               label={t("name")}
+                               autoFocus
+                               required
                 />
                 <FormSelect id="type"
                             value={type}
                             label={t("type")}
-                            items={[
-                                { "key": "MAVEN", "label": "MAVEN" },
-                                { "key": "NPM", "label": "NPM" },
-                                { "key": "DOCKER", "label": "DOCKER" },
-                                { "key": "NUGET", "label": "NUGET" },
-                            ]}
+                            items={mapToKeyLabelItemArray(["MAVEN", "NPM", "DOCKER", "NUGET"])}
                             onChange={(e) => setType(e.target.value as ProxyTypes)}
                 />
             </DialogContent>

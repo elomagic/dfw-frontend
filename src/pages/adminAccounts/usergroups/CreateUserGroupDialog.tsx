@@ -4,7 +4,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../../RestClient.ts"
 import {RestEndpoint} from "../../../RestClient.ts"
@@ -12,6 +11,7 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useState} from "react";
 import {UserAccountGroup} from "../../../DTOs.ts";
 import {toaster} from "../../../Toaster.ts";
+import FormTextField from "../../../components/FormTextField.tsx";
 
 interface CreateUserGroupProps {
     open: boolean;
@@ -45,24 +45,17 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Cr
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-user-group")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
                 <DialogContentText>
                     Please enter the name of the new user group
                 </DialogContentText>
-                <OutlinedInput
-                    id="name"
-                    name="name"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    autoFocus
-                    required
-                    margin="dense"
-                    label={t("name")}
-                    placeholder={t("name")}
-                    type="text"
-                    fullWidth
+
+                <FormTextField id="name"
+                               value={name}
+                               onChange={e => setName(e.target.value)}
+                               label={t("name")}
+                               autoFocus
+                               required
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

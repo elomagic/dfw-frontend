@@ -4,15 +4,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
 import {Policy, ViolationState} from "../../DTOs.ts";
-import {FormSelect} from "../../components/FormSelect.tsx";
+import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
 import { toaster } from '../../Toaster.ts';
+import FormTextField from "../../components/FormTextField.tsx";
 
 interface CreatePolicyDialogProps {
     open: boolean;
@@ -54,27 +54,17 @@ export default function CreatePolicyDialog({ open, handleClose }: Readonly<Creat
                 <DialogContentText>
                     Please enter the name and the violation state of the new policy
                 </DialogContentText>
-                <OutlinedInput
-                    id="name"
-                    name="name"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    autoFocus
-                    required
-                    margin="dense"
-                    label={t("name")}
-                    placeholder={t("name")}
-                    type="text"
-                    fullWidth
+                <FormTextField id="name"
+                               value={name}
+                               onChange={e => setName(e.target.value)}
+                               label={t("name")}
+                               autoFocus
+                               required
                 />
                 <FormSelect id="type"
                             value={violationState}
                             label={t("type")}
-                            items={[
-                                { "key": "FAIL", "label": "FAIL" },
-                                { "key": "WARN", "label": "WARN" },
-                                { "key": "INFO", "label": "INFO" },
-                            ]}
+                            items={mapToKeyLabelItemArray(["FAIL", "WARN", "INFO"])}
                             onChange={(e) => setViolationState(e.target.value as ViolationState)}
                 />
             </DialogContent>

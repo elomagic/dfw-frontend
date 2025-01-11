@@ -55,9 +55,7 @@ export default function CreatePurlMapDialog({ open, handleClose }: Readonly<Crea
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-purl-mapping")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
                 <DialogContentText>
                     {t("please-enter-mapping-details")}
                 </DialogContentText>
@@ -67,14 +65,12 @@ export default function CreatePurlMapDialog({ open, handleClose }: Readonly<Crea
                                label={t("purl-match")}
                                autoFocus
                                required
-                               gridSize={6}
                 />
                 <FormSelect id="spdxId"
                             value={spdxId}
                             label={t("spdx-id")}
                             items={spdxList}
                             onChange={(e) => setSpdxId(e.target.value as string)}
-                            gridSize={6}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

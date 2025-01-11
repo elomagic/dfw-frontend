@@ -4,7 +4,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../../RestClient.ts"
 import {RestEndpoint} from "../../../RestClient.ts"
@@ -12,6 +11,7 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useState} from "react";
 import {UserAccount} from "../../../DTOs.ts";
 import {toaster} from "../../../Toaster.ts";
+import FormTextField from "../../../components/FormTextField.tsx";
 
 interface CreateUserProps {
     open: boolean;
@@ -47,24 +47,19 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<CreateU
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-user-account")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
+
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
                 <DialogContentText>
                     Please enter the mail address of the new user account
                 </DialogContentText>
-                <OutlinedInput
-                    id="mailAddress"
-                    name="mailAddress"
-                    value={mailAddress}
-                    onChange={e => setMailAddress(e.target.value)}
-                    autoFocus
-                    required
-                    margin="dense"
-                    label={t("mailAddress")}
-                    placeholder={t("mailAddress")}
-                    type="email"
-                    fullWidth
+
+                <FormTextField id="mailAddress"
+                               value={mailAddress}
+                               onChange={e => setMailAddress(e.target.value)}
+                               label={t("mailAddress")}
+                               type="email"
+                               autoFocus
+                               required
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

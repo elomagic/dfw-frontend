@@ -10,7 +10,7 @@ export declare interface KeyLabelItem {
     label: string;
 }
 
-export function mapToKeyLabelItemArray(items: string[]): KeyLabelItem[] {
+export const mapToKeyLabelItemArray =(items: string[]): KeyLabelItem[] => {
     return items.map(s => { return { key: s, label: s }});
 }
 

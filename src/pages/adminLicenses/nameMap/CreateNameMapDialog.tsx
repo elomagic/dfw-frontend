@@ -55,9 +55,7 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Crea
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-name-mapping")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
                 <DialogContentText>
                     Please enter mapping details
                 </DialogContentText>
@@ -67,7 +65,6 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Crea
                                label={t("name-match")}
                                autoFocus
                                required
-                               gridSize={6}
                 />
                 <FormSelect id="spdxId"
                             value={spdxId}
