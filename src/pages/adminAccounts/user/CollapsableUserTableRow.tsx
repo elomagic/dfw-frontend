@@ -42,7 +42,7 @@ export default function CollapsableUserTableRow({ user, onDeleteRequest }: Reado
                 <TableCell>{data.displayName}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
+                <TableCell sx={{height: 0}} colSpan={3}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <EditableTableRow user={data}
                                           onSaveClick={handleSaveClick}

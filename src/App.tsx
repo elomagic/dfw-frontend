@@ -18,7 +18,6 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MuiDrawer from '@mui/material/Drawer';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import TitleHeader from "./TitleHeader.tsx";
-import ThemeModeSelector from './ThemeModeSelector';
 import AppMenuItems from "./sidebar/AppMenuItems.tsx";
 import {AuthContextProps, Role} from "./auth/Auth.tsx";
 import DashboardView from "./pages/dashboard/DashboardView.tsx";
@@ -129,6 +128,17 @@ const darkTheme = createTheme({
     palette: {
         mode: 'dark',
     },
+    components: {
+        MuiTableCell: {
+            styleOverrides: {
+                root: {
+                    fontSize: '0.9rem',
+                    padding: '0 10px',
+                    height: '40px',
+                },
+            }
+        },
+    }
 });
 
 function App() {
@@ -182,7 +192,6 @@ function App() {
                                 >
                                     <TitleHeader/>
                                 </Typography>
-                                <ThemeModeSelector />
                             </Toolbar>
                         </AppBar>
 

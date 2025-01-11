@@ -33,6 +33,7 @@ function UnwrappedTextField({id, type, value, errorMessage, onChange, label, req
                 required={required}
                 autoFocus={autoFocus}
                 variant="outlined"
+                size="small"
                 error={errorMessage != undefined}
                 helperText={errorMessage}
                 color={errorMessage == undefined ? 'primary' : 'error'}

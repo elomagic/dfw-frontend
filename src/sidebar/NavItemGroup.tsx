@@ -42,7 +42,7 @@ export function NavItemGroup({ links, open }: Readonly<{
             </Box>
             <Box sx={{fontSize: "75%"}}>
                 {links.items.map((item) => (
-                    <ListItem key={item.url} disablePadding sx={{ display: 'block' }}>
+                    <ListItem key={item.url} disablePadding sx={{ display: 'block', height: "44px" }}>
                         <ListItemButton
                             component={RouterLink}
                             to={item.url}

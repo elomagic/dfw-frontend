@@ -2,11 +2,7 @@ import {ProxyTypes} from "../DTOs.ts";
 import {SiApachemaven, SiNuget} from "react-icons/si";
 import {FaDocker, FaNpm} from "react-icons/fa";
 
-interface ProxyTypeIconProps {
-    type: ProxyTypes;
-}
-
-export default function ProxyTypeIcon({ type }: Readonly<ProxyTypeIconProps>) {
+export default function ProxyTypeIcon({ type }: Readonly<{ type: ProxyTypes }>) {
 
     const icon = () => {
         switch(type) {

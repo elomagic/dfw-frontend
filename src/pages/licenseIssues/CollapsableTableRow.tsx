@@ -24,7 +24,7 @@ export default function CollapsableTableRow({ licenseViolation, onDeleteRequest 
                 <TableCell>{licenseViolation.licenses.join(", ")}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={2}>
+                <TableCell sx={{height: 0}} colSpan={2}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <LicenseIssueTableRow licenseViolation={licenseViolation} onDeleteRequest={() => onDeleteRequest(licenseViolation)} />
                     </Collapse>

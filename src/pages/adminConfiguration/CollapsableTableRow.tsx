@@ -49,7 +49,7 @@ export default function CollapsableTableRow({ configuration, keyMeta, onResetReq
                 </TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
+                <TableCell sx={{height: 0}} colSpan={5}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <EditableTableRow configuration={data}
                                           keyMeta={keyMeta}

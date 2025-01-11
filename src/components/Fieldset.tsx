@@ -21,6 +21,8 @@ export const Fieldset = ({ label, children, ...props }: FieldsetProps) => {
                  borderColor: "rgba(255, 255, 255, 0.3)",
                  borderRadius: 1,
                  borderWidth: 1,
+                 paddingTop: 0,
+                 paddingBottom: 0,
                  margin: "-9px 0 0 0",
                  "&:hover": {
                      borderColor: "white"

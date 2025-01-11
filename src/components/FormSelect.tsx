@@ -42,8 +42,17 @@ function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<Form
                     id={id}
                     value={value}
                     variant="standard"
+                    size="small"
                     onChange={onChange}
                     fullWidth
+                    sx={{
+                        '&::before': {
+                            border: 'none'
+                        },
+                        '&::after': {
+                            border: 'none'
+                        },
+                    }}
                 >
                     {items.map((item) => (<MenuItem key={item.key} value={item.key}>{item.label}</MenuItem>))}
                 </Select>

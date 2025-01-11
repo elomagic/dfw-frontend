@@ -140,6 +140,7 @@ export default function SignInView() {
                             autoFocus
                             required
                             fullWidth
+                            size="small"
                             variant="outlined"
                             color={emailErrorMessage === undefined ? 'primary' : 'error'}
                             sx={{ ariaLabel: 'mailAddress' }}
@@ -170,6 +171,7 @@ export default function SignInView() {
                             autoFocus
                             required
                             fullWidth
+                            size="small"
                             variant="outlined"
                             color={passwordErrorMessage === undefined ? 'primary' : 'error'}
                         />

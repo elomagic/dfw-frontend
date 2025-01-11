@@ -40,7 +40,7 @@ export default function CollapsablePurlMapTableRow({ purlMap, onDeleteRequest }:
                 <TableCell>{data.spdxId}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
+                <TableCell sx={{height: 0}} colSpan={3}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <EditableTableRow purlMap={data}
                                           onSaveClick={handleSaveClick}

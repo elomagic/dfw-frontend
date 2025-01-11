@@ -47,7 +47,7 @@ export default function CollapsableTableRow({ proxy, internalBaseUrl, onDeleteRe
                 <TableCell>{`${internalBaseUrl}/proxy/${data.name}`}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
+                <TableCell sx={{height: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <EditableTableRow proxy={data}
                                           onSaveClick={handleSaveClick}

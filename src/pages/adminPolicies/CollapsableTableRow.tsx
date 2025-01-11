@@ -43,7 +43,7 @@ export default function CollapsableTableRow({ policy, onDeleteRequest }: Readonl
                 <TableCell>{data.conditions?.length}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
+                <TableCell sx={{height: 0}} colSpan={5}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <EditableTableRow policy={data}
                                           onSaveClick={handleSaveClick}

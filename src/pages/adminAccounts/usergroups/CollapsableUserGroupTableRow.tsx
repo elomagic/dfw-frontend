@@ -39,7 +39,7 @@ export default function CollapsableUserGroupTableRow({ userGroup, onDeleteReques
                 <TableCell>{data.name}</TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={1}>
+                <TableCell sx={{height: 0}} colSpan={1}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <EditableTableRow group={data}
                                           onSaveClick={handleSaveClick}
