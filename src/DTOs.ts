@@ -2,7 +2,7 @@ export declare type ProxyTypes = "MAVEN" | "NPM" | "DOCKER" | "NUGET"
 export declare type AuthenticationMode = "BASIC" | "BEARER"
 export declare type ViolationState = "FAIL" | "WARN" | "INFO";
 export declare type ConditionType = "AGE" | "LICENSE_GROUP" | "SEVERTITY";
-export declare type ConditionOperator = "GREATER_THAN" | "IS" | "IS_NOT" | "SMALLER_THAN";
+export declare type ConditionOperator = "GREATER_THAN" | "IN" | "IS" | "IS_NOT" | "NOT_IN" | "SMALLER_THAN";
 
 // For internal managing, create my own item ID
 export declare type ItemId<T> = T & {

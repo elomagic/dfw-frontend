@@ -62,15 +62,15 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
                         onChange={(e) => onConditionChanged(e.target.value as ConditionType)}
             />
 
-            {data.condition !== "LICENSE_GROUP" &&
-                <FormSelect id="operator"
-                            value={data.operator}
-                            label={t("operator")}
-                            gridSize={3}
-                            items={mapToKeyLabelItemArray(["GREATER_THAN", "IS", "IS_NOT", "SMALLER_THAN"])}
-                            onChange={(e) => handleOperatorChanged(e.target.value as ConditionOperator)}
-                />
-            }
+            <FormSelect id="operator"
+                        value={data.operator}
+                        label={t("operator")}
+                        gridSize={3}
+                        items={mapToKeyLabelItemArray(
+                            data.condition === "LICENSE_GROUP" ? ["IN", "NOT_IN"] : ["GREATER_THAN", "IS", "IS_NOT", "SMALLER_THAN"]
+                        )}
+                        onChange={(e) => handleOperatorChanged(e.target.value as ConditionOperator)}
+            />
 
             {data.condition !== "LICENSE_GROUP" &&
                 <FormTextField id="conditionalValue"
@@ -85,7 +85,7 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
                 <FormSelect id="conditionalValue"
                             value={data.conditionalValue}
                             label={t("license-group")}
-                            gridSize={6}
+                            gridSize={3}
                             items={licenseGroups.map(i => { return { key: i.id, label: i.name } as KeyLabelItem})}
                             onChange={(e) => handleValueChanged(e.target.value as string)}
                 />
