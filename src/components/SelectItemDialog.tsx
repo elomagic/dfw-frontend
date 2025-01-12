@@ -6,8 +6,19 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import {ReactNode, useEffect, useState} from "react";
-import {Checkbox, List, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
+import {
+    Box,
+    Checkbox,
+    IconButton,
+    List,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    TextField,
+    Tooltip
+} from "@mui/material";
 import {ItemId} from "../DTOs.ts";
+import {BsToggles} from "react-icons/bs";
 
 interface SelectItemDialogProps<T> {
     value: ItemId<T>[];
@@ -22,6 +33,7 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
     const { t } = useTranslation();
 
     const [checked, setChecked] = useState<string[]>([]);
+    const [filter, setFilter] = useState<string>("");
 
     const resolveCheckedItems = (allItems: ItemId<T>[], checked: string[]): ItemId<T>[] => {
         return allItems.filter(item => checked.indexOf(item._itemId) !== -1);
@@ -40,9 +52,27 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
         setChecked(newChecked);
     }
 
+    const handleToggleAll = () => {
+        if (checked.length === selectables.length) {
+            setChecked([]);
+        } else {
+            const allItems = selectables.map(item => item._itemId);
+            setChecked(allItems);
+        }
+    }
+
+    const handleFilterChanged = (value: string) => {
+        setFilter(value);
+    }
+
     useEffect(() => {
         setChecked(value.map(item => item._itemId))
     }, [value]);
+
+    // Reset dialog on open
+    useEffect(() => {
+        setFilter("");
+    }, [open]);
 
     return (
         <Dialog
@@ -52,18 +82,33 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
         >
             <DialogTitle>{t("select-items-dialog-title")}</DialogTitle>
             <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
+                sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}
             >
                 <DialogContentText>
                     {t("select-items-dialog-description")}
                 </DialogContentText>
+
+                <Box display="flex" flexDirection="row">
+                    <TextField size="small"
+                               value={filter}
+                               placeholder={t("filter")}
+                               fullWidth
+                               onChange={e => {handleFilterChanged(e.target.value)}}
+                    />
+
+                    <Tooltip title={t("toggle-all")}>
+                        <IconButton aria-label="toggle-all" onClick={handleToggleAll}><BsToggles /></IconButton>
+                    </Tooltip>
+                </Box>
 
                 <List sx={{
                     width: '100%', height: 400, margin: '6px 0 6px 0',
                     border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px', padding: '8px 14px',
                     overflow: "auto"
                 }}>
-                    {selectables.map((item) => {
+                    {selectables
+                        .filter(item => ("" === filter || (getItemLabel(item) as string).includes(filter)))
+                        .map((item) => {
                         const labelId = `list-item-${value}-label`;
 
                         return (
