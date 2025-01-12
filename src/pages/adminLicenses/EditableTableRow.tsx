@@ -22,7 +22,7 @@ export default function EditableTableRow({ licenseGroup, licenses, onSaveClick, 
     const [id] = useState(licenseGroup.id);
     const [name, setName] = useState(licenseGroup.name);
 
-    const [selectedLicenses, setSelectedLicenses] = useState<License[]>([]);
+    const [selectedLicenses, setSelectedLicenses] = useState<License[]>(licenseGroup.licenses ?? []);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
 
@@ -33,7 +33,8 @@ export default function EditableTableRow({ licenseGroup, licenses, onSaveClick, 
 
         onSaveClick({
             id,
-            name
+            name,
+            licenses: selectedLicenses
         });
     };
 

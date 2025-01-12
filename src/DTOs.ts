@@ -133,6 +133,7 @@ export declare interface License {
 export declare interface LicenseGroup extends IdItem {
     id?: string;
     name: string;
+    licenses?: License[];
 }
 
 export interface LicenseNameMap extends IdItem {
