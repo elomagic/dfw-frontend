@@ -130,7 +130,7 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
             />
             <FormCheckbox id="forwardHeaders"
                           value={forwardHeaders}
-                          label={t("forwardHeaders")}
+                          label={t("forward-http-headers")}
                           onChange={e => setForwardHeaders(e.target.checked)}
                           gridSize={6}
             />
@@ -145,7 +145,7 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
             <FormSelectList<UserAccountGroup>
                 value={groupPermissions}
                 selectables={allGroups}
-                label={t("roles")}
+                label={t("user-groups")}
                 editRole={Role.PROXY_UPDATE}
                 gridSize={6}
                 getItemId={(item: UserAccountGroup) => item.id ?? ""}
