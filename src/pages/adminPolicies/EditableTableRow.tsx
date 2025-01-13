@@ -1,4 +1,4 @@
-import {LicenseGroup, Policy, PolicyCondition, ViolationState} from "../../DTOs.ts";
+import {LicenseGroup, Policy, PolicyCondition, PolicyOperator, ViolationState} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
@@ -25,6 +25,7 @@ export default function EditableTableRow({ policy, licenseGroups, onSaveClick, o
     const [name, setName] = useState(policy.name);
     const [violationState, setViolationState] = useState<ViolationState>("FAIL");
     const [enabled, setEnabled] = useState(policy.enabled);
+    const [operator, setOperator] = useState<PolicyOperator>(policy.operator);
     const [conditions, setConditions] = useState<PolicyCondition[]>(policy.conditions);
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
@@ -43,6 +44,7 @@ export default function EditableTableRow({ policy, licenseGroups, onSaveClick, o
             enabled,
             name,
             violationState,
+            operator,
             conditions
         });
     };
@@ -61,12 +63,19 @@ export default function EditableTableRow({ policy, licenseGroups, onSaveClick, o
                            required
                            gridSize={6}
             />
+            <FormSelect id="operator"
+                        value={PolicyOperator[operator]}
+                        label={t("operator")}
+                        items={mapToKeyLabelItemArray(Object.keys(PolicyOperator))}
+                        onChange={(e) => setOperator(PolicyOperator[e.target.value as keyof typeof PolicyOperator])}
+                        gridSize={3}
+            />
             <FormSelect id="violationState"
                         value={violationState}
                         label={t("violation-state")}
                         items={mapToKeyLabelItemArray(["FAIL", "WARN", "INFO"])}
                         onChange={(e) => setViolationState(e.target.value as ViolationState)}
-                        gridSize={6}
+                        gridSize={3}
             />
 
             <FormCheckbox id="enabled"

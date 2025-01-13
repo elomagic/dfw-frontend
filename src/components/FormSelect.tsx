@@ -10,11 +10,11 @@ export declare interface KeyLabelItem {
     label: string;
 }
 
-export const mapToKeyLabelItemArray =(items: string[]): KeyLabelItem[] => {
+export const mapToKeyLabelItemArray = (items: string[]): KeyLabelItem[] => {
     return items.map(s => { return { key: s, label: s }});
 }
 
-interface FormSelectProps {
+interface ComponentProps {
     id: string;
     value: string;
     label: string;
@@ -32,7 +32,7 @@ interface FormSelectProps {
  * @param items
  * @constructor
  */
-function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<FormSelectProps>) {
+function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<ComponentProps>) {
 
     return (
         <Fieldset label={label}>
@@ -61,7 +61,7 @@ function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<Form
     );
 }
 
-export function FormSelect({ id, value, onChange, label, items, gridSize}: Readonly<FormSelectProps>) {
+export function FormSelect({ id, value, onChange, label, items, gridSize}: Readonly<ComponentProps>) {
 
     return (
         <>
