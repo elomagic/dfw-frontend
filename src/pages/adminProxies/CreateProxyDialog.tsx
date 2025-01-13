@@ -9,9 +9,9 @@ import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
-import {Proxy, ProxyTypes} from "../../DTOs.ts";
+import {Proxy, ProxyType} from "../../DTOs.ts";
 import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
-import { toaster } from '../../Toaster.ts';
+import {toaster} from '../../Toaster.ts';
 import FormTextField from "../../components/FormTextField.tsx";
 
 interface ComponentProps {
@@ -24,7 +24,7 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Compon
     const { t } = useTranslation();
     const auth = useAuth();
     const [name, setName] = useState("");
-    const [type, setType] = useState<ProxyTypes>("NPM");
+    const [type, setType] = useState<ProxyType>(ProxyType.NPM);
 
     const handleCreateClick = () => {
         const data: Proxy = {
@@ -61,10 +61,10 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Compon
                                required
                 />
                 <FormSelect id="type"
-                            value={type}
+                            value={ProxyType[type]}
                             label={t("type")}
-                            items={mapToKeyLabelItemArray(["MAVEN", "NPM", "DOCKER", "NUGET"])}
-                            onChange={(e) => setType(e.target.value as ProxyTypes)}
+                            items={mapToKeyLabelItemArray(Object.keys(ProxyType))}
+                            onChange={(e) => setType(ProxyType[e.target.value as keyof typeof ProxyType])}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

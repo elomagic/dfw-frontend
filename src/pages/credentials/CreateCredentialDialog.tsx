@@ -25,7 +25,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
     const { t } = useTranslation();
     const auth = useAuth();
     const [credentialId, setCredentialId] = useState("");
-    const [mode, setMode] = useState<AuthenticationMode>("BASIC");
+    const [mode, setMode] = useState<AuthenticationMode>(AuthenticationMode.BASIC);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [passphrase, setPassphrase] = useState("");
@@ -79,13 +79,13 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                 />
 
                 <FormSelect id="mode"
-                            value={mode}
+                            value={AuthenticationMode[mode]}
                             label={t("mode")}
                             items={[
                                 { "key": "BASIC", "label": "BASIC Authentication" },
                                 { "key": "BEARER", "label": "BEARER Token" },
                             ]}
-                            onChange={(e) => setMode(e.target.value as AuthenticationMode)}
+                            onChange={(e) => setMode(AuthenticationMode[e.target.value as keyof typeof AuthenticationMode])}
                 />
 
                 {mode == "BASIC" && (

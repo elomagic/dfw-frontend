@@ -23,7 +23,7 @@ export default function EditableTableRow({ policy, licenseGroups, onSaveClick, o
 
     const [id] = useState(policy.id);
     const [name, setName] = useState(policy.name);
-    const [violationState, setViolationState] = useState<ViolationState>("FAIL");
+    const [violationState, setViolationState] = useState<ViolationState>(ViolationState.FAIL);
     const [enabled, setEnabled] = useState(policy.enabled);
     const [operator, setOperator] = useState<PolicyOperator>(policy.operator);
     const [conditions, setConditions] = useState<PolicyCondition[]>(policy.conditions);
@@ -71,10 +71,10 @@ export default function EditableTableRow({ policy, licenseGroups, onSaveClick, o
                         gridSize={3}
             />
             <FormSelect id="violationState"
-                        value={violationState}
+                        value={ViolationState[violationState]}
                         label={t("violation-state")}
-                        items={mapToKeyLabelItemArray(["FAIL", "WARN", "INFO"])}
-                        onChange={(e) => setViolationState(e.target.value as ViolationState)}
+                        items={mapToKeyLabelItemArray(Object.keys(ViolationState))}
+                        onChange={(e) => setViolationState(ViolationState[e.target.value as keyof typeof ViolationState])}
                         gridSize={3}
             />
 

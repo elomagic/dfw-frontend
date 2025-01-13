@@ -9,9 +9,9 @@ import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
-import {Policy, ViolationState} from "../../DTOs.ts";
+import {Policy, PolicyOperator, ViolationState} from "../../DTOs.ts";
 import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
-import { toaster } from '../../Toaster.ts';
+import {toaster} from '../../Toaster.ts';
 import FormTextField from "../../components/FormTextField.tsx";
 
 interface ComponentProps {
@@ -24,13 +24,14 @@ export default function CreatePolicyDialog({ open, handleClose }: Readonly<Compo
     const { t } = useTranslation();
     const auth = useAuth();
     const [name, setName] = useState("");
-    const [violationState, setViolationState] = useState<ViolationState>("FAIL");
+    const [violationState, setViolationState] = useState<ViolationState>(ViolationState.FAIL);
 
     const handleCreateClick = () => {
         const data: Policy = {
             name,
             violationState,
             enabled: false,
+            operator: PolicyOperator.ALL,
             conditions: []
         }
 
