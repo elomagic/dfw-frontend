@@ -1,5 +1,6 @@
 import {AuthContextProps} from "./auth/Auth.tsx";
 import i18next from "i18next";
+import {ErrorResponse} from "./DTOs.ts";
 
 const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_URL : `${window.location.protocol}//${window.location.host}`;
 
@@ -12,7 +13,6 @@ export enum RestEndpoint {
     License = "/api/v1/license/spdx",
     LicenseGroup = "/api/v1/license/group",
     LicenseNameMap = "/api/v1/license/nameMap",
-    LicensePermitted = "/api/v1/license/permitted",
     LicensePurlMap = "/api/v1/license/purlMap",
     LicenseViolation = "/api/v1/license/violation",
     Policy = "/api/v1/policy",
@@ -22,14 +22,19 @@ export enum RestEndpoint {
     UserChangePassword = "/api/v1/user/changePassword",
     UserResetPassword = "/api/v1/user/resetPassword",
     UserResetPasswordRequest = "/api/v1/user/resetPasswordRequest",
-    UserRoles = "/api/v1/user/roles",
     UserSelf = "/api/v1/user/self",
     UserGroup = "/api/v1/usergroup",
     Version = "/api/v1/version",
 
 }
 
-function createUrl(endpoint: RestEndpoint, pathComponents: string[] | undefined, queryParameters?: Map<string, number>): RequestInfo {
+const toJson = (dto: object): string => {
+    return JSON.stringify(dto, (key, value) => {
+        return key === "_itemId" ? null : value;
+    });
+}
+
+const createUrl = (endpoint: RestEndpoint, pathComponents: string[] | undefined, queryParameters?: Map<string, number>): RequestInfo => {
 
     let url: string = BASE_REST_URL + endpoint;
 
@@ -91,7 +96,14 @@ const executeRequest = (auth: AuthContextProps, url: RequestInfo, requestOptions
                 auth.removeUser()
                     .finally(() => console.log("Wat nun?"));
             } else if (res.status >= 400) {
+                const contentType = res.headers.get('content-type');
                 let text = res.statusText;
+                if (contentType == "application/vnd.elomagic.dfw+json;charset=UTF-8") {
+                    return res.json().then((er: ErrorResponse) => {
+                        return Promise.reject(new Error(er.message));
+                    });
+                }
+
                 if (text === "") {
                     if (res.status === 403) {
                         text = i18next.t("forbidden");
@@ -144,7 +156,7 @@ export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponen
 export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
 
     const url: RequestInfo = createUrl(endpoint, undefined);
-    const data = JSON.stringify(dto);
+    const data = toJson(dto);
 
     const requestOptions: RequestInit = {
         body: data,
@@ -163,7 +175,7 @@ export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object
 export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
 
     const url: RequestInfo = createUrl(endpoint, undefined);
-    const data = JSON.stringify(dto);
+    const data = toJson(dto);
 
     const requestOptions: RequestInit = {
         body: data,
@@ -189,7 +201,7 @@ export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object)
 export const patch = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
 
     const url: RequestInfo = createUrl(endpoint, undefined);
-    const data = JSON.stringify(dto);
+    const data = toJson(dto);
 
     const requestOptions: RequestInit = {
         body: data,

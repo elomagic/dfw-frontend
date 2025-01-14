@@ -17,6 +17,17 @@ const getValueType = (value: ConditionType) => {
     }
 }
 
+const getOperator = (value: ConditionType) => {
+    switch (value) {
+        case "AGE":
+            return mapToKeyLabelItemArray(["GREATER_THAN", "SMALLER_THAN"]);
+        case "LICENSE_GROUP":
+            return mapToKeyLabelItemArray(["IN", "NOT_IN"]);
+        case "SEVERTITY":
+            return mapToKeyLabelItemArray(["GREATER_THAN", "IS", "IS_NOT", "SMALLER_THAN"]);
+    }
+}
+
 interface ComponentProps {
     policyCondition: PolicyCondition;
     licenseGroups: LicenseGroup[];
@@ -66,9 +77,7 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
                         value={data.operator}
                         label={t("operator")}
                         gridSize={3}
-                        items={mapToKeyLabelItemArray(
-                            data.condition === "LICENSE_GROUP" ? ["IN", "NOT_IN"] : ["GREATER_THAN", "IS", "IS_NOT", "SMALLER_THAN"]
-                        )}
+                        items={getOperator(data.condition)}
                         onChange={(e) => handleOperatorChanged(e.target.value as ConditionOperator)}
             />
 

@@ -46,20 +46,6 @@ export const NavItemData = {
         groupName: "administration",
         items: [
             {
-                name: "patches",
-                title: "admin-patches",
-                tooltip: "admin-patches",
-                url: "admin-patches",
-                icon: FaBandAid,
-            },
-            {
-                name: "license-groups",
-                title: "admin-license-groups",
-                tooltip: "admin-license-groups",
-                url: "admin-license-groups",
-                icon: TbLicense,
-            },
-            {
                 name: "proxies",
                 title: "admin-proxies",
                 tooltip: "admin-proxies",
@@ -72,6 +58,20 @@ export const NavItemData = {
                 tooltip: "admin-policies",
                 url: "admin-policies",
                 icon: MdPolicy,
+            },
+            {
+                name: "license-groups",
+                title: "admin-license-groups",
+                tooltip: "admin-license-groups",
+                url: "admin-license-groups",
+                icon: TbLicense,
+            },
+            {
+                name: "patches",
+                title: "admin-patches",
+                tooltip: "admin-patches",
+                url: "admin-patches",
+                icon: FaBandAid,
             },
             {
                 name: "credentials",
