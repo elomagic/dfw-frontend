@@ -10,7 +10,7 @@ import FormTextField from "../../components/FormTextField.tsx";
 import Grid from "@mui/material/Grid2";
 
 const getValueType = (value: ConditionType) => {
-    if (value === ConditionType.SEVERTITY || value === ConditionType.AGE) {
+    if (value === ConditionType.SEVERITY || value === ConditionType.AGE) {
         return "number";
     } else {
         return "text";
@@ -23,7 +23,7 @@ const getOperator = (value: ConditionType) => {
             return mapToKeyLabelItemArray(["GREATER_THAN", "SMALLER_THAN"]);
         case ConditionType.LICENSE_GROUP:
             return mapToKeyLabelItemArray(["IN", "NOT_IN"]);
-        case ConditionType.SEVERTITY:
+        case ConditionType.SEVERITY:
             return mapToKeyLabelItemArray(["GREATER_THAN", "IS", "IS_NOT", "SMALLER_THAN"]);
     }
 }

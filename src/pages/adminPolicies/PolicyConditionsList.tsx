@@ -1,4 +1,4 @@
-import {ItemId, LicenseGroup, PolicyCondition} from "../../DTOs.ts";
+import {ConditionOperator, ConditionType, ItemId, LicenseGroup, PolicyCondition} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
@@ -26,8 +26,8 @@ export default function PolicyConditionsList({ policyConditions, licenseGroups, 
 
         const newCondition: ItemId<PolicyCondition> = {
             _itemId: uuidv4(),
-            condition: "SEVERTITY",
-            operator: "GREATER_THAN",
+            condition: ConditionType.SEVERITY,
+            operator: ConditionOperator.GREATER_THAN,
             conditionalValue: "5"
         }
 
