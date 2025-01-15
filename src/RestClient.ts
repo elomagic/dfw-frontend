@@ -28,6 +28,9 @@ export enum RestEndpoint {
 
 }
 
+const HEADER_ACCEPTED: string = 'application/json, application/vnd.elomagic.dfw+json';
+const MIMETYPE_APPLICATION_JSON = 'application/json';
+
 const toJson = (dto: object): string => {
     return JSON.stringify(dto, (key, value) => {
         return key === "_itemId" ? null : value;
@@ -138,7 +141,7 @@ export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponen
         mode: 'cors',
         method: 'GET',
         headers: {
-            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
+            'Accept': HEADER_ACCEPTED,
             'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
     };
@@ -163,8 +166,8 @@ export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object
         mode: 'cors',
         method: 'POST',
         headers: {
-            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
-            'Content-Type': 'application/json',
+            'Accept': HEADER_ACCEPTED,
+            'Content-Type': MIMETYPE_APPLICATION_JSON,
             'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
     };
@@ -182,8 +185,8 @@ export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object)
         mode: 'cors',
         method: 'PUT',
         headers: {
-            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
-            'Content-Type': 'application/json',
+            'Accept': HEADER_ACCEPTED,
+            'Content-Type': MIMETYPE_APPLICATION_JSON,
             'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
     };
@@ -208,8 +211,8 @@ export const patch = (auth: AuthContextProps, endpoint: RestEndpoint, dto: objec
         mode: 'cors',
         method: 'PATCH',
         headers: {
-            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
-            'Content-Type': 'application/json',
+            'Accept': HEADER_ACCEPTED,
+            'Content-Type': MIMETYPE_APPLICATION_JSON,
             'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
     };
@@ -227,7 +230,7 @@ export const postFormData = (auth: AuthContextProps, endpoint: RestEndpoint, dat
         mode: 'cors',
         method: 'POST',
         headers: {
-            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
+            'Accept': HEADER_ACCEPTED,
             // Content-Type will be set during FormData
             'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
@@ -244,7 +247,7 @@ export const deleteResource = (auth: AuthContextProps, endpoint: RestEndpoint, u
         mode: 'cors',
         method: 'DELETE',
         headers: {
-            'Accept': 'application/json, application/vnd.elomagic.dfw+json',
+            'Accept': HEADER_ACCEPTED,
             'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         }
     };

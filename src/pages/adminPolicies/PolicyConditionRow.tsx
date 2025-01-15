@@ -10,7 +10,7 @@ import FormTextField from "../../components/FormTextField.tsx";
 import Grid from "@mui/material/Grid2";
 
 const getValueType = (value: ConditionType) => {
-    if (value === "SEVERTITY" || value === "AGE") {
+    if (value === ConditionType.SEVERTITY || value === ConditionType.AGE) {
         return "number";
     } else {
         return "text";
@@ -19,11 +19,11 @@ const getValueType = (value: ConditionType) => {
 
 const getOperator = (value: ConditionType) => {
     switch (value) {
-        case "AGE":
+        case ConditionType.AGE:
             return mapToKeyLabelItemArray(["GREATER_THAN", "SMALLER_THAN"]);
-        case "LICENSE_GROUP":
+        case ConditionType.LICENSE_GROUP:
             return mapToKeyLabelItemArray(["IN", "NOT_IN"]);
-        case "SEVERTITY":
+        case ConditionType.SEVERTITY:
             return mapToKeyLabelItemArray(["GREATER_THAN", "IS", "IS_NOT", "SMALLER_THAN"]);
     }
 }
@@ -42,7 +42,7 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
     const [data, setData] = useState<PolicyCondition>(policyCondition);
     const [valueType, setValueType] = useState<"text"|"number">(getValueType(data.condition));
 
-    const onConditionChanged = (value: ConditionType) => {
+    const handleConditionChanged = (value: ConditionType) => {
         setValueType(getValueType(value));
 
         setData({ ...data, condition: value });
@@ -51,12 +51,14 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
     }
 
     const handleOperatorChanged = (value: ConditionOperator) => {
+        // todo validate
         setData({ ...data, operator: value });
 
         onConditionChange(data);
     }
 
     const handleValueChanged = (value: string) => {
+        // todo validate
         setData({ ...data, conditionalValue: value });
 
         onConditionChange(data);
@@ -68,9 +70,9 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
             <FormSelect id="condition"
                         value={data.condition}
                         label={t("condition")}
-                        items={mapToKeyLabelItemArray(["AGE", "LICENSE_GROUP", "SEVERTITY"])}
+                        items={mapToKeyLabelItemArray(Object.keys(ConditionType))}
                         gridSize={3}
-                        onChange={(e) => onConditionChanged(e.target.value as ConditionType)}
+                        onChange={(e) => handleConditionChanged(ConditionType[e.target.value as keyof typeof ConditionType])}
             />
 
             <FormSelect id="operator"
@@ -78,7 +80,7 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
                         label={t("operator")}
                         gridSize={3}
                         items={getOperator(data.condition)}
-                        onChange={(e) => handleOperatorChanged(e.target.value as ConditionOperator)}
+                        onChange={(e) => handleOperatorChanged(ConditionOperator[e.target.value as keyof typeof ConditionOperator])}
             />
 
             {data.condition !== "LICENSE_GROUP" &&

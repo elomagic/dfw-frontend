@@ -1,9 +1,8 @@
 export enum ProxyType { "MAVEN" = 'MAVEN', "NPM" = 'NPM', "DOCKER" = 'DOCKER', "NUGET" = 'NUGET' }
 export enum AuthenticationMode { "BASIC" = 'BASIC', "BEARER" = 'BEARER' }
 export enum ViolationState { "FAIL" = 'FAIL', "WARN" = 'WARN', "INFO" = 'INFO' }
-// TODO Change all to enumerations
-export declare type ConditionType = "AGE" | "LICENSE_GROUP" | "SEVERTITY";
-export declare type ConditionOperator = "GREATER_THAN" | "IN" | "IS" | "IS_NOT" | "NOT_IN" | "SMALLER_THAN";
+export enum ConditionType { "AGE" = 'AGE', "LICENSE_GROUP" = 'LICENSE_GROUP', "SEVERTITY" = 'SEVERTITY' }
+export enum ConditionOperator { "GREATER_THAN" = 'GREATER_THAN', "IN" = 'IN', "IS" = 'IS', "IS_NOT" = 'IS_NOT', "NOT_IN" = 'NOT_IN', "SMALLER_THAN" = 'SMALLER_THAN' }
 export enum PolicyOperator { "ALL" = 'ALL', "ANY" = 'ANY'}
 
 // For internal managing, create my own item ID

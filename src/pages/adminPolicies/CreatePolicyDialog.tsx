@@ -65,8 +65,8 @@ export default function CreatePolicyDialog({ open, handleClose }: Readonly<Compo
                 <FormSelect id="type"
                             value={violationState}
                             label={t("type")}
-                            items={mapToKeyLabelItemArray(["FAIL", "WARN", "INFO"])}
-                            onChange={(e) => setViolationState(e.target.value as ViolationState)}
+                            items={mapToKeyLabelItemArray(Object.keys(ViolationState))}
+                            onChange={(e) => setViolationState(ViolationState[e.target.value as keyof typeof ViolationState])}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
