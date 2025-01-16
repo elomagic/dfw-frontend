@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Button,
     Dialog,
@@ -10,7 +12,7 @@ import {TransitionProps} from "@mui/material/transitions";
 import {forwardRef, ReactElement, Ref} from "react";
 import {useTranslation} from "react-i18next";
 
-interface YesNoDialogProps {
+interface ComponentProps {
     title: string;
     text: string;
     captionYes?: string;
@@ -37,7 +39,7 @@ const YesNoDialog = ({
                                                               open,
                                                               onYesClick,
                                                               onNoClick,
-                                                          }: Readonly<YesNoDialogProps>) => {
+                                                          }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
 

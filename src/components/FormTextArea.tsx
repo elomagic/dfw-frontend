@@ -1,9 +1,11 @@
+"use client"
+
 import {OutlinedInputProps} from "@mui/material/OutlinedInput";
 import Grid from "@mui/material/Grid2";
 import {FormControl, TextField} from "@mui/material";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 
-interface FormTextAreaProps {
+interface ComponentProps {
     id: string;
     minRows?: number | string;
     maxRows?: number | string;
@@ -17,7 +19,7 @@ interface FormTextAreaProps {
     readOnly?: boolean;
 }
 
-function UnwrappedTextArea({id, value, errorMessage, minRows, maxRows, onChange, label, required, autoFocus, readOnly}: Readonly<FormTextAreaProps>) {
+function UnwrappedTextArea({id, value, errorMessage, minRows, maxRows, onChange, label, required, autoFocus, readOnly}: Readonly<ComponentProps>) {
 
     return (
         <FormControl fullWidth>
@@ -64,7 +66,7 @@ function UnwrappedTextArea({id, value, errorMessage, minRows, maxRows, onChange,
  * @param readOnly
  * @constructor
  */
-export default function FormTextArea({id, value, errorMessage, minRows, maxRows, onChange, label, required, autoFocus, gridSize, readOnly}: Readonly<FormTextAreaProps>) {
+export default function FormTextArea({id, value, errorMessage, minRows, maxRows, onChange, label, required, autoFocus, gridSize, readOnly}: Readonly<ComponentProps>) {
 
     return (
         <>

@@ -1,3 +1,5 @@
+"use client"
+
 import {FormControl, MenuItem} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import Select from "@mui/material/Select";

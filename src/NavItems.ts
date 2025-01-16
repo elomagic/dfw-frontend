@@ -2,14 +2,35 @@ import {AiOutlineDashboard} from "react-icons/ai";
 import {BiSolidComponent} from "react-icons/bi";
 import {GoLaw} from "react-icons/go";
 import {FaBandAid, FaShieldVirus} from "react-icons/fa";
-import {Info} from "@mui/icons-material";
+import {Info, SvgIconComponent} from "@mui/icons-material";
 import {TbLicense, TbLockCog} from "react-icons/tb";
 import {MdPolicy} from "react-icons/md";
 import {GrConfigure, GrNavigate} from "react-icons/gr";
 import {RiAccountCircle2Line, RiUserSettingsLine} from "react-icons/ri";
 import {PiPasswordFill} from "react-icons/pi";
+import type {IconType} from "react-icons";
 
-export const NavItemData = {
+export declare type NavItem = {
+    url: string,
+    name: string,
+    title: string,
+    tooltip: string,
+    icon: IconType | SvgIconComponent;
+}
+
+export declare type NavGroup = {
+    groupName: string,
+    items: NavItem[],
+}
+
+export declare type NavItems = {
+    navMain: NavGroup,
+    navAdmin: NavGroup,
+    navHelp: NavGroup,
+    navOther: NavGroup,
+}
+
+export const NavItemData: NavItems = {
     navMain: {
         groupName: "main",
         items: [

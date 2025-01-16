@@ -1,3 +1,5 @@
+"use client"
+
 import {useTranslation} from "react-i18next";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -20,7 +22,7 @@ import {
 import {ItemId} from "../DTOs.ts";
 import {BsToggles} from "react-icons/bs";
 
-interface SelectItemDialogProps<T> {
+interface ComponentProps<T> {
     value: ItemId<T>[];
     selectables: ItemId<T>[];
     getItemLabel: (item: ItemId<T>) => ReactNode;
@@ -28,7 +30,7 @@ interface SelectItemDialogProps<T> {
     handleClose: (cancel: boolean, items: ItemId<T>[]) => void;
 }
 
-export default function SelectItemDialogIdItem<T>({ open, handleClose, value, selectables, getItemLabel }: Readonly<SelectItemDialogProps<T>>) {
+export default function SelectItemDialogIdItem<T>({ open, handleClose, value, selectables, getItemLabel }: Readonly<ComponentProps<T>>) {
 
     const { t } = useTranslation();
 

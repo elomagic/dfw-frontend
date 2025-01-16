@@ -101,12 +101,12 @@ export default function AdminProxiesView() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
+                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
                                 <CollapsableTableRow key={row.name}
                                                      proxy={row}
                                                      internalBaseUrl={internalBaseUrl}
-                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                                     onDeleteRequest={(dto) => handleDeleteRequest(dto)}
                                 />
                             ))
                         }

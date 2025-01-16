@@ -41,6 +41,8 @@
   "credentialId": "Credential ID",
   "credentials": "Credentials",
   "dashboard": "Dashboard",
+  "database-product": "Database Product",
+  "database-version": "Database Version",
   "delete-credential": "Delete Credential",
   "delete-repository": "Delete Repository",
   "delete-user-account": "Delete User Account",

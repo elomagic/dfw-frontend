@@ -90,12 +90,12 @@ export default function AdminLicenseGroupsView() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
+                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
                                 <CollapsableTableRow key={row.name}
                                                      licenseGroup={row}
                                                      licenses={licenses}
-                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                                     onDeleteRequest={(dto) => handleDeleteRequest(dto)}
                                 />
                             ))
                         }

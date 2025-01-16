@@ -13,12 +13,12 @@ const hasRole = (auth: AuthContextProps, roles: string[]|string): boolean => {
     return auth.roles ? auth.roles.filter(v => requiredRoles.includes(v)).length > 0 : false;
 }
 
-declare interface ProtectedProps {
+declare interface ComponentProps {
     roles?: string[] | string;
     children?: ReactNode;
 }
 
-export const ProtectedRoute = (props: ProtectedProps) => {
+export const ProtectedRoute = (props: ComponentProps) => {
     const auth = useAuth();
     const location = useLocation();
     

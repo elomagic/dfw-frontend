@@ -1,10 +1,12 @@
+"use client"
+
 import {HTMLInputTypeAttribute, ReactNode} from "react";
 import {OutlinedInputProps} from "@mui/material/OutlinedInput";
 import Grid from "@mui/material/Grid2";
 import {FormControl, TextField} from "@mui/material";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 
-interface FormTextFieldProps {
+interface ComponentProps {
     id: string;
     type?: HTMLInputTypeAttribute;
     value: string | undefined;
@@ -18,7 +20,7 @@ interface FormTextFieldProps {
     startAdornment?: ReactNode;
 }
 
-function UnwrappedTextField({id, type, value, errorMessage, onChange, label, required, autoFocus, readOnly, startAdornment}: Readonly<FormTextFieldProps>) {
+function UnwrappedTextField({id, type, value, errorMessage, onChange, label, required, autoFocus, readOnly, startAdornment}: Readonly<ComponentProps>) {
 
     return (
         <FormControl fullWidth>
@@ -65,7 +67,7 @@ function UnwrappedTextField({id, type, value, errorMessage, onChange, label, req
  * @param startAdornment
  * @constructor
  */
-export default function FormTextField({id, type, value, errorMessage, onChange, label, required, autoFocus, gridSize, readOnly, startAdornment}: Readonly<FormTextFieldProps>) {
+export default function FormTextField({id, type, value, errorMessage, onChange, label, required, autoFocus, gridSize, readOnly, startAdornment}: Readonly<ComponentProps>) {
 
     return (
         <>

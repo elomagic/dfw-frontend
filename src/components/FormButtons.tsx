@@ -1,3 +1,5 @@
+"use client"
+
 import {MouseEventHandler} from "react";
 import {Box, Button} from "@mui/material";
 import {DeleteForever, Save} from "@mui/icons-material";
@@ -6,7 +8,7 @@ import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../auth/useAuth.ts";
 
-interface FormButtonSaveProps {
+interface ComponentProps {
     labelLeftButton?: string;
     labelRightButton?: string;
     roleLeftButton?: string;
@@ -25,7 +27,7 @@ interface FormButtonSaveProps {
  * @param onRightClick Optional. If not set, the "delete" button not visible
  * @constructor
  */
-export default function FormButtons({labelLeftButton, labelRightButton, startIcon, onSaveClick, onDeleteClick, roleLeftButton, roleRightButton}: Readonly<FormButtonSaveProps>) {
+export default function FormButtons({labelLeftButton, labelRightButton, startIcon, onSaveClick, onDeleteClick, roleLeftButton, roleRightButton}: Readonly<ComponentProps>) {
 
     const auth = useAuth();
     const { t } = useTranslation();

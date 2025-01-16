@@ -1,4 +1,4 @@
-import {Box, Card} from "@mui/material";
+import {Box, Card, Divider, Stack, Typography} from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
@@ -16,47 +16,56 @@ export default function AboutView() {
     const frontendVersion = __APP_VERSION__;
     const frontendBuildOn = "unknown";
     const auth = useAuth();
-    const [ backendVersion, setBackendVersion ] = useState<string>("unknown");
-    const [ backendBuildOn, setBackendBuildOn ] = useState<string>("unknown");
+    const [ backend, setBackend ] = useState<Version|undefined>(undefined);
 
     useEffect(() => {
         Rest.get(auth, Rest.RestEndpoint.Version)
             .then((res) => res.json())
             .then((dto: Version) => {
-                setBackendVersion(dto.version);
-                setBackendBuildOn(dto.timestamp);
+                setBackend(dto);
             })
             .catch((reason) => console.log(reason));
     }, [auth]);
 
     return (
         <Box margin={4} sx={{ display: "flex", flexDirection: "column" }}>
-            <Card sx={{ maxWidth: "800px", alignSelf: "center" }}>
-                <Grid container spacing={2} margin={2}>
-                    <Grid size={12}>
-                        {t("app.title")}
-                    </Grid>
+            <Card sx={{ minWidth: "600px", alignSelf: "center", padding: "10px" }}>
+
+                <Typography component="div" variant="h6">
+                    {t("app.title")}
+                </Typography>
+
+                <Divider sx={{ mt: 2, mb: 2 }} />
+
+                <Grid container spacing={2}>
+                    {/* Left column */}
                     <Grid size={6}>
-                        {t("backend")} v{backendVersion}<br/>
-                        {t("builtOn")}: {backendBuildOn}
-                        <Box>
-                            <GitHub fontSize="small"/> <Link href="https://github.com/elomagic/dfw-backend">GitHub</Link>
-                        </Box>
+                        <span style={{color: 'gray'}}>{t("backend")}</span> v{backend?.version ?? t("unknown")}<br/>
+                        <span style={{color: 'gray'}}>{t("builtOn")}</span> {backend?.timestamp ?? t("unknown")}
+                        <Stack direction="row" spacing={1}>
+                            <GitHub fontSize="small"/><Link href="https://github.com/elomagic/dfw-backend">GitHub</Link>
+                        </Stack>
+                        <br/>
+                        <span style={{color: 'gray'}}>{t("database-product")}</span> v{backend?.databaseProduct ?? t("unknown")}<br/>
+                        <span style={{color: 'gray'}}>{t("database-version")}</span> v{backend?.databaseVersion ?? t("unknown")}<br/>
                     </Grid>
+
+                    {/* Right column */}
                     <Grid size={6}>
-                        {t("frontend")} v{frontendVersion}<br/>
-                        {t("builtOn")}: {frontendBuildOn}<br/>
-                        <Box>
-                            <GitHub fontSize="small"/> <Link href="https://github.com/elomagic/dfw-frontend">GitHub</Link>
-                        </Box>
-                    </Grid>
-                    <Grid size={12}>
-                        Licenses???
-                    </Grid>
-                    <Grid size={12} textAlign="center">
-                        Copyright Carsten Rambow. All Rights Reserved.
+                        <span style={{color: 'gray'}}>{t("frontend")}</span> v{frontendVersion}<br/>
+                        <span style={{color: 'gray'}}>{t("builtOn")}</span> {frontendBuildOn}<br/>
+                        <Stack direction="row" spacing={1}>
+                            <GitHub fontSize="small"/><Link
+                            href="https://github.com/elomagic/dfw-frontend">GitHub</Link>
+                        </Stack>
                     </Grid>
                 </Grid>
+
+                <Divider sx={{ mt: 2, mb: 2 }} />
+
+                <Typography component="div" variant="subtitle2">
+                    Copyright &copy; Carsten Rambow. All Rights Reserved.
+                </Typography>
             </Card>
         </Box>
     );

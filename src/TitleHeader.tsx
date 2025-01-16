@@ -1,19 +1,13 @@
+"use client"
+
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import {NavItemData} from "./NavItems.ts";
-import type {IconType} from "react-icons";
-import {SvgIconComponent} from "@mui/icons-material";
+import {NavItem, NavItemData} from "./NavItems.ts";
 
-declare type PathTitle = {
-    url: string,
-    title: string,
-    icon: IconType | SvgIconComponent;
-}
+const getAllPathsTitle = (): NavItem[] => {
 
-const getAllPathsTitle = (): PathTitle[] => {
-
-    const items: PathTitle[] = [];
+    const items: NavItem[] = [];
 
     NavItemData.navMain.items.forEach((item) => { items.push(item); });
     NavItemData.navAdmin.items.forEach((item) => { items.push(item); });
@@ -23,7 +17,7 @@ const getAllPathsTitle = (): PathTitle[] => {
     return items;
 }
 
-const getNavItem = (path: string): PathTitle | undefined => {
+const getNavItem = (path: string): NavItem | undefined => {
 
     const p = path.replace("/", "");
     return getAllPathsTitle().find((item) => { return item.url === p; });
@@ -32,7 +26,7 @@ const getNavItem = (path: string): PathTitle | undefined => {
 
 export default function TitleHeader() {
     const { t } = useTranslation();
-    const [navItem, setNavItem] = useState<PathTitle | undefined>(undefined);
+    const [navItem, setNavItem] = useState<NavItem | undefined>(undefined);
     const location = useLocation();
 
     useEffect(() => {

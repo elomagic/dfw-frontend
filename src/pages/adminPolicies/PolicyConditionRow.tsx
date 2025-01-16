@@ -1,4 +1,4 @@
-import {ConditionOperator, ConditionType, LicenseGroup, PolicyCondition} from "../../DTOs.ts";
+import {ConditionOperator, ConditionType, ItemId, LicenseGroup, PolicyCondition} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
@@ -29,39 +29,35 @@ const getOperator = (value: ConditionType) => {
 }
 
 interface ComponentProps {
-    policyCondition: PolicyCondition;
+    policyCondition: ItemId<PolicyCondition>;
     licenseGroups: LicenseGroup[];
-    onConditionChange: (r: PolicyCondition) => void;
-    onConditionDelete: (r: PolicyCondition) => void;
+    onConditionChange: (r: ItemId<PolicyCondition>) => void;
+    onConditionDelete: (r: ItemId<PolicyCondition>) => void;
 }
 
 export default function PolicyConditionRow({ policyCondition, licenseGroups, onConditionChange, onConditionDelete }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();
-    const [data, setData] = useState<PolicyCondition>(policyCondition);
+    const [data] = useState<ItemId<PolicyCondition>>(policyCondition);
     const [valueType, setValueType] = useState<"text"|"number">(getValueType(data.condition));
 
     const handleConditionChanged = (value: ConditionType) => {
         setValueType(getValueType(value));
 
-        setData({ ...data, condition: value });
-
-        onConditionChange(data);
+        onConditionChange({ ...data, condition: value });
     }
 
     const handleOperatorChanged = (value: ConditionOperator) => {
         // todo validate
-        setData({ ...data, operator: value });
 
-        onConditionChange(data);
+        onConditionChange({ ...data, operator: value });
     }
 
     const handleValueChanged = (value: string) => {
         // todo validate
-        setData({ ...data, conditionalValue: value });
 
-        onConditionChange(data);
+        onConditionChange({ ...data, conditionalValue: value });
     }
 
     return (

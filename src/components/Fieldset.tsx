@@ -1,7 +1,9 @@
+"use client"
+
 import * as React from "react";
 import {Box, Typography} from "@mui/material";
 
-interface FieldsetProps {
+interface ComponentProps {
     label?: string;
     children: React.ReactNode;
 }
@@ -14,7 +16,7 @@ interface FieldsetProps {
  * @param props Any other props
  */
 
-export const Fieldset = ({ label, children, ...props }: FieldsetProps) => {
+export const Fieldset = ({ label, children, ...props }: ComponentProps) => {
     return (
         <Box component="fieldset" {...props}
              sx={{

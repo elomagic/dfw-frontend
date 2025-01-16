@@ -83,7 +83,7 @@ export default function NameMapTab() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.nameMatch.toLowerCase().includes(filter)))
+                            .filter(r => ("" === filter || r.nameMatch.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
                                 <CollapsableNameMapTableRow key={row.id}
                                                          nameMap={row}

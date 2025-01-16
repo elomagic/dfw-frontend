@@ -91,12 +91,12 @@ export default function AdminPolicyView() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
+                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
                                 <CollapsableTableRow key={row.name}
                                                      policy={row}
                                                      licenseGroups={licenseGroups}
-                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                                     onDeleteRequest={(dto) => handleDeleteRequest(dto)}
                                 />
                             ))
                         }

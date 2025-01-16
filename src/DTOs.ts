@@ -119,6 +119,8 @@ export declare interface Proxy extends IdItem {
 export declare interface Version {
     version: string;
     timestamp: string;
+    databaseProduct: string;
+    databaseVersion: string;
 }
 
 export declare interface License {

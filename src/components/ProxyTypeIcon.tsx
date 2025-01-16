@@ -1,3 +1,5 @@
+"use client"
+
 import {ProxyType} from "../DTOs.ts";
 import {SiApachemaven, SiNuget} from "react-icons/si";
 import {FaDocker, FaNpm} from "react-icons/fa";
@@ -16,4 +18,5 @@ export default function ProxyTypeIcon({ type }: Readonly<{ type: ProxyType }>) {
     return (
         <>{icon()}</>
     );
+
 }

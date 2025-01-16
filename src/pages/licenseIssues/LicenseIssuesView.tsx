@@ -62,11 +62,11 @@ export default function LicenseIssuesView() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.purl.toLowerCase().includes(filter)))
+                            .filter(r => ("" === filter || r.purl.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
                                 <CollapsableTableRow key={row.id}
                                                      licenseViolation={row}
-                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                                     onDeleteRequest={(dto) => handleDeleteRequest(dto)}
                                 />
                             ))
                         }

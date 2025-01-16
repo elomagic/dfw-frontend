@@ -70,8 +70,8 @@ export default function PolicyConditionsList({ policyConditions, licenseGroups, 
                         <PolicyConditionRow key={r._itemId}
                                             policyCondition={r}
                                             licenseGroups={licenseGroups}
-                                            onConditionChange={() => handleChange(r)}
-                                            onConditionDelete={() => handleDeleteClick(r)}
+                                            onConditionChange={(c) => handleChange(c)}
+                                            onConditionDelete={(c) => handleDeleteClick(c)}
                         />)
                     }
                 </List>

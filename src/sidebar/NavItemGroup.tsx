@@ -1,21 +1,12 @@
 "use client"
 
-import type {IconType} from "react-icons";
 import {useTranslation} from "react-i18next";
 import {Link as RouterLink} from "react-router-dom";
 import {Box, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip} from "@mui/material";
-import {SvgIconComponent} from "@mui/icons-material";
+import {NavGroup} from "../NavItems.ts";
 
 export function NavItemGroup({ links, open }: Readonly<{
-    links: {
-        groupName: string;
-        items: {
-            name: string;
-            tooltip: string;
-            url: string;
-            icon: IconType | SvgIconComponent;
-        }[]
-    },
+    links: NavGroup,
     open: boolean
 }>) {
 

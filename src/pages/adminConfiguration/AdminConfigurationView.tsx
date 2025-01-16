@@ -78,7 +78,7 @@ export default function AdminConfigurationView() {
 
                     <TableBody>
                         {rows
-                            .filter(dto => ("" === filter || dto.key.toLowerCase().includes(filter)))
+                            .filter(dto => ("" === filter || dto.key.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
                                 <CollapsableTableRow key={row.key}
                                                      configuration={row}

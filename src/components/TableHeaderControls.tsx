@@ -1,3 +1,5 @@
+"use client"
+
 import {Box, Button, IconButton, TextField, Tooltip} from "@mui/material";
 import {Add, Refresh} from "@mui/icons-material";
 import {useAuth} from "../auth/useAuth.ts";
@@ -5,7 +7,7 @@ import {Role} from "../auth/Auth.tsx";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 
-interface TableHeaderControlsProps {
+interface ComponentProps {
     createCaption?: string;
     filter?: string;
     role?: Role;
@@ -14,7 +16,7 @@ interface TableHeaderControlsProps {
     onRefresh: () => void;
 }
 
-export default function TableHeaderControls({ createCaption, filter, role, onCreateClicked, onFilterChanged, onRefresh }: Readonly<TableHeaderControlsProps>) {
+export default function TableHeaderControls({ createCaption, filter, role, onCreateClicked, onFilterChanged, onRefresh }: Readonly<ComponentProps>) {
 
     const { t } = useTranslation();
     const auth = useAuth();

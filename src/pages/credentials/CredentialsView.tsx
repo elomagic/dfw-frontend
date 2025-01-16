@@ -84,11 +84,11 @@ export default function CredentialsView() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.credentialId.toLowerCase().includes(filter)))
+                            .filter(r => ("" === filter || r.credentialId.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
                                 <CredentialTableRow key={row.credentialId}
                                                     credential={row}
-                                                    onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                                    onDeleteRequest={(dto) => handleDeleteRequest(dto)}
                                 />
                             ))
                         }

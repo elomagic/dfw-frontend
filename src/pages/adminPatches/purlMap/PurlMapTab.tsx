@@ -84,7 +84,7 @@ export default function PurlMapTab() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.purlMatch.toLowerCase().includes(filter)))
+                            .filter(r => ("" === filter || r.purlMatch.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
                                 <CollapsablePurlMapTableRow key={row.id}
                                                          purlMap={row}

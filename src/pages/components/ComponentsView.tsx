@@ -51,10 +51,8 @@ export default function ComponentsView() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.purl.toLowerCase().includes(filter)))
-                            .map((row) => (
-                                <ComponentTableRow key={row.id} component={row}/>
-                            ))
+                            .filter(r => ("" === filter || r.purl.toLowerCase().includes(filter.toLowerCase())))
+                            .map((row) => (<ComponentTableRow key={row.id} component={row}/>))
                         }
                     </TableBody>
                 </Table>

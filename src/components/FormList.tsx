@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Button,
     IconButton,
@@ -15,7 +17,7 @@ import {ItemId} from "../DTOs.ts";
 import {Fieldset} from "./Fieldset.tsx";
 import {useAuth} from "../auth/useAuth.ts";
 
-interface UnwrappedFormListProps<T> {
+interface ComponentProps<T> {
     values: ItemId<T>[];
     label: string;
     editRole?: string;
@@ -25,7 +27,7 @@ interface UnwrappedFormListProps<T> {
     onDeleteClick: (itemId: string) => void;
 }
 
-function UnwrappedFormList<T>({ values, label, getItemLabel, editRole, onAddClick, onDeleteClick }: Readonly<UnwrappedFormListProps<T>>) {
+function UnwrappedFormList<T>({ values, label, getItemLabel, editRole, onAddClick, onDeleteClick }: Readonly<ComponentProps<T>>) {
 
     const auth = useAuth();
     const { t } = useTranslation();

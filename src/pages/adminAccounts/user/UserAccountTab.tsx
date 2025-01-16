@@ -84,11 +84,11 @@ export default function UserAccountTab() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.mailAddress.toLowerCase().includes(filter)))
+                            .filter(r => ("" === filter || r.mailAddress.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
                                 <CollapsableUserTableRow key={row.mailAddress}
                                                          user={row}
-                                                         onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                                         onDeleteRequest={(dto) => handleDeleteRequest(dto)}
                                 />
                             ))
                         }

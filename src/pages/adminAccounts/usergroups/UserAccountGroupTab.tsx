@@ -82,11 +82,11 @@ export default function UserAccountGroupTab() {
 
                     <TableBody>
                         {rows
-                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter)))
+                            .filter(r => ("" === filter || r.name.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
                                 <CollapsableUserGroupTableRow key={row.name}
                                                               userGroup={row}
-                                                              onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                                              onDeleteRequest={(dto) => handleDeleteRequest(dto)}
                                 />
                             ))
                         }
