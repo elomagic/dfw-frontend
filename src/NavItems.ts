@@ -49,10 +49,10 @@ export const NavItemData: NavItems = {
                 icon: BiSolidComponent,
             },
             {
-                name: "license-issues",
-                title: "license-issues",
-                tooltip: "license-issues",
-                url: "license-issues",
+                name: "policy-violations",
+                title: "policy-violations",
+                tooltip: "policy-violations",
+                url: "policy-violations",
                 icon: GoLaw,
             },
             {

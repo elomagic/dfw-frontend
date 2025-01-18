@@ -24,7 +24,7 @@ import DashboardView from "./pages/dashboard/DashboardView.tsx";
 import {ProtectedRoute} from "./auth/ProtectedRoute.tsx";
 import AccountsView from "./pages/adminAccounts/AccountsView.tsx";
 import AdminProxiesView from "./pages/adminProxies/AdminProxiesView.tsx";
-import LicenseIssuesView from "./pages/licenseIssues/LicenseIssuesView.tsx";
+import PolicyViolationsView from "./pages/policyViolations/PolicyViolationsView.tsx";
 import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
 import AdminPatchesView from "./pages/adminPatches/AdminPatchesView.tsx";
 import SignInView from "./pages/signin/SignInView.tsx";
@@ -233,8 +233,8 @@ function App() {
                             <Routes>
                                 <Route path='components'
                                        element={<ProtectedRoute><ComponentsView /></ProtectedRoute>}/>
-                                <Route path='license-issues'
-                                       element={<ProtectedRoute><LicenseIssuesView /></ProtectedRoute>}/>
+                                <Route path='policy-violations'
+                                       element={<ProtectedRoute><PolicyViolationsView /></ProtectedRoute>}/>
                                 <Route path='vulnerabilities'
                                        element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
 
