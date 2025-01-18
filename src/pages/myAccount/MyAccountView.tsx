@@ -1,3 +1,5 @@
+"use client"
+
 import {Box, Card} from "@mui/material";
 import {useAuth} from "../../auth/useAuth.ts";
 import {useTranslation} from "react-i18next";
@@ -16,7 +18,7 @@ import { toaster } from "../../Toaster.ts";
 
 export default function MyAccountView() {
 
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const auth = useAuth();
 
     const [mailAddress] = useState(auth.mailAddress);
@@ -43,11 +45,11 @@ export default function MyAccountView() {
             apiKeys: apiKeys
         }
 
-        Rest.patch(auth, RestEndpoint.UserSelf, data)
+        i18n.changeLanguage(language)
+            .then(() => Rest.patch(auth, RestEndpoint.UserSelf, data))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
-
 
     const handleApiKeysChanged = (keys: UserAccountApiKey[]) => {
         setApiKeys(keys);

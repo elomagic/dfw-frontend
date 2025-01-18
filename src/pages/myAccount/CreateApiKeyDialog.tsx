@@ -1,3 +1,5 @@
+"use client"
+
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -13,7 +15,7 @@ import {validateRequiredText} from "../../Validators.ts";
 
 interface ComponentProps {
     open: boolean;
-    handleClose: (dto: UserAccountApiKey|undefined) => void;
+    handleClose: (dto: UserAccountApiKey | undefined) => void;
 }
 
 export default function CreateApiKeyDialog({ open, handleClose }: Readonly<ComponentProps>) {

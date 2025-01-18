@@ -1,3 +1,5 @@
+"use client"
+
 import {Box, Card, Divider, Stack, Typography} from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import {useTranslation} from "react-i18next";
@@ -46,8 +48,8 @@ export default function AboutView() {
                             <GitHub fontSize="small"/><Link href="https://github.com/elomagic/dfw-backend">GitHub</Link>
                         </Stack>
                         <br/>
-                        <span style={{color: 'gray'}}>{t("database-product")}</span> v{backend?.databaseProduct ?? t("unknown")}<br/>
-                        <span style={{color: 'gray'}}>{t("database-version")}</span> v{backend?.databaseVersion ?? t("unknown")}<br/>
+                        <span style={{color: 'gray'}}>{t("database-product")}</span> {backend?.databaseProduct ?? t("unknown")}<br/>
+                        <span style={{color: 'gray'}}>{t("database-version")}</span> {backend?.databaseVersion ?? t("unknown")}<br/>
                     </Grid>
 
                     {/* Right column */}

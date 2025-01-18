@@ -16,20 +16,21 @@ const englishTrans = {
     ...englishBaseTrans,
 };
 
-i18n.use(initReactI18next).init({
-    fallbackLng: 'en',
-    lng: language,
-    ns: ['translations'],
-    defaultNS: 'translations',
-    resources: {
-        de: {
-            translations: germanTrans
-        },
-        en: {
-            translations: englishTrans
+i18n.use(initReactI18next)
+    .init({
+        fallbackLng: 'en',
+        lng: language,
+        ns: ['translations'],
+        defaultNS: 'translations',
+        resources: {
+            de: {
+                translations: germanTrans
+            },
+            en: {
+                translations: englishTrans
+            }
         }
-    }
-})
+    })
     .then(() => dayjs.locale(language))
     .catch((reason) => console.log(reason));
 
