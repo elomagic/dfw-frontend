@@ -1,3 +1,5 @@
+"use client"
+
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import {UserAccountGroup} from "../../../DTOs.ts";

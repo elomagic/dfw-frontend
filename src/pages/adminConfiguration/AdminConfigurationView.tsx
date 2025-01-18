@@ -1,3 +1,5 @@
+"use client"
+
 import {Box, Paper} from "@mui/material";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';

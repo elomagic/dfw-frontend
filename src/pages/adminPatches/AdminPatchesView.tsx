@@ -1,3 +1,5 @@
+"use client"
+
 import {Box, Tab, Tabs} from "@mui/material";
 import {SyntheticEvent, useState} from "react";
 import {useTranslation} from "react-i18next";

@@ -1,3 +1,5 @@
+"use client"
+
 import {Configuration, ConfigurationKeyMeta} from "../../DTOs.ts";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";

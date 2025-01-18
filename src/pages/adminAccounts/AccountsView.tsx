@@ -1,3 +1,5 @@
+"use client"
+
 import {Box, Tab, Tabs} from "@mui/material";
 import {SyntheticEvent, useState} from "react";
 import UserAccountTab from "./user/UserAccountTab.tsx";

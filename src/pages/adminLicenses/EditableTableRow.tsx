@@ -1,3 +1,5 @@
+"use client"
+
 import {License, LicenseGroup} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";

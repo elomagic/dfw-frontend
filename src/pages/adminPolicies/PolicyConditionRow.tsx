@@ -1,3 +1,5 @@
+"use client"
+
 import {ConditionOperator, ConditionType, ItemId, LicenseGroup, PolicyCondition} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
