@@ -51,9 +51,7 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Compon
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-proxy")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
                 <DialogContentText>{t("pages.admin-proxies.dialog.create.text")}</DialogContentText>
                 <FormTextField id="purlMatch"
                                value={name}
@@ -71,9 +69,7 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Compon
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
+                <Button variant="contained" onClick={handleCreateClick}>{t("create")}</Button>
             </DialogActions>
         </Dialog>
     );

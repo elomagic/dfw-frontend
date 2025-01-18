@@ -58,9 +58,7 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Comp
         >
             <DialogTitle>{t("create-name-mapping")}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
-                <DialogContentText>
-                    Please enter mapping details
-                </DialogContentText>
+                <DialogContentText>Please enter mapping details</DialogContentText>
                 <FormTextField id="nameMatch"
                                value={nameMatch}
                                onChange={e => setNameMatch(e.target.value)}
@@ -77,9 +75,7 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Comp
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
+                <Button variant="contained" onClick={handleCreateClick}>{t("create")}</Button>
             </DialogActions>
         </Dialog>
     );

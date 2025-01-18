@@ -61,12 +61,8 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-credential")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
-                <DialogContentText>
-                    Please enter credential details
-                </DialogContentText>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+                <DialogContentText>Please enter credential details</DialogContentText>
 
                 <FormTextField id="credentialId"
                                      value={credentialId}
@@ -116,9 +112,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
+                <Button variant="contained" onClick={handleCreateClick}>{t("create")}</Button>
             </DialogActions>
         </Dialog>
     );

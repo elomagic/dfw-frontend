@@ -18,9 +18,7 @@ export default function CredentialTableRow({ credential, onDeleteRequest }: Read
     const auth = useAuth();
 
     return (
-        <TableRow
-            sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
-        >
+        <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}>
             <TableCell>{credential.credentialId}</TableCell>
             <TableCell>{credential.mode}</TableCell>
             <TableCell>

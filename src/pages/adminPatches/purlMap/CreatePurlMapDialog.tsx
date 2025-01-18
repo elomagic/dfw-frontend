@@ -58,9 +58,7 @@ export default function CreatePurlMapDialog({ open, handleClose }: Readonly<Comp
         >
             <DialogTitle>{t("create-purl-mapping")}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
-                <DialogContentText>
-                    {t("please-enter-mapping-details")}
-                </DialogContentText>
+                <DialogContentText>{t("please-enter-mapping-details")}</DialogContentText>
                 <FormTextField id="purlMatch"
                                value={purlMatch}
                                onChange={e => setPurlMatch(e.target.value)}
@@ -77,9 +75,7 @@ export default function CreatePurlMapDialog({ open, handleClose }: Readonly<Comp
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
+                <Button variant="contained" onClick={handleCreateClick}>{t("create")}</Button>
             </DialogActions>
         </Dialog>
     );

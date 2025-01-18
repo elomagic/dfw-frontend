@@ -51,12 +51,8 @@ export default function CreatePolicyDialog({ open, handleClose }: Readonly<Compo
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-policy")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
-                <DialogContentText>
-                    Please enter the name and the violation state of the new policy
-                </DialogContentText>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+                <DialogContentText>Please enter the name and the violation state of the new policy</DialogContentText>
                 <FormTextField id="name"
                                value={name}
                                onChange={e => setName(e.target.value)}

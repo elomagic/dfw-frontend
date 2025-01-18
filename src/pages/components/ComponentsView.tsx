@@ -35,9 +35,7 @@ export default function ComponentsView() {
 
     return (
         <Box margin={3}>
-            <TableHeaderControls onFilterChanged={f => setFilter(f)}
-                                 onRefresh={refresh}
-            />
+            <TableHeaderControls onFilterChanged={f => setFilter(f)} onRefresh={refresh}/>
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
                     <TableHead>

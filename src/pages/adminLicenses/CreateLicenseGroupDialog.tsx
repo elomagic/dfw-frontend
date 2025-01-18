@@ -51,9 +51,7 @@ export default function CreateLicenseGroupDialog({ open, handleClose }: Readonly
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-license-group")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
                 <DialogContentText>{t("pages.admin-license-groups.dialog.create.text")}</DialogContentText>
                 <FormTextField id="name"
                                value={name}
@@ -65,9 +63,7 @@ export default function CreateLicenseGroupDialog({ open, handleClose }: Readonly
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
+                <Button variant="contained" onClick={handleCreateClick}>{t("create")}</Button>
             </DialogActions>
         </Dialog>
     );

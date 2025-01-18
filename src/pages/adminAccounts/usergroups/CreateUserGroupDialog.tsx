@@ -48,9 +48,7 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Co
         >
             <DialogTitle>{t("create-user-group")}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
-                <DialogContentText>
-                    Please enter the name of the new user group
-                </DialogContentText>
+                <DialogContentText>Please enter the name of the new user group</DialogContentText>
 
                 <FormTextField id="name"
                                value={name}
@@ -62,9 +60,7 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Co
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
+                <Button variant="contained" onClick={handleCreateClick}>{t("create")}</Button>
             </DialogActions>
         </Dialog>
     );

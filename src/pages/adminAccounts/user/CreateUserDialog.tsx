@@ -51,9 +51,7 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<Compone
             <DialogTitle>{t("create-user-account")}</DialogTitle>
 
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
-                <DialogContentText>
-                    Please enter the mail address of the new user account
-                </DialogContentText>
+                <DialogContentText>Please enter the mail address of the new user account</DialogContentText>
 
                 <FormTextField id="mailAddress"
                                value={mailAddress}
@@ -66,9 +64,7 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<Compone
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
+                <Button variant="contained" onClick={handleCreateClick}>{t("create")}</Button>
             </DialogActions>
         </Dialog>
     );

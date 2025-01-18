@@ -52,12 +52,8 @@ export default function CreateApiKeyDialog({ open, handleClose }: Readonly<Compo
             PaperProps={{ sx: { width: "500px", backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("create-api-key")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
-            >
-                <DialogContentText>
-                    Please enter usage for your new API Key
-                </DialogContentText>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
+                <DialogContentText>Please enter usage for your new API Key</DialogContentText>
                 <FormTextField
                     id="description"
                     type="text"
@@ -84,9 +80,7 @@ export default function CreateApiKeyDialog({ open, handleClose }: Readonly<Compo
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>
-                <Button variant="contained" onClick={handleCreateClick}>
-                    {t("create")}
-                </Button>
+                <Button variant="contained" onClick={handleCreateClick}>{t("create")}</Button>
             </DialogActions>
         </Dialog>
     );

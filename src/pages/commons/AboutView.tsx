@@ -33,9 +33,7 @@ export default function AboutView() {
         <Box margin={4} sx={{ display: "flex", flexDirection: "column" }}>
             <Card sx={{ minWidth: "600px", alignSelf: "center", padding: "10px" }}>
 
-                <Typography component="div" variant="h6">
-                    {t("app.title")}
-                </Typography>
+                <Typography component="div" variant="h6">{t("app.title")}</Typography>
 
                 <Divider sx={{ mt: 2, mb: 2 }} />
 
