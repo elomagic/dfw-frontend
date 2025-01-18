@@ -158,14 +158,16 @@ const darkTheme = createTheme({
 
 function App() {
     const theme = useTheme();
-    const [open, setOpen] = useState<boolean>("true" !== localStorage.getItem("appbar_closed"));
+    const [open, setOpen] = useState<boolean>("true" !== localStorage.getItem("sidebar_closed_status"));
     const auth: AuthContextProps = useAuth();
 
     const handleDrawerOpen = () => {
+        localStorage.setItem("sidebar_closed_status", "true");
         setOpen(true);
     };
 
     const handleDrawerClose = () => {
+        localStorage.setItem("sidebar_closed_status", "false");
         setOpen(false);
     };
 
