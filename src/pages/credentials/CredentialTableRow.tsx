@@ -1,3 +1,5 @@
+"use client"
+
 import { CredentialData } from "../../DTOs.ts";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";

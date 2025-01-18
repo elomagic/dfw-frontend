@@ -1,3 +1,5 @@
+"use client"
+
 import {Box, Paper} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";

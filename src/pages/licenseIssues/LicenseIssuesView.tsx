@@ -1,3 +1,5 @@
+"use client"
+
 import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useCallback, useEffect, useState} from "react";
 import {LicenseViolation} from "../../DTOs.ts";

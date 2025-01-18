@@ -1,3 +1,5 @@
+"use client"
+
 import {Paper} from "@mui/material";
 import ReactEChartsCore from "echarts-for-react/lib/core";
 import * as echarts from "echarts/core";

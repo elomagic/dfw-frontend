@@ -1,3 +1,5 @@
+"use client"
+
 import {FormEvent, useState} from "react";
 import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typography} from "@mui/material";
 // import { useNavigate } from "react-router-dom"

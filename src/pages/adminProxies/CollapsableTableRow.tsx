@@ -1,3 +1,5 @@
+"use client"
+
 import TableCell from "@mui/material/TableCell";
 import {Check} from "@mui/icons-material";
 import TableRow from "@mui/material/TableRow";

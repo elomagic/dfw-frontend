@@ -1,3 +1,5 @@
+"use client"
+
 import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typography} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {FormEvent, useEffect, useState} from "react";

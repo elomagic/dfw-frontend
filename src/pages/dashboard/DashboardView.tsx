@@ -1,3 +1,5 @@
+"use client"
+
 import LicencesPie from "./LicensesPie.tsx";
 import Grid from "@mui/material/Grid2";
 

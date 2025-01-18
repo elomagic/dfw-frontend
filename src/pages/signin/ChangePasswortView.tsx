@@ -1,3 +1,5 @@
+"use client"
+
 import {Box, Card, Paper} from "@mui/material";
 import {useTranslation} from "react-i18next";
 

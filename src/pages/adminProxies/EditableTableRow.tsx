@@ -1,3 +1,5 @@
+"use client"
+
 import {CredentialData, Proxy, UserAccountGroup} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
