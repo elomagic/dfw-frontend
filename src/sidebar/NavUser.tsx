@@ -51,8 +51,8 @@ export function NavUser({ expand }: Readonly<{ expand: boolean }>) {
                     </ListItemAvatar>
 
                     <ListItemText
-                        primary={<div style={{fontSize: "smaller", fontWeight: "bolder"}}>{auth.displayName}</div>}
-                        secondary={<div style={{fontSize: "smaller"}}>{auth.mailAddress}</div>}
+                        primary={<span style={{fontSize: "smaller", fontWeight: "bolder"}}>{auth.displayName}</span>}
+                        secondary={<span style={{fontSize: "smaller"}}>{auth.mailAddress}</span>}
                         sx={[
                             {
                                 transition: "opacity 0.5s",
@@ -112,8 +112,8 @@ export function NavUser({ expand }: Readonly<{ expand: boolean }>) {
                         <Avatar alt={auth.displayName} src={avatarUrl} variant="rounded" />
                     </ListItemAvatar>
                     <ListItemText
-                        primary={<div style={{ fontSize: "smaller", fontWeight: "bolder" }}>{auth.displayName}</div>}
-                        secondary={<div style={{ fontSize: "smaller" }}>{auth.mailAddress}</div>}
+                        primary={<span style={{ fontSize: "smaller", fontWeight: "bolder" }}>{auth.displayName}</span>}
+                        secondary={<span style={{ fontSize: "smaller" }}>{auth.mailAddress}</span>}
                     />
                 </ListItem>
 
