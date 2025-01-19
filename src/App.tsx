@@ -28,7 +28,7 @@ import PolicyViolationsView from "./pages/policyViolations/PolicyViolationsView.
 import VulnerabilitiesView from "./pages/vulnerabilities/VulnerabilitiesView.tsx";
 import AdminPatchesView from "./pages/adminPatches/AdminPatchesView.tsx";
 import SignInView from "./pages/signin/SignInView.tsx";
-import {createTheme, useTheme} from "@mui/material/styles";
+import {useTheme} from "@mui/material/styles";
 import {useAuth} from "./auth/useAuth.ts";
 import AboutView from "./pages/commons/AboutView.tsx";
 import MyAccountView from "./pages/myAccount/MyAccountView.tsx";
@@ -40,6 +40,7 @@ import ComponentsView from "./pages/components/ComponentsView.tsx";
 import {ToastContainer} from "react-toastify";
 import AdminPolicyView from "./pages/adminPolicies/AdminPoliciesView.tsx";
 import AdminLicenseGroupsView from "./pages/adminLicenses/AdminLicenseGroupsView.tsx";
+import {defaultTheme} from "./Theming.ts";
 
 const drawerWidth: number = 240;
 
@@ -125,37 +126,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-const darkTheme = createTheme({
-    palette: {
-        mode: 'dark',
-    },
-    components: {
-        MuiInputBase: {
-            styleOverrides: {
-                root: {
-                    fontSize: '0.9rem',
-                },
-            }
-        },
-        MuiMenuItem: {
-            styleOverrides: {
-                root: {
-                    fontSize: '0.9rem',
-                },
-            }
-        },
-        MuiTableCell: {
-            styleOverrides: {
-                root: {
-                    fontSize: '0.9rem',
-                    padding: '0 10px',
-                    height: '40px',
-                },
-            }
-        },
-    }
-});
-
 function App() {
     const theme = useTheme();
     const [open, setOpen] = useState<boolean>("true" !== localStorage.getItem("sidebar_closed_status"));
@@ -172,7 +142,7 @@ function App() {
     };
 
     return (
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={defaultTheme}>
             <ToastContainer />
             <CssBaseline />
             <BrowserRouter>

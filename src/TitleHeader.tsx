@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import {NavItem, NavItemData} from "./NavItems.ts";
+import ThemeSwitch from "./components/ThemeSwitch.tsx";
+import {Box, Stack} from "@mui/material";
 
 const getAllPathsTitle = (): NavItem[] => {
 
@@ -34,9 +36,11 @@ export default function TitleHeader() {
     }, [location])
 
     return (
-        <div style={{display: "flex", alignItems: "center"}}>
+        <Stack direction="row" alignItems="center" spacing={1}>
             {navItem && <navItem.icon style={{ height: "24", width: "24", fontSize: "24" }} />}
-            <span style={{ paddingLeft: 8 }}>{t(navItem?.title ?? 'app.title')}</span>
-        </div>
+            <span>{t(navItem?.title ?? 'app.title')}</span>
+            <Box flexGrow={1} />
+            <ThemeSwitch />
+        </Stack>
     );
 }
