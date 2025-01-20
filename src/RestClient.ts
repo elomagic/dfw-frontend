@@ -141,11 +141,9 @@ export const get = <T> (auth: AuthContextProps, endpoint: RestEndpoint, pathComp
             'Accept': HEADER_ACCEPTED,
             'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
-        //transformResponse: (data => JSON.parse(data))
     };
 
     return executeRequest(auth, requestOptions);
-        //.then((res) =>  JSON.parse(res.data));
 }
 
 /**
