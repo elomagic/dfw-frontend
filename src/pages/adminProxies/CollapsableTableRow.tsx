@@ -28,8 +28,7 @@ export default function CollapsableTableRow({ proxy, internalBaseUrl, onDeleteRe
     const [data, setData] = useState<Proxy>(proxy);
 
     const handleSaveClick = (d: Proxy) => {
-        Rest.patch(auth, RestEndpoint.Proxy, d)
-            .then((res) => res.json())
+        Rest.patch<Proxy>(auth, RestEndpoint.Proxy, d)
             .then((dto: Proxy) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

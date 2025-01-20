@@ -47,8 +47,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
             passphrase
         }
 
-        Rest
-            .post(auth, RestEndpoint.Credential, data)
+        Rest.post(auth, RestEndpoint.Credential, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

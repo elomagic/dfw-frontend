@@ -35,8 +35,7 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<Compone
             changePassword: true,
         }
 
-        Rest
-            .post(auth, RestEndpoint.User, data)
+        Rest.post(auth, RestEndpoint.User, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

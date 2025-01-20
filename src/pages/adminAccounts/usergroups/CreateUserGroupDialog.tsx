@@ -33,8 +33,7 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Co
             roles: []
         }
 
-        Rest
-            .post(auth, RestEndpoint.UserGroup, data)
+        Rest.post(auth, RestEndpoint.UserGroup, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

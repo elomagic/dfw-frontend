@@ -27,8 +27,7 @@ export default function CollapsableTableRow({ policy, licenseGroups, onDeleteReq
     const [data, setData] = useState<Policy>(policy);
 
     const handleSaveClick = (d: Policy) => {
-        Rest.patch(auth, RestEndpoint.Policy, d)
-            .then((res) => res.json())
+        Rest.patch<Policy>(auth, RestEndpoint.Policy, d)
             .then((dto: Policy) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

@@ -31,18 +31,14 @@ export default function AdminLicenseGroupsView() {
     const [ licenses, setLicenses ] = useState<License[]>([]);
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.LicenseGroup)
-            .then((res) => res.json())
-            .then((dto: LicenseGroup[]) => {
-                setRows(dto);
-            })
+        Rest.get<LicenseGroup[]>(auth, Rest.RestEndpoint.LicenseGroup)
+            .then((dto: LicenseGroup[]) => setRows(dto))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
 
-        Rest.get(auth, Rest.RestEndpoint.License)
-            .then((res) => res.json())
+        Rest.get<License[]>(auth, Rest.RestEndpoint.License)
             .then((rs: License[]) => setLicenses(rs))
             .catch((err: Error) => toaster("Getting license group list failed: " + err.message, 'error'));
     }, [t, auth]);

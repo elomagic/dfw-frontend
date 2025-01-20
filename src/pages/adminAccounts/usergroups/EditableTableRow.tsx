@@ -39,13 +39,11 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
 
     useEffect(() => {
-        Rest.get(auth, Rest.RestEndpoint.User)
-            .then((res) => res.json())
+        Rest.get<UserAccount[]>(auth, Rest.RestEndpoint.User)
             .then((dtos: UserAccount[]) => setAllUsers(dtos))
             .catch((err: Error) => toaster("Getting users failed: " + err.message, 'error'));
 
-        Rest.get(auth, Rest.RestEndpoint.Role)
-            .then((res) => res.json())
+        Rest.get<string[]>(auth, Rest.RestEndpoint.Role)
             .then((rs: string[]) => setAllRoles(rs.sort((a, b) => a.localeCompare(b)).map(r => ({value: r}))))
             .catch((err: Error) => toaster("Getting roles failed: " + err.message, 'error'));
     }, [auth]);

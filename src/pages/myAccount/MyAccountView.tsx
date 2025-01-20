@@ -65,8 +65,7 @@ export default function MyAccountView() {
     }
 
     useEffect(() => {
-        Rest.get(auth, RestEndpoint.UserSelf)
-            .then((res) => res.json())
+        Rest.get<UserAccount>(auth, RestEndpoint.UserSelf)
             .then((dto: UserAccount) => {
                 setDisplayName(dto.displayName);
                 setLanguage(dto.language);

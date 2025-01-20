@@ -31,11 +31,8 @@ export default function AdminProxiesView() {
     const [ selectedEntity, setSelectedEntity ] = useState<Proxy>();
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.Proxy)
-            .then((res) => res.json())
-            .then((reps: Proxy[]) => {
-                setRows(reps);
-            })
+        Rest.get<Proxy[]>(auth, Rest.RestEndpoint.Proxy)
+            .then((reps: Proxy[]) => setRows(reps))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');
@@ -66,11 +63,8 @@ export default function AdminProxiesView() {
     useEffect(() => refresh(), [refresh]);
 
     useEffect(() => {
-        Rest.get(auth, Rest.RestEndpoint.Configuration)
-            .then((res) => res.json())
-            .then((entities: Configuration[]) => {
-                return entities.filter((e) => e.key === "COMMON_BASE_URL")[0];
-            })
+        Rest.get<Configuration[]>(auth, Rest.RestEndpoint.Configuration)
+            .then((entities: Configuration[]) => entities.filter((e) => e.key === "COMMON_BASE_URL")[0])
             .then((c: Configuration) => setInternalBaseUrl(c.value))
             .catch((err: Error) => {
                 setRows([])

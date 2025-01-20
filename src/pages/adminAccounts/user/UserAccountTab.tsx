@@ -30,11 +30,8 @@ export default function UserAccountTab() {
     const [ selectedEntity, setSelectedEntity ] = useState<UserAccount>();
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.User)
-            .then((res) => res.json())
-            .then((dtos: UserAccount[]) => {
-                setRows(dtos);
-            })
+        Rest.get<UserAccount[]>(auth, Rest.RestEndpoint.User)
+            .then((dtos: UserAccount[]) => setRows(dtos))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed", { message: err.message }), 'error');

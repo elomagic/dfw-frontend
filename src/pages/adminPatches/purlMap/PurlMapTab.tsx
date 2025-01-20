@@ -30,11 +30,8 @@ export default function PurlMapTab() {
     const [ selectedEntity, setSelectedEntity ] = useState<LicensePurlMap>();
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.LicensePurlMap)
-            .then((res) => res.json())
-            .then((dtos: LicensePurlMap[]) => {
-                setRows(dtos);
-            })
+        Rest.get<LicensePurlMap[]>(auth, Rest.RestEndpoint.LicensePurlMap)
+            .then((dtos: LicensePurlMap[]) => setRows(dtos))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');

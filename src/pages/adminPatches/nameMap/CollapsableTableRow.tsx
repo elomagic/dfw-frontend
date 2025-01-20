@@ -25,8 +25,7 @@ export default function CollapsableTableRow({ nameMap, onDeleteRequest }: Readon
     const [data, setData] = useState<LicenseNameMap>(nameMap);
 
     const handleSaveClick = (d: LicenseNameMap) => {
-        Rest.patch(auth, RestEndpoint.LicensePurlMap, d)
-            .then((res) => res.json())
+        Rest.patch<LicenseNameMap>(auth, RestEndpoint.LicensePurlMap, d)
             .then((dto: LicenseNameMap) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
