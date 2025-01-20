@@ -21,11 +21,8 @@ export default function PolicyViolationsView() {
     const [ selectedEntity, setSelectedEntity ] = useState<PolicyViolation>();
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.PolicyViolation)
-            .then((res) => res.json())
-            .then((reps: PolicyViolation[]) => {
-                setRows(reps);
-            })
+        Rest.get<PolicyViolation[]>(auth, Rest.RestEndpoint.PolicyViolation)
+            .then((reps: PolicyViolation[]) => setRows(reps))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');

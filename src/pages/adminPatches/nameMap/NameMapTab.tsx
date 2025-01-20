@@ -30,11 +30,8 @@ export default function NameMapTab() {
     const [ selectedEntity, setSelectedEntity ] = useState<LicenseNameMap>();
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.LicenseNameMap)
-            .then((res) => res.json())
-            .then((dtos: LicenseNameMap[]) => {
-                setRows(dtos);
-            })
+        Rest.get<LicenseNameMap[]>(auth, Rest.RestEndpoint.LicenseNameMap)
+            .then((dtos: LicenseNameMap[]) => setRows(dtos))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');

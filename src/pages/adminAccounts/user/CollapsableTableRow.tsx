@@ -26,8 +26,7 @@ export default function CollapsableTableRow({ user, onDeleteRequest }: Readonly<
     const [data, setData] = useState<UserAccount>(user);
 
     const handleSaveClick = (d: UserAccount) => {
-        Rest.patch(auth, RestEndpoint.User, d)
-            .then((res) => res.json())
+        Rest.patch<UserAccount>(auth, RestEndpoint.User, d)
             .then((dto: UserAccount) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

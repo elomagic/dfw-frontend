@@ -37,8 +37,7 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Compon
             forwardHeaders: false
         }
 
-        Rest
-            .post(auth, RestEndpoint.Proxy, data)
+        Rest.post(auth, RestEndpoint.Proxy, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

@@ -18,11 +18,8 @@ export default function ComponentsView() {
     const [ filter, setFilter ] = useState<string>("");
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.Component)
-            .then((res) => res.json())
-            .then((reps: Component[]) => {
-                setRows(reps);
-            })
+        Rest.get<Component[]>(auth, Rest.RestEndpoint.Component)
+            .then((reps: Component[]) => setRows(reps))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');

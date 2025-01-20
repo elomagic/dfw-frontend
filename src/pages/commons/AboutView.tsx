@@ -21,11 +21,8 @@ export default function AboutView() {
     const [ backend, setBackend ] = useState<Version|undefined>(undefined);
 
     useEffect(() => {
-        Rest.get(auth, Rest.RestEndpoint.Version)
-            .then((res) => res.json())
-            .then((dto: Version) => {
-                setBackend(dto);
-            })
+        Rest.get<Version>(auth, Rest.RestEndpoint.Version)
+            .then((dto: Version) => setBackend(dto))
             .catch((reason) => console.log(reason));
     }, [auth]);
 

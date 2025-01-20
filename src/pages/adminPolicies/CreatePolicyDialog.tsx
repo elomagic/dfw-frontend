@@ -37,8 +37,7 @@ export default function CreatePolicyDialog({ open, handleClose }: Readonly<Compo
             conditions: []
         }
 
-        Rest
-            .post(auth, RestEndpoint.Policy, data)
+        Rest.post(auth, RestEndpoint.Policy, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

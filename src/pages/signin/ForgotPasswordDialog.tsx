@@ -12,6 +12,7 @@ import {useTranslation} from "react-i18next";
 import * as Rest from "../../RestClient.ts"
 import {RestEndpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
+import {AxiosResponse} from "axios";
 
 interface ForgotPasswordProps {
     open: boolean;
@@ -23,7 +24,7 @@ export default function ForgotPasswordDialog({ open, handleClose }: Readonly<For
     const { t } = useTranslation();
     const auth = useAuth();
 
-    const resetPassword = async (data: FormData): Promise<Response> => {
+    const resetPassword = async (data: FormData): Promise<AxiosResponse> => {
         const res = await Rest.postFormData(auth, RestEndpoint.UserResetPasswordRequest, data);
         if (res.status >= 400) {
             return Promise.reject(new Error(res.statusText));

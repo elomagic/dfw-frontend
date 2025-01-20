@@ -31,18 +31,14 @@ export default function AdminPolicyView() {
     const [ licenseGroups, setLicenseGroups ] = useState<LicenseGroup[]>([]);
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.Policy)
-            .then((res) => res.json())
-            .then((reps: Policy[]) => {
-                setRows(reps);
-            })
+        Rest.get<Policy[]>(auth, Rest.RestEndpoint.Policy)
+            .then((reps: Policy[]) => setRows(reps))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
 
-        Rest.get(auth, Rest.RestEndpoint.LicenseGroup)
-            .then((res) => res.json())
+        Rest.get<LicenseGroup[]>(auth, Rest.RestEndpoint.LicenseGroup)
             .then((rs: LicenseGroup[]) => setLicenseGroups(rs))
             .catch((err: Error) => toaster("Getting license group list failed: " + err.message, 'error'));
     }, [t, auth]);

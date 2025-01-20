@@ -25,8 +25,7 @@ export default function CollapsableTableRow({ purlMap, onDeleteRequest }: Readon
     const [data, setData] = useState<LicensePurlMap>(purlMap);
 
     const handleSaveClick = (d: LicensePurlMap) => {
-        Rest.patch(auth, RestEndpoint.LicensePurlMap, d)
-            .then((res) => res.json())
+        Rest.patch<LicensePurlMap>(auth, RestEndpoint.LicensePurlMap, d)
             .then((dto: LicensePurlMap) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

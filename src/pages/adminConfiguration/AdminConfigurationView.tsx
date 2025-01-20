@@ -29,8 +29,7 @@ export default function AdminConfigurationView() {
     const [ configurationKeyMetas, setConfigurationKeyMetas ] = useState<ConfigurationKeyMeta[]>([]);
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.Configuration)
-            .then((res) => res.json())
+        Rest.get<Configuration[]>(auth, Rest.RestEndpoint.Configuration)
             .then((entities: Configuration[]) => {
                 return entities.sort((a, b) => a.key.localeCompare(b.key));
             })
@@ -58,8 +57,7 @@ export default function AdminConfigurationView() {
     useEffect(() => refresh(), [refresh]);
 
     useEffect(() => {
-        Rest.get(auth, Rest.RestEndpoint.ConfigurationKey)
-            .then((res) => res.json())
+        Rest.get<ConfigurationKeyMeta[]>(auth, Rest.RestEndpoint.ConfigurationKey)
             .then((rs: ConfigurationKeyMeta[]) => setConfigurationKeyMetas(rs))
             .catch((err: Error) => toaster(t("getting-data-failed",  { message: err.message }), 'error'));
     }, [auth, t]);

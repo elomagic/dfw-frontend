@@ -101,9 +101,7 @@ export default function ResetPasswortView() {
 
     };
 
-    useEffect(() => {
-        setToken(searchParams.get("token") ?? "");
-    }, [searchParams]);
+    useEffect(() => setToken(searchParams.get("token") ?? ""), [searchParams]);
 
     return (
         <ResetPasswordContainer direction="column" justifyContent="space-between">

@@ -35,16 +35,14 @@ export default function CreatePurlMapDialog({ open, handleClose }: Readonly<Comp
             spdxId
         }
 
-        Rest
-            .post(auth, RestEndpoint.LicensePurlMap, data)
+        Rest.post(auth, RestEndpoint.LicensePurlMap, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));
     }
 
     useEffect(() => {
-        Rest.get(auth, Rest.RestEndpoint.License)
-            .then((res) => res.json())
+        Rest.get<License[]>(auth, Rest.RestEndpoint.License)
             .then((rs: License[]) => rs.map(l => { return { "key": l.licenseId, "label": l.name} as KeyLabelItem })) // setSpdxList(rs))
             .then((kl: KeyLabelItem[]) => setSpdxList(kl))
             .catch((err: Error) => toaster("Getting spdx list failed: " + err.message, 'error'));

@@ -30,11 +30,8 @@ export default function CredentialsView() {
     const [ selectedEntity, setSelectedEntity ] = useState<CredentialData>();
 
     const refresh = useCallback(() => {
-        Rest.get(auth, Rest.RestEndpoint.Credential)
-            .then((res) => res.json())
-            .then((cd: CredentialData[]) => {
-                setRows(cd);
-            })
+        Rest.get<CredentialData[]>(auth, Rest.RestEndpoint.Credential)
+            .then((cd: CredentialData[]) => setRows(cd))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');

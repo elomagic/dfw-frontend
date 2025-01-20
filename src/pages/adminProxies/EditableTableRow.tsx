@@ -62,8 +62,7 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
     };
 
     useEffect(() => {
-        Rest.get(auth, Rest.RestEndpoint.Credential)
-            .then((res) => res.json())
+        Rest.get<CredentialData[]>(auth, Rest.RestEndpoint.Credential)
             .then((rs: CredentialData[]) => rs.map(c => { return { "key": c.credentialId, "label": c.credentialId} as KeyLabelItem }))
             .then((cd: KeyLabelItem[]) => {
                 cd.unshift({ key: "-", label: "-"});
@@ -72,8 +71,7 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
             .then((kl: KeyLabelItem[]) => setCredentialsIds(kl))
             .catch((err: Error) => toaster(t("getting-data-failed",  { message: err.message }), 'error'));
 
-        Rest.get(auth, Rest.RestEndpoint.UserGroup)
-            .then((res) => res.json())
+        Rest.get<UserAccountGroup[]>(auth, Rest.RestEndpoint.UserGroup)
             .then((rs: UserAccountGroup[]) => setAllGroups(rs))
             .catch((err: Error) => toaster(t("getting-data-failed",  { message: err.message }), 'error'));
     }, [auth, t]);

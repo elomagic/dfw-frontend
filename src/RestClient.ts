@@ -1,6 +1,8 @@
 import {AuthContextProps} from "./auth/Auth.tsx";
 import i18next from "i18next";
 import {ErrorResponse} from "./DTOs.ts";
+import * as axios from "axios";
+import {AxiosRequestConfig, AxiosResponse} from "axios";
 
 const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_URL : `${window.location.protocol}//${window.location.host}`;
 
@@ -19,7 +21,7 @@ export enum RestEndpoint {
     Proxy = "/api/v1/proxy",
     Role = "/api/v1/role",
     User = "/api/v1/user",
-    UserChangePassword = "/api/v1/user/changePassword",
+    // UserChangePassword = "/api/v1/user/changePassword",
     UserResetPassword = "/api/v1/user/resetPassword",
     UserResetPasswordRequest = "/api/v1/user/resetPasswordRequest",
     UserSelf = "/api/v1/user/self",
@@ -37,7 +39,7 @@ const toJson = (dto: object): string => {
     });
 }
 
-const createUrl = (endpoint: RestEndpoint, pathComponents: string[] | undefined, queryParameters?: Map<string, number>): RequestInfo => {
+const createUrl = (endpoint: RestEndpoint, pathComponents: string[] | undefined, queryParameters?: Map<string, number>): string => {
 
     let url: string = BASE_REST_URL + endpoint;
 
@@ -61,48 +63,34 @@ const createUrl = (endpoint: RestEndpoint, pathComponents: string[] | undefined,
 
 }
 
-const applyBearerToken = (auth: AuthContextProps | undefined, headers: HeadersInit | undefined): HeadersInit => {
-    if (headers === undefined) {
-        return auth?.isAuthenticated ? {'Authorization':`Bearer ${auth?.accessToken}`} : new Headers();
+const applyBearerToken = (auth: AuthContextProps | undefined, requestOptions: AxiosRequestConfig): AxiosRequestConfig => {
+    if (requestOptions.headers === undefined) {
+        requestOptions.headers = {};
     }
 
-    if (headers instanceof Headers) {
-        if (auth?.isAuthenticated) {
-            headers.set('Authorization', `Bearer ${auth?.accessToken}`);
-        }
-        return headers;
-    }
+    requestOptions.headers.Authorization = `Bearer ${auth?.accessToken}`;
 
-    const h: Headers = new Headers();
-    if (auth?.isAuthenticated) {
-        h.set('Authorization', `Bearer ${auth?.accessToken}`);
-    }
-
-    Reflect.ownKeys(headers)
-        .map(k => [k, Reflect.get(headers, k)])
-        .forEach((t: string[]) => h.set(t[0], t[1]))
-
-    return h;
+    return requestOptions;
 }
 
-const executeRequest = (auth: AuthContextProps, url: RequestInfo, requestOptions: RequestInit): Promise<Response> => {
+const executeRequest = <T> (auth: AuthContextProps, requestOptions: AxiosRequestConfig): Promise<T> => {
 
     try {
-        requestOptions.headers = applyBearerToken(auth, requestOptions?.headers);
+        requestOptions = applyBearerToken(auth, requestOptions);
     } catch (err) {
         return Promise.reject(err)
     }
 
-    return fetch(url, requestOptions)
-        .then((res: Response) => {
+    return axios.default.request(requestOptions)
+        .then((res: AxiosResponse) => {
             if (res.status === 401) {
                 auth.removeUser()
                     .finally(() => console.log("Wat nun?"));
             } else if (res.status >= 400) {
-                const contentType = res.headers.get('content-type');
+                const contentType = res.headers['content-type'];
                 let text = res.statusText;
                 if (contentType == "application/vnd.elomagic.dfw+json;charset=UTF-8") {
-                    return res.json().then((er: ErrorResponse) => {
+                    return JSON.parse(res.data).then((er: ErrorResponse) => {
                         return Promise.reject(new Error(er.message));
                     });
                 }
@@ -121,13 +109,21 @@ const executeRequest = (auth: AuthContextProps, url: RequestInfo, requestOptions
 
                 return Promise.reject(new Error(text));
             }
-            return Promise.resolve(res);
+            return Promise.resolve(res.data);
         });
 }
 
 export declare type PathComponents = string[] | string | undefined
 
-export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: PathComponents, queryParameters?: Map<string, number>): Promise<Response> => {
+/**
+ * Request DTOs
+ *
+ * @param auth
+ * @param endpoint
+ * @param pathComponents
+ * @param queryParameters
+ */
+export const get = <T> (auth: AuthContextProps, endpoint: RestEndpoint, pathComponents?: PathComponents, queryParameters?: Map<string, number>): Promise<T> => {
     let paths = undefined;
     if (pathComponents != null && Array.isArray(pathComponents)) {
         paths = pathComponents
@@ -135,18 +131,21 @@ export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponen
         paths = [pathComponents];
     }
 
-    const url: RequestInfo = createUrl(endpoint, paths, queryParameters);
+    const url: string = createUrl(endpoint, paths, queryParameters);
 
-    const requestOptions: RequestInit = {
-        mode: 'cors',
+    const requestOptions: AxiosRequestConfig = {
+        url,
+        // TODO mode: 'cors',
         method: 'GET',
         headers: {
             'Accept': HEADER_ACCEPTED,
             'Accept-Language': `${auth.language ?? "en"}, *;q=0.5`
         },
+        //transformResponse: (data => JSON.parse(data))
     };
 
-    return executeRequest(auth, url, requestOptions);
+    return executeRequest(auth, requestOptions);
+        //.then((res) =>  JSON.parse(res.data));
 }
 
 /**
@@ -156,14 +155,15 @@ export const get = (auth: AuthContextProps, endpoint: RestEndpoint, pathComponen
  * @param endpoint
  * @param dto
  */
-export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
+export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<AxiosResponse> => {
 
     const url: RequestInfo = createUrl(endpoint, undefined);
     const data = toJson(dto);
 
-    const requestOptions: RequestInit = {
-        body: data,
-        mode: 'cors',
+    const requestOptions: AxiosRequestConfig = {
+        url,
+        data,
+        // TODO mode: 'cors',
         method: 'POST',
         headers: {
             'Accept': HEADER_ACCEPTED,
@@ -172,17 +172,18 @@ export const post = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object
         },
     };
 
-    return executeRequest(auth, url, requestOptions);
+    return executeRequest(auth, requestOptions);
 }
 
-export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
+export const put = <T> (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<T> => {
 
     const url: RequestInfo = createUrl(endpoint, undefined);
     const data = toJson(dto);
 
-    const requestOptions: RequestInit = {
-        body: data,
-        mode: 'cors',
+    const requestOptions: AxiosRequestConfig = {
+        url,
+        data,
+        // TODO mode: 'cors',
         method: 'PUT',
         headers: {
             'Accept': HEADER_ACCEPTED,
@@ -191,7 +192,7 @@ export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object)
         },
     };
 
-    return executeRequest(auth, url, requestOptions);
+    return executeRequest(auth, requestOptions);
 }
 
 /**
@@ -201,14 +202,15 @@ export const put = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object)
  * @param endpoint
  * @param dto
  */
-export const patch = (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<Response> => {
+export const patch = <T> (auth: AuthContextProps, endpoint: RestEndpoint, dto: object): Promise<T> => {
 
     const url: RequestInfo = createUrl(endpoint, undefined);
     const data = toJson(dto);
 
-    const requestOptions: RequestInit = {
-        body: data,
-        mode: 'cors',
+    const requestOptions: AxiosRequestConfig = {
+        url,
+        data,
+        // TODO mode: 'cors',
         method: 'PATCH',
         headers: {
             'Accept': HEADER_ACCEPTED,
@@ -217,17 +219,18 @@ export const patch = (auth: AuthContextProps, endpoint: RestEndpoint, dto: objec
         },
     };
 
-    return executeRequest(auth, url, requestOptions);
+    return executeRequest(auth, requestOptions);
 }
 
 
-export const postFormData = (auth: AuthContextProps, endpoint: RestEndpoint, data: FormData): Promise<Response> => {
+export const postFormData = (auth: AuthContextProps, endpoint: RestEndpoint, data: FormData): Promise<AxiosResponse> => {
 
     const url: RequestInfo = createUrl(endpoint, undefined);
 
-    const requestOptions: RequestInit = {
-        body: data,
-        mode: 'cors',
+    const requestOptions: AxiosRequestConfig = {
+        url,
+        data,
+        // TODO mode: 'cors',
         method: 'POST',
         headers: {
             'Accept': HEADER_ACCEPTED,
@@ -236,15 +239,16 @@ export const postFormData = (auth: AuthContextProps, endpoint: RestEndpoint, dat
         },
     };
 
-    return executeRequest(auth, url, requestOptions);
+    return executeRequest(auth, requestOptions);
 }
 
-export const deleteResource = (auth: AuthContextProps, endpoint: RestEndpoint, uid: string|undefined, queryParameters?: Map<string, number>): Promise<Response> => {
+export const deleteResource = (auth: AuthContextProps, endpoint: RestEndpoint, uid: string|undefined, queryParameters?: Map<string, number>): Promise<AxiosResponse> => {
     const path = uid === undefined ? undefined : [uid];
     const url: RequestInfo = createUrl(endpoint, path, queryParameters);
 
-    const requestOptions: RequestInit = {
-        mode: 'cors',
+    const requestOptions: AxiosRequestConfig = {
+        url,
+        // TODO mode: 'cors',
         method: 'DELETE',
         headers: {
             'Accept': HEADER_ACCEPTED,
@@ -252,5 +256,5 @@ export const deleteResource = (auth: AuthContextProps, endpoint: RestEndpoint, u
         }
     };
 
-    return executeRequest(auth, url, requestOptions);
+    return executeRequest(auth, requestOptions);
 }
