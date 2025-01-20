@@ -2,8 +2,8 @@
 
 import {Component} from "../../DTOs.ts";
 import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import ProxyTypeIcon from "../../components/ProxyTypeIcon.tsx";
+import {TableDataRow} from "../../components/TableDataRow.tsx";
 
 interface ComponentProps {
     component: Component;
@@ -12,13 +12,13 @@ interface ComponentProps {
 export default function ComponentTableRow({component}: Readonly<ComponentProps>) {
 
     return (
-        <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}, backgroundColor: "#292929"}}>
+        <TableDataRow>
             <TableCell><ProxyTypeIcon type={component.type} /></TableCell>
             <TableCell>{component.purl}</TableCell>
             <TableCell>{component.namespace}</TableCell>
             <TableCell>{component.name}</TableCell>
             <TableCell>{component.version}</TableCell>
             <TableCell>{component.licenses.map(l => l.name).join(", ")}</TableCell>
-        </TableRow>
+        </TableDataRow>
     );
 }

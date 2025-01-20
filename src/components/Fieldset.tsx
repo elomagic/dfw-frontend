@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react";
-import {Box, Typography} from "@mui/material";
+import {Box, Typography, useColorScheme} from "@mui/material";
 
 interface ComponentProps {
     label?: string;
@@ -17,10 +17,13 @@ interface ComponentProps {
  */
 
 export const Fieldset = ({ label, children, ...props }: ComponentProps) => {
+
+    const {mode} = useColorScheme();
+
     return (
         <Box component="fieldset" {...props}
              sx={{
-                 borderColor: "rgba(255, 255, 255, 0.3)",
+                 borderColor: (mode == "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.23)"),
                  borderRadius: 1,
                  borderWidth: 1,
                  paddingTop: 0,
@@ -38,7 +41,7 @@ export const Fieldset = ({ label, children, ...props }: ComponentProps) => {
             {label && (<Typography
                 component="legend"
                 sx={{
-                    color: "rgba(255, 255, 255, 0.7)",
+                    color: (mode == "dark" ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.6)"),
                     fontSize: '0.75rem',
                 }}>
                 {label}

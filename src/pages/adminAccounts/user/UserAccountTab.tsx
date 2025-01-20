@@ -13,7 +13,7 @@ import {useCallback, useEffect, useState} from "react";
 import {UserAccount} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
 import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
-import CollapsableUserTableRow from "./CollapsableUserTableRow.tsx";
+import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateUserDialog from "./CreateUserDialog.tsx";
 import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
@@ -88,9 +88,9 @@ export default function UserAccountTab() {
                         {rows
                             .filter(r => ("" === filter || r.mailAddress.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
-                                <CollapsableUserTableRow key={row.mailAddress}
-                                                         user={row}
-                                                         onDeleteRequest={(dto) => handleDeleteRequest(dto)}
+                                <CollapsableTableRow key={row.mailAddress}
+                                                     user={row}
+                                                     onDeleteRequest={(dto) => handleDeleteRequest(dto)}
                                 />
                             ))
                         }

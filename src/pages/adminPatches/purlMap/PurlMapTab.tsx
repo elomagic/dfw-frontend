@@ -14,7 +14,7 @@ import * as Rest from "../../../RestClient.ts";
 import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
 import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import {LicensePurlMap} from "../../../DTOs.ts";
-import CollapsablePurlMapTableRow from "./CollapsablePurlMapTableRow.tsx";
+import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreatePurlMapDialog from "./CreatePurlMapDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
@@ -88,9 +88,9 @@ export default function PurlMapTab() {
                         {rows
                             .filter(r => ("" === filter || r.purlMatch.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
-                                <CollapsablePurlMapTableRow key={row.id}
-                                                         purlMap={row}
-                                                         onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                <CollapsableTableRow key={row.id}
+                                                     purlMap={row}
+                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
                                 />
                             ))
                         }

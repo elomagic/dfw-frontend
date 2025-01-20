@@ -2,11 +2,11 @@
 
 import { CredentialData } from "../../DTOs.ts";
 import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import {DeleteForever} from "@mui/icons-material";
 import {IconButton} from "@mui/material";
 import {useAuth} from "../../auth/useAuth.ts";
 import {Role} from "../../auth/Auth.tsx";
+import { TableDataRow } from "../../components/TableDataRow.tsx";
 
 interface ComponentProps {
     credential: CredentialData;
@@ -18,12 +18,12 @@ export default function CredentialTableRow({ credential, onDeleteRequest }: Read
     const auth = useAuth();
 
     return (
-        <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}>
+        <TableDataRow>
             <TableCell>{credential.credentialId}</TableCell>
             <TableCell>{credential.mode}</TableCell>
             <TableCell>
                 {auth.roles.includes(Role.CREDENTIAL_DELETE) && <IconButton onClick={() => onDeleteRequest(credential)}><DeleteForever/></IconButton>}
             </TableCell>
-        </TableRow>
+        </TableDataRow>
     );
 }

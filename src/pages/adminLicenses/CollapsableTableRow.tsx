@@ -3,7 +3,6 @@
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import {License, LicenseGroup} from "../../DTOs.ts";
-import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
 import {useTranslation} from "react-i18next";
@@ -11,6 +10,7 @@ import {useAuth} from "../../auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import {toaster} from "../../Toaster.ts";
+import {TablePanelRow} from "../../components/TablePanelRow.tsx";
 
 interface ComponentProps {
     licenseGroup: LicenseGroup;
@@ -35,22 +35,15 @@ export default function CollapsableTableRow({ licenseGroup, licenses, onDeleteRe
 
     return (
         <>
-            <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
-                onClick={()=> setOpen(!open)}
-            >
+            <TableRow onClick={()=> setOpen(!open)}>
                 <TableCell>{data.name}</TableCell>
             </TableRow>
-            <TableRow>
-                <TableCell sx={{height: 0}} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow licenseGroup={data}
-                                          licenses={licenses}
-                                          onSaveClick={handleSaveClick}
-                                          onDeleteRequest={() => onDeleteRequest(data)} />
-                    </Collapse>
-                </TableCell>
-            </TableRow>
+            <TablePanelRow open={open} colSpan={6}>
+                <EditableTableRow licenseGroup={data}
+                                  licenses={licenses}
+                                  onSaveClick={handleSaveClick}
+                                  onDeleteRequest={() => onDeleteRequest(data)} />
+            </TablePanelRow>
         </>
     );
 }

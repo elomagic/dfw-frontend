@@ -104,8 +104,8 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
                 </Box>
 
                 <List sx={{
-                    width: '100%', height: 400, margin: '6px 0 6px 0',
-                    border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px', padding: '8px 14px',
+                    width: '100%', height: 400,
+                    border: '1px solid rgba(81, 81, 81, 1)', borderRadius: '4px',
                     overflow: "auto"
                 }}>
                     {selectables
@@ -116,7 +116,7 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
                         return (
                             <ListItemButton
                                 key={item._itemId}
-                                sx={{ p: 0 }}
+                                sx={{ p: 0, height: "2em" }}
                                 onClick={() => handleToggleItem(item)}
                             >
                                 <ListItemIcon>

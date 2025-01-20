@@ -14,7 +14,7 @@ import {LicenseNameMap} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
 import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
 import YesNoDialog from "../../../components/YesNoDialog.tsx";
-import CollapsableNameMapTableRow from "./CollapsableNameMapTableRow.tsx";
+import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateNameMapDialog from "./CreateNameMapDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
@@ -87,9 +87,9 @@ export default function NameMapTab() {
                         {rows
                             .filter(r => ("" === filter || r.nameMatch.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
-                                <CollapsableNameMapTableRow key={row.id}
-                                                         nameMap={row}
-                                                         onDeleteRequest={(id) => handleDeleteRequest(id)}
+                                <CollapsableTableRow key={row.id}
+                                                     nameMap={row}
+                                                     onDeleteRequest={(id) => handleDeleteRequest(id)}
                                 />
                             ))
                         }

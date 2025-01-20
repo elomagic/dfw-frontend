@@ -2,9 +2,7 @@
 
 import TableCell from "@mui/material/TableCell";
 import {Check} from "@mui/icons-material";
-import TableRow from "@mui/material/TableRow";
 import {LicenseGroup, Policy} from "../../DTOs.ts";
-import {Collapse} from "@mui/material";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
 import {useTranslation} from "react-i18next";
@@ -12,6 +10,8 @@ import {useAuth} from "../../auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
 import {RestEndpoint} from "../../RestClient.ts";
 import {toaster} from "../../Toaster.ts";
+import {TableDataRow} from "../../components/TableDataRow.tsx";
+import {TablePanelRow} from "../../components/TablePanelRow.tsx";
 
 interface ComponentProps {
     policy: Policy;
@@ -36,25 +36,18 @@ export default function CollapsableTableRow({ policy, licenseGroups, onDeleteReq
 
     return (
         <>
-            <TableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 }, backgroundColor: "#292929" }}
-                onClick={()=> setOpen(!open)}
-            >
+            <TableDataRow onClick={()=> setOpen(!open)}>
                 <TableCell>{data.enabled ? <Check color="success" /> : ""}</TableCell>
                 <TableCell>{data.name}</TableCell>
                 <TableCell>{data.violationState}</TableCell>
                 <TableCell>{data.conditions?.length}</TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell sx={{height: 0}} colSpan={5}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <EditableTableRow policy={data}
-                                          licenseGroups={licenseGroups}
-                                          onSaveClick={handleSaveClick}
-                                          onDeleteRequest={() => onDeleteRequest(data)} />
-                    </Collapse>
-                </TableCell>
-            </TableRow>
+            </TableDataRow>
+            <TablePanelRow open={open} colSpan={5}>
+                <EditableTableRow policy={data}
+                                  licenseGroups={licenseGroups}
+                                  onSaveClick={handleSaveClick}
+                                  onDeleteRequest={() => onDeleteRequest(data)} />
+            </TablePanelRow>
         </>
     );
 }

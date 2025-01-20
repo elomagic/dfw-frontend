@@ -13,7 +13,7 @@ import {useCallback, useEffect, useState} from "react";
 import {UserAccountGroup} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
 import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
-import CollapsableUserGroupTableRow from "./CollapsableUserGroupTableRow.tsx";
+import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateUserGroupDialog from "./CreateUserGroupDialog.tsx";
 import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
@@ -86,9 +86,9 @@ export default function UserAccountGroupTab() {
                         {rows
                             .filter(r => ("" === filter || r.name.toLowerCase().includes(filter.toLowerCase())))
                             .map((row) => (
-                                <CollapsableUserGroupTableRow key={row.name}
-                                                              userGroup={row}
-                                                              onDeleteRequest={(dto) => handleDeleteRequest(dto)}
+                                <CollapsableTableRow key={row.name}
+                                                     userGroup={row}
+                                                     onDeleteRequest={(dto) => handleDeleteRequest(dto)}
                                 />
                             ))
                         }
