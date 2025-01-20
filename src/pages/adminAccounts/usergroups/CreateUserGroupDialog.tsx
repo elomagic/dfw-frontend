@@ -52,7 +52,7 @@ export default function CreateUserGroupDialog({ open, handleClose }: Readonly<Co
 
                 <FormTextField id="name"
                                value={name}
-                               onChange={e => setName(e.target.value)}
+                               onChange={setName}
                                label={t("name")}
                                autoFocus
                                required

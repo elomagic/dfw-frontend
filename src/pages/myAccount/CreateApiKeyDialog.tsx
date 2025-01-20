@@ -58,10 +58,7 @@ export default function CreateApiKeyDialog({ open, handleClose }: Readonly<Compo
                     id="description"
                     type="text"
                     value={comment}
-                    onChange={e => {
-                        validateRequiredText(e.target.value, setDescriptionErrorMessage);
-                        setComment(e.target.value);
-                    }}
+                    onChange={setComment}
                     autoFocus
                     required
                     errorMessage={descriptionErrorMessage}

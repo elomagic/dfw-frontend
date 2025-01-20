@@ -62,9 +62,7 @@ export default function NameMapTab() {
             .finally(() => setDeleteOpen(false))
     }
 
-    useEffect(() => {
-        refresh();
-    }, [refresh]);
+    useEffect(() => refresh(), [refresh]);
 
     return (
         <Box>

@@ -63,9 +63,7 @@ export default function AdminProxiesView() {
             .finally(() => setDeleteOpen(false))
     }
 
-    useEffect(() => {
-        refresh();
-    }, [refresh]);
+    useEffect(() => refresh(), [refresh]);
 
     useEffect(() => {
         Rest.get(auth, Rest.RestEndpoint.Configuration)

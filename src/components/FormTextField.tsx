@@ -1,10 +1,10 @@
 "use client"
 
-import {HTMLInputTypeAttribute, ReactNode} from "react";
-import {OutlinedInputProps} from "@mui/material/OutlinedInput";
+import {HTMLInputTypeAttribute, ReactNode, useEffect, useState} from "react";
 import Grid from "@mui/material/Grid2";
 import {FormControl, TextField} from "@mui/material";
 import {GridSize} from "@mui/material/Grid2/Grid2";
+import {validateRequiredText} from "../Validators.ts";
 
 interface ComponentProps {
     id: string;
@@ -14,13 +14,19 @@ interface ComponentProps {
     label: string;
     required?: boolean;
     autoFocus?: boolean;
-    onChange?: OutlinedInputProps['onChange'];
+    onChange?: (newValue: string) => void;
     gridSize?: GridSize;
     readOnly?: boolean;
     startAdornment?: ReactNode;
 }
 
 function UnwrappedTextField({id, type, value, errorMessage, onChange, label, required, autoFocus, readOnly, startAdornment}: Readonly<ComponentProps>) {
+
+    const [em, setEm] = useState<string|undefined>(errorMessage)
+
+    useEffect(() => {
+        setEm(errorMessage);
+    }, [errorMessage]);
 
     return (
         <FormControl fullWidth>
@@ -30,15 +36,22 @@ function UnwrappedTextField({id, type, value, errorMessage, onChange, label, req
                 type={type ?? "text"}
                 value={value}
                 label={label}
-                onChange={onChange}
+                onChange={e => {
+                    if (required) {
+                        validateRequiredText(e.target.value, setEm);
+                    }
+                    if (onChange) {
+                        onChange(e.target.value);
+                    }
+                }}
                 fullWidth
                 required={required}
                 autoFocus={autoFocus}
                 variant="outlined"
                 size="small"
-                error={errorMessage != undefined}
-                helperText={errorMessage}
-                color={errorMessage == undefined ? 'primary' : 'error'}
+                error={em != undefined}
+                helperText={em}
+                color={em == undefined ? 'primary' : 'error'}
                 sx={{ ariaLabel: {label}}}
                 slotProps={{
                     input: {

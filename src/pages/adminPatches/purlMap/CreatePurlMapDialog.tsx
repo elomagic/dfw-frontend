@@ -61,7 +61,7 @@ export default function CreatePurlMapDialog({ open, handleClose }: Readonly<Comp
                 <DialogContentText>{t("please-enter-mapping-details")}</DialogContentText>
                 <FormTextField id="purlMatch"
                                value={purlMatch}
-                               onChange={e => setPurlMatch(e.target.value)}
+                               onChange={setPurlMatch}
                                label={t("purl-match")}
                                autoFocus
                                required
@@ -70,7 +70,7 @@ export default function CreatePurlMapDialog({ open, handleClose }: Readonly<Comp
                             value={spdxId}
                             label={t("spdx-id")}
                             items={spdxList}
-                            onChange={(e) => setSpdxId(e.target.value as string)}
+                            onChange={setSpdxId}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

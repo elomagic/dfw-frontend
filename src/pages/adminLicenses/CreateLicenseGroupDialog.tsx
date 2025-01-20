@@ -55,7 +55,7 @@ export default function CreateLicenseGroupDialog({ open, handleClose }: Readonly
                 <DialogContentText>{t("pages.admin-license-groups.dialog.create.text")}</DialogContentText>
                 <FormTextField id="name"
                                value={name}
-                               onChange={e => setName(e.target.value)}
+                               onChange={setName}
                                label={t("name")}
                                autoFocus
                                required

@@ -55,10 +55,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
             <FormTextField id="purlMatch"
                                  value={purlMatch}
                                  errorMessage={purlErrorMessage}
-                                 onChange={e => {
-                                     validateRequiredText(e.target.value, setPurlErrorMessage);
-                                     setPurlMatch(e.target.value);
-                                 }}
+                                 onChange={setPurlMatch}
                                  label={t("purl-match")}
                                  autoFocus
                                  required
@@ -69,7 +66,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
                         value={spdxId}
                         label={t("spdx-id")}
                         items={spdxList}
-                        onChange={(e) => setSpdxId(e.target.value as string)}
+                        onChange={setSpdxId}
                         gridSize={6}
             />
 
@@ -77,7 +74,7 @@ export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick
                           value={comment}
                           label={t("comment")}
                           minRows={6}
-                          onChange={(e) => setComment(e.target.value)}
+                          onChange={setComment}
                           gridSize={6}
             />
 

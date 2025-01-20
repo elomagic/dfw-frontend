@@ -32,10 +32,6 @@ export default function EditableTableRow({ policy, licenseGroups, onSaveClick, o
 
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
 
-    const handleConditionsChanges = (newConditions: PolicyCondition[]) => {
-        setConditions(newConditions);
-    }
-
     const handleSaveClick = () => {
         if (!validateRequiredText(name, setNameErrorMessage)) {
             return;
@@ -56,10 +52,7 @@ export default function EditableTableRow({ policy, licenseGroups, onSaveClick, o
             <FormTextField id="name"
                            value={name}
                            errorMessage={nameErrorMessage}
-                           onChange={e => {
-                               validateRequiredText(e.target.value, setNameErrorMessage);
-                               setName(e.target.value);
-                           }}
+                           onChange={setName}
                            label={t("name")}
                            autoFocus
                            required
@@ -69,27 +62,27 @@ export default function EditableTableRow({ policy, licenseGroups, onSaveClick, o
                         value={PolicyOperator[operator]}
                         label={t("operator")}
                         items={mapToKeyLabelItemArray(Object.keys(PolicyOperator))}
-                        onChange={(e) => setOperator(PolicyOperator[e.target.value as keyof typeof PolicyOperator])}
+                        onChange={key => setOperator(PolicyOperator[key as keyof typeof PolicyOperator])}
                         gridSize={3}
             />
             <FormSelect id="violationState"
                         value={ViolationState[violationState]}
                         label={t("violation-state")}
                         items={mapToKeyLabelItemArray(Object.keys(ViolationState))}
-                        onChange={(e) => setViolationState(ViolationState[e.target.value as keyof typeof ViolationState])}
+                        onChange={key => setViolationState(ViolationState[key as keyof typeof ViolationState])}
                         gridSize={3}
             />
 
             <FormCheckbox id="enabled"
                           value={enabled}
                           label={t("enabled")}
-                          onChange={e => setEnabled(e.target.checked)}
+                          onChange={setEnabled}
                           gridSize={12}
             />
 
             <PolicyConditionsList policyConditions={conditions}
                                   licenseGroups={licenseGroups}
-                                  onConditionsChange={handleConditionsChanges} />
+                                  onConditionsChange={setConditions} />
 
             <FormButtons roleRightButton={Role.POLICY_UPDATE}
                          roleLeftButton={Role.POLICY_DELETE}

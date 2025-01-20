@@ -47,9 +47,7 @@ const YesNoDialog = ({
         <Dialog open={open} onClose={onNoClick} TransitionComponent={Transition} keepMounted>
             <DialogTitle>{title}</DialogTitle>
             <DialogContent>
-                <DialogContentText id="yes-no-dialog-description">
-                    {text}
-                </DialogContentText>
+                <DialogContentText id="yes-no-dialog-description">{text}</DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onNoClick}>{captionNo ?? t("cancel")}</Button>

@@ -53,9 +53,9 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Compon
             <DialogTitle>{t("create-proxy")}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
                 <DialogContentText>{t("pages.admin-proxies.dialog.create.text")}</DialogContentText>
-                <FormTextField id="purlMatch"
+                <FormTextField id="name"
                                value={name}
-                               onChange={e => setName(e.target.value)}
+                               onChange={setName}
                                label={t("name")}
                                autoFocus
                                required
@@ -64,7 +64,7 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Compon
                             value={ProxyType[type]}
                             label={t("type")}
                             items={mapToKeyLabelItemArray(Object.keys(ProxyType))}
-                            onChange={(e) => setType(ProxyType[e.target.value as keyof typeof ProxyType])}
+                            onChange={key => setType(ProxyType[key as keyof typeof ProxyType])}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

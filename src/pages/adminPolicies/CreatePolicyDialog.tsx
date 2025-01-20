@@ -55,7 +55,7 @@ export default function CreatePolicyDialog({ open, handleClose }: Readonly<Compo
                 <DialogContentText>Please enter the name and the violation state of the new policy</DialogContentText>
                 <FormTextField id="name"
                                value={name}
-                               onChange={e => setName(e.target.value)}
+                               onChange={setName}
                                label={t("name")}
                                autoFocus
                                required
@@ -64,7 +64,7 @@ export default function CreatePolicyDialog({ open, handleClose }: Readonly<Compo
                             value={violationState}
                             label={t("type")}
                             items={mapToKeyLabelItemArray(Object.keys(ViolationState))}
-                            onChange={(e) => setViolationState(ViolationState[e.target.value as keyof typeof ViolationState])}
+                            onChange={key => setViolationState(ViolationState[key as keyof typeof ViolationState])}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

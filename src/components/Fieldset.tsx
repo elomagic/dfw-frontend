@@ -30,7 +30,7 @@ export const Fieldset = ({ label, children, ...props }: ComponentProps) => {
                  paddingBottom: 0,
                  margin: "-9px 0 0 0",
                  "&:hover": {
-                     borderColor: "white"
+                     borderColor: (mode == "dark" ? "white" : "black")
                  },
                  "&:focus-within": {
                      borderColor: "#90caf9",

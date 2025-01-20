@@ -55,7 +55,7 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<Compone
 
                 <FormTextField id="mailAddress"
                                value={mailAddress}
-                               onChange={e => setMailAddress(e.target.value)}
+                               onChange={newValue => setMailAddress(newValue)}
                                label={t("mailAddress")}
                                type="email"
                                autoFocus

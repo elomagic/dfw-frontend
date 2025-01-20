@@ -62,9 +62,7 @@ export default function UserAccountTab() {
             .finally(() => setDeleteOpen(false))
     }
 
-    useEffect(() => {
-        refresh();
-    }, [refresh]);
+    useEffect(() => refresh(), [refresh]);
 
     return (
         <Box>

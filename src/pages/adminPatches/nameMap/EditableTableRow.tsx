@@ -55,10 +55,7 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
             <FormTextField id="nameMatch"
                            value={nameMatch}
                            errorMessage={nameErrorMessage}
-                           onChange={e => {
-                               validateRequiredText(e.target.value, setNameErrorMessage);
-                               setNameMatch(e.target.value)
-                           }}
+                           onChange={setNameMatch}
                            label={t("name-match")}
                            autoFocus
                            required
@@ -68,7 +65,7 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
                         value={spdxId}
                         label={t("spdx-id")}
                         items={spdxList}
-                        onChange={(e) => setSpdxId(e.target.value as string)}
+                        onChange={setSpdxId}
                         gridSize={6}
             />
 
@@ -77,7 +74,7 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
                           label={t("comment")}
                           minRows={6}
                           maxRows={6}
-                          onChange={(e) => setComment(e.target.value)}
+                          onChange={setComment}
                           gridSize={6}
             />
 

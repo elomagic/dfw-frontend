@@ -1,0 +1,4 @@
+
+.FormSelect:hover:before {
+    border: none !important;
+}

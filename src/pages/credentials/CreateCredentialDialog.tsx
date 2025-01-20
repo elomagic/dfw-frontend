@@ -67,9 +67,9 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                 <FormTextField id="credentialId"
                                      value={credentialId}
                                      errorMessage={credentialIdErrorMessage}
-                                     onChange={e => {
-                                         validateRequiredUrl(e.target.value, setCredentialIdErrorMessage);
-                                         setCredentialId(e.target.value);
+                                     onChange={newValue => {
+                                         validateRequiredUrl(newValue, setCredentialIdErrorMessage);
+                                         setCredentialId(newValue);
                                      }}
                                      label={t("credentialId")}
                                      autoFocus
@@ -83,20 +83,20 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                                 { "key": "BASIC", "label": "BASIC Authentication" },
                                 { "key": "BEARER", "label": "BEARER Token" },
                             ]}
-                            onChange={(e) => setMode(AuthenticationMode[e.target.value as keyof typeof AuthenticationMode])}
+                            onChange={key => setMode(AuthenticationMode[key as keyof typeof AuthenticationMode])}
                 />
 
                 {mode == "BASIC" && (
                     <>
                         <FormTextField id="username"
                                              value={username}
-                                             onChange={e => setUsername(e.target.value)}
+                                             onChange={setUsername}
                                              label={t("username")}
                         />
                         <FormTextField id="name"
                                              value={password}
                                              type="password"
-                                             onChange={e => setPassword(e.target.value)}
+                                             onChange={setPassword}
                                              label={t("password")}
                         />
                     </>
@@ -105,7 +105,7 @@ export default function CreateCredentialDialog({ open, handleClose }: Readonly<C
                     <FormTextField id="passphrase"
                                          value={password}
                                          type="passphrase"
-                                         onChange={e => setPassphrase(e.target.value)}
+                                         onChange={setPassphrase}
                                          label={t("passphrase")}
                     />
                 )}

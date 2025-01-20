@@ -4,7 +4,7 @@ import {ConditionOperator, ConditionType, ItemId, LicenseGroup, PolicyCondition}
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
-import {Box, IconButton} from "@mui/material";
+import {Box, IconButton, useColorScheme} from "@mui/material";
 import {FormSelect, KeyLabelItem, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {DeleteForever} from "@mui/icons-material";
@@ -43,6 +43,7 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
     const auth = useAuth();
     const [data] = useState<ItemId<PolicyCondition>>(policyCondition);
     const [valueType, setValueType] = useState<"text"|"number">(getValueType(data.condition));
+    const {mode} = useColorScheme();
 
     const handleConditionChanged = (value: ConditionType) => {
         setValueType(getValueType(value));
@@ -63,14 +64,14 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
     }
 
     return (
-        <Grid container spacing={2} sx={{ p: 1, m: "0 0 4px 0 ", backgroundColor: "#292929"}}>
+        <Grid container spacing={2} sx={{ p: 1, m: "0 0 4px 0 ", backgroundColor: (mode == "dark" ? "#292929" : "unset")}}>
 
             <FormSelect id="condition"
                         value={data.condition}
                         label={t("condition")}
                         items={mapToKeyLabelItemArray(Object.keys(ConditionType))}
                         gridSize={3}
-                        onChange={(e) => handleConditionChanged(ConditionType[e.target.value as keyof typeof ConditionType])}
+                        onChange={key => handleConditionChanged(ConditionType[key as keyof typeof ConditionType])}
             />
 
             <FormSelect id="operator"
@@ -78,7 +79,7 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
                         label={t("operator")}
                         gridSize={3}
                         items={getOperator(data.condition)}
-                        onChange={(e) => handleOperatorChanged(ConditionOperator[e.target.value as keyof typeof ConditionOperator])}
+                        onChange={key => handleOperatorChanged(ConditionOperator[key as keyof typeof ConditionOperator])}
             />
 
             {data.condition !== "LICENSE_GROUP" &&
@@ -87,7 +88,7 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
                                label={t("value")}
                                type={valueType}
                                gridSize={3}
-                               onChange={(e) => handleValueChanged(e.target.value)}
+                               onChange={handleValueChanged}
                 />
             }
             {data.condition === "LICENSE_GROUP" &&
@@ -96,7 +97,7 @@ export default function PolicyConditionRow({ policyCondition, licenseGroups, onC
                             label={t("license-group")}
                             gridSize={3}
                             items={licenseGroups.map(i => { return { key: i.id, label: i.name } as KeyLabelItem})}
-                            onChange={(e) => handleValueChanged(e.target.value as string)}
+                            onChange={handleValueChanged}
                 />
             }
 

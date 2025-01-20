@@ -61,7 +61,7 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Comp
                 <DialogContentText>Please enter mapping details</DialogContentText>
                 <FormTextField id="nameMatch"
                                value={nameMatch}
-                               onChange={e => setNameMatch(e.target.value)}
+                               onChange={setNameMatch}
                                label={t("name-match")}
                                autoFocus
                                required
@@ -70,7 +70,7 @@ export default function CreateNameMapDialog({ open, handleClose }: Readonly<Comp
                             value={spdxId}
                             label={t("spdx-id")}
                             items={spdxList}
-                            onChange={(e) => setSpdxId(e.target.value as string)}
+                            onChange={setSpdxId}
                 />
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>

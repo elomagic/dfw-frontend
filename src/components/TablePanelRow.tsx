@@ -16,7 +16,7 @@ export const TablePanelRow = ({ children, open, colSpan }: ComponentProps) => {
 
     return (
         <TableRow>
-            <TableCell sx={{height: 0, bgcolor: (mode === "dark" ? "#292929" : 'grey.100') }} colSpan={colSpan}>
+            <TableCell sx={{border: 'none', height: 0, bgcolor: (mode === "dark" ? "#292929" : 'grey.100') }} colSpan={colSpan}>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     {children}
                 </Collapse>

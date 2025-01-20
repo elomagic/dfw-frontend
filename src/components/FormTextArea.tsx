@@ -1,6 +1,5 @@
 "use client"
 
-import {OutlinedInputProps} from "@mui/material/OutlinedInput";
 import Grid from "@mui/material/Grid2";
 import {FormControl, TextField} from "@mui/material";
 import {GridSize} from "@mui/material/Grid2/Grid2";
@@ -14,7 +13,7 @@ interface ComponentProps {
     label: string;
     required?: boolean;
     autoFocus?: boolean;
-    onChange?: OutlinedInputProps['onChange'];
+    onChange?: (text: string) => void;
     gridSize?: GridSize;
     readOnly?: boolean;
 }
@@ -29,7 +28,7 @@ function UnwrappedTextArea({id, value, errorMessage, minRows, maxRows, onChange,
                 type={"text"}
                 value={value}
                 label={label}
-                onChange={onChange}
+                onChange={e => onChange && onChange(e.target.value)}
                 fullWidth
                 required={required}
                 autoFocus={autoFocus}

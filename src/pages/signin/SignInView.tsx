@@ -60,14 +60,6 @@ export default function SignInView() {
     const [passwordErrorMessage, setPasswordErrorMessage] = useState<string|undefined>(undefined);
     const [open, setOpen] = useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -155,7 +147,7 @@ export default function SignInView() {
                             <Link
                                 component="button"
                                 type="button"
-                                onClick={handleClickOpen}
+                                onClick={() => setOpen(true)}
                                 variant="body2"
                                 sx={{ alignSelf: 'baseline' }}
                             >
@@ -179,7 +171,7 @@ export default function SignInView() {
                         />
                     </FormControl>
 
-                    <ForgotPasswordDialog open={open} handleClose={handleClose} />
+                    <ForgotPasswordDialog open={open} handleClose={() => setOpen(false)} />
 
                     <Button
                         type="submit"

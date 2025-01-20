@@ -68,10 +68,7 @@ export default function AdminLicenseGroupsView() {
             .finally(() => setDeleteOpen(false))
     }
 
-
-    useEffect(() => {
-        refresh();
-    }, [refresh]);
+    useEffect(() => refresh(), [refresh]);
 
     return (
         <Box margin={3}>

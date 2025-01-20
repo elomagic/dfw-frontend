@@ -50,14 +50,6 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
             .catch((err: Error) => toaster("Getting roles failed: " + err.message, 'error'));
     }, [auth]);
 
-    const handleUserMembersChanged = (selectedMembers: UserAccount[]) => {
-        setUserMembers(selectedMembers);
-    }
-
-    const handleRolesChanged = (selectedRoles: StringWrapperItem[]) => {
-        setRoles(selectedRoles);
-    }
-
     const handleSaveClick = () => {
         if(!validateRequiredText(name, setNameErrorMessage)) {
             return;
@@ -71,10 +63,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
             <FormTextField id="name"
                                  value={name}
                                  errorMessage={nameErrorMessage}
-                                 onChange={e => {
-                                     setName(e.target.value);
-                                     validateRequiredText(e.target.value, setNameErrorMessage);
-                                 }}
+                                 onChange={setName}
                                  label={t("name")}
                                  autoFocus
                                  required
@@ -88,7 +77,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
                 selectables={allUsers}
                 label={t("user-account-members")}
                 editRole={Role.USERACCOUNT_GROUP_UPDATE}
-                onChange={handleUserMembersChanged}
+                onChange={setUserMembers}
                 getItemId={(item) => item.mailAddress}
                 getItemLabel={(item) => item.mailAddress}
                 gridSize={6}
@@ -98,7 +87,7 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
                 selectables={allRoles}
                 label={t("roles")}
                 editRole={Role.USERACCOUNT_GROUP_UPDATE}
-                onChange={handleRolesChanged}
+                onChange={setRoles}
                 getItemId={(item) => item.value}
                 getItemLabel={(item) => item.value}
                 gridSize={6}

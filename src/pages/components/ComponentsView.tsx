@@ -29,9 +29,7 @@ export default function ComponentsView() {
             });
     }, [t, auth]);
 
-    useEffect(() => {
-        refresh();
-    }, [refresh]);
+    useEffect(() => refresh(), [refresh]);
 
     return (
         <Box margin={3}>

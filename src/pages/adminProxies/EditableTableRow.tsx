@@ -83,10 +83,7 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
             <FormTextField id="name"
                            value={name}
                            errorMessage={nameErrorMessage}
-                           onChange={e => {
-                               validateRequiredText(e.target.value, setNameErrorMessage);
-                               setName(e.target.value);
-                           }}
+                           onChange={setName}
                            label={t("name")}
                            autoFocus
                            required
@@ -94,7 +91,7 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
             />
             <FormTextField id="description"
                            value={description}
-                           onChange={e => setDescription(e.target.value)}
+                           onChange={setDescription}
                            label={t("description")}
                            gridSize={6}
             />
@@ -103,9 +100,9 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
                            type="url"
                            value={baseUri}
                            errorMessage={baseUriErrorMessage}
-                           onChange={e => {
-                               validateRequiredUrl(e.target.value, setBaseUriErrorMessage);
-                               setBaseUri(e.target.value)
+                           onChange={newValue => {
+                               validateRequiredUrl(newValue, setBaseUriErrorMessage);
+                               setBaseUri(newValue)
                            }}
                            label={t("baseUrl")}
                            required
@@ -115,7 +112,7 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
                         value={credentialId}
                         label={t("credentialId")}
                         items={credentialsIds}
-                        onChange={(e) => setCredentialId(e.target.value as string)}
+                        onChange={setCredentialId}
                         gridSize={6}
             />
 
@@ -133,14 +130,14 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
             <FormCheckbox id="forwardHeaders"
                           value={forwardHeaders}
                           label={t("forward-http-headers")}
-                          onChange={e => setForwardHeaders(e.target.checked)}
+                          onChange={setForwardHeaders}
                           gridSize={6}
             />
 
             <FormCheckbox id="enabled"
                           value={enabled}
                           label={t("enabled")}
-                          onChange={e => setEnabled(e.target.checked)}
+                          onChange={setEnabled}
                           gridSize={12}
             />
 

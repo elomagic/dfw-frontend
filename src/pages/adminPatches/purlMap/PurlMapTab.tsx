@@ -63,9 +63,7 @@ export default function PurlMapTab() {
             .finally(() => setDeleteOpen(false))
     }
 
-    useEffect(() => {
-        refresh();
-    }, [refresh]);
+    useEffect(() => refresh(), [refresh]);
 
     return (
         <Box>

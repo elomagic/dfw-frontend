@@ -1,6 +1,5 @@
 "use client"
 
-import {SwitchBaseProps} from "@mui/material/internal/SwitchBase";
 import Grid from "@mui/material/Grid2";
 import {FormControl, FormControlLabel, Switch} from "@mui/material";
 import {GridSize} from "@mui/material/Grid2/Grid2";
@@ -9,7 +8,7 @@ interface ComponentProps {
     id: string;
     value: boolean;
     label: string;
-    onChange: SwitchBaseProps['onChange'];
+    onChange: (select: boolean) => void;
     gridSize?: GridSize;
 }
 
@@ -17,7 +16,7 @@ function UnwrappedFormCheckBox({ id, value, onChange, label}: Readonly<Component
     return (
         <FormControl>
             <FormControlLabel
-                control={<Switch onChange={onChange}/>}
+                control={<Switch onChange={e => onChange(e.target.checked)}/>}
                 id={id}
                 name={id}
                 checked={value}

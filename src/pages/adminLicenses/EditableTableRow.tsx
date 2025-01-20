@@ -45,10 +45,7 @@ export default function EditableTableRow({ licenseGroup, licenses, onSaveClick, 
             <FormTextField id="name"
                            value={name}
                            errorMessage={nameErrorMessage}
-                           onChange={e => {
-                               validateRequiredText(e.target.value, setNameErrorMessage);
-                               setName(e.target.value);
-                           }}
+                           onChange={setName}
                            label={t("name")}
                            autoFocus
                            required

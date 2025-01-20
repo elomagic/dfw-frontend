@@ -51,10 +51,6 @@ export default function MyAccountView() {
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
 
-    const handleApiKeysChanged = (keys: UserAccountApiKey[]) => {
-        setApiKeys(keys);
-    }
-
     const handleCloseKeyDialog = (data: UserAccountApiKey|undefined) => {
         setOpenCreate(false);
 
@@ -94,10 +90,7 @@ export default function MyAccountView() {
                     <FormTextField id="displayName"
                                    value={displayName}
                                    errorMessage={displayNameErrorMessage}
-                                     onChange={e => {
-                                         setDisplayName(e.target.value)
-                                         validateRequiredText(e.target.value, setDisplayNameErrorMessage)
-                                     }}
+                                     onChange={setDisplayName}
                                      label={t("displayName")}
                                      autoFocus
                                      required
@@ -111,14 +104,14 @@ export default function MyAccountView() {
                                     { "key": "en", "label": t("english") },
                                     { "key": "de", "label": t("german") },
                                 ]}
-                                onChange={(e) => setLanguage(e.target.value as string)}
+                                onChange={setLanguage}
                                 gridSize={6}
                     />
                     <FormList<UserAccountApiKey>
                         value={apiKeys}
                         label={t("api-keys")}
                         getItemLabel={(item) => { return item.comment ?? ""}}
-                        onChange={handleApiKeysChanged}
+                        onChange={setApiKeys}
                         onAddClick={() => setOpenCreate(true)}
                         gridSize={6}
                     />

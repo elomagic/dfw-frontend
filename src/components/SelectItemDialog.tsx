@@ -63,18 +63,10 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
         }
     }
 
-    const handleFilterChanged = (value: string) => {
-        setFilter(value);
-    }
-
-    useEffect(() => {
-        setChecked(value.map(item => item._itemId))
-    }, [value]);
+    useEffect(() => setChecked(value.map(item => item._itemId)), [value]);
 
     // Reset dialog on open
-    useEffect(() => {
-        setFilter("");
-    }, [open]);
+    useEffect(() => setFilter(""), [open]);
 
     return (
         <Dialog
@@ -83,19 +75,15 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
             PaperProps={{ sx: { backgroundImage: 'none' }}}
         >
             <DialogTitle>{t("select-items-dialog-title")}</DialogTitle>
-            <DialogContent
-                sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}
-            >
-                <DialogContentText>
-                    {t("select-items-dialog-description")}
-                </DialogContentText>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}>
+                <DialogContentText>{t("select-items-dialog-description")}</DialogContentText>
 
                 <Box display="flex" flexDirection="row">
                     <TextField size="small"
                                value={filter}
                                placeholder={t("filter")}
                                fullWidth
-                               onChange={e => {handleFilterChanged(e.target.value)}}
+                               onChange={e => setFilter(e.target.value)}
                     />
 
                     <Tooltip title={t("toggle-all")}>

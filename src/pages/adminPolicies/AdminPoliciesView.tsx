@@ -68,9 +68,7 @@ export default function AdminPolicyView() {
             .finally(() => setDeleteOpen(false))
     }
 
-    useEffect(() => {
-        refresh();
-    }, [refresh]);
+    useEffect(() => refresh(), [refresh]);
 
     return (
         <Box margin={3}>

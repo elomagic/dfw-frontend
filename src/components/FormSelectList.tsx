@@ -34,16 +34,14 @@ function UnwrappedFormSelectList<T>({ values, getItemLabel, label, editRole, onA
     return (
         <>
             <Fieldset label={label}>
-                <List sx={{
-                    width: '100%', minHeight: '32px', height: 300, overflow: "auto", padding: 0
-                }}>
+                <List sx={{width: '100%', minHeight: '32px', height: 300, overflow: "auto", padding: 0}}>
                     {values
                         .map((item) => (
                             <ListItem key={item._itemId}
                                       disablePadding
                                       secondaryAction={
                                           (editRole === undefined || auth.roles.includes(editRole)) &&
-                                              <IconButton edge="end" aria-label="remove">
+                                              <IconButton edge="end" aria-label="remove" sx={{padding: 0}}>
                                                   <RemoveCircle color="error" onClick={() => onDeleteClick(item)}/>
                                               </IconButton>
                                             }

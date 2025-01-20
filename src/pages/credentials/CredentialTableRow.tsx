@@ -22,7 +22,7 @@ export default function CredentialTableRow({ credential, onDeleteRequest }: Read
             <TableCell>{credential.credentialId}</TableCell>
             <TableCell>{credential.mode}</TableCell>
             <TableCell>
-                {auth.roles.includes(Role.CREDENTIAL_DELETE) && <IconButton onClick={() => onDeleteRequest(credential)}><DeleteForever/></IconButton>}
+                {auth.roles.includes(Role.CREDENTIAL_DELETE) && <IconButton onClick={() => onDeleteRequest(credential)}><DeleteForever color={"error"}/></IconButton>}
             </TableCell>
         </TableDataRow>
     );

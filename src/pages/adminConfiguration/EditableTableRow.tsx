@@ -38,7 +38,7 @@ export default function EditableTableRow({ configuration, keyMeta, onSaveClick, 
                               value={value === "true"}
                               label={key.split("_")[key.split("_").length-1]}
                               gridSize={12}
-                              onChange={(e) => setValue(e.target.checked ? "true" : "false")}
+                              onChange={(c) => setValue(c ? "true" : "false")}
                 />
             )}
             {keyMeta && keyMeta.dataType !== "BOOLEAN" && (
@@ -47,7 +47,7 @@ export default function EditableTableRow({ configuration, keyMeta, onSaveClick, 
                                label={key.split("_")[key.split("_").length-1]}
                                autoFocus
                                gridSize={12}
-                               onChange={e => setValue(e.target.value)}
+                               onChange={setValue}
                 />
             )}
 

@@ -55,9 +55,7 @@ export default function AdminConfigurationView() {
             .finally(() => setDeleteOpen(false))
     }
 
-    useEffect(() => {
-        refresh();
-    }, [refresh]);
+    useEffect(() => refresh(), [refresh]);
 
     useEffect(() => {
         Rest.get(auth, Rest.RestEndpoint.ConfigurationKey)

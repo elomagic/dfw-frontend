@@ -34,7 +34,6 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
             return;
         }
 
-
         onSaveClick({id: user.id, mailAddress, displayName, language, enabled, changePassword});
     };
 
@@ -48,10 +47,7 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
             <FormTextField id="displayName"
                                  value={displayName}
                                  errorMessage={displayNameErrorMessage}
-                                 onChange={e => {
-                                     setDisplayName(e.target.value);
-                                     validateRequiredText(e.target.value, setDisplayNameErrorMessage);
-                                 }}
+                                 onChange={setDisplayName}
                                  label={t("displayName")}
                                  autoFocus
                                  required
@@ -61,13 +57,13 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
             <FormCheckbox id="enabled"
                           value={enabled}
                           label={t("enabled")}
-                          onChange={e => setEnabled(e.target.checked)}
+                          onChange={setEnabled}
                           gridSize={6}
             />
             <FormCheckbox id="changePassword"
                           value={changePassword}
                           label={t("changePassword")}
-                          onChange={e => setChangePassword(e.target.checked)}
+                          onChange={setChangePassword}
                           gridSize={6}
             />
 
@@ -78,7 +74,7 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
                             { "key": "en", "label": t("english") },
                             { "key": "de", "label": t("german") },
                         ]}
-                        onChange={(e) => setLanguage(e.target.value as string)}
+                        onChange={setLanguage}
                         gridSize={6}
             />
 

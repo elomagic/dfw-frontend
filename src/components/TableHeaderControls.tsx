@@ -23,9 +23,7 @@ export default function TableHeaderControls({ createCaption, filter, role, onCre
 
     const [fil, setFil] = useState<string|undefined>("");
 
-    useEffect(() => {
-        setFil(filter)
-    }, [filter]);
+    useEffect(() => setFil(filter), [filter]);
 
     const handleFilterChanged = (f: string) => {
         setFil(f);
