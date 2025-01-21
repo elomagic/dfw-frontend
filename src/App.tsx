@@ -41,6 +41,7 @@ import {ToastContainer} from "react-toastify";
 import AdminPolicyView from "./pages/adminPolicies/AdminPoliciesView.tsx";
 import AdminLicenseGroupsView from "./pages/adminLicenses/AdminLicenseGroupsView.tsx";
 import {defaultTheme} from "./Theming.ts";
+import ProxyAuditView from "./pages/proxyAudit/ProxyAuditView.tsx";
 
 const drawerWidth: number = 240;
 
@@ -205,6 +206,8 @@ function App() {
                                        element={<ProtectedRoute><ComponentsView /></ProtectedRoute>}/>
                                 <Route path='policy-violations'
                                        element={<ProtectedRoute><PolicyViolationsView /></ProtectedRoute>}/>
+                                <Route path='proxy-audits'
+                                       element={<ProtectedRoute roles={[Role.PROXY_AUDIT_READ]}><ProxyAuditView /></ProtectedRoute>}/>
                                 <Route path='vulnerabilities'
                                        element={<ProtectedRoute><VulnerabilitiesView /></ProtectedRoute>}/>
 

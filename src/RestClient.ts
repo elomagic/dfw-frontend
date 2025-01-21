@@ -19,6 +19,7 @@ export enum RestEndpoint {
     Policy = "/api/v1/policy",
     PolicyViolation = "/api/v1/policyViolation",
     Proxy = "/api/v1/proxy",
+    ProxyAudit = "/api/v1/proxyAudit",
     Role = "/api/v1/role",
     User = "/api/v1/user",
     // UserChangePassword = "/api/v1/user/changePassword",

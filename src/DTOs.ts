@@ -117,6 +117,12 @@ export declare interface Proxy extends IdItem {
     forwardHeaders: boolean;
 }
 
+export declare interface ProxyAudit extends IdItem {
+    proxy: Proxy;
+    component: Component;
+    permitted: boolean;
+}
+
 export declare interface Version {
     version: string;
     timestamp: string;

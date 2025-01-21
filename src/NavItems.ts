@@ -1,4 +1,4 @@
-import {AiOutlineDashboard} from "react-icons/ai";
+import {AiOutlineAudit, AiOutlineDashboard} from "react-icons/ai";
 import {BiSolidComponent} from "react-icons/bi";
 import {GoLaw} from "react-icons/go";
 import {FaBandAid, FaShieldVirus} from "react-icons/fa";
@@ -54,6 +54,13 @@ export const NavItemData: NavItems = {
                 tooltip: "policy-violations",
                 url: "policy-violations",
                 icon: GoLaw,
+            },
+            {
+                name: "proxy-audits",
+                title: "proxy-audits",
+                tooltip: "proxy-audits",
+                url: "proxy-audits",
+                icon: AiOutlineAudit,
             },
             {
                 name: "vulnerabilities",
