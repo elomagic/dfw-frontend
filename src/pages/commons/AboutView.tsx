@@ -28,9 +28,12 @@ export default function AboutView() {
 
     return (
         <Box margin={4} sx={{ display: "flex", flexDirection: "column" }}>
-            <Card sx={{ minWidth: "600px", alignSelf: "center", padding: "10px" }}>
+            <Card sx={{ minWidth: "600px", alignSelf: "center", padding: "10px", fontSize: "smaller" }}>
 
-                <Typography component="div" variant="h6">{t("app.title")}</Typography>
+                <Stack direction="row" gap={1} alignItems={"center"}>
+                    <img width="32px" src="/fav-icon.svg" alt="logo" />
+                    <Typography component="div" variant="h6">{t("app.title")}</Typography>
+                </Stack>
 
                 <Divider sx={{ mt: 2, mb: 2 }} />
 
