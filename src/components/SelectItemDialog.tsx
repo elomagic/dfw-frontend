@@ -72,10 +72,10 @@ export default function SelectItemDialogIdItem<T>({ open, handleClose, value, se
         <Dialog
             open={open}
             onClose={() => handleClose(true, resolveCheckedItems(selectables, checked))}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
+            PaperProps={{ sx: { backgroundImage: 'none', width: '400px' }}}
         >
             <DialogTitle>{t("select-items-dialog-title")}</DialogTitle>
-            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}>
+            <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%', paddingBottom: 0 }}>
                 <DialogContentText>{t("select-items-dialog-description")}</DialogContentText>
 
                 <Box display="flex" flexDirection="row">
