@@ -2,7 +2,7 @@
 
 import {useTranslation} from "react-i18next";
 import {Link as RouterLink} from "react-router-dom";
-import {Box, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip} from "@mui/material";
+import {Box, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip} from "@mui/material";
 import {NavGroup} from "../NavItems.ts";
 
 export function NavItemGroup({ links, open }: Readonly<{
@@ -31,6 +31,7 @@ export function NavItemGroup({ links, open }: Readonly<{
             ]}>
                 {t(links.groupName)}
             </Box>
+
             <Box sx={{fontSize: "75%"}}>
                 {links.items.map((item) => (
                     <ListItem key={item.url} disablePadding sx={{ display: 'block', height: "44px" }}>
@@ -56,7 +57,13 @@ export function NavItemGroup({ links, open }: Readonly<{
                     </ListItem>
                 ))}
             </Box>
-            <Box sx={{height: "16px"}} />
+
+            <Divider sx={{
+                transition: "opacity 0.5s, height 0.5s",
+                height: 0,
+                margin: 1,
+                opacity: (open ? 0 : 1),
+            }} />
         </>
     )
 }

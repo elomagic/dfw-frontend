@@ -1,7 +1,15 @@
 import {createTheme} from "@mui/material/styles";
 
-
-const commonTheme = {
+export const defaultTheme = createTheme({
+    palette: {
+        mode: 'light',
+        primary: {
+            main: '#369a22',
+        },
+        secondary: {
+            main: '#f50057',
+        },
+    },
     components: {
         MuiInputBase: {
             styleOverrides: {
@@ -26,11 +34,7 @@ const commonTheme = {
                 },
             }
         },
-    }
-};
-
-export const defaultTheme = createTheme({
-    ...commonTheme,
+    },
     colorSchemes: {
         dark: true,
     },

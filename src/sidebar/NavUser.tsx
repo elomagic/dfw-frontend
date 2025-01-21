@@ -107,7 +107,7 @@ export function NavUser({ expand }: Readonly<{ expand: boolean }>) {
                 transformOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'center' }}
             >
-                <ListItem>
+                <ListItem sx={{ paddingTop: 0 }}>
                     <ListItemAvatar sx={{ minWidth: "30px" }}>
                         <Avatar alt={auth.displayName} src={avatarUrl} variant="rounded" />
                     </ListItemAvatar>
@@ -117,7 +117,7 @@ export function NavUser({ expand }: Readonly<{ expand: boolean }>) {
                     />
                 </ListItem>
 
-                <Divider />
+                <Divider sx={{ mb: 1 }}/>
 
                 <MenuItem component={RouterLink} to="my-account" sx={{fontSize: "0.90em"}}>
                     <ListItemIcon>
