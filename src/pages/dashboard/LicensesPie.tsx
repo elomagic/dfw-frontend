@@ -1,6 +1,6 @@
 "use client"
 
-import {Paper} from "@mui/material";
+import {Paper, useColorScheme} from "@mui/material";
 import ReactEChartsCore from "echarts-for-react/lib/core";
 import * as echarts from "echarts/core";
 import {GridComponent, LegendComponent, TitleComponent, TooltipComponent} from "echarts/components";
@@ -15,15 +15,18 @@ echarts.use(
     [PieChart, TitleComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer, LegendComponent]
 );
 
-function createOption(items: KeyLabelItem[]): EChartsOption {
+function createOption(
+    title: string|undefined,
+    subtitle: string | undefined,
+    items: KeyLabelItem[]): EChartsOption {
     const dataItems = items.map((i) => { return { value: i.key, name: i.label }});// items.reverse();
 
     console.log(dataItems)
 
     return {
         title: {
-            text: 'Licenses Permitted',
-            subtext: 'Last 28 days',
+            text: title ?? 'Licenses Permitted',
+            subtext: subtitle,
             left: 'center'
         },
         tooltip: {
@@ -54,9 +57,16 @@ function createOption(items: KeyLabelItem[]): EChartsOption {
     }
 }
 
-export default function LicencesPie() {
+interface ComponentProps {
+    title?: string;
+    subtitle?: string;
+}
+
+
+export default function LicencesPie({ title, subtitle }: Readonly<ComponentProps>) {
 
     const [option, setOption] = useState<EChartsOption|undefined>(undefined);
+    const {mode} = useColorScheme();
 
     /*
     useEffect(() => {
@@ -70,18 +80,16 @@ export default function LicencesPie() {
     }, [t, auth]);
     */
 
-    useEffect(() => {
-        setOption(createOption([]))
-    }, []);
+    useEffect(() => setOption(createOption(title, subtitle, [])), []);
 
     return (
-        <Paper>
+        <Paper sx={{ height: '100%', width: '100%'}}>
             {option && <ReactEChartsCore
                 echarts={echarts}
                 option={option}
                 notMerge={true}
                 lazyUpdate={true}
-                theme={"dark"}
+                theme={mode}
             />}
         </Paper>
     );

@@ -108,7 +108,7 @@ export default function ResetPasswortView() {
             <Card variant="outlined">
 
                 <Typography
-                    component="h2"
+                    component="span"
                     variant="h4"
                     sx={{ width: '100%', fontSize: 'unset' }}
                 >
@@ -116,7 +116,7 @@ export default function ResetPasswortView() {
                 </Typography>
 
                 <Typography
-                    component="h1"
+                    component="span"
                     variant="h4"
                     sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
                 >

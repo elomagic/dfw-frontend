@@ -94,16 +94,19 @@ export default function SignInView() {
         <SignInContainer direction="column" justifyContent="space-between">
             <Card variant="outlined">
 
-                <Typography
-                    component="h2"
-                    variant="h4"
-                    sx={{ width: '100%', fontSize: 'unset' }}
-                >
-                    {t("app.title")}
-                </Typography>
+                <Stack direction="row" gap={1} alignItems={"center"}>
+                    <img width="32px" src="/fav-icon.svg" alt="logo" />
+                    <Typography
+                        component="span"
+                        variant="h4"
+                        sx={{ width: '100%', fontSize: 'unset' }}
+                    >
+                        {t("app.title")}
+                    </Typography>
+                </Stack>
 
                 <Typography
-                    component="h1"
+                    component="span"
                     variant="h4"
                     sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
                 >

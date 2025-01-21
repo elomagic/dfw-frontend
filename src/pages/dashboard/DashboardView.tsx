@@ -1,29 +1,20 @@
 "use client"
 
 import LicencesPie from "./LicensesPie.tsx";
-import Grid from "@mui/material/Grid2";
+import {Box, Stack} from "@mui/material";
 
 export default function DashboardView() {
 
     return (
-        <Grid container spacing={2} marginTop={2} marginBottom={2}>
-            <Grid size={4}>
-                { /* TODO Counter > License in triage */ }
-                <LicencesPie />
-            </Grid>
-            <Grid size={4}>
-                <LicencesPie />
-            </Grid>
-            <Grid size={4}>
-                <LicencesPie />
-            </Grid>
+        <Box margin={3}>
+            <Stack direction="column" sx={{ height: "100%", width: "100%" }}>
+                <Stack direction="row" gap={2}>
+                    { /* TODO Counter > License in triage */ }
+                    <LicencesPie title="DEMO: Licences" subtitle='Last 24h' />
+                    <LicencesPie title="DEMO: Licences Permitted" subtitle='Last 28 days'/>
+                </Stack>
 
-            <Grid size={6}>
-                { /* TODO Chart > Blocked By Vulnerability score */ }
-            </Grid>
-            <Grid size={6}>
-                { /* TODO Chart > Blocked By License Violation */ }
-            </Grid>
-        </Grid>
+            </Stack>
+        </Box>
     );
 }

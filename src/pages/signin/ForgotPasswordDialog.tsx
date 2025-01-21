@@ -45,7 +45,10 @@ export default function ForgotPasswordDialog({ open, handleClose }: Readonly<For
 
                     handleClose();
                 },
-                sx: { backgroundImage: 'none' },
+                sx: {
+                    backgroundImage: 'none',
+                    width: '400px'
+                },
             }}
         >
             <DialogTitle>{t("reset-password")}</DialogTitle>
@@ -60,6 +63,7 @@ export default function ForgotPasswordDialog({ open, handleClose }: Readonly<For
                     label={t("emailAddress")}
                     placeholder={t("emailAddress")}
                     type="email"
+                    size="small"
                     fullWidth
                 />
             </DialogContent>
