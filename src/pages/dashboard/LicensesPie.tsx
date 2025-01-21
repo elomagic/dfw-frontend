@@ -80,7 +80,7 @@ export default function LicencesPie({ title, subtitle }: Readonly<ComponentProps
     }, [t, auth]);
     */
 
-    useEffect(() => setOption(createOption(title, subtitle, [])), []);
+    useEffect(() => setOption(createOption(title, subtitle, [])), [title, subtitle]);
 
     return (
         <Paper sx={{ height: '100%', width: '100%'}}>
