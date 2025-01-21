@@ -62,7 +62,7 @@ export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }:
             />
             <FormCheckbox id="changePassword"
                           value={changePassword}
-                          label={t("changePassword")}
+                          label={t("change-password")}
                           onChange={setChangePassword}
                           gridSize={6}
             />

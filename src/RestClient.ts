@@ -2,7 +2,7 @@ import {AuthContextProps} from "./auth/Auth.tsx";
 import i18next from "i18next";
 import {ErrorResponse} from "./DTOs.ts";
 import * as axios from "axios";
-import {AxiosRequestConfig, AxiosResponse} from "axios";
+import {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
 
 const BASE_REST_URL: string = import.meta.env.DEV ? import.meta.env.VITE_BASE_URL : `${window.location.protocol}//${window.location.host}`;
 
@@ -83,34 +83,35 @@ const executeRequest = <T> (auth: AuthContextProps, requestOptions: AxiosRequest
 
     return axios.default.request(requestOptions)
         .then((res: AxiosResponse) => {
-            if (res.status === 401) {
+            return res.data;
+        })
+        .catch((error: AxiosError) => {
+            if (error.status === 401) {
                 auth.removeUser()
                     .finally(() => console.log("Wat nun?"));
-            } else if (res.status >= 400) {
-                const contentType = res.headers['content-type'];
-                let text = res.statusText;
+            } else {
+                const contentType = error.response?.headers['content-type'];
+                let text = error.message;
                 if (contentType == "application/vnd.elomagic.dfw+json;charset=UTF-8") {
-                    return JSON.parse(res.data).then((er: ErrorResponse) => {
-                        return Promise.reject(new Error(er.message));
-                    });
+                    const errorResponse: ErrorResponse = error.response?.data as ErrorResponse ?? { message: '', statusCode: '' };
+                    return Promise.reject(new Error(errorResponse.message));
                 }
 
                 if (text === "") {
-                    if (res.status === 403) {
+                    if (error.status === 403) {
                         text = i18next.t("forbidden");
-                    } else if (res.status === 404) {
+                    } else if (error.status === 404) {
                         text = i18next.t("not-found");
-                    } else if (res.status === 429) {
+                    } else if (error.status === 429) {
                         text = i18next.t("too-many-requests");
                     } else {
-                        text = i18next.t("http-error-code", { status: res.status });
+                        text = i18next.t("http-error-code", { status: error.status });
                     }
-                 }
+                }
 
                 return Promise.reject(new Error(text));
             }
-            return Promise.resolve(res.data);
-        });
+        })
 }
 
 export declare type PathComponents = string[] | string | undefined
