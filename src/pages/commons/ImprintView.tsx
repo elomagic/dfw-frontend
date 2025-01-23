@@ -1,6 +1,6 @@
 import {Box} from "@mui/material";
 
-export default function ImprintView() {
+export const ImprintView = () => {
 
     return (
         <Box margin={3}>

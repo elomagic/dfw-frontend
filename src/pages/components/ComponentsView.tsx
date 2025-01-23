@@ -6,9 +6,9 @@ import {Component} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import ComponentTableRow from "./ComponentTableRow.tsx";
 import {toaster} from "../../Toaster.ts";
 import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
+import {ComponentTableRow} from "./ComponentTableRow.tsx";
 
 export const ComponentsView = () => {
 
@@ -47,7 +47,7 @@ export const ComponentsView = () => {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.purl.toLowerCase().includes(filter.toLowerCase())))
-                            .map((row) => (<ComponentTableRow key={row.id} component={row}/>))
+                            .map(row => (<ComponentTableRow key={row.id} component={row}/>))
                         }
                     </TableBody>
                 </Table>

@@ -12,12 +12,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import CredentialTableRow from "./CredentialTableRow.tsx";
-import CreateCredentialDialog from "./CreateCredentialDialog.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
 import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
 import {YesNoDialog} from "../../components/YesNoDialog.tsx";
+import {CreateCredentialDialog} from "./CreateCredentialDialog.tsx";
+import {CredentialTableRow} from "./CredentialTableRow.tsx";
 
 export const CredentialsView = () => {
 

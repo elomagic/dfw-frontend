@@ -21,7 +21,7 @@ interface ComponentProps {
     handleClose: (dto: LicensePurlMap|undefined) => void;
 }
 
-export default function CreatePurlMapDialog({ open, handleClose }: Readonly<ComponentProps>) {
+export const CreatePurlMapDialog = ({ open, handleClose }: Readonly<ComponentProps>)=> {
 
     const { t } = useTranslation();
     const auth = useAuth();

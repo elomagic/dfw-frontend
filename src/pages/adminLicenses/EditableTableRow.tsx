@@ -5,10 +5,10 @@ import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../Validators.ts";
-import FormSelectList from "../../components/FormSelectList.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import { FormTextField } from "../../components/FormTextField.tsx";
 import {FormButtons} from "../../components/FormButtons.tsx";
+import {FormSelectList} from "../../components/FormSelectList.tsx";
 
 interface ComponentProps {
     licenseGroup: LicenseGroup;
@@ -17,7 +17,7 @@ interface ComponentProps {
     onDeleteRequest: () => void;
 }
 
-export default function EditableTableRow({ licenseGroup, licenses, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) {
+export const EditableTableRow = ({ licenseGroup, licenses, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
 

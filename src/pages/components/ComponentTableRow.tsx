@@ -9,7 +9,7 @@ interface ComponentProps {
     component: Component;
 }
 
-export default function ComponentTableRow({component}: Readonly<ComponentProps>) {
+export const ComponentTableRow = ({component}: Readonly<ComponentProps>) => {
 
     return (
         <TableDataRow>

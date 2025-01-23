@@ -5,10 +5,10 @@ import {Link as RouterLink} from "react-router-dom";
 import {Box, Divider, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip} from "@mui/material";
 import {NavGroup} from "../NavItems.ts";
 
-export function NavItemGroup({ links, open }: Readonly<{
+export const NavItemGroup = ({ links, open }: Readonly<{
     links: NavGroup,
     open: boolean
-}>) {
+}>) => {
 
     const { t } = useTranslation();
 

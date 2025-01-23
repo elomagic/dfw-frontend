@@ -21,7 +21,7 @@ interface ComponentProps {
     handleClose: (dto: LicenseNameMap|undefined) => void;
 }
 
-export default function CreateNameMapDialog({ open, handleClose }: Readonly<ComponentProps>) {
+export const CreateNameMapDialog = ({ open, handleClose }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();

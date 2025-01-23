@@ -11,11 +11,11 @@ import Grid from "@mui/material/Grid2";
 import {Add, RemoveCircle} from "@mui/icons-material";
 import {useTranslation} from "react-i18next";
 import {ReactNode, useEffect, useState} from "react";
-import SelectItemDialog from "./SelectItemDialog.tsx";
 import {GridSize} from "@mui/material/Grid2/Grid2";
 import {ItemId} from "../DTOs.ts";
 import {Fieldset} from "./Fieldset.tsx";
 import {useAuth} from "../auth/useAuth.ts";
+import {SelectItemDialog} from "./SelectItemDialog.tsx";
 
 interface ComponentProps<T> {
     values: ItemId<T>[];
@@ -26,7 +26,7 @@ interface ComponentProps<T> {
     onDeleteClick: (itemId: ItemId<T>) => void;
 }
 
-function UnwrappedFormSelectList<T>({ values, getItemLabel, label, editRole, onAddClick, onDeleteClick }: Readonly<ComponentProps<T>>) {
+const UnwrappedFormSelectList = <T,>({ values, getItemLabel, label, editRole, onAddClick, onDeleteClick }: Readonly<ComponentProps<T>>) => {
 
     const auth = useAuth();
     const { t } = useTranslation();
@@ -78,7 +78,7 @@ interface FormSelectListProps<T> {
 
 }
 
-export default function FormSelectList<T> ({ value, selectables, label, editRole, gridSize, onChange, getItemId, getItemLabel }: Readonly<FormSelectListProps<T>>) {
+export const FormSelectList = <T,> ({ value, selectables, label, editRole, gridSize, onChange, getItemId, getItemLabel }: Readonly<FormSelectListProps<T>>) => {
 
     const [ dialogOpen, setDialogOpen ] = useState<boolean>(false);
     const [ values, setValues ] = useState<ItemId<T>[]>([]);

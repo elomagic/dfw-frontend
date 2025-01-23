@@ -37,7 +37,7 @@ interface ComponentProps {
     onConditionDelete: (r: ItemId<PolicyCondition>) => void;
 }
 
-export default function PolicyConditionRow({ policyCondition, licenseGroups, onConditionChange, onConditionDelete }: Readonly<ComponentProps>) {
+export const PolicyConditionRow = ({ policyCondition, licenseGroups, onConditionChange, onConditionDelete }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();

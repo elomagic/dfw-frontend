@@ -8,9 +8,9 @@ import {validateRequiredText} from "../../Validators.ts";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
 import {Role} from "../../auth/Auth.tsx";
-import PolicyConditionsList from "./PolicyConditionsList.tsx";
 import { FormTextField } from "../../components/FormTextField.tsx";
 import { FormButtons } from "../../components/FormButtons.tsx";
+import {PolicyConditionsList} from "./PolicyConditionsList.tsx";
 
 interface ComponentProps {
     policy: Policy
@@ -19,7 +19,7 @@ interface ComponentProps {
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ policy, licenseGroups, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) {
+export const EditableTableRow = ({ policy, licenseGroups, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
 

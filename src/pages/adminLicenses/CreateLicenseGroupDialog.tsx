@@ -20,7 +20,7 @@ interface ComponentProps {
     handleClose: (dto: LicenseGroup|undefined) => void;
 }
 
-export default function CreateLicenseGroupDialog({ open, handleClose }: Readonly<ComponentProps>) {
+export const CreateLicenseGroupDialog = ({ open, handleClose }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();

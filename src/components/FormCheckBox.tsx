@@ -12,7 +12,7 @@ interface ComponentProps {
     gridSize?: GridSize;
 }
 
-function UnwrappedFormCheckBox({ id, value, onChange, label}: Readonly<ComponentProps>) {
+const UnwrappedFormCheckBox = ({ id, value, onChange, label}: Readonly<ComponentProps>) => {
     return (
         <FormControl>
             <FormControlLabel

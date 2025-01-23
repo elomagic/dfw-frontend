@@ -13,8 +13,8 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {toaster} from "../../Toaster.ts";
-import ProxyAuditTableRow from "./ProxyAuditTableRow.tsx";
 import { TableHeaderControls } from "../../components/TableHeaderControls.tsx";
+import {ProxyAuditTableRow} from "./ProxyAuditTableRow.tsx";
 
 export const ProxyAuditView = () => {
 

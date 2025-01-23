@@ -12,10 +12,10 @@ import * as Rest from "../../RestClient.ts"
 import {Configuration, ConfigurationKeyMeta} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import { toaster } from "../../Toaster.ts";
 import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
 import {YesNoDialog} from "../../components/YesNoDialog.tsx";
+import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
 
 export const AdminConfigurationView = () => {
 
@@ -77,7 +77,7 @@ export const AdminConfigurationView = () => {
                     <TableBody>
                         {rows
                             .filter(dto => ("" === filter || dto.key.toLowerCase().includes(filter.toLowerCase())))
-                            .map((row) => (
+                            .map(row => (
                                 <CollapsableTableRow key={row.key}
                                                      configuration={row}
                                                      keyMeta={configurationKeyMetas.find(m => m.key == row.key)}

@@ -13,7 +13,7 @@ interface ComponentProps {
     onDeleteRequest: (cd: CredentialData) => void;
 }
 
-export default function CredentialTableRow({ credential, onDeleteRequest }: Readonly<ComponentProps>) {
+export const CredentialTableRow = ({ credential, onDeleteRequest }: Readonly<ComponentProps>) => {
 
     const auth = useAuth();
 

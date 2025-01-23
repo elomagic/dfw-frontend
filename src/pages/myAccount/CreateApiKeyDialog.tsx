@@ -18,7 +18,7 @@ interface ComponentProps {
     handleClose: (dto: UserAccountApiKey | undefined) => void;
 }
 
-export default function CreateApiKeyDialog({ open, handleClose }: Readonly<ComponentProps>) {
+export const CreateApiKeyDialog = ({ open, handleClose }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
 

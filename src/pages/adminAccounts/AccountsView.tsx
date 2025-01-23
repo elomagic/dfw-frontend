@@ -2,9 +2,9 @@
 
 import {Box, Tab, Tabs} from "@mui/material";
 import {SyntheticEvent, useState} from "react";
-import UserAccountTab from "./user/UserAccountTab.tsx";
-import UserAccountGroupTab from "./usergroups/UserAccountGroupTab.tsx";
 import {useTranslation} from "react-i18next";
+import {UserAccountTab} from "./user/UserAccountTab.tsx";
+import {UserAccountGroupTab} from "./usergroups/UserAccountGroupTab.tsx";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -12,7 +12,7 @@ interface TabPanelProps {
     value: number;
 }
 
-function CustomTabPanel(props: Readonly<TabPanelProps>) {
+const CustomTabPanel = (props: Readonly<TabPanelProps>) => {
     const { children, value, index, ...other } = props;
 
     return (
@@ -28,7 +28,7 @@ function CustomTabPanel(props: Readonly<TabPanelProps>) {
     );
 }
 
-function a11yProps(index: number) {
+const a11yProps = (index: number) => {
     return {
         id: `simple-tab-${index}`,
         'aria-controls': `simple-tabpanel-${index}`,

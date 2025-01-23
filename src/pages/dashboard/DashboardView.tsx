@@ -1,7 +1,7 @@
 "use client"
 
-import LicencesPie from "./LicensesPie.tsx";
 import {Box, Stack} from "@mui/material";
+import {LicencesPie} from "./LicensesPie.tsx";
 
 export const DashboardView = () => {
 

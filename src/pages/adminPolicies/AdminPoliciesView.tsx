@@ -12,12 +12,12 @@ import * as Rest from "../../RestClient.ts"
 import {LicenseGroup, Policy} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
-import CreatePolicyDialog from "./CreatePolicyDialog.tsx";
 import { TableHeaderControls } from "../../components/TableHeaderControls.tsx";
 import { YesNoDialog } from "../../components/YesNoDialog.tsx";
+import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
+import {CreatePolicyDialog} from "./CreatePolicyDialog.tsx";
 
 export const AdminPolicyView = () => {
 
@@ -88,7 +88,7 @@ export const AdminPolicyView = () => {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.name.toLowerCase().includes(filter.toLowerCase())))
-                            .map((row) => (
+                            .map(row => (
                                 <CollapsableTableRow key={row.name}
                                                      policy={row}
                                                      licenseGroups={licenseGroups}

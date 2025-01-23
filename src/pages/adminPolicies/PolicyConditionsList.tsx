@@ -9,8 +9,8 @@ import {Fieldset} from "../../components/Fieldset.tsx";
 import Grid from "@mui/material/Grid2";
 import {Add} from "@mui/icons-material";
 import {Role} from "../../auth/Auth.tsx";
-import PolicyConditionRow from "./PolicyConditionRow.tsx";
 import {v4 as uuidv4} from "uuid";
+import {PolicyConditionRow} from "./PolicyConditionRow.tsx";
 
 interface ComponentProps {
     policyConditions: PolicyCondition[];
@@ -18,7 +18,7 @@ interface ComponentProps {
     onConditionsChange: (r: PolicyCondition[]) => void;
 }
 
-export default function PolicyConditionsList({ policyConditions, licenseGroups, onConditionsChange }: Readonly<ComponentProps>) {
+export const PolicyConditionsList = ({ policyConditions, licenseGroups, onConditionsChange }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -72,8 +72,8 @@ export default function PolicyConditionsList({ policyConditions, licenseGroups, 
                         <PolicyConditionRow key={r._itemId}
                                             policyCondition={r}
                                             licenseGroups={licenseGroups}
-                                            onConditionChange={(c) => handleChange(c)}
-                                            onConditionDelete={(c) => handleDeleteClick(c)}
+                                            onConditionChange={c => handleChange(c)}
+                                            onConditionDelete={c => handleDeleteClick(c)}
                         />)
                     }
                 </List>

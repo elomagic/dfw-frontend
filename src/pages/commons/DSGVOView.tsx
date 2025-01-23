@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { Paper, Container, Typography } from "@mui/material";
 import Grid from '@mui/material/Grid2';
+import {CopyrightFooter} from "../../CopyrightFooter.tsx";
 
-import CopyrightFooter from "../../CopyrightFooter";
-
-export default function DSGVOView() {
+export const DSGVOView = () => {
 
     const { t } = useTranslation();
 

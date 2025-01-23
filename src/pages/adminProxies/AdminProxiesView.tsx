@@ -12,12 +12,12 @@ import * as Rest from "../../RestClient.ts"
 import {Configuration, Proxy} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import CreateProxyDialog from "./CreateProxyDialog.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
 import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
 import {YesNoDialog} from "../../components/YesNoDialog.tsx";
+import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
+import {CreateProxyDialog} from "./CreateProxyDialog.tsx";
 
 export const AdminProxiesView = () => {
 
@@ -96,7 +96,7 @@ export const AdminProxiesView = () => {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.name.toLowerCase().includes(filter.toLowerCase())))
-                            .map((row) => (
+                            .map(row => (
                                 <CollapsableTableRow key={row.name}
                                                      proxy={row}
                                                      internalBaseUrl={internalBaseUrl}

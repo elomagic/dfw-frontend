@@ -65,7 +65,7 @@ const UnwrappedTextArea = ({id, value, errorMessage, minRows, maxRows, onChange,
  * @param readOnly
  * @constructor
  */
-export default function FormTextArea({id, value, errorMessage, minRows, maxRows, onChange, label, required, autoFocus, gridSize, readOnly}: Readonly<ComponentProps>) {
+export const FormTextArea = ({id, value, errorMessage, minRows, maxRows, onChange, label, required, autoFocus, gridSize, readOnly}: Readonly<ComponentProps>) => {
 
     return (
         <>

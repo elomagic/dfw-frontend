@@ -20,7 +20,8 @@ import {Logout} from "@mui/icons-material";
 import {useState} from "react";
 import * as React from "react";
 import {BsChevronExpand} from "react-icons/bs";
-export function NavUser({ expand }: Readonly<{ expand: boolean }>) {
+
+export const NavUser = ({ expand }: Readonly<{ expand: boolean }>) => {
 
     const { t } = useTranslation();
     const auth: AuthContextProps = useAuth();

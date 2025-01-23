@@ -7,7 +7,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import {createTheme} from "@mui/material/styles";
 
-export default function CopyrightFooter() {
+export const CopyrightFooter = () => {
 
     const { t } = useTranslation();
     const theme = createTheme();

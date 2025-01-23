@@ -12,14 +12,14 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {LicenseNameMap} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
-import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import CreateNameMapDialog from "./CreateNameMapDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
 import { TableHeaderControls } from "../../../components/TableHeaderControls.tsx";
 import { YesNoDialog } from "../../../components/YesNoDialog.tsx";
+import {CreateNameMapDialog} from "./CreateNameMapDialog.tsx";
+import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
 
-export default function NameMapTab() {
+export const NameMapTab = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -81,7 +81,7 @@ export default function NameMapTab() {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.nameMatch.toLowerCase().includes(filter.toLowerCase())))
-                            .map((row) => (
+                            .map(row => (
                                 <CollapsableTableRow key={row.id}
                                                      nameMap={row}
                                                      onDeleteRequest={(id) => handleDeleteRequest(id)}

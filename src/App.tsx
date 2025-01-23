@@ -17,7 +17,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MuiDrawer from '@mui/material/Drawer';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import AppMenuItems from "./sidebar/AppMenuItems.tsx";
 import {AuthContextProps, Role} from "./auth/Auth.tsx";
 import {ProtectedRoute} from "./auth/ProtectedRoute.tsx";
 import {useTheme} from "@mui/material/styles";
@@ -42,6 +41,7 @@ import { MyAccountView } from './pages/myAccount/MyAccountView.tsx';
 import {ChangePasswortView} from "./pages/signin/ChangePasswortView.tsx";
 import {AboutView} from "./pages/commons/AboutView.tsx";
 import {DashboardView} from "./pages/dashboard/DashboardView.tsx";
+import {AppMenuItems} from "./sidebar/AppMenuItems.tsx";
 
 const drawerWidth: number = 240;
 

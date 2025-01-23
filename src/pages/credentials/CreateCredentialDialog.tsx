@@ -22,7 +22,7 @@ interface ComponentProps {
     handleClose: (dto: CredentialData|undefined) => void;
 }
 
-export default function CreateCredentialDialog({ open, handleClose }: Readonly<ComponentProps>) {
+export const CreateCredentialDialog = ({ open, handleClose }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();

@@ -12,14 +12,14 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {UserAccount} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
-import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import CreateUserDialog from "./CreateUserDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import { toaster } from "../../../Toaster.ts";
 import {TableHeaderControls} from "../../../components/TableHeaderControls.tsx";
 import { YesNoDialog } from "../../../components/YesNoDialog.tsx";
+import {CreateUserDialog} from "./CreateUserDialog.tsx";
+import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
 
-export default function UserAccountTab() {
+export const UserAccountTab = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -82,7 +82,7 @@ export default function UserAccountTab() {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.mailAddress.toLowerCase().includes(filter.toLowerCase())))
-                            .map((row) => (
+                            .map(row => (
                                 <CollapsableTableRow key={row.mailAddress}
                                                      user={row}
                                                      onDeleteRequest={(dto) => handleDeleteRequest(dto)}

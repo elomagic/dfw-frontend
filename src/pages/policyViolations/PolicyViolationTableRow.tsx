@@ -11,7 +11,7 @@ interface ComponentProps {
     onDeleteRequest: () => void
 }
 
-export default function PolicyViolationTableRow({ policyViolation, onDeleteRequest }: Readonly<ComponentProps>) {
+export const PolicyViolationTableRow = ({ policyViolation, onDeleteRequest }: Readonly<ComponentProps>)=> {
 
     const { t } = useTranslation();
 

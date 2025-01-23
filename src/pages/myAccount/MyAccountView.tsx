@@ -10,11 +10,11 @@ import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../Validators.ts";
 import {UserAccount, UserAccountApiKey} from "../../DTOs.ts";
 import {FormSelect} from "../../components/FormSelect.tsx";
-import FormList from "../../components/FormList.tsx";
-import CreateApiKeyDialog from "./CreateApiKeyDialog.tsx";
 import { toaster } from "../../Toaster.ts";
 import {FormTextField} from "../../components/FormTextField.tsx";
 import {FormButtons} from "../../components/FormButtons.tsx";
+import { FormList } from "../../components/FormList.tsx";
+import {CreateApiKeyDialog} from "./CreateApiKeyDialog.tsx";
 
 export const MyAccountView = () => {
 

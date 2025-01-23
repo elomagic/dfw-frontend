@@ -30,7 +30,7 @@ interface ComponentProps<T> {
     handleClose: (cancel: boolean, items: ItemId<T>[]) => void;
 }
 
-export default function SelectItemDialogIdItem<T>({ open, handleClose, value, selectables, getItemLabel }: Readonly<ComponentProps<T>>) {
+export const SelectItemDialog = <T,> ({ open, handleClose, value, selectables, getItemLabel }: Readonly<ComponentProps<T>>) => {
 
     const { t } = useTranslation();
 

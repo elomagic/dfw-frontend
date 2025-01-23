@@ -3,9 +3,8 @@
 import {Box, Tab, Tabs} from "@mui/material";
 import {SyntheticEvent, useState} from "react";
 import {useTranslation} from "react-i18next";
-import PurlMapTab from "./purlMap/PurlMapTab.tsx";
-import NameMapTab from "./nameMap/NameMapTab.tsx";
-
+import {PurlMapTab} from "./purlMap/PurlMapTab.tsx";
+import {NameMapTab} from "./nameMap/NameMapTab.tsx";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -13,7 +12,7 @@ interface TabPanelProps {
     value: number;
 }
 
-function CustomTabPanel(props: Readonly<TabPanelProps>) {
+const CustomTabPanel = (props: Readonly<TabPanelProps>) => {
     const { children, value, index, ...other } = props;
 
     return (
@@ -29,7 +28,7 @@ function CustomTabPanel(props: Readonly<TabPanelProps>) {
     );
 }
 
-function a11yProps(index: number) {
+const a11yProps = (index: number) => {
     return {
         id: `admin-licenses-tab-${index}`,
         'aria-controls': `admin-licenses-tab-${index}`,

@@ -10,7 +10,7 @@ interface ComponentProps {
     data: ProxyAudit;
 }
 
-export default function ProxyAuditTableRow({ data }: Readonly<ComponentProps>) {
+export const ProxyAuditTableRow = ({ data }: Readonly<ComponentProps>) => {
 
     return (
         <TableDataRow>
@@ -19,4 +19,5 @@ export default function ProxyAuditTableRow({ data }: Readonly<ComponentProps>) {
             <TableCell>{data.component.purl}</TableCell>
         </TableDataRow>
     );
+
 }

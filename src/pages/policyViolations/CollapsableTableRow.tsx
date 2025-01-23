@@ -4,15 +4,15 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
-import PolicyViolationTableRow from "./PolicyViolationTableRow.tsx";
 import {PolicyViolation} from "../../DTOs.ts";
+import { PolicyViolationTableRow } from "./PolicyViolationTableRow.tsx";
 
 interface ComponentProps {
     policyViolation: PolicyViolation
     onDeleteRequest: (r: PolicyViolation) => void;
 }
 
-export default function CollapsableTableRow({ policyViolation, onDeleteRequest }: Readonly<ComponentProps>) {
+export const CollapsableTableRow = ({ policyViolation, onDeleteRequest }: Readonly<ComponentProps>) => {
 
     const [open, setOpen] = useState<boolean>(false);
 

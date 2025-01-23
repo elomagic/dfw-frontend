@@ -14,10 +14,10 @@ import {useCallback, useEffect, useState} from "react";
 import {License, LicenseGroup} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
 import {toaster} from "../../Toaster.ts";
-import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import CreateLicenseGroupDialog from "./CreateLicenseGroupDialog.tsx";
 import { TableHeaderControls } from "../../components/TableHeaderControls.tsx";
 import { YesNoDialog } from "../../components/YesNoDialog.tsx";
+import {CreateLicenseGroupDialog} from "./CreateLicenseGroupDialog.tsx";
+import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
 
 export const AdminLicenseGroupsView = () => {
 
@@ -86,7 +86,7 @@ export const AdminLicenseGroupsView = () => {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.name.toLowerCase().includes(filter.toLowerCase())))
-                            .map((row) => (
+                            .map(row => (
                                 <CollapsableTableRow key={row.name}
                                                      licenseGroup={row}
                                                      licenses={licenses}

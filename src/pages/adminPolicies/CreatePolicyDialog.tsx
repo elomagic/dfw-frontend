@@ -21,7 +21,7 @@ interface ComponentProps {
     handleClose: (dto: Policy|undefined) => void;
 }
 
-export default function CreatePolicyDialog({ open, handleClose }: Readonly<ComponentProps>) {
+export const CreatePolicyDialog = ({ open, handleClose }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();

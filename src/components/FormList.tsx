@@ -27,7 +27,7 @@ interface ComponentProps<T> {
     onDeleteClick: (itemId: string) => void;
 }
 
-function UnwrappedFormList<T>({ values, label, getItemLabel, editRole, onAddClick, onDeleteClick }: Readonly<ComponentProps<T>>) {
+const UnwrappedFormList = <T,> ({ values, label, getItemLabel, editRole, onAddClick, onDeleteClick }: ComponentProps<T>) => {
 
     const auth = useAuth();
     const { t } = useTranslation();
@@ -75,7 +75,7 @@ interface FormListProps<T> {
     gridSize?: GridSize;
 }
 
-export default function FormList<T>({ value, label, getItemLabel, gridSize, onChange, onAddClick }: Readonly<FormListProps<T>>) {
+export const FormList = <T,>({ value, label, getItemLabel, gridSize, onChange, onAddClick }: Readonly<FormListProps<T>>)=> {
 
     const [ values, setValues ] = useState<ItemId<T>[]>([]);
 

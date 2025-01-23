@@ -21,7 +21,7 @@ interface ComponentProps {
     handleClose: (dto: Proxy|undefined) => void;
 }
 
-export default function CreateProxyDialog({ open, handleClose }: Readonly<ComponentProps>) {
+export const CreateProxyDialog = ({ open, handleClose }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();

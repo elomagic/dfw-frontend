@@ -12,14 +12,14 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../../RestClient.ts";
 import {LicensePurlMap} from "../../../DTOs.ts";
-import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import CreatePurlMapDialog from "./CreatePurlMapDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
 import {TableHeaderControls} from "../../../components/TableHeaderControls.tsx";
 import {YesNoDialog} from "../../../components/YesNoDialog.tsx";
+import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
+import {CreatePurlMapDialog} from "./CreatePurlMapDialog.tsx";
 
-export default function PurlMapTab() {
+export const PurlMapTab = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -82,7 +82,7 @@ export default function PurlMapTab() {
                     <TableBody>
                         {rows
                             .filter(r => ("" === filter || r.purlMatch.toLowerCase().includes(filter.toLowerCase())))
-                            .map((row) => (
+                            .map(row => (
                                 <CollapsableTableRow key={row.id}
                                                      purlMap={row}
                                                      onDeleteRequest={(id) => handleDeleteRequest(id)}

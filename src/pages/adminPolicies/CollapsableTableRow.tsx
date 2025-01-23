@@ -4,7 +4,6 @@ import TableCell from "@mui/material/TableCell";
 import {Check} from "@mui/icons-material";
 import {LicenseGroup, Policy} from "../../DTOs.ts";
 import {useState} from "react";
-import EditableTableRow from "./EditableTableRow.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
@@ -12,6 +11,7 @@ import {Endpoint} from "../../RestClient.ts";
 import {toaster} from "../../Toaster.ts";
 import {TableDataRow} from "../../components/TableDataRow.tsx";
 import {TablePanelRow} from "../../components/TablePanelRow.tsx";
+import { EditableTableRow } from "./EditableTableRow.tsx";
 
 interface ComponentProps {
     policy: Policy;
@@ -19,7 +19,7 @@ interface ComponentProps {
     licenseGroups: LicenseGroup[];
 }
 
-export default function CollapsableTableRow({ policy, licenseGroups, onDeleteRequest }: Readonly<ComponentProps>) {
+export const CollapsableTableRow = ({ policy, licenseGroups, onDeleteRequest }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();

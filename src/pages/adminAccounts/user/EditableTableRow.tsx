@@ -17,7 +17,7 @@ interface ComponentProps {
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ user, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) {
+export const EditableTableRow = ({ user, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
 

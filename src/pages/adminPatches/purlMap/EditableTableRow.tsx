@@ -8,11 +8,11 @@ import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {License, LicensePurlMap} from "../../../DTOs.ts";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
-import FormTextArea from "../../../components/FormTextArea.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import { toaster } from "../../../Toaster.ts";
 import { FormTextField } from "../../../components/FormTextField.tsx";
 import { FormButtons } from "../../../components/FormButtons.tsx";
+import {FormTextArea} from "../../../components/FormTextArea.tsx";
 
 interface ComponentProps {
     purlMap: LicensePurlMap
@@ -20,7 +20,7 @@ interface ComponentProps {
     onDeleteRequest: () => void;
 }
 
-export default function EditableTableRow({ purlMap, onDeleteRequest, onSaveClick }: Readonly<ComponentProps>) {
+export const EditableTableRow = ({ purlMap, onDeleteRequest, onSaveClick }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();

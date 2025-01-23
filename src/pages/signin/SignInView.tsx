@@ -5,10 +5,10 @@ import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typograph
 // import { useNavigate } from "react-router-dom"
 import MuiCard from '@mui/material/Card';
 import Link from "@mui/material/Link";
-import ForgotPasswordDialog from "./ForgotPasswordDialog.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import {toaster} from "../../Toaster.ts";
+import {ForgotPasswordDialog} from "./ForgotPasswordDialog.tsx";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',

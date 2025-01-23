@@ -12,14 +12,14 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {UserAccountGroup} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
-import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import CreateUserGroupDialog from "./CreateUserGroupDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
 import { TableHeaderControls } from "../../../components/TableHeaderControls.tsx";
 import { YesNoDialog } from "../../../components/YesNoDialog.tsx";
+import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
+import {CreateUserGroupDialog} from "./CreateUserGroupDialog.tsx";
 
-export default function UserAccountGroupTab() {
+export const UserAccountGroupTab = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();

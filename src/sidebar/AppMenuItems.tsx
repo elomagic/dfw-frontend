@@ -5,7 +5,7 @@ import {List} from "@mui/material";
 import {NavUser} from "./NavUser.tsx";
 import {NavItemData} from "../NavItems.ts";
 
-export default function AppMenuItems({ open }: Readonly<{ open: boolean }>) {
+export const AppMenuItems = ({ open }: Readonly<{ open: boolean }>) => {
 
     return (
         <List>

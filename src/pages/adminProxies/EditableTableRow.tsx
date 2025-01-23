@@ -10,12 +10,12 @@ import * as Rest from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormSelect, KeyLabelItem} from "../../components/FormSelect.tsx";
-import FormSelectList from "../../components/FormSelectList.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
 import { FormTextField } from "../../components/FormTextField.tsx";
 import {ProxyTypeIcon} from "../../components/ProxyTypeIcon.tsx";
 import {FormButtons} from "../../components/FormButtons.tsx";
+import { FormSelectList } from "../../components/FormSelectList.tsx";
 
 interface ComponentProps {
     proxy: Proxy
@@ -23,7 +23,7 @@ interface ComponentProps {
     onDeleteRequest: () => void
 }
 
-export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) {
+export const EditableTableRow = ({ proxy, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();

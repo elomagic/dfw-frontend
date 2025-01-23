@@ -7,11 +7,11 @@ import {validateRequiredText} from "../../../Validators.ts";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
-import FormSelectList from "../../../components/FormSelectList.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
 import { FormTextField } from "../../../components/FormTextField.tsx";
 import { FormButtons } from "../../../components/FormButtons.tsx";
+import {FormSelectList} from "../../../components/FormSelectList.tsx";
 
 interface ComponentProps {
     group: UserAccountGroup
@@ -23,7 +23,7 @@ interface StringWrapperItem {
     value: string;
 }
 
-export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) {
+export const EditableTableRow = ({ group, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>)=> {
 
     const { t } = useTranslation();
     const auth = useAuth();

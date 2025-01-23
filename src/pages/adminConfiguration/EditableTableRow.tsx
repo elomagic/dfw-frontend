@@ -16,7 +16,7 @@ interface ComponentProps {
     onResetRequest: () => void;
 }
 
-export default function EditableTableRow({ configuration, keyMeta, onSaveClick, onResetRequest }: Readonly<ComponentProps>) {
+export const EditableTableRow = ({ configuration, keyMeta, onSaveClick, onResetRequest }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
 

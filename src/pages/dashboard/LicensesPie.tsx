@@ -15,10 +15,10 @@ echarts.use(
     [PieChart, TitleComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer, LegendComponent]
 );
 
-function createOption(
+const createOption = (
     title: string|undefined,
     subtitle: string | undefined,
-    items: KeyLabelItem[]): EChartsOption {
+    items: KeyLabelItem[]): EChartsOption => {
     const dataItems = items.map((i) => { return { value: i.key, name: i.label }});// items.reverse();
 
     console.log(dataItems)
@@ -63,7 +63,7 @@ interface ComponentProps {
 }
 
 
-export default function LicencesPie({ title, subtitle }: Readonly<ComponentProps>) {
+export const LicencesPie = ({ title, subtitle }: Readonly<ComponentProps>) => {
 
     const [option, setOption] = useState<EChartsOption|undefined>(undefined);
     const {mode} = useColorScheme();

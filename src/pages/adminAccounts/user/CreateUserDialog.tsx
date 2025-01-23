@@ -20,7 +20,7 @@ interface ComponentProps {
     handleClose: (dto: UserAccount|undefined) => void;
 }
 
-export default function CreateUserDialog({ open, handleClose }: Readonly<ComponentProps>) {
+export const CreateUserDialog = ({ open, handleClose }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();
