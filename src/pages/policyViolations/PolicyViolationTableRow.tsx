@@ -3,8 +3,8 @@
 import {PolicyViolation} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import Grid from "@mui/material/Grid2";
-import FormButtons from "../../components/FormButtons.tsx";
-import FormTextField from "../../components/FormTextField.tsx";
+import { FormTextField } from "../../components/FormTextField.tsx";
+import { FormButtons } from "../../components/FormButtons.tsx";
 
 interface ComponentProps {
     policyViolation: PolicyViolation

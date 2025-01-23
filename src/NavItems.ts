@@ -163,3 +163,15 @@ export const NavItemData: NavItems = {
         ]
     }
 }
+
+export const getAllPathsTitle = (): NavItem[] => {
+
+    const items: NavItem[] = [];
+
+    NavItemData.navMain.items.forEach((item) => { items.push(item); });
+    NavItemData.navAdmin.items.forEach((item) => { items.push(item); });
+    NavItemData.navHelp.items.forEach((item) => { items.push(item); });
+    NavItemData.navOther.items.forEach((item) => { items.push(item); });
+
+    return items;
+}

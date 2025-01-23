@@ -59,7 +59,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     },
 }));
 
-export default function ThemeSwitch() {
+export const ThemeSwitch = () => {
 
     const { mode, setMode } = useColorScheme();
 

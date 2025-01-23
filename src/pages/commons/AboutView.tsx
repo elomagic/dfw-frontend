@@ -12,7 +12,7 @@ import Link from "@mui/material/Link";
 
 declare const __APP_VERSION__: string
 
-export default function AboutView() {
+export const AboutView = () => {
 
     const { t } = useTranslation();
     const frontendVersion = __APP_VERSION__;
@@ -21,7 +21,7 @@ export default function AboutView() {
     const [ backend, setBackend ] = useState<Version|undefined>(undefined);
 
     useEffect(() => {
-        Rest.get<Version>(auth, Rest.RestEndpoint.Version)
+        Rest.get<Version>(auth, Rest.Endpoint.Version)
             .then((dto: Version) => setBackend(dto))
             .catch((reason) => console.log(reason));
     }, [auth]);

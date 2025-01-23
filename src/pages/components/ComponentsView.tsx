@@ -6,11 +6,11 @@ import {Component} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import ComponentTableRow from "./ComponentTableRow.tsx";
 import {toaster} from "../../Toaster.ts";
+import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
 
-export default function ComponentsView() {
+export const ComponentsView = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -18,7 +18,7 @@ export default function ComponentsView() {
     const [ filter, setFilter ] = useState<string>("");
 
     const refresh = useCallback(() => {
-        Rest.get<Component[]>(auth, Rest.RestEndpoint.Component)
+        Rest.get<Component[]>(auth, Rest.Endpoint.Component)
             .then((reps: Component[]) => setRows(reps))
             .catch((err: Error) => {
                 setRows([])

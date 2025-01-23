@@ -9,9 +9,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import {UserAccountApiKey} from "../../DTOs.ts";
-import FormTextField from "../../components/FormTextField.tsx";
 import { v4 as uuidv4 } from 'uuid';
 import {validateRequiredText} from "../../Validators.ts";
+import { FormTextField } from '../../components/FormTextField.tsx';
 
 interface ComponentProps {
     open: boolean;

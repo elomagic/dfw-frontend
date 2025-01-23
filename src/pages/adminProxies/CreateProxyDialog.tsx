@@ -8,13 +8,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../RestClient.ts"
-import {RestEndpoint} from "../../RestClient.ts"
+import {Endpoint} from "../../RestClient.ts"
 import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
 import {Proxy, ProxyType} from "../../DTOs.ts";
 import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
 import {toaster} from '../../Toaster.ts';
-import FormTextField from "../../components/FormTextField.tsx";
+import {FormTextField} from "../../components/FormTextField.tsx";
 
 interface ComponentProps {
     open: boolean;
@@ -37,7 +37,7 @@ export default function CreateProxyDialog({ open, handleClose }: Readonly<Compon
             forwardHeaders: false
         }
 
-        Rest.post(auth, RestEndpoint.Proxy, data)
+        Rest.post(auth, Endpoint.Proxy, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

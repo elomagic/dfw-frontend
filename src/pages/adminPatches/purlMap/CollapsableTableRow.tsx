@@ -5,7 +5,7 @@ import {LicensePurlMap} from "../../../DTOs.ts";
 import {useState} from "react";
 import EditableTableRow from "./EditableTableRow.tsx";
 import * as Rest from "../../../RestClient.ts";
-import {RestEndpoint} from "../../../RestClient.ts";
+import {Endpoint} from "../../../RestClient.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {toaster} from "../../../Toaster.ts";
@@ -25,7 +25,7 @@ export default function CollapsableTableRow({ purlMap, onDeleteRequest }: Readon
     const [data, setData] = useState<LicensePurlMap>(purlMap);
 
     const handleSaveClick = (d: LicensePurlMap) => {
-        Rest.patch<LicensePurlMap>(auth, RestEndpoint.LicensePurlMap, d)
+        Rest.patch<LicensePurlMap>(auth, Endpoint.LicensePurlMap, d)
             .then((dto: LicensePurlMap) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

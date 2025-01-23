@@ -6,7 +6,6 @@ import {useAuth} from "../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {ProxyAudit} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
-import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
@@ -15,8 +14,9 @@ import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import {toaster} from "../../Toaster.ts";
 import ProxyAuditTableRow from "./ProxyAuditTableRow.tsx";
+import { TableHeaderControls } from "../../components/TableHeaderControls.tsx";
 
-export default function ProxyAuditView() {
+export const ProxyAuditView = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -24,7 +24,7 @@ export default function ProxyAuditView() {
     const [ filter, setFilter ] = useState<string>("");
 
     const refresh = useCallback(() => {
-        Rest.get<ProxyAudit[]>(auth, Rest.RestEndpoint.ProxyAudit)
+        Rest.get<ProxyAudit[]>(auth, Rest.Endpoint.ProxyAudit)
             .then((cd: ProxyAudit[]) => setRows(cd))
             .catch((err: Error) => {
                 setRows([])

@@ -31,7 +31,7 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="down" ref={ref} {...props}/>;
 });
 
-const YesNoDialog = ({
+export const YesNoDialog = ({
                                                               title,
                                                               text,
                                                               captionYes,
@@ -56,5 +56,3 @@ const YesNoDialog = ({
         </Dialog>
     );
 };
-
-export default YesNoDialog;

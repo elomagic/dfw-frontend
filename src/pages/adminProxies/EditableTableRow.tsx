@@ -8,14 +8,14 @@ import Grid from "@mui/material/Grid2";
 import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
 import * as Rest from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
-import ProxyTypeIcon from "../../components/ProxyTypeIcon.tsx";
-import FormButtons from "../../components/FormButtons.tsx";
-import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormSelect, KeyLabelItem} from "../../components/FormSelect.tsx";
 import FormSelectList from "../../components/FormSelectList.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
+import { FormTextField } from "../../components/FormTextField.tsx";
+import {ProxyTypeIcon} from "../../components/ProxyTypeIcon.tsx";
+import {FormButtons} from "../../components/FormButtons.tsx";
 
 interface ComponentProps {
     proxy: Proxy
@@ -62,7 +62,7 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
     };
 
     useEffect(() => {
-        Rest.get<CredentialData[]>(auth, Rest.RestEndpoint.Credential)
+        Rest.get<CredentialData[]>(auth, Rest.Endpoint.Credential)
             .then((rs: CredentialData[]) => rs.map(c => { return { "key": c.credentialId, "label": c.credentialId} as KeyLabelItem }))
             .then((cd: KeyLabelItem[]) => {
                 cd.unshift({ key: "-", label: "-"});
@@ -71,7 +71,7 @@ export default function EditableTableRow({ proxy, onSaveClick, onDeleteRequest }
             .then((kl: KeyLabelItem[]) => setCredentialsIds(kl))
             .catch((err: Error) => toaster(t("getting-data-failed",  { message: err.message }), 'error'));
 
-        Rest.get<UserAccountGroup[]>(auth, Rest.RestEndpoint.UserGroup)
+        Rest.get<UserAccountGroup[]>(auth, Rest.Endpoint.UserGroup)
             .then((rs: UserAccountGroup[]) => setAllGroups(rs))
             .catch((err: Error) => toaster(t("getting-data-failed",  { message: err.message }), 'error'));
     }, [auth, t]);

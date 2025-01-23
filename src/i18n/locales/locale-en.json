@@ -139,6 +139,7 @@
   "property": "Property",
   "proxies": "Proxies",
   "proxy": "Proxy",
+  "proxy-audits": "Proxy Audits",
   "purl": "PURL",
   "purl-mappings": "PURL Mappings",
   "purl-match": "PURL Match",

@@ -27,7 +27,7 @@ interface ComponentProps {
  * @param onRightClick Optional. If not set, the "delete" button not visible
  * @constructor
  */
-export default function FormButtons({labelLeftButton, labelRightButton, startIcon, onSaveClick, onDeleteClick, roleLeftButton, roleRightButton}: Readonly<ComponentProps>) {
+export const FormButtons = ({labelLeftButton, labelRightButton, startIcon, onSaveClick, onDeleteClick, roleLeftButton, roleRightButton}: Readonly<ComponentProps>) => {
 
     const auth = useAuth();
     const { t } = useTranslation();

@@ -8,7 +8,7 @@ import EditableTableRow from "./EditableTableRow.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
-import {RestEndpoint} from "../../RestClient.ts";
+import {Endpoint} from "../../RestClient.ts";
 import {toaster} from "../../Toaster.ts";
 import {TableDataRow} from "../../components/TableDataRow.tsx";
 import {TablePanelRow} from "../../components/TablePanelRow.tsx";
@@ -27,7 +27,7 @@ export default function CollapsableTableRow({ policy, licenseGroups, onDeleteReq
     const [data, setData] = useState<Policy>(policy);
 
     const handleSaveClick = (d: Policy) => {
-        Rest.patch<Policy>(auth, RestEndpoint.Policy, d)
+        Rest.patch<Policy>(auth, Endpoint.Policy, d)
             .then((dto: Policy) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

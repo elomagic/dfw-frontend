@@ -8,13 +8,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../../RestClient.ts"
-import {RestEndpoint} from "../../../RestClient.ts"
+import {Endpoint} from "../../../RestClient.ts"
 import {useAuth} from "../../../auth/useAuth.ts";
 import {useEffect, useState} from "react";
 import {License, LicensePurlMap} from "../../../DTOs.ts";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
-import FormTextField from "../../../components/FormTextField.tsx";
 import {toaster} from "../../../Toaster.ts";
+import {FormTextField} from "../../../components/FormTextField.tsx";
 
 interface ComponentProps {
     open: boolean;
@@ -35,14 +35,14 @@ export default function CreatePurlMapDialog({ open, handleClose }: Readonly<Comp
             spdxId
         }
 
-        Rest.post(auth, RestEndpoint.LicensePurlMap, data)
+        Rest.post(auth, Endpoint.LicensePurlMap, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));
     }
 
     useEffect(() => {
-        Rest.get<License[]>(auth, Rest.RestEndpoint.License)
+        Rest.get<License[]>(auth, Rest.Endpoint.License)
             .then((rs: License[]) => rs.map(l => { return { "key": l.licenseId, "label": l.name} as KeyLabelItem })) // setSpdxList(rs))
             .then((kl: KeyLabelItem[]) => setSpdxList(kl))
             .catch((err: Error) => toaster("Getting spdx list failed: " + err.message, 'error'));

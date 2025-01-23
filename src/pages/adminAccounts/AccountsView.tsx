@@ -35,7 +35,7 @@ function a11yProps(index: number) {
     };
 }
 
-export default function AccountsView() {
+export const AccountsView = () => {
 
     const { t } = useTranslation();
     const [value, setValue] = useState(0);

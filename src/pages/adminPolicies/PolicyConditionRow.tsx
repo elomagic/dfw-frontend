@@ -8,8 +8,8 @@ import {Box, IconButton, useColorScheme} from "@mui/material";
 import {FormSelect, KeyLabelItem, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {DeleteForever} from "@mui/icons-material";
-import FormTextField from "../../components/FormTextField.tsx";
 import Grid from "@mui/material/Grid2";
+import {FormTextField} from "../../components/FormTextField.tsx";
 
 const getValueType = (value: ConditionType) => {
     if (value === ConditionType.SEVERITY || value === ConditionType.AGE) {

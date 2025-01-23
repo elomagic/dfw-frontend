@@ -3,7 +3,7 @@
 import LicencesPie from "./LicensesPie.tsx";
 import {Box, Stack} from "@mui/material";
 
-export default function DashboardView() {
+export const DashboardView = () => {
 
     return (
         <Box margin={3}>

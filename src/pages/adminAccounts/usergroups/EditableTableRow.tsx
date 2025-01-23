@@ -8,10 +8,10 @@ import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
 import FormSelectList from "../../../components/FormSelectList.tsx";
-import FormButtons from "../../../components/FormButtons.tsx";
-import FormTextField from "../../../components/FormTextField.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
+import { FormTextField } from "../../../components/FormTextField.tsx";
+import { FormButtons } from "../../../components/FormButtons.tsx";
 
 interface ComponentProps {
     group: UserAccountGroup
@@ -39,11 +39,11 @@ export default function EditableTableRow({ group, onSaveClick, onDeleteRequest }
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
 
     useEffect(() => {
-        Rest.get<UserAccount[]>(auth, Rest.RestEndpoint.User)
+        Rest.get<UserAccount[]>(auth, Rest.Endpoint.User)
             .then((dtos: UserAccount[]) => setAllUsers(dtos))
             .catch((err: Error) => toaster("Getting users failed: " + err.message, 'error'));
 
-        Rest.get<string[]>(auth, Rest.RestEndpoint.Role)
+        Rest.get<string[]>(auth, Rest.Endpoint.Role)
             .then((rs: string[]) => setAllRoles(rs.sort((a, b) => a.localeCompare(b)).map(r => ({value: r}))))
             .catch((err: Error) => toaster("Getting roles failed: " + err.message, 'error'));
     }, [auth]);

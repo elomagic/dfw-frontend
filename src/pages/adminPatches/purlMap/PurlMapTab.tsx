@@ -11,13 +11,13 @@ import TableContainer from "@mui/material/TableContainer";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../../RestClient.ts";
-import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
-import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import {LicensePurlMap} from "../../../DTOs.ts";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreatePurlMapDialog from "./CreatePurlMapDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
+import {TableHeaderControls} from "../../../components/TableHeaderControls.tsx";
+import {YesNoDialog} from "../../../components/YesNoDialog.tsx";
 
 export default function PurlMapTab() {
 
@@ -30,7 +30,7 @@ export default function PurlMapTab() {
     const [ selectedEntity, setSelectedEntity ] = useState<LicensePurlMap>();
 
     const refresh = useCallback(() => {
-        Rest.get<LicensePurlMap[]>(auth, Rest.RestEndpoint.LicensePurlMap)
+        Rest.get<LicensePurlMap[]>(auth, Rest.Endpoint.LicensePurlMap)
             .then((dtos: LicensePurlMap[]) => setRows(dtos))
             .catch((err: Error) => {
                 setRows([])
@@ -54,7 +54,7 @@ export default function PurlMapTab() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.LicensePurlMap, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.Endpoint.LicensePurlMap, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))

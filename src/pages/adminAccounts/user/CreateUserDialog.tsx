@@ -8,12 +8,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../../RestClient.ts"
-import {RestEndpoint} from "../../../RestClient.ts"
+import {Endpoint} from "../../../RestClient.ts"
 import {useAuth} from "../../../auth/useAuth.ts";
 import {useState} from "react";
 import {UserAccount} from "../../../DTOs.ts";
 import {toaster} from "../../../Toaster.ts";
-import FormTextField from "../../../components/FormTextField.tsx";
+import {FormTextField} from "../../../components/FormTextField.tsx";
 
 interface ComponentProps {
     open: boolean;
@@ -35,7 +35,7 @@ export default function CreateUserDialog({ open, handleClose }: Readonly<Compone
             changePassword: true,
         }
 
-        Rest.post(auth, RestEndpoint.User, data)
+        Rest.post(auth, Endpoint.User, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

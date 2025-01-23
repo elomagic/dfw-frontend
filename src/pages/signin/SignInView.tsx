@@ -52,7 +52,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
     },
 }));
 
-export default function SignInView() {
+export const SignInView = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();

@@ -36,7 +36,7 @@ function a11yProps(index: number) {
     };
 }
 
-export default function AdminPatchesView() {
+export const AdminPatchesView = () => {
 
     const { t } = useTranslation();
     const [value, setValue] = useState(0);

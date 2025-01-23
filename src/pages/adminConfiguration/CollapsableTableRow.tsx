@@ -7,7 +7,7 @@ import EditableTableRow from "./EditableTableRow.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
-import {RestEndpoint} from "../../RestClient.ts";
+import {Endpoint} from "../../RestClient.ts";
 import {FaHourglass} from "react-icons/fa6";
 import {ImCheckboxChecked, ImCheckboxUnchecked} from "react-icons/im";
 import {toaster} from "../../Toaster.ts";
@@ -28,7 +28,7 @@ export default function CollapsableTableRow({ configuration, keyMeta, onResetReq
     const [data, setData] = useState<Configuration>(configuration);
 
     const handleSaveClick = (d: Configuration) => {
-        Rest.put<Configuration>(auth, RestEndpoint.Configuration, d)
+        Rest.patch<Configuration>(auth, Endpoint.Configuration, d)
             .then((dto: Configuration) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

@@ -12,12 +12,12 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {UserAccount} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
-import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateUserDialog from "./CreateUserDialog.tsx";
-import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import { toaster } from "../../../Toaster.ts";
+import {TableHeaderControls} from "../../../components/TableHeaderControls.tsx";
+import { YesNoDialog } from "../../../components/YesNoDialog.tsx";
 
 export default function UserAccountTab() {
 
@@ -30,7 +30,7 @@ export default function UserAccountTab() {
     const [ selectedEntity, setSelectedEntity ] = useState<UserAccount>();
 
     const refresh = useCallback(() => {
-        Rest.get<UserAccount[]>(auth, Rest.RestEndpoint.User)
+        Rest.get<UserAccount[]>(auth, Rest.Endpoint.User)
             .then((dtos: UserAccount[]) => setRows(dtos))
             .catch((err: Error) => {
                 setRows([])
@@ -53,7 +53,7 @@ export default function UserAccountTab() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.User, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.Endpoint.User, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))

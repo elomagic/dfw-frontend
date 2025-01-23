@@ -12,14 +12,14 @@ import * as Rest from "../../RestClient.ts"
 import {LicenseGroup, Policy} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import YesNoDialog from "../../components/YesNoDialog.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
 import CreatePolicyDialog from "./CreatePolicyDialog.tsx";
+import { TableHeaderControls } from "../../components/TableHeaderControls.tsx";
+import { YesNoDialog } from "../../components/YesNoDialog.tsx";
 
-export default function AdminPolicyView() {
+export const AdminPolicyView = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -31,14 +31,14 @@ export default function AdminPolicyView() {
     const [ licenseGroups, setLicenseGroups ] = useState<LicenseGroup[]>([]);
 
     const refresh = useCallback(() => {
-        Rest.get<Policy[]>(auth, Rest.RestEndpoint.Policy)
+        Rest.get<Policy[]>(auth, Rest.Endpoint.Policy)
             .then((reps: Policy[]) => setRows(reps))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
 
-        Rest.get<LicenseGroup[]>(auth, Rest.RestEndpoint.LicenseGroup)
+        Rest.get<LicenseGroup[]>(auth, Rest.Endpoint.LicenseGroup)
             .then((rs: LicenseGroup[]) => setLicenseGroups(rs))
             .catch((err: Error) => toaster("Getting license group list failed: " + err.message, 'error'));
     }, [t, auth]);
@@ -58,7 +58,7 @@ export default function AdminPolicyView() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.Policy, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.Endpoint.Policy, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))

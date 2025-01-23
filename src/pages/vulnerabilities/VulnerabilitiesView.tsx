@@ -1,7 +1,7 @@
 import {Box} from "@mui/material";
 import {useTranslation} from "react-i18next";
 
-export default function VulnerabilitiesView() {
+export const VulnerabilitiesView = () => {
 
     const { t } = useTranslation();
 

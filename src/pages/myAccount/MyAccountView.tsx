@@ -5,18 +5,18 @@ import {useAuth} from "../../auth/useAuth.ts";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
-import {RestEndpoint} from "../../RestClient.ts";
+import {Endpoint} from "../../RestClient.ts";
 import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../Validators.ts";
 import {UserAccount, UserAccountApiKey} from "../../DTOs.ts";
-import FormButtons from "../../components/FormButtons.tsx";
-import FormTextField from "../../components/FormTextField.tsx";
 import {FormSelect} from "../../components/FormSelect.tsx";
 import FormList from "../../components/FormList.tsx";
 import CreateApiKeyDialog from "./CreateApiKeyDialog.tsx";
 import { toaster } from "../../Toaster.ts";
+import {FormTextField} from "../../components/FormTextField.tsx";
+import {FormButtons} from "../../components/FormButtons.tsx";
 
-export default function MyAccountView() {
+export const MyAccountView = () => {
 
     const { t, i18n } = useTranslation();
     const auth = useAuth();
@@ -46,7 +46,7 @@ export default function MyAccountView() {
         }
 
         i18n.changeLanguage(language)
-            .then(() => Rest.patch(auth, RestEndpoint.UserSelf, data))
+            .then(() => Rest.patch(auth, Endpoint.UserSelf, data))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
@@ -65,7 +65,7 @@ export default function MyAccountView() {
     }
 
     useEffect(() => {
-        Rest.get<UserAccount>(auth, RestEndpoint.UserSelf)
+        Rest.get<UserAccount>(auth, Endpoint.UserSelf)
             .then((dto: UserAccount) => {
                 setDisplayName(dto.displayName);
                 setLanguage(dto.language);

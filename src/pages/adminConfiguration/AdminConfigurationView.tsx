@@ -12,12 +12,12 @@ import * as Rest from "../../RestClient.ts"
 import {Configuration, ConfigurationKeyMeta} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
-import YesNoDialog from "../../components/YesNoDialog.tsx";
 import { toaster } from "../../Toaster.ts";
+import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
+import {YesNoDialog} from "../../components/YesNoDialog.tsx";
 
-export default function AdminConfigurationView() {
+export const AdminConfigurationView = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -29,7 +29,7 @@ export default function AdminConfigurationView() {
     const [ configurationKeyMetas, setConfigurationKeyMetas ] = useState<ConfigurationKeyMeta[]>([]);
 
     const refresh = useCallback(() => {
-        Rest.get<Configuration[]>(auth, Rest.RestEndpoint.Configuration)
+        Rest.get<Configuration[]>(auth, Rest.Endpoint.Configuration)
             .then((entities: Configuration[]) => {
                 return entities.sort((a, b) => a.key.localeCompare(b.key));
             })
@@ -48,7 +48,7 @@ export default function AdminConfigurationView() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.Configuration, selectedEntity?.key)
+        Rest.deleteResource(auth, Rest.Endpoint.Configuration, selectedEntity?.key)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("reset-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))
@@ -57,7 +57,7 @@ export default function AdminConfigurationView() {
     useEffect(() => refresh(), [refresh]);
 
     useEffect(() => {
-        Rest.get<ConfigurationKeyMeta[]>(auth, Rest.RestEndpoint.ConfigurationKey)
+        Rest.get<ConfigurationKeyMeta[]>(auth, Rest.Endpoint.ConfigurationKey)
             .then((rs: ConfigurationKeyMeta[]) => setConfigurationKeyMetas(rs))
             .catch((err: Error) => toaster(t("getting-data-failed",  { message: err.message }), 'error'));
     }, [auth, t]);

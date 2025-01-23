@@ -2,7 +2,6 @@
 
 import {Box, Paper} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -10,7 +9,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import YesNoDialog from "../../components/YesNoDialog.tsx";
 import {useAuth} from "../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {License, LicenseGroup} from "../../DTOs.ts";
@@ -18,8 +16,10 @@ import * as Rest from "../../RestClient.ts";
 import {toaster} from "../../Toaster.ts";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateLicenseGroupDialog from "./CreateLicenseGroupDialog.tsx";
+import { TableHeaderControls } from "../../components/TableHeaderControls.tsx";
+import { YesNoDialog } from "../../components/YesNoDialog.tsx";
 
-export default function AdminLicenseGroupsView() {
+export const AdminLicenseGroupsView = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -31,14 +31,14 @@ export default function AdminLicenseGroupsView() {
     const [ licenses, setLicenses ] = useState<License[]>([]);
 
     const refresh = useCallback(() => {
-        Rest.get<LicenseGroup[]>(auth, Rest.RestEndpoint.LicenseGroup)
+        Rest.get<LicenseGroup[]>(auth, Rest.Endpoint.LicenseGroup)
             .then((dto: LicenseGroup[]) => setRows(dto))
             .catch((err: Error) => {
                 setRows([])
                 toaster(t("getting-data-failed",  { message: err.message }), 'error');
             });
 
-        Rest.get<License[]>(auth, Rest.RestEndpoint.License)
+        Rest.get<License[]>(auth, Rest.Endpoint.License)
             .then((rs: License[]) => setLicenses(rs))
             .catch((err: Error) => toaster("Getting license group list failed: " + err.message, 'error'));
     }, [t, auth]);
@@ -58,7 +58,7 @@ export default function AdminLicenseGroupsView() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.LicenseGroup, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.Endpoint.LicenseGroup, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))

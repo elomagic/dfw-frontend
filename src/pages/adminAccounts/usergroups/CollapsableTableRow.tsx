@@ -7,7 +7,7 @@ import EditableTableRow from "./EditableTableRow.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../../auth/useAuth.ts";
 import * as Rest from "../../../RestClient.ts";
-import {RestEndpoint} from "../../../RestClient.ts";
+import {Endpoint} from "../../../RestClient.ts";
 import { toaster } from "../../../Toaster.ts";
 import { TableDataRow } from "../../../components/TableDataRow.tsx";
 import {TablePanelRow} from "../../../components/TablePanelRow.tsx";
@@ -25,7 +25,7 @@ export default function CollapsableTableRow({ userGroup, onDeleteRequest }: Read
     const [data, setData] = useState<UserAccountGroup>(userGroup);
 
     const handleSaveClick = (d: UserAccountGroup) => {
-        Rest.patch<UserAccountGroup>(auth, RestEndpoint.UserGroup, d)
+        Rest.patch<UserAccountGroup>(auth, Endpoint.UserGroup, d)
             .then((dto: UserAccountGroup) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

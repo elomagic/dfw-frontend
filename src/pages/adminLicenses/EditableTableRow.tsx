@@ -5,10 +5,10 @@ import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../Validators.ts";
-import FormButtons from "../../components/FormButtons.tsx";
-import FormTextField from "../../components/FormTextField.tsx";
 import FormSelectList from "../../components/FormSelectList.tsx";
 import {Role} from "../../auth/Auth.tsx";
+import { FormTextField } from "../../components/FormTextField.tsx";
+import {FormButtons} from "../../components/FormButtons.tsx";
 
 interface ComponentProps {
     licenseGroup: LicenseGroup;

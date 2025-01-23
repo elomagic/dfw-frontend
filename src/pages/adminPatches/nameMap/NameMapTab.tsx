@@ -12,12 +12,12 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {LicenseNameMap} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
-import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
-import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateNameMapDialog from "./CreateNameMapDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
+import { TableHeaderControls } from "../../../components/TableHeaderControls.tsx";
+import { YesNoDialog } from "../../../components/YesNoDialog.tsx";
 
 export default function NameMapTab() {
 
@@ -30,7 +30,7 @@ export default function NameMapTab() {
     const [ selectedEntity, setSelectedEntity ] = useState<LicenseNameMap>();
 
     const refresh = useCallback(() => {
-        Rest.get<LicenseNameMap[]>(auth, Rest.RestEndpoint.LicenseNameMap)
+        Rest.get<LicenseNameMap[]>(auth, Rest.Endpoint.LicenseNameMap)
             .then((dtos: LicenseNameMap[]) => setRows(dtos))
             .catch((err: Error) => {
                 setRows([])
@@ -53,7 +53,7 @@ export default function NameMapTab() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.LicenseNameMap, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.Endpoint.LicenseNameMap, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))

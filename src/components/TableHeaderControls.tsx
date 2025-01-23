@@ -16,7 +16,7 @@ interface ComponentProps {
     onRefresh: () => void;
 }
 
-export default function TableHeaderControls({ createCaption, filter, role, onCreateClicked, onFilterChanged, onRefresh }: Readonly<ComponentProps>) {
+export const TableHeaderControls = ({ createCaption, filter, role, onCreateClicked, onFilterChanged, onRefresh }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();

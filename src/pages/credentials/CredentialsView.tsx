@@ -6,7 +6,6 @@ import {useAuth} from "../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {CredentialData} from "../../DTOs.ts";
 import * as Rest from "../../RestClient.ts";
-import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
@@ -14,12 +13,13 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import CredentialTableRow from "./CredentialTableRow.tsx";
-import YesNoDialog from "../../components/YesNoDialog.tsx";
 import CreateCredentialDialog from "./CreateCredentialDialog.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
+import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
+import {YesNoDialog} from "../../components/YesNoDialog.tsx";
 
-export default function CredentialsView() {
+export const CredentialsView = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -30,7 +30,7 @@ export default function CredentialsView() {
     const [ selectedEntity, setSelectedEntity ] = useState<CredentialData>();
 
     const refresh = useCallback(() => {
-        Rest.get<CredentialData[]>(auth, Rest.RestEndpoint.Credential)
+        Rest.get<CredentialData[]>(auth, Rest.Endpoint.Credential)
             .then((cd: CredentialData[]) => setRows(cd))
             .catch((err: Error) => {
                 setRows([])
@@ -53,7 +53,7 @@ export default function CredentialsView() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.Credential, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.Endpoint.Credential, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))

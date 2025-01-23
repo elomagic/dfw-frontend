@@ -26,7 +26,7 @@ function UnwrappedFormCheckBox({ id, value, onChange, label}: Readonly<Component
     );
 }
 
-export function FormCheckbox({ id, value, onChange, label, gridSize}: Readonly<ComponentProps>) {
+export const FormCheckbox = ({ id, value, onChange, label, gridSize}: Readonly<ComponentProps>) => {
 
     return (
         <>

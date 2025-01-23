@@ -3,11 +3,11 @@
 import {Configuration, ConfigurationKeyMeta} from "../../DTOs.ts";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
-import FormButtons from "../../components/FormButtons.tsx";
-import FormTextField from "../../components/FormTextField.tsx";
 import {useTranslation} from "react-i18next";
 import {Role} from "../../auth/Auth.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
+import { FormTextField } from "../../components/FormTextField.tsx";
+import {FormButtons} from "../../components/FormButtons.tsx";
 
 interface ComponentProps {
     configuration: Configuration;

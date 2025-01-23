@@ -18,7 +18,7 @@ interface ComponentProps {
     readOnly?: boolean;
 }
 
-function UnwrappedTextArea({id, value, errorMessage, minRows, maxRows, onChange, label, required, autoFocus, readOnly}: Readonly<ComponentProps>) {
+const UnwrappedTextArea = ({id, value, errorMessage, minRows, maxRows, onChange, label, required, autoFocus, readOnly}: Readonly<ComponentProps>) => {
 
     return (
         <FormControl fullWidth>

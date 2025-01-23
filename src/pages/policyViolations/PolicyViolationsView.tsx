@@ -5,13 +5,13 @@ import {useCallback, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import YesNoDialog from "../../components/YesNoDialog.tsx";
-import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import {toaster} from "../../Toaster.ts";
 import {PolicyViolation} from "../../DTOs.ts";
+import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
+import {YesNoDialog} from "../../components/YesNoDialog.tsx";
 
-export default function PolicyViolationsView() {
+export const PolicyViolationsView = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -21,7 +21,7 @@ export default function PolicyViolationsView() {
     const [ selectedEntity, setSelectedEntity ] = useState<PolicyViolation>();
 
     const refresh = useCallback(() => {
-        Rest.get<PolicyViolation[]>(auth, Rest.RestEndpoint.PolicyViolation)
+        Rest.get<PolicyViolation[]>(auth, Rest.Endpoint.PolicyViolation)
             .then((reps: PolicyViolation[]) => setRows(reps))
             .catch((err: Error) => {
                 setRows([])
@@ -35,7 +35,7 @@ export default function PolicyViolationsView() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.PolicyViolation, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.Endpoint.PolicyViolation, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))

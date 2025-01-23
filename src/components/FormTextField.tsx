@@ -20,7 +20,7 @@ interface ComponentProps {
     startAdornment?: ReactNode;
 }
 
-function UnwrappedTextField({id, type, value, errorMessage, onChange, label, required, autoFocus, readOnly, startAdornment}: Readonly<ComponentProps>) {
+const UnwrappedTextField = ({id, type, value, errorMessage, onChange, label, required, autoFocus, readOnly, startAdornment}: Readonly<ComponentProps>) => {
 
     const [em, setEm] = useState<string|undefined>(errorMessage)
 
@@ -80,8 +80,7 @@ function UnwrappedTextField({id, type, value, errorMessage, onChange, label, req
  * @param startAdornment
  * @constructor
  */
-export default function FormTextField({id, type, value, errorMessage, onChange, label, required, autoFocus, gridSize, readOnly, startAdornment}: Readonly<ComponentProps>) {
-
+export const FormTextField = ({id, type, value, errorMessage, onChange, label, required, autoFocus, gridSize, readOnly, startAdornment}: Readonly<ComponentProps>) => {
     return (
         <>
             { gridSize && (

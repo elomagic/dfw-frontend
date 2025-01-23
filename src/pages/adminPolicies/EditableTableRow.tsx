@@ -5,12 +5,12 @@ import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../Validators.ts";
-import FormButtons from "../../components/FormButtons.tsx";
-import FormTextField from "../../components/FormTextField.tsx";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import PolicyConditionsList from "./PolicyConditionsList.tsx";
+import { FormTextField } from "../../components/FormTextField.tsx";
+import { FormButtons } from "../../components/FormButtons.tsx";
 
 interface ComponentProps {
     policy: Policy

@@ -12,14 +12,14 @@ import * as Rest from "../../RestClient.ts"
 import {Configuration, Proxy} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import TableHeaderControls from "../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateProxyDialog from "./CreateProxyDialog.tsx";
-import YesNoDialog from "../../components/YesNoDialog.tsx";
 import {Role} from "../../auth/Auth.tsx";
 import {toaster} from "../../Toaster.ts";
+import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
+import {YesNoDialog} from "../../components/YesNoDialog.tsx";
 
-export default function AdminProxiesView() {
+export const AdminProxiesView = () => {
 
     const { t } = useTranslation();
     const auth = useAuth();
@@ -31,7 +31,7 @@ export default function AdminProxiesView() {
     const [ selectedEntity, setSelectedEntity ] = useState<Proxy>();
 
     const refresh = useCallback(() => {
-        Rest.get<Proxy[]>(auth, Rest.RestEndpoint.Proxy)
+        Rest.get<Proxy[]>(auth, Rest.Endpoint.Proxy)
             .then((reps: Proxy[]) => setRows(reps))
             .catch((err: Error) => {
                 setRows([])
@@ -54,7 +54,7 @@ export default function AdminProxiesView() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.Proxy, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.Endpoint.Proxy, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))
@@ -63,7 +63,7 @@ export default function AdminProxiesView() {
     useEffect(() => refresh(), [refresh]);
 
     useEffect(() => {
-        Rest.get<Configuration[]>(auth, Rest.RestEndpoint.Configuration)
+        Rest.get<Configuration[]>(auth, Rest.Endpoint.Configuration)
             .then((entities: Configuration[]) => entities.filter((e) => e.key === "COMMON_BASE_URL")[0])
             .then((c: Configuration) => setInternalBaseUrl(c.value))
             .catch((err: Error) => {

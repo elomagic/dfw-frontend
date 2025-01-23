@@ -3,21 +3,9 @@
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import {NavItem, NavItemData} from "./NavItems.ts";
-import ThemeSwitch from "./components/ThemeSwitch.tsx";
+import {NavItem, getAllPathsTitle} from "./NavItems.ts";
 import {Box, Stack} from "@mui/material";
-
-const getAllPathsTitle = (): NavItem[] => {
-
-    const items: NavItem[] = [];
-
-    NavItemData.navMain.items.forEach((item) => { items.push(item); });
-    NavItemData.navAdmin.items.forEach((item) => { items.push(item); });
-    NavItemData.navHelp.items.forEach((item) => { items.push(item); });
-    NavItemData.navOther.items.forEach((item) => { items.push(item); });
-
-    return items;
-}
+import {ThemeSwitch} from "./components/ThemeSwitch.tsx";
 
 const getNavItem = (path: string): NavItem | undefined => {
 
@@ -26,7 +14,7 @@ const getNavItem = (path: string): NavItem | undefined => {
 
 }
 
-export default function TitleHeader() {
+export const TitleHeader = () => {
     const { t } = useTranslation();
     const [navItem, setNavItem] = useState<NavItem | undefined>(undefined);
     const location = useLocation();

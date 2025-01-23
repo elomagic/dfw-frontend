@@ -7,12 +7,12 @@ import {validateRequiredText} from "../../../Validators.ts";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {License, LicenseNameMap} from "../../../DTOs.ts";
-import FormButtons from "../../../components/FormButtons.tsx";
-import FormTextField from "../../../components/FormTextField.tsx";
 import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
 import FormTextArea from "../../../components/FormTextArea.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import { toaster } from "../../../Toaster.ts";
+import {FormTextField} from "../../../components/FormTextField.tsx";
+import { FormButtons } from "../../../components/FormButtons.tsx";
 
 interface ComponentProps {
     nameMap: LicenseNameMap,
@@ -35,7 +35,7 @@ export default function EditableTableRow({ nameMap, onSaveClick, onDeleteRequest
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
 
     useEffect(() => {
-        Rest.get<License[]>(auth, Rest.RestEndpoint.License)
+        Rest.get<License[]>(auth, Rest.Endpoint.License)
             .then((rs: License[]) => rs.map(l => { return { "key": l.licenseId, "label": l.name} as KeyLabelItem })) // setSpdxList(rs))
             .then((kl: KeyLabelItem[]) => setSpdxList(kl))
             .catch((err: Error) => toaster("Getting spdx list failed: " + err.message, 'error'));

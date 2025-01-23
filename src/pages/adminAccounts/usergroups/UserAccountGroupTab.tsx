@@ -12,12 +12,12 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {UserAccountGroup} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
-import TableHeaderControls from "../../../components/TableHeaderControls.tsx";
 import CollapsableTableRow from "./CollapsableTableRow.tsx";
 import CreateUserGroupDialog from "./CreateUserGroupDialog.tsx";
-import YesNoDialog from "../../../components/YesNoDialog.tsx";
 import {Role} from "../../../auth/Auth.tsx";
 import {toaster} from "../../../Toaster.ts";
+import { TableHeaderControls } from "../../../components/TableHeaderControls.tsx";
+import { YesNoDialog } from "../../../components/YesNoDialog.tsx";
 
 export default function UserAccountGroupTab() {
 
@@ -30,7 +30,7 @@ export default function UserAccountGroupTab() {
     const [ selectedEntity, setSelectedEntity ] = useState<UserAccountGroup>();
 
     const refresh = useCallback(() => {
-        Rest.get<UserAccountGroup[]>(auth, Rest.RestEndpoint.UserGroup)
+        Rest.get<UserAccountGroup[]>(auth, Rest.Endpoint.UserGroup)
             .then((dtos: UserAccountGroup[]) => setRows(dtos))
             .catch((err: Error) => {
                 setRows([])
@@ -53,7 +53,7 @@ export default function UserAccountGroupTab() {
     }
 
     const handleDelete = () => {
-        Rest.deleteResource(auth, Rest.RestEndpoint.UserGroup, selectedEntity?.id)
+        Rest.deleteResource(auth, Rest.Endpoint.UserGroup, selectedEntity?.id)
             .then(() => refresh())
             .catch((err: Error) => toaster(t("deleting-failed", { message: err.message }), 'error'))
             .finally(() => setDeleteOpen(false))

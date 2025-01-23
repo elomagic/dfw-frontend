@@ -34,7 +34,7 @@ interface ComponentProps {
  * @param items
  * @constructor
  */
-function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<ComponentProps>) {
+const UnwrappedFormSelect = ({ id, value, onChange, label, items}: Readonly<ComponentProps>) => {
 
     return (
         <Fieldset label={label}>
@@ -65,7 +65,7 @@ function UnwrappedFormSelect({ id, value, onChange, label, items}: Readonly<Comp
     );
 }
 
-export function FormSelect({ id, value, onChange, label, items, gridSize}: Readonly<ComponentProps>) {
+export const FormSelect = ({ id, value, onChange, label, items, gridSize}: Readonly<ComponentProps>) => {
 
     return (
         <>
