@@ -1,21 +1,21 @@
 "use client"
 
-import {CredentialData, Proxy, UserAccountGroup} from "../../DTOs.ts";
-import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
 import {InputAdornment} from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
+import {validateRequiredText, validateRequiredUrl} from "@/Validators.ts";
 import * as Rest from "../../RestClient.ts";
-import {useAuth} from "../../auth/useAuth.ts";
-import {FormCheckbox} from "../../components/FormCheckBox.tsx";
-import {FormSelect, KeyLabelItem} from "../../components/FormSelect.tsx";
-import {Role} from "../../auth/Role.ts";
-import {toaster} from "../../Toaster.ts";
-import { FormTextField } from "../../components/FormTextField.tsx";
-import {ProxyTypeIcon} from "../../components/ProxyTypeIcon.tsx";
-import {FormButtons} from "../../components/FormButtons.tsx";
-import { FormSelectList } from "../../components/FormSelectList.tsx";
+import {useAuth} from "@/auth/useAuth.ts";
+import {Role} from "@/auth/Role.ts";
+import {toaster} from "@/Toaster.ts";
+import {FormCheckbox} from "@components/FormCheckBox.tsx";
+import {FormSelect, KeyLabelItem} from "@components/FormSelect.tsx";
+import { FormTextField } from "@components/FormTextField.tsx";
+import {ProxyTypeIcon} from "@components/ProxyTypeIcon.tsx";
+import {FormButtons} from "@components/FormButtons.tsx";
+import { FormSelectList } from "@components/FormSelectList.tsx";
+import {CredentialData, Proxy, UserAccountGroup} from "@/DTOs.ts";
 
 interface ComponentProps {
     proxy: Proxy

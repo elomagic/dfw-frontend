@@ -1,8 +1,8 @@
 "use client"
 
-import {Box, Tab, Tabs} from "@mui/material";
 import {SyntheticEvent, useState} from "react";
 import {useTranslation} from "react-i18next";
+import {Box, Tab, Tabs} from "@mui/material";
 import {UserAccountTab} from "./user/UserAccountTab.tsx";
 import {UserAccountGroupTab} from "./usergroups/UserAccountGroupTab.tsx";
 

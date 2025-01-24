@@ -1,19 +1,18 @@
 "use client"
 
 import {Box, Card} from "@mui/material";
-import {useAuth} from "../../auth/useAuth.ts";
+import {useAuth} from "@/auth/useAuth.ts";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
-import {Endpoint} from "../../RestClient.ts";
 import Grid from "@mui/material/Grid2";
-import {validateRequiredText} from "../../Validators.ts";
-import {UserAccount, UserAccountApiKey} from "../../DTOs.ts";
-import {FormSelect} from "../../components/FormSelect.tsx";
-import { toaster } from "../../Toaster.ts";
-import {FormTextField} from "../../components/FormTextField.tsx";
-import {FormButtons} from "../../components/FormButtons.tsx";
-import { FormList } from "../../components/FormList.tsx";
+import {validateRequiredText} from "@/Validators.ts";
+import {UserAccount, UserAccountApiKey} from "@/DTOs.ts";
+import {FormSelect} from "@components/FormSelect.tsx";
+import { toaster } from "@/Toaster.ts";
+import {FormTextField} from "@components/FormTextField.tsx";
+import {FormButtons} from "@components/FormButtons.tsx";
+import { FormList } from "@components/FormList.tsx";
 import {CreateApiKeyDialog} from "./CreateApiKeyDialog.tsx";
 
 export const MyAccountView = () => {
@@ -46,7 +45,7 @@ export const MyAccountView = () => {
         }
 
         i18n.changeLanguage(language)
-            .then(() => Rest.patch(auth, Endpoint.UserSelf, data))
+            .then(() => Rest.patch(auth, Rest.Endpoint.UserSelf, data))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
     };
@@ -65,7 +64,7 @@ export const MyAccountView = () => {
     }
 
     useEffect(() => {
-        Rest.get<UserAccount>(auth, Endpoint.UserSelf)
+        Rest.get<UserAccount>(auth, Rest.Endpoint.UserSelf)
             .then((dto: UserAccount) => {
                 setDisplayName(dto.displayName);
                 setLanguage(dto.language);

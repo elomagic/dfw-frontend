@@ -1,15 +1,15 @@
 "use client"
 
-import {ConditionOperator, ConditionType, ItemId, LicenseGroup, PolicyCondition} from "@/DTOs.ts";
-import {useTranslation} from "react-i18next";
-import {useAuth} from "@/auth/useAuth.ts";
 import {useState} from "react";
+import {useTranslation} from "react-i18next";
+import {v4 as uuidv4} from "uuid";
 import {Button, List} from "@mui/material";
-import {Fieldset} from "@components/Fieldset.tsx";
 import Grid from "@mui/material/Grid2";
 import {Add} from "@mui/icons-material";
+import {ConditionOperator, ConditionType, ItemId, LicenseGroup, PolicyCondition} from "@/DTOs.ts";
 import {Role} from "@/auth/Role.ts";
-import {v4 as uuidv4} from "uuid";
+import {useAuth} from "@/auth/useAuth.ts";
+import {Fieldset} from "@components/Fieldset.tsx";
 import {PolicyConditionRow} from "./PolicyConditionRow.tsx";
 
 interface ComponentProps {

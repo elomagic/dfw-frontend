@@ -1,17 +1,17 @@
 "use client"
 
-import TableCell from "@mui/material/TableCell";
-import {Configuration, ConfigurationKeyMeta} from "../../DTOs.ts";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../auth/useAuth.ts";
-import * as Rest from "../../RestClient.ts";
-import {Endpoint} from "../../RestClient.ts";
-import {FaHourglass} from "react-icons/fa6";
 import {ImCheckboxChecked, ImCheckboxUnchecked} from "react-icons/im";
-import {toaster} from "../../Toaster.ts";
-import { TableDataRow } from "../../components/TableDataRow.tsx";
-import {TablePanelRow} from "../../components/TablePanelRow.tsx";
+import {FaHourglass} from "react-icons/fa6";
+import TableCell from "@mui/material/TableCell";
+import {useAuth} from "@/auth/useAuth.ts";
+import * as Rest from "../../RestClient.ts";
+import {Endpoint} from "@/RestClient.ts";
+import {toaster} from "@/Toaster.ts";
+import { TableDataRow } from "@components/TableDataRow.tsx";
+import {TablePanelRow} from "@components/TablePanelRow.tsx";
+import {Configuration, ConfigurationKeyMeta} from "@/DTOs.ts";
 import {EditableTableRow} from "./EditableTableRow.tsx";
 
 interface ComponentProps {

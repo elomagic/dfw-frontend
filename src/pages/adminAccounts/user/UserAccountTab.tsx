@@ -1,5 +1,6 @@
 "use client"
 
+import {useCallback, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Box, Paper} from "@mui/material";
 import Table from "@mui/material/Table";
@@ -8,14 +9,13 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
-import {useAuth} from "../../../auth/useAuth.ts";
-import {useCallback, useEffect, useState} from "react";
-import {UserAccount} from "../../../DTOs.ts";
+import {useAuth} from "@/auth/useAuth.ts";
 import * as Rest from "../../../RestClient.ts";
-import {Role} from "../../../auth/Role.ts";
-import { toaster } from "../../../Toaster.ts";
-import {TableHeaderControls} from "../../../components/TableHeaderControls.tsx";
-import { YesNoDialog } from "../../../components/YesNoDialog.tsx";
+import {Role} from "@/auth/Role.ts";
+import { toaster } from "@/Toaster.ts";
+import {TableHeaderControls} from "@components/TableHeaderControls.tsx";
+import { YesNoDialog } from "@components/YesNoDialog.tsx";
+import {UserAccount} from "@/DTOs.ts";
 import {CreateUserDialog} from "./CreateUserDialog.tsx";
 import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
 

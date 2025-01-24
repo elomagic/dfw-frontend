@@ -1,8 +1,8 @@
 "use client"
 
-import {ProxyAudit} from "../../DTOs.ts";
+import {ProxyAudit} from "@/DTOs.ts";
 import TableCell from "@mui/material/TableCell";
-import { TableDataRow } from "../../components/TableDataRow.tsx";
+import { TableDataRow } from "@components/TableDataRow.tsx";
 import {Check} from "@mui/icons-material";
 import {ImBlocked} from "react-icons/im";
 

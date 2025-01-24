@@ -1,19 +1,18 @@
 "use client"
 
+import {useState} from "react";
+import {useTranslation} from "react-i18next";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {useTranslation} from "react-i18next";
 import * as Rest from "../../../RestClient.ts"
-import {Endpoint} from "../../../RestClient.ts"
-import {useAuth} from "../../../auth/useAuth.ts";
-import {useState} from "react";
-import {UserAccountGroup} from "../../../DTOs.ts";
-import {toaster} from "../../../Toaster.ts";
-import { FormTextField } from '../../../components/FormTextField.tsx';
+import {useAuth} from "@/auth/useAuth.ts";
+import {toaster} from "@/Toaster.ts";
+import { FormTextField } from '@components/FormTextField.tsx';
+import {UserAccountGroup} from "@/DTOs.ts";
 
 interface ComponentProps {
     open: boolean;
@@ -33,7 +32,7 @@ export const CreateUserGroupDialog = ({ open, handleClose }: Readonly<ComponentP
             roles: []
         }
 
-        Rest.post(auth, Endpoint.UserGroup, data)
+        Rest.post(auth, Rest.Endpoint.UserGroup, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

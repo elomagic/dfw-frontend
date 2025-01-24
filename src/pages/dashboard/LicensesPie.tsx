@@ -6,7 +6,7 @@ import * as echarts from "echarts/core";
 import {GridComponent, LegendComponent, TitleComponent, TooltipComponent} from "echarts/components";
 import {BarChart, PieChart} from "echarts/charts";
 import {CanvasRenderer} from "echarts/renderers";
-import {KeyLabelItem} from "../../components/FormSelect.tsx";
+import {KeyLabelItem} from "@components/FormSelect.tsx";
 import {EChartsOption} from "echarts-for-react";
 import {useEffect, useState} from "react";
 

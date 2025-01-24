@@ -2,12 +2,12 @@
 
 import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useCallback, useEffect, useState} from "react";
-import {Component} from "../../DTOs.ts";
+import {Component} from "@/DTOs.ts";
 import * as Rest from "../../RestClient.ts";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../auth/useAuth.ts";
-import {toaster} from "../../Toaster.ts";
-import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
+import {useAuth} from "@/auth/useAuth.ts";
+import {toaster} from "@/Toaster.ts";
+import {TableHeaderControls} from "@components/TableHeaderControls.tsx";
 import {ComponentTableRow} from "./ComponentTableRow.tsx";
 
 export const ComponentsView = () => {

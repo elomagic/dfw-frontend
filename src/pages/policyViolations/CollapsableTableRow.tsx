@@ -4,7 +4,7 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import {Collapse} from "@mui/material";
 import {useState} from "react";
-import {PolicyViolation} from "../../DTOs.ts";
+import {PolicyViolation} from "@/DTOs.ts";
 import { PolicyViolationTableRow } from "./PolicyViolationTableRow.tsx";
 
 interface ComponentProps {

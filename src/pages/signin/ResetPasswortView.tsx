@@ -4,9 +4,9 @@ import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typograph
 import {useTranslation} from "react-i18next";
 import {FormEvent, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
-import {Endpoint} from "../../RestClient.ts";
+import {Endpoint} from "@/RestClient.ts";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {useAuth} from "../../auth/useAuth.ts";
+import {useAuth} from "@/auth/useAuth.ts";
 import MuiCard from "@mui/material/Card";
 
 const Card = styled(MuiCard)(({ theme }) => ({

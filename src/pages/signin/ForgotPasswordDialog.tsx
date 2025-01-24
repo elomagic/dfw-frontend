@@ -10,8 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../RestClient.ts"
-import {Endpoint} from "../../RestClient.ts"
-import {useAuth} from "../../auth/useAuth.ts";
+import {useAuth} from "@/auth/useAuth.ts";
 import {AxiosResponse} from "axios";
 
 interface ForgotPasswordProps {
@@ -25,7 +24,7 @@ export const ForgotPasswordDialog = ({ open, handleClose }: Readonly<ForgotPassw
     const auth = useAuth();
 
     const resetPassword = async (data: FormData): Promise<AxiosResponse> => {
-        const res = await Rest.postForm(auth, Endpoint.UserResetPasswordRequest, data);
+        const res = await Rest.postForm(auth, Rest.Endpoint.UserResetPasswordRequest, data);
         if (res.status >= 400) {
             return Promise.reject(new Error(res.statusText));
         }

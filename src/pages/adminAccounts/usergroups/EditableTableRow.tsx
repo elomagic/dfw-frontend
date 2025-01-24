@@ -1,17 +1,17 @@
 "use client"
 
-import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
 import Grid from "@mui/material/Grid2";
-import {validateRequiredText} from "../../../Validators.ts";
+import {validateRequiredText} from "@/Validators.ts";
 import * as Rest from "../../../RestClient.ts";
-import {useAuth} from "../../../auth/useAuth.ts";
-import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
-import {Role} from "../../../auth/Role.ts";
-import {toaster} from "../../../Toaster.ts";
-import { FormTextField } from "../../../components/FormTextField.tsx";
-import { FormButtons } from "../../../components/FormButtons.tsx";
-import {FormSelectList} from "../../../components/FormSelectList.tsx";
+import {useAuth} from "@/auth/useAuth.ts";
+import {Role} from "@/auth/Role.ts";
+import {toaster} from "@/Toaster.ts";
+import { FormTextField } from "@components/FormTextField.tsx";
+import { FormButtons } from "@components/FormButtons.tsx";
+import {FormSelectList} from "@components/FormSelectList.tsx";
+import {UserAccount, UserAccountGroup} from "@/DTOs.ts";
 
 interface ComponentProps {
     group: UserAccountGroup

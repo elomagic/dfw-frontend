@@ -1,15 +1,14 @@
 "use client"
 
-import TableCell from "@mui/material/TableCell";
-import {UserAccountGroup} from "../../../DTOs.ts";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../../auth/useAuth.ts";
+import TableCell from "@mui/material/TableCell";
+import {useAuth} from "@/auth/useAuth.ts";
 import * as Rest from "../../../RestClient.ts";
-import {Endpoint} from "../../../RestClient.ts";
-import { toaster } from "../../../Toaster.ts";
-import { TableDataRow } from "../../../components/TableDataRow.tsx";
-import {TablePanelRow} from "../../../components/TablePanelRow.tsx";
+import { toaster } from "@/Toaster.ts";
+import { TableDataRow } from "@components/TableDataRow.tsx";
+import {TablePanelRow} from "@components/TablePanelRow.tsx";
+import {UserAccountGroup} from "@/DTOs.ts";
 import {EditableTableRow} from "./EditableTableRow.tsx";
 
 interface ComponentProps {
@@ -25,7 +24,7 @@ export const CollapsableTableRow = ({ userGroup, onDeleteRequest }: Readonly<Com
     const [data, setData] = useState<UserAccountGroup>(userGroup);
 
     const handleSaveClick = (d: UserAccountGroup) => {
-        Rest.patch<UserAccountGroup>(auth, Endpoint.UserGroup, d)
+        Rest.patch<UserAccountGroup>(auth, Rest.Endpoint.UserGroup, d)
             .then((dto: UserAccountGroup) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
