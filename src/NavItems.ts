@@ -9,6 +9,7 @@ import {GrConfigure, GrNavigate} from "react-icons/gr";
 import {RiAccountCircle2Line, RiUserSettingsLine} from "react-icons/ri";
 import {PiPasswordFill} from "react-icons/pi";
 import type {IconType} from "react-icons";
+import {Role} from "./auth/Role.ts";
 
 export declare type NavItem = {
     url: string,
@@ -16,6 +17,7 @@ export declare type NavItem = {
     title: string,
     tooltip: string,
     icon: IconType | SvgIconComponent;
+    roles?: Role[] | Role;
 }
 
 export declare type NavGroup = {
@@ -61,6 +63,7 @@ export const NavItemData: NavItems = {
                 tooltip: "proxy-audits",
                 url: "proxy-audits",
                 icon: AiOutlineAudit,
+                roles: Role.PROXY_AUDIT_READ,
             },
             {
                 name: "vulnerabilities",
@@ -79,6 +82,7 @@ export const NavItemData: NavItems = {
                 tooltip: "admin-proxies",
                 url: "admin-proxies",
                 icon: GrNavigate,
+                roles: Role.PROXY_READ,
             },
             {
                 name: "policies",
@@ -86,6 +90,7 @@ export const NavItemData: NavItems = {
                 tooltip: "admin-policies",
                 url: "admin-policies",
                 icon: MdPolicy,
+                roles: Role.POLICY_READ,
             },
             {
                 name: "license-groups",
@@ -93,6 +98,7 @@ export const NavItemData: NavItems = {
                 tooltip: "admin-license-groups",
                 url: "admin-license-groups",
                 icon: TbLicense,
+                roles: Role.LICENSE_GROUP_READ,
             },
             {
                 name: "patches",
@@ -100,6 +106,7 @@ export const NavItemData: NavItems = {
                 tooltip: "admin-patches",
                 url: "admin-patches",
                 icon: FaBandAid,
+                roles: [Role.LICENSE_NAME_MAP_READ, Role.LICENSE_PURL_MAP_READ],
             },
             {
                 name: "credentials",
@@ -107,6 +114,7 @@ export const NavItemData: NavItems = {
                 tooltip: "credentials",
                 url: "admin-credentials",
                 icon: TbLockCog,
+                roles: Role.CREDENTIAL_READ,
             },
             {
                 name: "accounts",
@@ -114,6 +122,7 @@ export const NavItemData: NavItems = {
                 tooltip: "admin-accounts",
                 url: "admin-accounts",
                 icon: RiUserSettingsLine,
+                roles: [Role.USERACCOUNT_READ, Role.USERACCOUNT_GROUP_READ],
             },
             {
                 name: "configuration",
@@ -121,6 +130,7 @@ export const NavItemData: NavItems = {
                 tooltip: "configuration",
                 url: "admin-configuration",
                 icon: GrConfigure,
+                roles: Role.CONFIGURATION_READ,
             },
         ]
     },
