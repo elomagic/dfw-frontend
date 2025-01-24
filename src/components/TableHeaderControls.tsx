@@ -16,46 +16,46 @@ interface ComponentProps {
     onRefresh: () => void;
 }
 
-export const TableHeaderControls = ({ createCaption, filter, role, onCreateClicked, onFilterChanged, onRefresh }: Readonly<ComponentProps>) => {
+export const TableHeaderControls = (props: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
     const auth = useAuth();
 
-    const [fil, setFil] = useState<string|undefined>("");
+    const [filter, setFilter] = useState<string|undefined>("");
 
-    useEffect(() => setFil(filter), [filter]);
+    useEffect(() => setFilter(props.filter), [props.filter]);
 
     const handleFilterChanged = (f: string) => {
-        setFil(f);
+        setFilter(f);
 
-        if (onFilterChanged) {
-            onFilterChanged(f);
+        if (props.onFilterChanged) {
+            props.onFilterChanged(f);
         }
     }
 
     return (
         <Box display="flex" flexDirection="row" marginBottom={2}>
-            {(role === undefined || auth.roles.includes(role)) && onCreateClicked &&
+            {(props.role === undefined || auth.roles.includes(props.role)) && props.onCreateClicked &&
                 <Button variant="outlined"
-                        onClick={onCreateClicked}
+                        onClick={props.onCreateClicked}
                         size="small"
                         startIcon={<Add />}>
-                    {createCaption}
+                    {props.createCaption}
                 </Button>
             }
 
             <Box flexGrow={1} />
 
-            {onFilterChanged &&
+            {props.onFilterChanged &&
                 <TextField size="small"
-                           value={fil}
+                           value={filter}
                            placeholder={t("filter")}
-                           onChange={e => {handleFilterChanged(e.target.value)}}
+                           onChange={e => handleFilterChanged(e.target.value)}
                 />
             }
 
             <Tooltip title={t("reset-view")}>
-                <IconButton aria-label="refresh" onClick={onRefresh}><Refresh /></IconButton>
+                <IconButton aria-label="refresh" onClick={props.onRefresh}><Refresh /></IconButton>
             </Tooltip>
         </Box>
     );

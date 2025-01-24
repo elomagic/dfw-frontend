@@ -3,14 +3,14 @@
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import {NavItem, getAllPathsTitle} from "./NavItems.ts";
+import {NavItem, getAllNavItems} from "./NavItems.ts";
 import {Box, Stack} from "@mui/material";
 import {ThemeSwitch} from "./components/ThemeSwitch.tsx";
 
 const getNavItem = (path: string): NavItem | undefined => {
 
     const p = path.replace("/", "");
-    return getAllPathsTitle().find((item) => { return item.url === p; });
+    return getAllNavItems().find((item) => { return item.url === p; });
 
 }
 

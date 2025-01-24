@@ -25,14 +25,14 @@ export declare type NavGroup = {
     items: NavItem[],
 }
 
-export declare type NavItems = {
+export declare type NavGroups = {
     navMain: NavGroup,
     navAdmin: NavGroup,
     navHelp: NavGroup,
     navOther: NavGroup,
 }
 
-export const NavItemData: NavItems = {
+export const NavItemData: NavGroups = {
     navMain: {
         groupName: "main",
         items: [
@@ -174,7 +174,7 @@ export const NavItemData: NavItems = {
     }
 }
 
-export const getAllPathsTitle = (): NavItem[] => {
+export const getAllNavItems = (): NavItem[] => {
 
     const items: NavItem[] = [];
 
