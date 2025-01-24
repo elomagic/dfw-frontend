@@ -1,4 +1,5 @@
-import {JSX, ReactNode, createContext, useEffect, useState} from "react";
+import {ReactNode, createContext, useEffect, useState} from "react";
+import * as React from "react";
 
 export enum Role {
 
@@ -76,7 +77,7 @@ declare interface AuthenticationResponse {
     roles: string[];
 }
 
-export const AuthProvider = (authProvider: AuthProviderProps): JSX.Element => {
+export const AuthProvider = (authProvider: AuthProviderProps): React.ReactElement => {
 
     const getAuthBaseUrl = (): string => {
         return import.meta.env.DEV ? import.meta.env.VITE_AUTH_URL : `${window.location.protocol}//${window.location.host}`;
