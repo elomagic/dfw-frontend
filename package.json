@@ -22,7 +22,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run licenses && vitest run && tsc -b && vite build",
+    "build": "npm run licenses && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
