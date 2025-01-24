@@ -40,20 +40,21 @@ export const AboutView = () => {
                 <Grid container spacing={2}>
                     {/* Left column */}
                     <Grid size={6}>
-                        <span style={{color: 'gray'}}>{t("backend")}</span> v{backend?.version ?? t("unknown")}<br/>
-                        <span style={{color: 'gray'}}>{t("builtOn")}</span> {backend?.timestamp ?? t("unknown")}
+                        <span style={{color: 'gray'}}>{t("backend")}:</span> v{backend?.version ?? t("unknown")}<br/>
+                        <span style={{color: 'gray'}}>{t("builtOn")}:</span> {backend?.timestamp ?? t("unknown")}
                         <Stack direction="row" spacing={1}>
                             <GitHub fontSize="small"/><Link href="https://github.com/elomagic/dfw-backend">GitHub</Link>
                         </Stack>
                         <br/>
-                        <span style={{color: 'gray'}}>{t("database-product")}</span> {backend?.databaseProduct ?? t("unknown")}<br/>
-                        <span style={{color: 'gray'}}>{t("database-version")}</span> {backend?.databaseVersion ?? t("unknown")}<br/>
+                        <span style={{color: 'gray'}}>{t("database-product")}:</span> {backend?.databaseProduct ?? t("unknown")}<br/>
+                        <span style={{color: 'gray'}}>{t("database-version")}:</span> {backend?.databaseVersion ?? t("unknown")}<br/>
+                        <span style={{color: 'gray'}}>{t("database-schema")}:</span> {backend?.databaseSchemaId ?? t("unknown")}<br/>
                     </Grid>
 
                     {/* Right column */}
                     <Grid size={6}>
-                        <span style={{color: 'gray'}}>{t("frontend")}</span> v{frontendVersion}<br/>
-                        <span style={{color: 'gray'}}>{t("builtOn")}</span> {frontendBuildOn}<br/>
+                        <span style={{color: 'gray'}}>{t("frontend")}:</span> v{frontendVersion}<br/>
+                        <span style={{color: 'gray'}}>{t("builtOn")}:</span> {frontendBuildOn}<br/>
                         <Stack direction="row" spacing={1}>
                             <GitHub fontSize="small"/><Link
                             href="https://github.com/elomagic/dfw-frontend">GitHub</Link>

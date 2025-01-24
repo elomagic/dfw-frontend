@@ -128,6 +128,7 @@ export declare interface Version {
     timestamp: string;
     databaseProduct: string;
     databaseVersion: string;
+    databaseSchemaId: string;
 }
 
 export declare interface License {

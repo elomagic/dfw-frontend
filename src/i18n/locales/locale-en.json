@@ -42,6 +42,7 @@
   "credentials": "Credentials",
   "dashboard": "Dashboard",
   "database-product": "Database Product",
+  "database-schema": "Database Schema",
   "database-version": "Database Version",
   "delete-credential": "Delete Credential",
   "delete-repository": "Delete Repository",
