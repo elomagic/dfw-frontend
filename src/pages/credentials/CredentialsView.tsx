@@ -2,9 +2,9 @@
 
 import {Box, Paper} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../auth/useAuth.ts";
+import {useAuth} from "@/auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
-import {CredentialData} from "../../DTOs.ts";
+import {CredentialData} from "@/DTOs.ts";
 import * as Rest from "../../RestClient.ts";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
@@ -12,10 +12,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {Role} from "../../auth/Role.ts";
-import {toaster} from "../../Toaster.ts";
-import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
-import {YesNoDialog} from "../../components/YesNoDialog.tsx";
+import {Role} from "@/auth/Role.ts";
+import {toaster} from "@/Toaster.ts";
+import {TableHeaderControls} from "@components/TableHeaderControls.tsx";
+import {YesNoDialog} from "@components/YesNoDialog.tsx";
 import {CreateCredentialDialog} from "./CreateCredentialDialog.tsx";
 import {CredentialTableRow} from "./CredentialTableRow.tsx";
 

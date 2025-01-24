@@ -7,14 +7,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useTranslation} from "react-i18next";
-import * as Rest from "../../RestClient.ts"
-import {Endpoint} from "../../RestClient.ts"
-import {useAuth} from "../../auth/useAuth.ts";
+import * as Rest from "@/RestClient.ts"
+import {useAuth} from "@/auth/useAuth.ts";
 import {useState} from "react";
-import {Policy, PolicyOperator, ViolationState} from "../../DTOs.ts";
-import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
-import {toaster} from '../../Toaster.ts';
-import { FormTextField } from '../../components/FormTextField.tsx';
+import {Policy, PolicyOperator, ViolationState} from "@/DTOs.ts";
+import {FormSelect, mapToKeyLabelItemArray} from "@components/FormSelect.tsx";
+import {toaster} from '@/Toaster.ts';
+import { FormTextField } from '@components/FormTextField.tsx';
 
 interface ComponentProps {
     open: boolean;
@@ -37,7 +36,7 @@ export const CreatePolicyDialog = ({ open, handleClose }: Readonly<ComponentProp
             conditions: []
         }
 
-        Rest.post(auth, Endpoint.Policy, data)
+        Rest.post(auth, Rest.Endpoint.Policy, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

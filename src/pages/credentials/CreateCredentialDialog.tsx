@@ -9,13 +9,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {useTranslation} from "react-i18next";
 import * as Rest from "../../RestClient.ts"
-import {Endpoint} from "../../RestClient.ts"
-import {useAuth} from "../../auth/useAuth.ts";
-import {AuthenticationMode, CredentialData} from "../../DTOs.ts";
-import {FormSelect} from "../../components/FormSelect.tsx";
-import {validateRequiredText, validateRequiredUrl} from "../../Validators.ts";
-import {toaster} from "../../Toaster.ts";
-import { FormTextField } from "../../components/FormTextField.tsx";
+import {useAuth} from "@/auth/useAuth.ts";
+import {AuthenticationMode, CredentialData} from "@/DTOs.ts";
+import {FormSelect} from "@components/FormSelect.tsx";
+import {validateRequiredText, validateRequiredUrl} from "@/Validators.ts";
+import {toaster} from "@/Toaster.ts";
+import { FormTextField } from "@components/FormTextField.tsx";
 
 interface ComponentProps {
     open: boolean;
@@ -47,7 +46,7 @@ export const CreateCredentialDialog = ({ open, handleClose }: Readonly<Component
             passphrase
         }
 
-        Rest.post(auth, Endpoint.Credential, data)
+        Rest.post(auth, Rest.Endpoint.Credential, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

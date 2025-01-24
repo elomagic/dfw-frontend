@@ -1,15 +1,15 @@
 "use client"
 
-import {ConditionOperator, ConditionType, ItemId, LicenseGroup, PolicyCondition} from "../../DTOs.ts";
+import {ConditionOperator, ConditionType, ItemId, LicenseGroup, PolicyCondition} from "@/DTOs.ts";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../auth/useAuth.ts";
+import {useAuth} from "@/auth/useAuth.ts";
 import {useState} from "react";
 import {Box, IconButton, useColorScheme} from "@mui/material";
-import {FormSelect, KeyLabelItem, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
-import {Role} from "../../auth/Role.ts";
+import {FormSelect, KeyLabelItem, mapToKeyLabelItemArray} from "@components/FormSelect.tsx";
+import {Role} from "@/auth/Role.ts";
 import {DeleteForever} from "@mui/icons-material";
 import Grid from "@mui/material/Grid2";
-import {FormTextField} from "../../components/FormTextField.tsx";
+import {FormTextField} from "@components/FormTextField.tsx";
 
 const getValueType = (value: ConditionType) => {
     if (value === ConditionType.SEVERITY || value === ConditionType.AGE) {

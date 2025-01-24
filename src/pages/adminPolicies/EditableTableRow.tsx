@@ -1,15 +1,15 @@
 "use client"
 
-import {LicenseGroup, Policy, PolicyCondition, PolicyOperator, ViolationState} from "../../DTOs.ts";
+import {LicenseGroup, Policy, PolicyCondition, PolicyOperator, ViolationState} from "@/DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
 import Grid from "@mui/material/Grid2";
-import {validateRequiredText} from "../../Validators.ts";
-import {FormCheckbox} from "../../components/FormCheckBox.tsx";
-import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
-import {Role} from "../../auth/Role.ts";
-import { FormTextField } from "../../components/FormTextField.tsx";
-import { FormButtons } from "../../components/FormButtons.tsx";
+import {validateRequiredText} from "@/Validators.ts";
+import {FormCheckbox} from "@components/FormCheckBox.tsx";
+import {FormSelect, mapToKeyLabelItemArray} from "@components/FormSelect.tsx";
+import {Role} from "@/auth/Role.ts";
+import { FormTextField } from "@components/FormTextField.tsx";
+import { FormButtons } from "@components/FormButtons.tsx";
 import {PolicyConditionsList} from "./PolicyConditionsList.tsx";
 
 interface ComponentProps {

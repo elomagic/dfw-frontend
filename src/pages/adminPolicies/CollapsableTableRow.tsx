@@ -2,15 +2,14 @@
 
 import TableCell from "@mui/material/TableCell";
 import {Check} from "@mui/icons-material";
-import {LicenseGroup, Policy} from "../../DTOs.ts";
+import {LicenseGroup, Policy} from "@/DTOs.ts";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../auth/useAuth.ts";
+import {useAuth} from "@/auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
-import {Endpoint} from "../../RestClient.ts";
-import {toaster} from "../../Toaster.ts";
-import {TableDataRow} from "../../components/TableDataRow.tsx";
-import {TablePanelRow} from "../../components/TablePanelRow.tsx";
+import {toaster} from "@/Toaster.ts";
+import {TableDataRow} from "@components/TableDataRow.tsx";
+import {TablePanelRow} from "@components/TablePanelRow.tsx";
 import { EditableTableRow } from "./EditableTableRow.tsx";
 
 interface ComponentProps {
@@ -27,7 +26,7 @@ export const CollapsableTableRow = ({ policy, licenseGroups, onDeleteRequest }: 
     const [data, setData] = useState<Policy>(policy);
 
     const handleSaveClick = (d: Policy) => {
-        Rest.patch<Policy>(auth, Endpoint.Policy, d)
+        Rest.patch<Policy>(auth, Rest.Endpoint.Policy, d)
             .then((dto: Policy) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
