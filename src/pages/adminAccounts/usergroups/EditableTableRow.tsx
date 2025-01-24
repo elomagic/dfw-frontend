@@ -7,7 +7,7 @@ import {validateRequiredText} from "../../../Validators.ts";
 import * as Rest from "../../../RestClient.ts";
 import {useAuth} from "../../../auth/useAuth.ts";
 import {UserAccount, UserAccountGroup} from "../../../DTOs.ts";
-import {Role} from "../../../auth/Auth.tsx";
+import {Role} from "../../../auth/Role.ts";
 import {toaster} from "../../../Toaster.ts";
 import { FormTextField } from "../../../components/FormTextField.tsx";
 import { FormButtons } from "../../../components/FormButtons.tsx";

@@ -3,7 +3,7 @@
 import {Box, Button, IconButton, TextField, Tooltip} from "@mui/material";
 import {Add, Refresh} from "@mui/icons-material";
 import {useAuth} from "../auth/useAuth.ts";
-import {Role} from "../auth/Auth.tsx";
+import {Role} from "../auth/Role.ts";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 

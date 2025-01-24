@@ -12,7 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {Role} from "../../auth/Auth.tsx";
+import {Role} from "../../auth/Role.ts";
 import {toaster} from "../../Toaster.ts";
 import {TableHeaderControls} from "../../components/TableHeaderControls.tsx";
 import {YesNoDialog} from "../../components/YesNoDialog.tsx";

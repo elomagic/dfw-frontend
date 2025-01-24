@@ -12,7 +12,7 @@ import {useAuth} from "../../../auth/useAuth.ts";
 import {useCallback, useEffect, useState} from "react";
 import {LicenseNameMap} from "../../../DTOs.ts";
 import * as Rest from "../../../RestClient.ts";
-import {Role} from "../../../auth/Auth.tsx";
+import {Role} from "../../../auth/Role.ts";
 import {toaster} from "../../../Toaster.ts";
 import { TableHeaderControls } from "../../../components/TableHeaderControls.tsx";
 import { YesNoDialog } from "../../../components/YesNoDialog.tsx";

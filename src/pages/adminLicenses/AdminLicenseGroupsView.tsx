@@ -2,7 +2,7 @@
 
 import {Box, Paper} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import {Role} from "../../auth/Auth.tsx";
+import {Role} from "../../auth/Role.ts";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";

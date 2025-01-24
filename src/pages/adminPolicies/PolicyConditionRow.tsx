@@ -6,7 +6,7 @@ import {useAuth} from "../../auth/useAuth.ts";
 import {useState} from "react";
 import {Box, IconButton, useColorScheme} from "@mui/material";
 import {FormSelect, KeyLabelItem, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
-import {Role} from "../../auth/Auth.tsx";
+import {Role} from "../../auth/Role.ts";
 import {DeleteForever} from "@mui/icons-material";
 import Grid from "@mui/material/Grid2";
 import {FormTextField} from "../../components/FormTextField.tsx";

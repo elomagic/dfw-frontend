@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "../../Validators.ts";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormSelect, mapToKeyLabelItemArray} from "../../components/FormSelect.tsx";
-import {Role} from "../../auth/Auth.tsx";
+import {Role} from "../../auth/Role.ts";
 import { FormTextField } from "../../components/FormTextField.tsx";
 import { FormButtons } from "../../components/FormButtons.tsx";
 import {PolicyConditionsList} from "./PolicyConditionsList.tsx";

@@ -8,7 +8,7 @@ import {Button, List} from "@mui/material";
 import {Fieldset} from "../../components/Fieldset.tsx";
 import Grid from "@mui/material/Grid2";
 import {Add} from "@mui/icons-material";
-import {Role} from "../../auth/Auth.tsx";
+import {Role} from "../../auth/Role.ts";
 import {v4 as uuidv4} from "uuid";
 import {PolicyConditionRow} from "./PolicyConditionRow.tsx";
 

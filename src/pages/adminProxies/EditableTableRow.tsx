@@ -10,7 +10,7 @@ import * as Rest from "../../RestClient.ts";
 import {useAuth} from "../../auth/useAuth.ts";
 import {FormCheckbox} from "../../components/FormCheckBox.tsx";
 import {FormSelect, KeyLabelItem} from "../../components/FormSelect.tsx";
-import {Role} from "../../auth/Auth.tsx";
+import {Role} from "../../auth/Role.ts";
 import {toaster} from "../../Toaster.ts";
 import { FormTextField } from "../../components/FormTextField.tsx";
 import {ProxyTypeIcon} from "../../components/ProxyTypeIcon.tsx";

@@ -12,7 +12,7 @@ import * as Rest from "../../RestClient.ts"
 import {LicenseGroup, Policy} from "../../DTOs.ts";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../auth/useAuth.ts";
-import {Role} from "../../auth/Auth.tsx";
+import {Role} from "../../auth/Role.ts";
 import {toaster} from "../../Toaster.ts";
 import { TableHeaderControls } from "../../components/TableHeaderControls.tsx";
 import { YesNoDialog } from "../../components/YesNoDialog.tsx";

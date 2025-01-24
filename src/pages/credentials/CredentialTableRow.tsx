@@ -5,7 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import {DeleteForever} from "@mui/icons-material";
 import {IconButton} from "@mui/material";
 import {useAuth} from "../../auth/useAuth.ts";
-import {Role} from "../../auth/Auth.tsx";
+import {Role} from "../../auth/Role.ts";
 import { TableDataRow } from "../../components/TableDataRow.tsx";
 
 interface ComponentProps {
