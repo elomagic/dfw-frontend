@@ -1,7 +1,6 @@
 "use client"
 
-import {AuthContextProps} from "../auth/Auth.tsx";
-import {useAuth} from "../auth/useAuth.ts";
+import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Link as RouterLink} from "react-router-dom";
 import {RiUserSettingsLine} from "react-icons/ri";
@@ -17,9 +16,9 @@ import {
     MenuItem
 } from "@mui/material";
 import {Logout} from "@mui/icons-material";
-import {useState} from "react";
-import * as React from "react";
 import {BsChevronExpand} from "react-icons/bs";
+import {AuthContextProps} from "../auth/Auth.tsx";
+import {useAuth} from "../auth/useAuth.ts";
 
 export const NavUser = ({ expand }: Readonly<{ expand: boolean }>) => {
 

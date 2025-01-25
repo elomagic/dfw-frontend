@@ -4,7 +4,6 @@ import {MouseEventHandler} from "react";
 import {Box, Button} from "@mui/material";
 import {DeleteForever, Save} from "@mui/icons-material";
 import Grid from "@mui/material/Grid2";
-import * as React from "react";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../auth/useAuth.ts";
 
