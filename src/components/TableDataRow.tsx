@@ -1,9 +1,10 @@
 "use client"
 
+import {ReactNode} from "react";
 import TableRow from "@mui/material/TableRow";
 
 interface ComponentProps {
-    children: React.ReactNode;
+    children: ReactNode;
     onClick?: () => void;
 }
 

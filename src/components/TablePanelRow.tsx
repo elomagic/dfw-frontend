@@ -1,11 +1,12 @@
 "use client"
 
+import {ReactNode} from "react";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import {Collapse, useColorScheme} from "@mui/material";
 
 interface ComponentProps {
-    children: React.ReactNode;
+    children: ReactNode;
     open: boolean;
     colSpan: number;
 }

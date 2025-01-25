@@ -44,7 +44,10 @@ export const YesNoDialog = ({
     const { t } = useTranslation();
 
     return (
-        <Dialog open={open} onClose={onNoClick} TransitionComponent={Transition} keepMounted>
+        <Dialog open={open}
+                onClose={onNoClick}
+                TransitionComponent={Transition}
+                keepMounted>
             <DialogTitle>{title}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="yes-no-dialog-description">{text}</DialogContentText>

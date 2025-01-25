@@ -1,6 +1,6 @@
 "use client"
 
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -10,10 +10,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as Rest from "../../../RestClient.ts"
 import {useAuth} from "@/auth/useAuth.ts";
-import {FormSelect, KeyLabelItem} from "@components/FormSelect.tsx";
 import {toaster} from "@/Toaster.ts";
 import {FormTextField} from "@components/FormTextField.tsx";
-import {License, LicensePurlMap} from "@/DTOs.ts";
+import {LicensePurlMap} from "@/DTOs.ts";
+import {FormSpdxSelect} from "@/pages/adminPatches/FormSpdxSelect.tsx";
 
 interface ComponentProps {
     open: boolean;
@@ -26,7 +26,6 @@ export const CreatePurlMapDialog = ({ open, handleClose }: Readonly<ComponentPro
     const auth = useAuth();
     const [purlMatch, setPurlMatch] = useState("");
     const [spdxId, setSpdxId] = useState("");
-    const [spdxList, setSpdxList] = useState<KeyLabelItem[]>([]);
 
     const handleCreateClick = () => {
         const data: LicensePurlMap = {
@@ -40,18 +39,15 @@ export const CreatePurlMapDialog = ({ open, handleClose }: Readonly<ComponentPro
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));
     }
 
-    useEffect(() => {
-        Rest.get<License[]>(auth, Rest.Endpoint.License)
-            .then((rs: License[]) => rs.map(l => { return { "key": l.licenseId, "label": l.name} as KeyLabelItem })) // setSpdxList(rs))
-            .then((kl: KeyLabelItem[]) => setSpdxList(kl))
-            .catch((err: Error) => toaster("Getting spdx list failed: " + err.message, 'error'));
-    }, [auth]);
-
     return (
         <Dialog
             open={open}
             onClose={() => handleClose(undefined)}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
+            slotProps={{
+                paper: {
+                    sx: { backgroundImage: 'none' }
+                }
+            }}
         >
             <DialogTitle>{t("create-purl-mapping")}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
@@ -63,12 +59,7 @@ export const CreatePurlMapDialog = ({ open, handleClose }: Readonly<ComponentPro
                                autoFocus
                                required
                 />
-                <FormSelect id="spdxId"
-                            value={spdxId}
-                            label={t("spdx-id")}
-                            items={spdxList}
-                            onChange={setSpdxId}
-                />
+                <FormSpdxSelect value={spdxId} onChange={setSpdxId}/>
             </DialogContent>
             <DialogActions sx={{ pb: 3, px: 3 }}>
                 <Button onClick={() => handleClose(undefined)}>{t("cancel")}</Button>

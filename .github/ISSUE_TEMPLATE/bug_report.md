@@ -38,9 +38,9 @@ assignees: ''
 
 <!--- Include as many relevant details about the environment you experienced the bug in -->
 
-- Java version :
+- Java version:
 - Java distribution:
-- Operating System and version :
+- Operating System and version:
 
 <!---
 ❗️❗️ Also, please consider donating (https://www.buymeacoffee.com/elomagic) ❗️❗️

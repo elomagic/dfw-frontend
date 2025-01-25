@@ -72,7 +72,11 @@ export const SelectItemDialog = <T,> ({ open, handleClose, value, selectables, g
         <Dialog
             open={open}
             onClose={() => handleClose(true, resolveCheckedItems(selectables, checked))}
-            PaperProps={{ sx: { backgroundImage: 'none', width: '400px' }}}
+            slotProps={{
+                paper: {
+                    sx: { width: '400px', backgroundImage: 'none' }
+                }
+            }}
         >
             <DialogTitle>{t("select-items-dialog-title")}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%', paddingBottom: 0 }}>

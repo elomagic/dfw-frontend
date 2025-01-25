@@ -46,7 +46,11 @@ export const CreateProxyDialog = ({ open, handleClose }: Readonly<ComponentProps
         <Dialog
             open={open}
             onClose={() => handleClose(undefined)}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
+            slotProps={{
+                paper: {
+                    sx: { backgroundImage: 'none' }
+                }
+            }}
         >
             <DialogTitle>{t("create-proxy")}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>

@@ -1,14 +1,14 @@
 "use client"
 
-import {Box, Card, Divider, Stack, Typography} from "@mui/material";
-import Grid from '@mui/material/Grid2';
-import {useTranslation} from "react-i18next";
-import {useAuth} from "../../auth/useAuth.ts";
 import {useEffect, useState} from "react";
-import {Version} from "../../DTOs.ts";
-import * as Rest from "../../RestClient.ts";
+import {useTranslation} from "react-i18next";
+import {Box, Card, Divider, Stack, Typography} from "@mui/material";
 import {GitHub} from "@mui/icons-material";
 import Link from "@mui/material/Link";
+import Grid from '@mui/material/Grid2';
+import {useAuth} from "@/auth/useAuth.ts";
+import * as Rest from "../../RestClient.ts";
+import {Version} from "@/DTOs.ts";
 
 declare const __APP_VERSION__: string
 

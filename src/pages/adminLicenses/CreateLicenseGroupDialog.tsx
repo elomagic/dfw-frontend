@@ -47,7 +47,11 @@ export const CreateLicenseGroupDialog = ({ open, handleClose }: Readonly<Compone
         <Dialog
             open={open}
             onClose={() => handleClose(undefined)}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
+            slotProps={{
+                paper: {
+                    sx: { backgroundImage: 'none' }
+                }
+            }}
         >
             <DialogTitle>{t("create-license-group")}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>

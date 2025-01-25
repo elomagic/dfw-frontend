@@ -49,7 +49,11 @@ export const CreateApiKeyDialog = ({ open, handleClose }: Readonly<ComponentProp
     return (
         <Dialog
             open={open}
-            PaperProps={{ sx: { width: "500px", backgroundImage: 'none' }}}
+            slotProps={{
+                paper: {
+                    sx: { width: "500px", backgroundImage: 'none' }
+                }
+            }}
         >
             <DialogTitle>{t("create-api-key")}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>

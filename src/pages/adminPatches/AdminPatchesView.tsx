@@ -1,13 +1,13 @@
 "use client"
 
-import {SyntheticEvent, useState} from "react";
+import {ReactNode, SyntheticEvent, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Box, Tab, Tabs} from "@mui/material";
 import {PurlMapTab} from "./purlMap/PurlMapTab.tsx";
 import {NameMapTab} from "./nameMap/NameMapTab.tsx";
 
 interface TabPanelProps {
-    children?: React.ReactNode;
+    children?: ReactNode;
     index: number;
     value: number;
 }

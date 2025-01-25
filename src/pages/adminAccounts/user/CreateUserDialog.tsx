@@ -44,7 +44,11 @@ export const CreateUserDialog = ({ open, handleClose }: Readonly<ComponentProps>
         <Dialog
             open={open}
             onClose={() => handleClose (undefined)}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
+            slotProps={{
+                paper: {
+                    sx: { backgroundImage: 'none' }
+                }
+            }}
         >
             <DialogTitle>{t("create-user-account")}</DialogTitle>
 

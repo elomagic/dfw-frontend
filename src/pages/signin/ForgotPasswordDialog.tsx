@@ -35,19 +35,21 @@ export const ForgotPasswordDialog = ({ open, handleClose }: Readonly<ForgotPassw
         <Dialog
             open={open}
             onClose={handleClose}
-            PaperProps={{
-                component: 'form',
-                onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-                    event.preventDefault();
-                    resetPassword(new FormData(event.currentTarget));
-                    // TODO Mail successful send);
+            slotProps={{
+                paper: {
+                    component: 'form',
+                    onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
+                        event.preventDefault();
+                        resetPassword(new FormData(event.currentTarget));
+                        // TODO Mail successful send);
 
-                    handleClose();
-                },
-                sx: {
-                    backgroundImage: 'none',
-                    width: '400px'
-                },
+                        handleClose();
+                    },
+                    sx: {
+                        backgroundImage: 'none',
+                        width: '400px'
+                    },
+                }
             }}
         >
             <DialogTitle>{t("reset-password")}</DialogTitle>

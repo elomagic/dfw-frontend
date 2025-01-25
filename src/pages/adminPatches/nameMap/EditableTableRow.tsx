@@ -1,18 +1,15 @@
 "use client"
 
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import Grid from "@mui/material/Grid2";
 import {validateRequiredText} from "@/Validators.ts";
-import * as Rest from "../../../RestClient.ts";
-import {useAuth} from "@/auth/useAuth.ts";
 import {Role} from "@/auth/Role.ts";
-import { toaster } from "@/Toaster.ts";
-import {FormSelect, KeyLabelItem} from "@components/FormSelect.tsx";
 import {FormTextField} from "@components/FormTextField.tsx";
 import { FormButtons } from "@components/FormButtons.tsx";
 import {FormTextArea} from "@components/FormTextArea.tsx";
-import {License, LicenseNameMap} from "@/DTOs.ts";
+import {LicenseNameMap} from "@/DTOs.ts";
+import {FormSpdxSelect} from "@/pages/adminPatches/FormSpdxSelect.tsx";
 
 interface ComponentProps {
     nameMap: LicenseNameMap,
@@ -23,23 +20,13 @@ interface ComponentProps {
 export const EditableTableRow = ({ nameMap, onSaveClick, onDeleteRequest }: Readonly<ComponentProps>) => {
 
     const { t } = useTranslation();
-    const auth = useAuth();
 
     const [id] = useState(nameMap.id);
     const [nameMatch, setNameMatch] = useState<string>(nameMap.nameMatch);
     const [spdxId, setSpdxId] = useState<string>(nameMap.spdxId);
     const [comment, setComment] = useState<string|undefined>(nameMap.comment);
 
-    const [spdxList, setSpdxList] = useState<KeyLabelItem[]>([]);
-
     const [nameErrorMessage, setNameErrorMessage] = useState<string|undefined>(undefined);
-
-    useEffect(() => {
-        Rest.get<License[]>(auth, Rest.Endpoint.License)
-            .then((rs: License[]) => rs.map(l => { return { "key": l.licenseId, "label": l.name} as KeyLabelItem })) // setSpdxList(rs))
-            .then((kl: KeyLabelItem[]) => setSpdxList(kl))
-            .catch((err: Error) => toaster("Getting spdx list failed: " + err.message, 'error'));
-    }, [auth]);
 
     const handleSaveClick = () => {
         if (!validateRequiredText(nameMatch, setNameErrorMessage)) {
@@ -60,13 +47,7 @@ export const EditableTableRow = ({ nameMap, onSaveClick, onDeleteRequest }: Read
                            required
                            gridSize={6}
             />
-            <FormSelect id="spdxId"
-                        value={spdxId}
-                        label={t("spdx-id")}
-                        items={spdxList}
-                        onChange={setSpdxId}
-                        gridSize={6}
-            />
+            <FormSpdxSelect value={spdxId} onChange={setSpdxId} gridSize={6} />
 
             <FormTextArea id="comment"
                           value={comment}

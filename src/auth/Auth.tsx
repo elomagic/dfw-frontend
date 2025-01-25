@@ -1,4 +1,4 @@
-import {ReactNode, createContext, useEffect, useState} from "react";
+import {ReactNode, createContext, useEffect, useState, ReactElement} from "react";
 
 export interface AuthContextProps {
     mailAddress: string | undefined;
@@ -28,7 +28,7 @@ declare interface AuthenticationResponse {
     roles: string[];
 }
 
-export const AuthProvider = (authProvider: AuthProviderProps): React.ReactElement => {
+export const AuthProvider = (authProvider: AuthProviderProps): ReactElement => {
 
     const getAuthBaseUrl = (): string => {
         return import.meta.env.DEV ? import.meta.env.VITE_AUTH_URL : `${window.location.protocol}//${window.location.host}`;

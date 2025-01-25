@@ -42,7 +42,11 @@ export const CreateUserGroupDialog = ({ open, handleClose }: Readonly<ComponentP
         <Dialog
             open={open}
             onClose={() => handleClose(undefined)}
-            PaperProps={{ sx: { backgroundImage: 'none' }}}
+            slotProps={{
+                paper: {
+                    sx: { backgroundImage: 'none' }
+                }
+            }}
         >
             <DialogTitle>{t("create-user-group")}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
