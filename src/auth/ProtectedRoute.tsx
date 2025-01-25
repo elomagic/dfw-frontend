@@ -1,7 +1,8 @@
-import {AuthContextProps} from "./Auth.tsx";
+
 import {ReactNode} from "react";
 import {Navigate, useLocation} from "react-router-dom";
 import {useAuth} from "./useAuth.ts";
+import {AuthContextProps} from "./Auth.tsx";
 
 const hasRole = (auth: AuthContextProps, roles: string[]|string): boolean => {
     if (auth.accessToken === undefined) {

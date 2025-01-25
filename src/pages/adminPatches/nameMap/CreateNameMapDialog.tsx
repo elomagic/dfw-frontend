@@ -1,20 +1,19 @@
 "use client"
 
+import {useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {useTranslation} from "react-i18next";
 import * as Rest from "../../../RestClient.ts"
-import {Endpoint} from "../../../RestClient.ts"
-import {useAuth} from "../../../auth/useAuth.ts";
-import {useEffect, useState} from "react";
-import {License, LicenseNameMap} from "../../../DTOs.ts";
-import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
-import {toaster} from "../../../Toaster.ts";
-import {FormTextField} from "../../../components/FormTextField.tsx";
+import {toaster} from "@/Toaster.ts";
+import {useAuth} from "@/auth/useAuth.ts";
+import {FormSelect, KeyLabelItem} from "@components/FormSelect.tsx";
+import {FormTextField} from "@components/FormTextField.tsx";
+import {License, LicenseNameMap} from "@/DTOs.ts";
 
 interface ComponentProps {
     open: boolean;
@@ -35,7 +34,7 @@ export const CreateNameMapDialog = ({ open, handleClose }: Readonly<ComponentPro
             spdxId
         }
 
-        Rest.post(auth, Endpoint.LicenseNameMap, data)
+        Rest.post(auth, Rest.Endpoint.LicenseNameMap, data)
             .then(() => handleClose(data))
             .then(() => toaster(t("successful-created"), 'success'))
             .catch((err: Error) => toaster(t("creation-failed", { message: err.message }), 'error'));

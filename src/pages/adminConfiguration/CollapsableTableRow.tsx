@@ -7,7 +7,6 @@ import {FaHourglass} from "react-icons/fa6";
 import TableCell from "@mui/material/TableCell";
 import {useAuth} from "@/auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
-import {Endpoint} from "@/RestClient.ts";
 import {toaster} from "@/Toaster.ts";
 import { TableDataRow } from "@components/TableDataRow.tsx";
 import {TablePanelRow} from "@components/TablePanelRow.tsx";
@@ -28,7 +27,7 @@ export const CollapsableTableRow = ({ configuration, keyMeta, onResetRequest }: 
     const [data, setData] = useState<Configuration>(configuration);
 
     const handleSaveClick = (d: Configuration) => {
-        Rest.patch<Configuration>(auth, Endpoint.Configuration, d)
+        Rest.patch<Configuration>(auth, Rest.Endpoint.Configuration, d)
             .then((dto: Configuration) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

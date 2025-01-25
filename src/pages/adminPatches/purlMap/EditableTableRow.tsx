@@ -3,16 +3,16 @@
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid2";
-import {validateRequiredText} from "../../../Validators.ts";
+import {validateRequiredText} from "@/Validators.ts";
 import * as Rest from "../../../RestClient.ts";
-import {useAuth} from "../../../auth/useAuth.ts";
-import {License, LicensePurlMap} from "../../../DTOs.ts";
-import {FormSelect, KeyLabelItem} from "../../../components/FormSelect.tsx";
-import {Role} from "../../../auth/Role.ts";
-import { toaster } from "../../../Toaster.ts";
-import { FormTextField } from "../../../components/FormTextField.tsx";
-import { FormButtons } from "../../../components/FormButtons.tsx";
-import {FormTextArea} from "../../../components/FormTextArea.tsx";
+import {useAuth} from "@/auth/useAuth.ts";
+import {Role} from "@/auth/Role.ts";
+import { toaster } from "@/Toaster.ts";
+import {FormSelect, KeyLabelItem} from "@components/FormSelect.tsx";
+import { FormTextField } from "@components/FormTextField.tsx";
+import { FormButtons } from "@components/FormButtons.tsx";
+import {FormTextArea} from "@components/FormTextArea.tsx";
+import {License, LicensePurlMap} from "@/DTOs.ts";
 
 interface ComponentProps {
     purlMap: LicensePurlMap

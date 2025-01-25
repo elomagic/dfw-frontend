@@ -1,15 +1,14 @@
 "use client"
 
-import TableCell from "@mui/material/TableCell";
-import {LicensePurlMap} from "../../../DTOs.ts";
 import {useState} from "react";
-import * as Rest from "../../../RestClient.ts";
-import {Endpoint} from "../../../RestClient.ts";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../../auth/useAuth.ts";
-import {toaster} from "../../../Toaster.ts";
-import {TableDataRow} from "../../../components/TableDataRow.tsx";
-import {TablePanelRow} from "../../../components/TablePanelRow.tsx";
+import TableCell from "@mui/material/TableCell";
+import * as Rest from "../../../RestClient.ts";
+import {useAuth} from "@/auth/useAuth.ts";
+import {toaster} from "@/Toaster.ts";
+import {TableDataRow} from "@components/TableDataRow.tsx";
+import {TablePanelRow} from "@components/TablePanelRow.tsx"
+import {LicensePurlMap} from "@/DTOs.ts";
 import { EditableTableRow } from "./EditableTableRow.tsx";
 
 interface ComponentProps {
@@ -25,7 +24,7 @@ export const CollapsableTableRow = ({ purlMap, onDeleteRequest }: Readonly<Compo
     const [data, setData] = useState<LicensePurlMap>(purlMap);
 
     const handleSaveClick = (d: LicensePurlMap) => {
-        Rest.patch<LicensePurlMap>(auth, Endpoint.LicensePurlMap, d)
+        Rest.patch<LicensePurlMap>(auth, Rest.Endpoint.LicensePurlMap, d)
             .then((dto: LicensePurlMap) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

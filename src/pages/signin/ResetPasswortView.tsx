@@ -4,7 +4,6 @@ import {Box, Button, FormControl, FormLabel, Stack, styled, TextField, Typograph
 import {useTranslation} from "react-i18next";
 import {FormEvent, useEffect, useState} from "react";
 import * as Rest from "../../RestClient.ts";
-import {Endpoint} from "@/RestClient.ts";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useAuth} from "@/auth/useAuth.ts";
 import MuiCard from "@mui/material/Card";
@@ -70,7 +69,7 @@ export const ResetPasswortView = () => {
 
         const data = new FormData(event.currentTarget);
 
-        Rest.postForm(auth, Endpoint.UserResetPassword, data)
+        Rest.postForm(auth, Rest.Endpoint.UserResetPassword, data)
             .then(() => {
                 navigate("/");
             })

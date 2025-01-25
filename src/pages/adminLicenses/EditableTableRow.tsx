@@ -1,14 +1,14 @@
 "use client"
 
-import {License, LicenseGroup} from "../../DTOs.ts";
-import {useTranslation} from "react-i18next";
 import {useState} from "react";
+import {useTranslation} from "react-i18next";
 import Grid from "@mui/material/Grid2";
-import {validateRequiredText} from "../../Validators.ts";
-import {Role} from "../../auth/Role.ts";
-import { FormTextField } from "../../components/FormTextField.tsx";
-import {FormButtons} from "../../components/FormButtons.tsx";
-import {FormSelectList} from "../../components/FormSelectList.tsx";
+import {validateRequiredText} from "@/Validators.ts";
+import {Role} from "@/auth/Role.ts";
+import { FormTextField } from "@components/FormTextField.tsx";
+import {FormButtons} from "@components/FormButtons.tsx";
+import {FormSelectList} from "@components/FormSelectList.tsx";
+import {License, LicenseGroup} from "@/DTOs.ts";
 
 interface ComponentProps {
     licenseGroup: LicenseGroup;

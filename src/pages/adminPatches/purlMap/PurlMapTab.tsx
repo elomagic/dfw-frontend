@@ -1,5 +1,6 @@
 "use client"
 
+import {useCallback, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Box, Paper} from "@mui/material";
 import Table from "@mui/material/Table";
@@ -8,14 +9,13 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
-import {useAuth} from "../../../auth/useAuth.ts";
-import {useCallback, useEffect, useState} from "react";
+import {useAuth} from "@/auth/useAuth.ts";
 import * as Rest from "../../../RestClient.ts";
-import {LicensePurlMap} from "../../../DTOs.ts";
-import {Role} from "../../../auth/Role.ts";
-import {toaster} from "../../../Toaster.ts";
-import {TableHeaderControls} from "../../../components/TableHeaderControls.tsx";
-import {YesNoDialog} from "../../../components/YesNoDialog.tsx";
+import {Role} from "@/auth/Role.ts";
+import {toaster} from "@/Toaster.ts";
+import {TableHeaderControls} from "@components/TableHeaderControls.tsx";
+import {YesNoDialog} from "@components/YesNoDialog.tsx";
+import {LicensePurlMap} from "@/DTOs.ts";
 import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
 import {CreatePurlMapDialog} from "./CreatePurlMapDialog.tsx";
 

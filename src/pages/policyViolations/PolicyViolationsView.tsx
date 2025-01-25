@@ -1,15 +1,15 @@
 "use client"
 
-import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import {useCallback, useEffect, useState} from "react";
-import * as Rest from "../../RestClient.ts";
 import {useTranslation} from "react-i18next";
+import {Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import * as Rest from "../../RestClient.ts";
 import {useAuth} from "@/auth/useAuth.ts";
 import {toaster} from "@/Toaster.ts";
-import {PolicyViolation} from "@/DTOs.ts";
 import {TableHeaderControls} from "@components/TableHeaderControls.tsx";
 import {YesNoDialog} from "@components/YesNoDialog.tsx";
 import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
+import {PolicyViolation} from "@/DTOs.ts";
 
 export const PolicyViolationsView = () => {
 

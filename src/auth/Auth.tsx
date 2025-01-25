@@ -1,5 +1,4 @@
 import {ReactNode, createContext, useEffect, useState} from "react";
-import * as React from "react";
 
 export interface AuthContextProps {
     mailAddress: string | undefined;

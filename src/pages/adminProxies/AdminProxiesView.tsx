@@ -10,12 +10,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import * as Rest from "../../RestClient.ts"
-import {Configuration, Proxy} from "@/DTOs.ts";
 import {useAuth} from "@/auth/useAuth.ts";
 import {Role} from "@/auth/Role.ts";
 import {toaster} from "@/Toaster.ts";
 import {TableHeaderControls} from "@components/TableHeaderControls.tsx";
 import {YesNoDialog} from "@components/YesNoDialog.tsx";
+import {Configuration, Proxy} from "@/DTOs.ts";
 import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
 import {CreateProxyDialog} from "./CreateProxyDialog.tsx";
 

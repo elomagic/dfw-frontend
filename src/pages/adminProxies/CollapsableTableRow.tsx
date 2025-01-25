@@ -9,7 +9,6 @@ import * as Rest from "../../RestClient.ts";
 import { TableDataRow } from "@components/TableDataRow.tsx";
 import {TablePanelRow} from "@components/TablePanelRow.tsx";
 import {ProxyTypeIcon} from "@components/ProxyTypeIcon.tsx";
-import {Endpoint} from "@/RestClient.ts";
 import {toaster} from "@/Toaster.ts";
 import {Proxy} from "@/DTOs.ts";
 import {EditableTableRow} from "./EditableTableRow.tsx";
@@ -28,7 +27,7 @@ export const CollapsableTableRow = ({ proxy, internalBaseUrl, onDeleteRequest }:
     const [data, setData] = useState<Proxy>(proxy);
 
     const handleSaveClick = (d: Proxy) => {
-        Rest.patch<Proxy>(auth, Endpoint.Proxy, d)
+        Rest.patch<Proxy>(auth, Rest.Endpoint.Proxy, d)
             .then((dto: Proxy) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));

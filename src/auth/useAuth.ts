@@ -1,5 +1,6 @@
-import {AuthContext, AuthContextProps} from "./Auth.tsx";
+
 import {useContext} from "react";
+import {AuthContext, AuthContextProps} from "./Auth.tsx";
 
 export const useAuth = (): AuthContextProps => {
     const context: AuthContextProps | undefined = useContext(AuthContext);

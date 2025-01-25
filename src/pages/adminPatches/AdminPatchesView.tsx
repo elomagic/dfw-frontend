@@ -1,8 +1,8 @@
 "use client"
 
-import {Box, Tab, Tabs} from "@mui/material";
 import {SyntheticEvent, useState} from "react";
 import {useTranslation} from "react-i18next";
+import {Box, Tab, Tabs} from "@mui/material";
 import {PurlMapTab} from "./purlMap/PurlMapTab.tsx";
 import {NameMapTab} from "./nameMap/NameMapTab.tsx";
 

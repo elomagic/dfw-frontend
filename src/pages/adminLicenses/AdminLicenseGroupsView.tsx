@@ -1,21 +1,21 @@
 "use client"
 
-import {Box, Paper} from "@mui/material";
+import {useCallback, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {Role} from "../../auth/Role.ts";
+import {Box, Paper} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
-import {useAuth} from "../../auth/useAuth.ts";
-import {useCallback, useEffect, useState} from "react";
-import {License, LicenseGroup} from "../../DTOs.ts";
+import {useAuth} from "@/auth/useAuth.ts";
+import {Role} from "@/auth/Role.ts";
 import * as Rest from "../../RestClient.ts";
-import {toaster} from "../../Toaster.ts";
-import { TableHeaderControls } from "../../components/TableHeaderControls.tsx";
-import { YesNoDialog } from "../../components/YesNoDialog.tsx";
+import {toaster} from "@/Toaster.ts";
+import { TableHeaderControls } from "@components/TableHeaderControls.tsx";
+import { YesNoDialog } from "@components/YesNoDialog.tsx";
+import {License, LicenseGroup} from "@/DTOs.ts";
 import {CreateLicenseGroupDialog} from "./CreateLicenseGroupDialog.tsx";
 import {CollapsableTableRow} from "./CollapsableTableRow.tsx";
 

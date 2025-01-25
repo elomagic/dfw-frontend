@@ -1,15 +1,14 @@
 "use client"
 
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import {License, LicenseGroup} from "../../DTOs.ts";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../auth/useAuth.ts";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import {useAuth} from "@/auth/useAuth.ts";
 import * as Rest from "../../RestClient.ts";
-import {Endpoint} from "../../RestClient.ts";
-import {toaster} from "../../Toaster.ts";
-import {TablePanelRow} from "../../components/TablePanelRow.tsx";
+import {toaster} from "@/Toaster.ts";
+import {TablePanelRow} from "@components/TablePanelRow.tsx";
+import {License, LicenseGroup} from "@/DTOs.ts";
 import {EditableTableRow} from "./EditableTableRow.tsx";
 
 interface ComponentProps {
@@ -26,7 +25,7 @@ export const CollapsableTableRow = ({ licenseGroup, licenses, onDeleteRequest }:
     const [data, setData] = useState<LicenseGroup>(licenseGroup);
 
     const handleSaveClick = (d: LicenseGroup) => {
-        Rest.patch<LicenseGroup>(auth, Endpoint.LicenseGroup, d)
+        Rest.patch<LicenseGroup>(auth, Rest.Endpoint.LicenseGroup, d)
             .then((dto: LicenseGroup) => setData(dto))
             .then(() => toaster(t("successful-saved"), 'success'))
             .catch((err: Error) => toaster(t("saving-data-failed", { message: err.message}), 'error'));
