@@ -8,10 +8,10 @@ export const ProxyTypeIcon = ({ type }: Readonly<{ type: ProxyType }>) => {
 
     const icon = () => {
         switch(type) {
-            case "MAVEN": return <SiApachemaven color="#b71c1c" size="1.5em" />;
-            case "NPM": return <FaNpm color="#cb3837" size="1.5em" />;
-            case "DOCKER": return <FaDocker color="#0db7ed" size="1.5em" />;
-            case "NUGET": return <SiNuget color="#0db7ed" size="1.5em" />;
+            case "MAVEN": return <SiApachemaven color="#b71c1c" style={{ verticalAlign: "inherit"}} size="1.5em" />;
+            case "NPM": return <FaNpm color="#cb3837" style={{ verticalAlign: "inherit"}} size="1.5em" />;
+            case "DOCKER": return <FaDocker color="#0db7ed" style={{ verticalAlign: "inherit"}} size="1.5em" />;
+            case "NUGET": return <SiNuget color="#0db7ed" style={{ verticalAlign: "inherit"}} size="1.5em" />;
         }
     }
 
